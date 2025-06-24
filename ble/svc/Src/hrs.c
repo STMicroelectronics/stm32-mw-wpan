@@ -3,18 +3,18 @@
   * @file    hrs.c
   * @author  MCD Application Team
   * @brief   Heart Rate Service
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2018-2021 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
+ *****************************************************************************
+ * @attention
+ *
+ * Copyright (c) 2018-2022 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ *****************************************************************************
+ */
 
 
 /* Includes ------------------------------------------------------------------*/
@@ -75,7 +75,7 @@ PLACE_IN_SECTION("BLE_DRIVER_CONTEXT") static HRS_Context_t HRS_Context;
 static tBleStatus Update_Char_BodySensorLocation( HRS_BodySensorLocation_t *pBodySensorLocationValue );
 #endif
 static tBleStatus Update_Char_Measurement(HRS_MeasVal_t *pMeasurement );
-static SVCCTL_EvtAckStatus_t HeartRate_Event_Handler(void *Event);
+static SVCCTL_EvtAckStatus_t HearRate_Event_Handler(void *pckt);
 
 
 /* Functions Definition ------------------------------------------------------*/
@@ -86,7 +86,7 @@ static SVCCTL_EvtAckStatus_t HeartRate_Event_Handler(void *Event);
  * @param  Event: Address of the buffer holding the Event
  * @retval Ack: Return whether the Event has been managed or not
  */
-static SVCCTL_EvtAckStatus_t HeartRate_Event_Handler(void *Event)
+static SVCCTL_EvtAckStatus_t HearRate_Event_Handler(void *Event)
 {
   SVCCTL_EvtAckStatus_t return_value;
   hci_event_pckt *event_pckt;
@@ -192,9 +192,8 @@ static SVCCTL_EvtAckStatus_t HeartRate_Event_Handler(void *Event)
     default:
       break;
   }
-
   return(return_value);
-}/* end HeartRate_Event_Handler */
+}/* end HearRate_Event_Handler */
 
 #if (BLE_CFG_HRS_BODY_SENSOR_LOCATION_CHAR != 0)
 /**
@@ -400,7 +399,7 @@ void HRS_Init(void)
   /**
    *	Register the event handler to the BLE controller
    */
-  SVCCTL_RegisterSvcHandler(HeartRate_Event_Handler);
+  SVCCTL_RegisterSvcHandler(HearRate_Event_Handler);
 
   /**
    *  Add Heart Rate Service
@@ -554,8 +553,6 @@ void HRS_Init(void)
   }
 #endif
   
-  
-  
   return;
 }
 
@@ -585,4 +582,4 @@ tBleStatus HRS_UpdateChar(uint16_t UUID, uint8_t *pPayload)
   return return_value;
 }/* end HRS_UpdateChar() */
 
-
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

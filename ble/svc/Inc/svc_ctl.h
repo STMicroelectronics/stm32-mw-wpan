@@ -6,16 +6,17 @@
   * @brief   Header for ble_controller.c module
   ******************************************************************************
   * @attention
-  *
-  * Copyright (c) 2018-2021 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
+ *
+ * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
+ * All rights reserved.</center></h2>
+ *
+ * This software component is licensed by ST under Ultimate Liberty license
+ * SLA0044, the "License"; You may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at:
+ *                             www.st.com/SLA0044
+ *
+ ******************************************************************************
+ */
 
 
 /**
@@ -43,6 +44,47 @@ extern "C" {
 
   /* Includes ------------------------------------------------------------------*/
   /* Exported types ------------------------------------------------------------*/
+#define PACKED(d) __PACKED_STRUCT     
+typedef PACKED(struct) _hci_uart_pckt
+{
+  uint8_t type;
+  uint8_t data[1];
+} hci_uart_pckt;
+
+typedef PACKED(struct) _hci_event_pckt
+{
+  uint8_t         evt;
+  uint8_t         plen;
+  uint8_t         data[1];
+} hci_event_pckt;
+
+typedef PACKED(struct) _evt_le_meta_event
+{
+  uint8_t         subevent;
+  uint8_t         data[1];
+} evt_le_meta_event;
+
+/**
+ * Vendor specific event for BLE core.
+ */
+typedef PACKED(struct) _evt_blecore_aci
+{
+  uint16_t ecode; /**< One of the BLE core event codes. */
+  uint8_t  data[1];
+} evt_blecore_aci;
+
+
+/* ------------------------------------------------------------------------- */
+
+#define ADV_IND                                        0
+#define ADV_DIRECT_IND                                 1
+#define ADV_SCAN_IND                                   2
+#define ADV_NONCONN_IND                                3
+#define SCAN_RSP                                       4
+#define HIGH_DUTY_CYCLE_DIRECTED_ADV                   1
+#define LOW_DUTY_CYCLE_DIRECTED_ADV                    4
+
+
   typedef enum
   {
     SVCCTL_EvtNotAck,
@@ -103,6 +145,7 @@ extern "C" {
    * @retval None
    */
   void SVCCTL_RegisterCltHandler( SVC_CTL_p_EvtHandler_t pfBLE_SVC_Client_Event_Handler );
+  
 
   /**
    * @brief  This API is used to resume the User Event Flow that has been stopped in return of SVCCTL_UserEvtRx()
@@ -140,32 +183,10 @@ extern "C" {
    */
   SVCCTL_UserEvtFlowStatus_t SVCCTL_UserEvtRx( void *pckt );
 
-  /**
-   * @brief This API may be used by the application when the Service Controller is used to add a custom service
-   *
-   *
-   * @param  None
-   * @retval None
-   */
-  void SVCCTL_InitCustomSvc( void );
-
-  /**
-   * @brief This API may be overloaded by the application to select a limited list of ble services to initialize.
-   *        It is called by SVCCTL_Init()
-   *        By default, SVCCTL_SvcInit() is implemented to initialize all BLE services which are included in the
-   *        application at build time
-   *        If it is required to initialize only limited part of the BLE service available in the application,
-   *        this API may be used to call the initialization API of the subset of needed services at run time.
-   *
-   * @param  None
-   * @retval None
-   */
-  void SVCCTL_SvcInit( void );
-
 #ifdef __cplusplus
 }
 #endif
 
 #endif /*__SVCCTL_H */
 
-
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

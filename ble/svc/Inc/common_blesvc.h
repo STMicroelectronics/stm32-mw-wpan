@@ -1,8 +1,9 @@
+
 /**
- ******************************************************************************
- * @file    ble.h
- * @author  MCD Application Team
- * @brief   BLE interface
+  ******************************************************************************
+  * @file    common_blesvc.h
+  * @author  MCD Application Team
+  * @brief   Header for ble modules
  *****************************************************************************
  * @attention
  *
@@ -18,37 +19,34 @@
 
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __BLE_H
-#define __BLE_H
+#ifndef __COMMON_BLESVC_H
+#define __COMMON_BLESVC_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-
 /* Includes ------------------------------------------------------------------*/
-#include "ble_conf.h"
-#include "ble_dbg_conf.h"
-  
-/**< core */
-#include "ble_core.h"
-#include "ble_bufsize.h"
-#include "ble_defs.h"
-#include "ble_std.h"
+#include "ble_common.h"
+#include "ble.h"
+#include "dbg_trace.h"
 
-#include "svc/Inc/svc_ctl.h"
-
-#include "svc/Inc/uuid.h"
 
 
 /* Exported types ------------------------------------------------------------*/
+typedef enum
+{
+  COMSVC_Notification = ( 1 << 0 ),
+  COMSVC_Indication =   ( 1 << 1 ),
+} COMSVC_ClientCharConfMask_t;
+
 /* Exported constants --------------------------------------------------------*/
 /* External variables --------------------------------------------------------*/
 /* Exported macros -----------------------------------------------------------*/
-/* Exported functions ------------------------------------------------------- */
+
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /*__BLE_H */
+#endif /*__COMMON_BLESVC_H */

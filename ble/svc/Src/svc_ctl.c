@@ -3,17 +3,17 @@
  * @file    svc_ctl.c
  * @author  MCD Application Team
  * @brief   BLE Controller
- ******************************************************************************
+ *****************************************************************************
  * @attention
  *
- * Copyright (c) 2018-2021 STMicroelectronics.
+ * Copyright (c) 2018-2022 STMicroelectronics.
  * All rights reserved.
  *
  * This software is licensed under terms that can be found in the LICENSE file
  * in the root directory of this software component.
  * If no LICENSE file comes with this software, it is provided AS-IS.
  *
- ******************************************************************************
+ *****************************************************************************
  */
 
 
@@ -41,98 +41,14 @@ uint8_t NbreOfRegisteredHandler;
 /* Private defines -----------------------------------------------------------*/
 #define SVCCTL_EGID_EVT_MASK   0xFF00
 #define SVCCTL_GATT_EVT_TYPE   0x0C00
-#define SVCCTL_GAP_DEVICE_NAME_LENGTH 7
 
 /* Private macros ------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-/**
- * START of Section BLE_DRIVER_CONTEXT
- */
-
-PLACE_IN_SECTION("BLE_DRIVER_CONTEXT") SVCCTL_EvtHandler_t SVCCTL_EvtHandler;
-PLACE_IN_SECTION("BLE_DRIVER_CONTEXT") SVCCTL_CltHandler_t SVCCTL_CltHandler;
-
-/**
- * END of Section BLE_DRIVER_CONTEXT
- */
+SVCCTL_EvtHandler_t SVCCTL_EvtHandler;
+SVCCTL_CltHandler_t SVCCTL_CltHandler;
 
 /* Private functions ----------------------------------------------------------*/
-/* Weak functions ----------------------------------------------------------*/
-void BVOPUS_STM_Init(void);
-
-__WEAK void BAS_Init( void )
-{
-  return;
-}
-
-__WEAK void BLS_Init( void )
-{
-  return;
-}
-__WEAK void CRS_STM_Init( void )
-{
-  return;
-}
-__WEAK void DIS_Init( void )
-{
-  return;
-}
-__WEAK void EDS_STM_Init( void )
-{
-  return;
-}
-__WEAK void HIDS_Init( void )
-{
-  return;
-}
-__WEAK void HRS_Init( void )
-{
-  return;
-}
-__WEAK void HTS_Init( void )
-{
-  return;
-}
-__WEAK void IAS_Init( void )
-{
-  return;
-}
-__WEAK void LLS_Init( void )
-{
-  return;
-}
-__WEAK void TPS_Init( void )
-{
-  return;
-}
-__WEAK void MOTENV_STM_Init( void )
-{
-  return;
-}
-__WEAK void P2PS_STM_Init( void )
-{
-  return;
-}
-__WEAK void ZDD_STM_Init( void )
-{
-  return;
-}
-__WEAK void OTAS_STM_Init( void )
-{
-  return;
-}
-__WEAK void MESH_Init( void )
-{
-  return;
-}
-__WEAK void BVOPUS_STM_Init( void )
-{
-  return;
-}
-__WEAK void SVCCTL_InitCustomSvc( void )
-{
-  return;
-}
+/* Weak functions -------------------------------------------------------------*/
 
 /* Functions Definition ------------------------------------------------------*/
 
@@ -145,52 +61,6 @@ void SVCCTL_Init( void )
   SVCCTL_EvtHandler.NbreOfRegisteredHandler = 0;
   SVCCTL_CltHandler.NbreOfRegisteredHandler = 0;
 
-  /**
-   * Add and Initialize requested services
-   */
-  SVCCTL_SvcInit();
-
-  return;
-}
-
-__WEAK void SVCCTL_SvcInit(void)
-{
-  BAS_Init();
-
-  BLS_Init();
-
-  CRS_STM_Init();
-
-  DIS_Init();
-
-  EDS_STM_Init();
-
-  HIDS_Init();
-
-  HRS_Init();
-
-  HTS_Init();
-
-  IAS_Init();
-
-  LLS_Init();
-
-  TPS_Init();
-
-  MOTENV_STM_Init();
-
-  P2PS_STM_Init();
-
-  ZDD_STM_Init();
-
-  OTAS_STM_Init();
-  
-  BVOPUS_STM_Init();
-
-  MESH_Init();
-
-  SVCCTL_InitCustomSvc();
-  
   return;
 }
 
@@ -228,13 +98,15 @@ void SVCCTL_RegisterCltHandler( SVC_CTL_p_EvtHandler_t pfBLE_SVC_Client_Event_Ha
   return;
 }
 
-__WEAK SVCCTL_UserEvtFlowStatus_t SVCCTL_UserEvtRx( void *pckt )
+SVCCTL_UserEvtFlowStatus_t SVCCTL_UserEvtRx( void *pckt )
 {
   hci_event_pckt *event_pckt;
   evt_blecore_aci *blecore_evt;
   SVCCTL_EvtAckStatus_t event_notification_status;
   SVCCTL_UserEvtFlowStatus_t return_status;
+#if (BLE_CFG_SVC_MAX_NBR_CB > 0) || (BLE_CFG_CLT_MAX_NBR_CB > 0)
   uint8_t index;
+#endif
 
   event_pckt = (hci_event_pckt*) ((hci_uart_pckt *) pckt)->data;
   event_notification_status = SVCCTL_EvtNotAck;
@@ -299,7 +171,7 @@ __WEAK SVCCTL_UserEvtFlowStatus_t SVCCTL_UserEvtRx( void *pckt )
 
   /**
    * When no registered handlers (either Service or Client) has acknowledged the GATT event, it is reported to the application
-   * a GAP event is always reported to the application.
+   * a GAP event is always reported to the applicaiton.
    */
   switch (event_notification_status)
   {
@@ -327,4 +199,4 @@ __WEAK SVCCTL_UserEvtFlowStatus_t SVCCTL_UserEvtRx( void *pckt )
   return (return_status);
 }
 
-
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

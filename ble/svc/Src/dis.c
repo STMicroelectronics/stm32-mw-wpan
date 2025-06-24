@@ -3,18 +3,18 @@
   * @file    dis.c
   * @author  MCD Application Team
   * @brief   Device Information Service
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2018-2021 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
+ *****************************************************************************
+ * @attention
+ *
+ * Copyright (c) 2018-2022 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ *****************************************************************************
+ */
 
 
 /* Includes ------------------------------------------------------------------*/
@@ -492,11 +492,11 @@ tBleStatus DIS_UpdateChar(uint16_t UUID, DIS_Data_t *pPData)
 #endif
 
     default:
-      return_value = BLE_STATUS_ERROR;
+      return_value = 0;
       break;
   }
 
   return return_value;
 }/* end DIS_UpdateChar() */
 
-
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

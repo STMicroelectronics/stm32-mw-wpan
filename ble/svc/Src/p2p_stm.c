@@ -3,18 +3,18 @@
   * @file    p2p_stm.c
   * @author  MCD Application Team
   * @brief   Peer to Peer Service (Custom STM)
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2018-2021 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
+ *****************************************************************************
+ * @attention
+ *
+ * Copyright (c) 2018-2022 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ *****************************************************************************
+ */
 
 
 /* Includes ------------------------------------------------------------------*/
@@ -69,7 +69,7 @@ PLACE_IN_SECTION("BLE_DRIVER_CONTEXT") static PeerToPeerContext_t aPeerToPeerCon
  * END of Section BLE_DRIVER_CONTEXT
  */
 /* Private function prototypes -----------------------------------------------*/
-static SVCCTL_EvtAckStatus_t PeerToPeer_Event_Handler(void *Event);
+static SVCCTL_EvtAckStatus_t PeerToPeer_Event_Handler(void *pckt);
 
 
 /* Functions Definition ------------------------------------------------------*/
@@ -210,10 +210,7 @@ void P2PS_STM_Init(void)
     aci_gatt_add_service(UUID_TYPE_128,
                       (Service_UUID_t *) &uuid16,
                       PRIMARY_SERVICE,
-#if (BLE_CFG_OTA_REBOOT_CHAR != 0)
-                      2+
-#endif                      
-                      6,
+                      8,
                       &(aPeerToPeerContext.PeerToPeerSvcHdle));
 
     /**
@@ -292,4 +289,4 @@ tBleStatus P2PS_STM_App_Update_Char(uint16_t UUID, uint8_t *pPayload)
   return result;
 }/* end P2PS_STM_Init() */
 
-
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

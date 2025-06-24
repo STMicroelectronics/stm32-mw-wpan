@@ -3,18 +3,18 @@
   * @file    ble_common.h
   * @author  MCD Application Team
   * @brief   Common file to BLE Middleware
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2018-2021 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
+ *****************************************************************************
+ * @attention
+ *
+ * Copyright (c) 2018-2022 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ *****************************************************************************
+ */
 
 
 /* Define to prevent recursive inclusion -------------------------------------*/
@@ -33,9 +33,6 @@ extern "C" {
 
 #include "ble_conf.h"
 #include "ble_dbg_conf.h"
-
-/* Event types copied from MW Legacy file*/
-#include "tl.h"
 
 /* -------------------------------- *
  *  Basic definitions               *
@@ -108,10 +105,10 @@ extern "C" {
    * -------------------------------- */
 #define PLACE_IN_SECTION( __x__ )  __attribute__((section (__x__)))
 
+
+
 #ifdef __cplusplus
 }
 #endif
 
 #endif /*__BLE_COMMON_H */
-
-
