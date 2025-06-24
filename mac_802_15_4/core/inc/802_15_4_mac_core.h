@@ -29,6 +29,7 @@
 #include "stm32wbxx_hal.h"
 #include "stm32wbxx_hal_def.h"
 #include "stm32wbxx_hal_cortex.h"
+#include "stm32_wpan_common.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -49,7 +50,7 @@ typedef struct
   uint32_t  Data[OT_CMD_BUFFER_SIZE];
 }MAC_802_15_4_CmdReq_OT_LIKE_t;
 
-typedef struct
+typedef PACKED_STRUCT
 {
   uint16_t  subEvtCode;
   uint8_t   notPayload[1];
@@ -104,7 +105,8 @@ typedef enum
   MSG_M0TOM4_MAC_MLME_ORPHAN_IND,
   MSG_M0TOM4_MAC_MLME_SYNC_LOSS_IND,
   MSG_M0TOM4_MAC_MLME_DPS_IND,
-  MSG_M0TOM4_MAC_MCPS_DATA_IND
+  MSG_M0TOM4_MAC_MCPS_DATA_IND,
+  MSG_M0TOM4_MAC_MLME_POLL_IND
 } MAC_802_15_4_MsgIdM0ToM4_t;
 
 /* List of modes available for UART configuration */

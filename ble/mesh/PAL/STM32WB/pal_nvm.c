@@ -1,9 +1,9 @@
 /**
 ******************************************************************************
-* @file    appli_mesh.c
+* @file    pal_nvm.c
 * @author  BLE Mesh Team
-* @version V1.08.000
-* @date    10-July-2018
+* @version V1.09.000
+* @date    15-Oct-2018
 * @brief   Flash management for the Controller
 ******************************************************************************
 * @attention
@@ -106,6 +106,8 @@ MOBLE_RESULT MoblePalNvmRead(MOBLEUINT32 offset, void *buf, MOBLEUINT32 size, MO
 {
   MOBLE_RESULT result = MOBLE_RESULT_SUCCESS;
   
+//  printf("MoblePalNvmRead >>>\r\n");  
+
   if (offset > NVM_SIZE)
   {
     result = MOBLE_RESULT_INVALIDARG;
@@ -123,6 +125,7 @@ MOBLE_RESULT MoblePalNvmRead(MOBLEUINT32 offset, void *buf, MOBLEUINT32 size, MO
     memmove(buf, (void *)(NVM_BASE + offset), size);
   }
   
+//  printf("MoblePalNvmRead <<<\r\n");  
   return result;
 }
 
@@ -137,6 +140,8 @@ MOBLE_RESULT MoblePalNvmRead(MOBLEUINT32 offset, void *buf, MOBLEUINT32 size, MO
 MOBLE_RESULT MoblePalNvmCompare(MOBLEUINT32 offset, void const *buf, MOBLEUINT32 size, MOBLE_NVM_COMPARE* comparison)
 {
   MOBLE_RESULT result = MOBLE_RESULT_SUCCESS;
+  
+//  printf("MoblePalNvmCompare >>>\r\n");
   
   if ((comparison == NULL) || (buf == NULL))
   {
@@ -176,17 +181,15 @@ MOBLE_RESULT MoblePalNvmCompare(MOBLEUINT32 offset, void const *buf, MOBLEUINT32
       {
         *comparison = MOBLE_NVM_COMPARE_NOT_EQUAL;
       }
-#ifdef STM32F0
-      if ((src[i] | dst[i]) != dst[i])
-#else
         if ((src[i<<3] & dst[i<<3]) != dst[i<<3])
-#endif
         {
           *comparison = MOBLE_NVM_COMPARE_NOT_EQUAL_ERASE;
           break;
         }
     }
   }
+  
+//  printf("MoblePalNvmCompare <<<\r\n");
   
   return result;
 }
@@ -198,6 +201,10 @@ MOBLE_RESULT MoblePalNvmCompare(MOBLEUINT32 offset, void const *buf, MOBLEUINT32
 */
 MOBLE_RESULT MoblePalNvmErase(MOBLEUINT32 offset)
 {
+  HAL_StatusTypeDef status = HAL_OK;
+
+//  printf("MoblePalNvmErase >>>\r\n");
+  
   while( LL_HSEM_1StepLock( HSEM, CFG_HW_FLASH_SEMID ) );
   HAL_FLASH_Unlock();
   __HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_EOP | FLASH_FLAG_WRPERR | FLASH_FLAG_OPTVERR);
@@ -209,10 +216,12 @@ MOBLE_RESULT MoblePalNvmErase(MOBLEUINT32 offset)
   
   uint32_t pageError = 0;
   while(LL_FLASH_IsActiveFlag_OperationSuspended());
-  HAL_StatusTypeDef status = HAL_FLASHEx_Erase(&erase, &pageError);
+  status = HAL_FLASHEx_Erase(&erase, &pageError);
   while(LL_FLASH_IsActiveFlag_OperationSuspended());
   HAL_FLASH_Lock();
   LL_HSEM_ReleaseLock( HSEM, CFG_HW_FLASH_SEMID, 0 );
+  
+//  printf("MoblePalNvmErase <<<\r\n");
   
   return status == HAL_OK ? MOBLE_RESULT_SUCCESS : MOBLE_RESULT_FAIL;
 }
@@ -227,6 +236,8 @@ MOBLE_RESULT MoblePalNvmErase(MOBLEUINT32 offset)
 MOBLE_RESULT MoblePalNvmWrite(MOBLEUINT32 offset, void const *buf, MOBLEUINT32 size)
 {
   MOBLE_RESULT result = MOBLE_RESULT_SUCCESS;
+  
+//  printf("MoblePalNvmWrite >>>\r\n");
   
   if (offset > NVM_SIZE)
   {
@@ -265,7 +276,7 @@ MOBLE_RESULT MoblePalNvmWrite(MOBLEUINT32 offset, void const *buf, MOBLEUINT32 s
       if (src[i<<3] != dst[i<<3])
       {
         while(LL_FLASH_IsActiveFlag_OperationSuspended());
-        status = HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD/*FLASH_TYPEPROGRAM_WORD*/, NVM_BASE + offset + (i <<3/*2*/), src[i]);
+        status = HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, NVM_BASE + offset + (i <<3), src[i]);
         if (status != HAL_OK)
         {
           break;
@@ -280,6 +291,7 @@ MOBLE_RESULT MoblePalNvmWrite(MOBLEUINT32 offset, void const *buf, MOBLEUINT32 s
       result = MOBLE_RESULT_FAIL;
     }
   }
+//  printf("MoblePalNvmWrite <<<\r\n");
   
   return result;
 }
@@ -289,7 +301,7 @@ MOBLE_RESULT MoblePalNvmWrite(MOBLEUINT32 offset, void const *buf, MOBLEUINT32 s
 * @param  None
 * @retval Result
 */
-MOBLE_RESULT MoblePalNvmProcess(void)
+MOBLE_RESULT BnrgmPalNvmProcess(void)
 {
     /* do nothing */
     return MOBLE_RESULT_SUCCESS;

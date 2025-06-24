@@ -30,6 +30,9 @@
 #include "dbg_trace.h"
 #include "stm_logging.h"
 
+#include "tl.h"
+#include "tl_mac_802_15_4.h"
+
 
 /** @defgroup CORE MAC 802.15.4 Core & Utils
   *   @brief Provides  functions to handle MAC Confirmation and notification from
@@ -37,12 +40,7 @@
   * @{
   */
 
-#if defined ( __CC_ARM ) || defined(__GNUC__)  /* KEIL MDK-ARM or SW4STM32 */
-/* Use local buffer to avoid non-aligned accesses with LDM instruction with KEIL */
-MAC_802_15_4_Notification_t notification_local;
-#endif /* ( __CC_ARM ) || defined(__GNUC__)  */
-
- /**
+/**
  * @brief  MAC Callbacks Structure registering user callback to be notify from MAC layers on
  *         MAC Confirmation and MAC Indications.
  */
@@ -87,18 +85,9 @@ HAL_StatusTypeDef MAC_802_15_4_CallBack_Processing(void)
 {
   HAL_StatusTypeDef status = HAL_OK;
 
-#if defined ( __CC_ARM ) || defined(__GNUC__)  /* KEIL MDK-ARM or SW4STM32 */
-    /* Get pointer on received event buffer from M0 */
-    TL_Evt_t* p_notif_evt = MAC_802_15_4_GetNotificationBuffer();
-    MAC_802_15_4_Notification_t* p_mac_evt_old = (MAC_802_15_4_Notification_t*)(p_notif_evt->payload);
-    /* Use local buffer to avoid non-aligned accesses with LDM instruction with KEIL */
-    MAC_802_15_4_Notification_t* p_mac_evt = &notification_local;
-    memcpy(p_mac_evt, p_mac_evt_old, sizeof(MAC_802_15_4_Notification_t));
-#else
-    /* Get pointer on received event buffer from M0 */
-    TL_Evt_t * p_notif_evt = MAC_802_15_4_GetNotificationBuffer();
-    MAC_802_15_4_Notification_t* p_mac_evt = (MAC_802_15_4_Notification_t*)(p_notif_evt->payload);
-#endif /* ( __CC_ARM ) || defined(__GNUC__)  */
+  /* Get pointer on received event buffer from M0 */
+  TL_Evt_t * p_notif_evt = MAC_802_15_4_GetNotificationBuffer();
+  MAC_802_15_4_Notification_t* p_mac_evt = (MAC_802_15_4_Notification_t*)(p_notif_evt->payload);
 
   uint8_t subEvtCode = p_mac_evt->subEvtCode;
 
@@ -270,6 +259,13 @@ HAL_StatusTypeDef MAC_802_15_4_CallBack_Processing(void)
       MAC_dataInd_t dataInd ;
       memcpy(&dataInd,p_mac_evt->notPayload, sizeof(MAC_dataInd_t));
       macCbConfig.mcpsDataIndCb(&dataInd);
+    }
+    break;
+    case MSG_M0TOM4_MAC_MLME_POLL_IND:
+    {
+      MAC_pollInd_t pollInd ;
+      memcpy(&pollInd,p_mac_evt->notPayload, sizeof(MAC_pollInd_t));
+      macCbConfig.mlmePollIndCb(&pollInd);
     }
     break;
   default:

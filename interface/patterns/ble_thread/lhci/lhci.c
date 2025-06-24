@@ -4,17 +4,17 @@
  * @author  MCD Application Team
  * @brief   HCI command for the system channel
  ******************************************************************************
- * @attention
- *
- * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
- * All rights reserved.</center></h2>
- *
- * This software component is licensed by ST under Ultimate Liberty license
- * SLA0044, the "License"; You may not use this file except in compliance with
- * the License. You may obtain a copy of the License at:
- *                             www.st.com/SLA0044
- *
- ******************************************************************************
+  * @attention
+  *
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics. 
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under BSD 3-Clause license,
+  * the "License"; You may not use this file except in compliance with the 
+  * License. You may obtain a copy of the License at:
+  *                        opensource.org/licenses/BSD-3-Clause
+  *
+  ******************************************************************************
  */
 
 
@@ -63,7 +63,7 @@ void LHCI_C1_Write_Register( TL_CmdPacket_t *pcmd )
 		__set_PRIMASK(primask_bit); /**< Restore PRIMASK bit*/
 		break;
 
-	default: /**< case SHCI_32bits */
+	default: /**< case SHCI_32BITS */
 		__disable_irq();
 
 		*(uint32_t *) (p_param->add) = ((*(uint32_t *) (p_param->add)) & (~(p_param->mask)))
@@ -103,7 +103,7 @@ void LHCI_C1_Read_Register( TL_CmdPacket_t *pcmd )
 		rsp_val = *(uint16_t *) (p_param->add);
 		break;
 
-	default: /**< case SHCI_32bits */
+	default: /**< case SHCI_32BITS */
 		rsp_val = *(uint32_t *) (p_param->add);
 		break;
 	}
@@ -202,19 +202,19 @@ void LHCI_C1_Read_Device_Information( TL_CmdPacket_t *pcmd )
 			sizeof(MB_SafeBootInfoTable_t));
 
 	/**
-	 * RssInf
+	 * FusInf
 	 */
 	memcpy(
-			&(((LHCI_C1_Device_Information_ccrp_t *) (((TL_CcEvt_t *) (((TL_EvtPacket_t*) pcmd)->evtserial.evt.payload))->payload))->RssInf),
-			&((MB_RefTable_t*) 0x20030000)->p_device_info_table->RssInfoTable,
-			sizeof(MB_RssInfoTable_t));
+			&(((LHCI_C1_Device_Information_ccrp_t *) (((TL_CcEvt_t *) (((TL_EvtPacket_t*) pcmd)->evtserial.evt.payload))->payload))->FusInf),
+			&((MB_RefTable_t*) 0x20030000)->p_device_info_table->FusInfoTable,
+			sizeof(MB_FusInfoTable_t));
 
 	/**
 	 * WirelessFwInf
 	 */
 	memcpy(
 			&(((LHCI_C1_Device_Information_ccrp_t *) (((TL_CcEvt_t *) (((TL_EvtPacket_t*) pcmd)->evtserial.evt.payload))->payload))->WirelessFwInf),
-			&((MB_RefTable_t*) 0x20030000)->p_device_info_table->WirelessFwIinfoTable,
+			&((MB_RefTable_t*) 0x20030000)->p_device_info_table->WirelessFwInfoTable,
 			sizeof(MB_WirelessFwInfoTable_t));
 
 	/**

@@ -24,7 +24,6 @@
 
 #include "stm32wbxx_core_interface_def.h"
 #include "tl_thread_hci.h"
-#include "app_common.h"
 #include "tasklet.h"
 
 

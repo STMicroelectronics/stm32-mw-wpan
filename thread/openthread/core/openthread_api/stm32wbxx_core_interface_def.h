@@ -26,13 +26,15 @@
 #ifndef STM32WBxx_CORE_INTERFACE_DEF_H
 #define STM32WBxx_CORE_INTERFACE_DEF_H
 
+#include "stm32_wpan_common.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /* Structure of the messages exchanged between M0 and M4 */
 #define OT_CMD_BUFFER_SIZE 20U
-typedef struct
+typedef PACKED_STRUCT
 {
   uint32_t  ID;
   uint32_t  Size;
@@ -404,7 +406,10 @@ typedef enum
   MSG_M4TOM0_OT_NETWORK_TIME_GET_XTAL_THRESHOLD,
   /* Crypto */
   MSG_M4TOM0_OT_CRYPTO_HMAC_SHA256,
-  MSG_M4TOM0_OT_CRYPTO_AES_CCM
+  MSG_M4TOM0_OT_CRYPTO_AES_CCM,
+  /* Radio platform */
+  MSG_M4TOM0_OT_RADIO_SET_TRANSMIT_POWER,
+  MSG_M4TOM0_OT_RADIO_GET_TRANSMIT_POWER
 } MsgId_M4toM0_Enum_t;
 
 /* List of messages sent by the M0 to the M4 */

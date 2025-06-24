@@ -86,10 +86,6 @@ CoapResponseHandlerCallback coapResponseHandlerCb = NULL;
 otJamDetectionCallback otJamDetectionCallbackCb = NULL;
 #endif
 
-#if defined ( __CC_ARM ) || defined(__GNUC__)  /* KEIL MDK-ARM or SW4STM32 */
-/* Use local buffer to avoid non-aligned accesses with LDM instruction with KEIL */
-Thread_OT_Cmd_Request_t notification_local;
-#endif /* ( __CC_ARM ) || defined(__GNUC__)  */
 
 /**
   * @brief  This function is used to manage all the callbacks used by the
@@ -108,16 +104,8 @@ HAL_StatusTypeDef OpenThread_CallBack_Processing(void)
 {
     HAL_StatusTypeDef status = HAL_OK;
 
-#if defined ( __CC_ARM ) || defined(__GNUC__)  /* KEIL MDK-ARM or SW4STM32 */
-    /* Get pointer on received event buffer from M0 */
-    Thread_OT_Cmd_Request_t* p_notification_old = THREAD_Get_NotificationPayloadBuffer();
-    /* Use local buffer to avoid non-aligned accesses with LDM instruction with KEIL */
-    Thread_OT_Cmd_Request_t* p_notification = &notification_local;
-    memcpy(p_notification, p_notification_old, sizeof(Thread_OT_Cmd_Request_t));
-#else
     /* Get pointer on received event buffer from M0 */
     Thread_OT_Cmd_Request_t* p_notification = THREAD_Get_NotificationPayloadBuffer();
-#endif /* ( __CC_ARM ) || defined(__GNUC__)  */
 
     switch(p_notification->ID)
     {

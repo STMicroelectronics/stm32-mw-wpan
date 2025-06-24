@@ -27,8 +27,6 @@
 
 /* Include definition of compilation flags requested for OpenThread configuration */
 #include OPENTHREAD_CONFIG_FILE
-
-#include "app_common.h"
 #include "thread.h"
 
 extern otHandleActiveScanResult otHandleActiveScanResultCb;
