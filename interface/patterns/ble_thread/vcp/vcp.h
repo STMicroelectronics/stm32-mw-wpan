@@ -4,17 +4,16 @@
  * @author  MCD Application Team
  * @brief   VCP Interfaces
  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics. 
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the 
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
-  ******************************************************************************
+ * @attention
+ *
+ * Copyright (c) 2018-2021 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ ******************************************************************************
  */
 
 
@@ -65,6 +64,17 @@ void VCP_SendData ( uint8_t *p_data , uint16_t size , void (*cb)( void ) );
  */
 extern void VCP_DataReceived( uint8_t* Buf , uint32_t *Len );
 
+/**
+ * @brief Report to the application data transmission complete over USB (VCP)
+ *
+ * @param  Buf : Address of the data transmitted
+ * @param  Len : length of transmitted data
+ * @param  epnum : endpoint number
+ *
+ * @retval None
+ */
+extern  int8_t VCP_TransmitCplt( uint8_t *Buf, uint32_t *Len, uint8_t epnum );
+
 
 #ifdef __cplusplus
 }
@@ -72,4 +82,3 @@ extern void VCP_DataReceived( uint8_t* Buf , uint32_t *Len );
 
 #endif /*__VCP_H */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

@@ -1,19 +1,18 @@
 /*****************************************************************************
  * @file    ble_const.h
- * @author  MCD Application Team
+ *
  * @brief   This file contains the definitions which are compiler dependent.
  *****************************************************************************
  * @attention
  *
- * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
- * All rights reserved.</center></h2>
+ * Copyright (c) 2018-2025 STMicroelectronics.
+ * All rights reserved.
  *
- * This software component is licensed by ST under Ultimate Liberty license
- * SLA0044, the "License"; You may not use this file except in compliance with
- * the License. You may obtain a copy of the License at:
- *                             www.st.com/SLA0044
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
  *
- ******************************************************************************
+ *****************************************************************************
  */
 
 #ifndef BLE_CONST_H__
@@ -25,6 +24,28 @@
 #include "ble_std.h"
 #include "ble_defs.h"
 #include "osal.h"
+#include "compiler.h"
+
+
+/* Default BLE variant */
+#ifndef BASIC_FEATURES
+#define BASIC_FEATURES 0
+#endif
+#ifndef SLAVE_ONLY
+#define SLAVE_ONLY 0
+#endif
+#ifndef LL_ONLY
+#define LL_ONLY 0
+#endif
+#ifndef LL_ONLY_BASIC
+#define LL_ONLY_BASIC 0
+#endif
+#ifndef BEACON_ONLY
+#define BEACON_ONLY 0
+#endif
+
+/* Defintion to determine BLE Host stack presence */
+#define BLE_HOST_PRESENT (!(LL_ONLY || LL_ONLY_BASIC || BEACON_ONLY))
 
 
 /* Size of command/events buffers:
@@ -32,8 +53,8 @@
  * To change the size of commands and events parameters used in the
  * auto-generated files, you need to update 2 defines:
  *
- *  - BLE_CMD_MAX_PARAM_LEN          
- *  - BLE_EVT_MAX_PARAM_LEN          
+ *  - BLE_CMD_MAX_PARAM_LEN
+ *  - BLE_EVT_MAX_PARAM_LEN
  *
  * These 2 defines are set below with default values and can be changed.
  *
@@ -92,11 +113,6 @@ struct hci_request
 extern int hci_send_req( struct hci_request* req, uint8_t async );
 
 
-/* Byte order conversions */
-#define htob( d, n )  (d)     /* LE */
-#define btoh( d, n )  (d)     /* LE */
-
-
 #ifndef FALSE
 #define FALSE 0
 #endif
@@ -110,6 +126,4 @@ extern int hci_send_req( struct hci_request* req, uint8_t async );
 #endif
 
 
-#endif /* ! BLE_CONST_H__ */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE***/
+#endif /* BLE_CONST_H__ */

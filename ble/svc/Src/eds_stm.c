@@ -5,17 +5,16 @@
   * @brief   End Device Service (Custom - STM)
   ******************************************************************************
   * @attention
- *
- * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
- * All rights reserved.</center></h2>
- *
- * This software component is licensed by ST under Ultimate Liberty license
- * SLA0044, the "License"; You may not use this file except in compliance with
- * the License. You may obtain a copy of the License at:
- *                             www.st.com/SLA0044
- *
- ******************************************************************************
- */
+  *
+  * Copyright (c) 2018-2021 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
 
 
 /* Includes ------------------------------------------------------------------*/
@@ -36,7 +35,7 @@ typedef struct{
 PLACE_IN_SECTION("BLE_DRIVER_CONTEXT") static EndDeviceManagementContext_t aEndDeviceManagementContext;
 
 /* Private function prototypes -----------------------------------------------*/
-static SVCCTL_EvtAckStatus_t EndDeviceManagement_Event_Handler(void *pckt);
+static SVCCTL_EvtAckStatus_t EndDeviceManagement_Event_Handler(void *Event);
 
 
 /* Functions Definition ------------------------------------------------------*/
@@ -63,7 +62,7 @@ static SVCCTL_EvtAckStatus_t EndDeviceManagement_Event_Handler(void *Event)
 {
   SVCCTL_EvtAckStatus_t return_value;
   hci_event_pckt *event_pckt;
-  evt_blue_aci *blue_evt;
+  evt_blecore_aci *blecore_evt;
   aci_gatt_attribute_modified_event_rp0    * attribute_modified;
   EDS_STM_App_Notification_evt_t Notification;
 
@@ -72,14 +71,14 @@ static SVCCTL_EvtAckStatus_t EndDeviceManagement_Event_Handler(void *Event)
 
   switch(event_pckt->evt)
   {
-    case EVT_VENDOR:
+    case HCI_VENDOR_SPECIFIC_DEBUG_EVT_CODE:
     {
-      blue_evt = (evt_blue_aci*)event_pckt->data;
-      switch(blue_evt->ecode)
+      blecore_evt = (evt_blecore_aci*)event_pckt->data;
+      switch(blecore_evt->ecode)
       {
-        case EVT_BLUE_GATT_ATTRIBUTE_MODIFIED:
+        case ACI_GATT_ATTRIBUTE_MODIFIED_VSEVT_CODE:
        {
-          attribute_modified = (aci_gatt_attribute_modified_event_rp0*)blue_evt->data;
+          attribute_modified = (aci_gatt_attribute_modified_event_rp0*)blecore_evt->data;
           
             if(attribute_modified->Attr_Handle == (aEndDeviceManagementContext.EndDeviceStatusCharHdle + 2))
             {
@@ -115,7 +114,7 @@ static SVCCTL_EvtAckStatus_t EndDeviceManagement_Event_Handler(void *Event)
           break;
       }
     }
-    break; /* HCI_EVT_VENDOR_SPECIFIC */
+    break; /* HCI_HCI_VENDOR_SPECIFIC_DEBUG_EVT_CODE_SPECIFIC */
 
     default:
       break;
@@ -146,7 +145,7 @@ void EDS_STM_Init(void)
      *
      * Max_Attribute_Records = 2*no_of_char + 1
      * service_max_attribute_record = 1 for End Device Mgt service +
-     *                                2 for End Device Staus characteristic +
+     *                                2 for End Device Status characteristic +
      *                                1 for client char configuration descriptor 
      *                                
      */
@@ -172,7 +171,7 @@ void EDS_STM_Init(void)
                       1, /* isVariable */
                       &(aEndDeviceManagementContext.EndDeviceStatusCharHdle));
     
-     BLE_DBG_EDS_STM_MSG("-- End Device Managment Service (EDMS) is added Successfully %04X\n",
+     BLE_DBG_EDS_STM_MSG("-- End Device Management Service (EDMS) is added Successfully %04X\n",
                  aEndDeviceManagementContext.EndDeviceManagementSvcHdle);
 
     return;
@@ -209,4 +208,4 @@ tBleStatus EDS_STM_Update_Char(uint16_t UUID, uint8_t *pPayload)
 }/* end BLE_SVC_LedButton_Update_Char() */
 
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+

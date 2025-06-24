@@ -4,17 +4,16 @@
  * @author  MCD Application Team
  * @brief   Header for tl module
  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics. 
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the 
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
-  ******************************************************************************
+ * @attention
+ *
+ * Copyright (c) 2018-2021 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ ******************************************************************************
  */
 
 
@@ -31,34 +30,36 @@ extern "C" {
 #include "stm32_wpan_common.h"
 
 /* Exported defines -----------------------------------------------------------*/
-#define TL_BLECMD_PKT_TYPE                                              ( 0x01 )
-#define TL_ACL_DATA_PKT_TYPE                                            ( 0x02 )
-#define TL_BLEEVT_PKT_TYPE                                              ( 0x04 )
-#define TL_OTCMD_PKT_TYPE                                               ( 0x08 )
-#define TL_OTRSP_PKT_TYPE                                               ( 0x09 )
-#define TL_CLICMD_PKT_TYPE                                              ( 0x0A )
-#define TL_OTNOT_PKT_TYPE                                               ( 0x0C )
-#define TL_OTACK_PKT_TYPE                                               ( 0x0D )
-#define TL_CLINOT_PKT_TYPE                                              ( 0x0E )
-#define TL_CLIACK_PKT_TYPE                                              ( 0x0F )
-#define TL_SYSCMD_PKT_TYPE  	                                        ( 0x10 )
-#define TL_SYSRSP_PKT_TYPE  	                                        ( 0x11 )
-#define TL_SYSEVT_PKT_TYPE  	                                        ( 0x12 )
-#define TL_LOCCMD_PKT_TYPE  	                                        ( 0x20 )
-#define TL_LOCRSP_PKT_TYPE  	                                        ( 0x21 )
-#define TL_TRACES_APP_PKT_TYPE                                          ( 0x40 )
-#define TL_TRACES_WL_PKT_TYPE                                           ( 0x41 )
+#define TL_BLECMD_PKT_TYPE             ( 0x01 )
+#define TL_ACL_DATA_PKT_TYPE           ( 0x02 )
+#define TL_BLEEVT_PKT_TYPE             ( 0x04 )
+#define TL_OTCMD_PKT_TYPE              ( 0x08 )
+#define TL_OTRSP_PKT_TYPE              ( 0x09 )
+#define TL_CLICMD_PKT_TYPE             ( 0x0A )
+#define TL_OTNOT_PKT_TYPE              ( 0x0C )
+#define TL_OTACK_PKT_TYPE              ( 0x0D )
+#define TL_CLINOT_PKT_TYPE             ( 0x0E )
+#define TL_CLIACK_PKT_TYPE             ( 0x0F )
+#define TL_SYSCMD_PKT_TYPE             ( 0x10 )
+#define TL_SYSRSP_PKT_TYPE             ( 0x11 )
+#define TL_SYSEVT_PKT_TYPE             ( 0x12 )
+#define TL_CLIRESP_PKT_TYPE            ( 0x15 )
+#define TL_M0CMD_PKT_TYPE              ( 0x16 )
+#define TL_LOCCMD_PKT_TYPE             ( 0x20 )
+#define TL_LOCRSP_PKT_TYPE             ( 0x21 )
+#define TL_TRACES_APP_PKT_TYPE         ( 0x40 )
+#define TL_TRACES_WL_PKT_TYPE          ( 0x41 )
 
-#define TL_CMD_HDR_SIZE                                                      (4)
-#define TL_EVT_HDR_SIZE                                                      (3)
-#define TL_EVT_CS_PAYLOAD_SIZE                                               (4)
+#define TL_CMD_HDR_SIZE                (4)
+#define TL_EVT_HDR_SIZE                (3)
+#define TL_EVT_CS_PAYLOAD_SIZE         (4)
 
-#define TL_BLEEVT_CC_OPCODE                                               (0x0E)
-#define TL_BLEEVT_CS_OPCODE                                               (0x0F)
+#define TL_BLEEVT_CC_OPCODE            (0x0E)
+#define TL_BLEEVT_CS_OPCODE            (0x0F)
+#define TL_BLEEVT_VS_OPCODE            (0xFF)
 
-#define TL_BLEEVT_CS_PACKET_SIZE        (TL_EVT_HDR_SIZE + sizeof(TL_CsEvt_t))
-#define TL_BLEEVT_CS_BUFFER_SIZE        (sizeof(TL_PacketHeader_t) + TL_BLEEVT_CS_PACKET_SIZE)
-
+#define TL_BLEEVT_CC_PACKET_SIZE       (TL_EVT_HDR_SIZE + sizeof(TL_CcEvt_t))
+#define TL_BLEEVT_CC_BUFFER_SIZE       (sizeof(TL_PacketHeader_t) + TL_BLEEVT_CC_PACKET_SIZE)
 /* Exported types ------------------------------------------------------------*/
 /**< Packet header */
 typedef PACKED_STRUCT
@@ -82,29 +83,32 @@ typedef PACKED_STRUCT
 } TL_CsEvt_t;
 
 /**
- * This the payload of TL_Evt_t for a command complete event
+ * This the payload of TL_Evt_t for a command complete event, only used a pointer
  */
 typedef PACKED_STRUCT
 {
   uint8_t   numcmd;
   uint16_t  cmdcode;
-  uint8_t   payload[1];
+  uint8_t   payload[2];
 } TL_CcEvt_t;
 
 /**
- * This the payload of TL_Evt_t for an asynchronous event
+ * This the payload of TL_Evt_t for an asynchronous event, only used a pointer
  */
 typedef PACKED_STRUCT
 {
   uint16_t  subevtcode;
-  uint8_t   payload[1];
+  uint8_t   payload[2];
 } TL_AsynchEvt_t;
 
+/**
+ * This the payload of TL_Evt_t, only used a pointer
+ */
 typedef PACKED_STRUCT
 {
   uint8_t   evtcode;
   uint8_t   plen;
-  uint8_t   payload[1];
+  uint8_t   payload[2];
 } TL_Evt_t;
 
 typedef PACKED_STRUCT
@@ -182,7 +186,20 @@ typedef struct
   uint8_t *p_ThreadOtCmdRspBuffer;
   uint8_t *p_ThreadCliRspBuffer;
   uint8_t *p_ThreadNotAckBuffer;
+  uint8_t *p_ThreadCliNotBuffer;
 } TL_TH_Config_t;
+
+typedef struct
+{
+  uint8_t *p_LldTestsCliCmdRspBuffer;
+  uint8_t *p_LldTestsM0CmdBuffer;
+} TL_LLD_tests_Config_t;
+
+typedef struct
+{
+  uint8_t *p_BleLldCmdRspBuffer;
+  uint8_t *p_BleLldM0CmdBuffer;
+} TL_BLE_LLD_Config_t;
 
 typedef struct
 {
@@ -194,6 +211,7 @@ typedef struct
 {
   uint8_t *p_ZigbeeOtCmdRspBuffer;
   uint8_t *p_ZigbeeNotAckBuffer;
+  uint8_t *p_ZigbeeNotifRequestBuffer;
 } TL_ZIGBEE_Config_t;
 
 /**
@@ -218,6 +236,43 @@ typedef struct
   void (* IoBusCallBackUserEvt) (TL_EvtPacket_t *phcievt);
   uint8_t *p_cmdbuffer;
 } TL_SYS_InitConf_t;
+
+/*****************************************************************************************
+ * Event type copied from ble_legacy.h 
+ */
+
+typedef PACKED_STRUCT
+{
+  uint8_t type;
+  uint8_t data[1];
+} hci_uart_pckt;
+
+typedef PACKED_STRUCT
+{
+  uint8_t         evt;
+  uint8_t         plen;
+  uint8_t         data[1];
+} hci_event_pckt;
+
+typedef PACKED_STRUCT
+{
+  uint8_t         subevent;
+  uint8_t         data[1];
+} evt_le_meta_event;
+
+/**
+ * Vendor specific event for BLE core.
+ */
+typedef PACKED_STRUCT
+{
+  uint16_t ecode; /**< One of the BLE core event codes. */
+  uint8_t  data[1];
+} evt_blecore_aci;
+
+/* Bluetooth 48 bit address (in little-endian order).
+ */
+typedef	uint8_t	tBDAddr[6];
+
 
 /* Exported constants --------------------------------------------------------*/
 /* External variables --------------------------------------------------------*/
@@ -256,6 +311,28 @@ void TL_THREAD_CliSendAck ( void );
 void TL_THREAD_CliNotReceived( TL_EvtPacket_t * Notbuffer );
 
 /******************************************************************************
+ * LLD TESTS
+ ******************************************************************************/
+void TL_LLDTESTS_Init( TL_LLD_tests_Config_t *p_Config );
+void TL_LLDTESTS_SendCliCmd( void );
+void TL_LLDTESTS_ReceiveCliRsp( TL_CmdPacket_t * Notbuffer );
+void TL_LLDTESTS_SendCliRspAck( void );
+void TL_LLDTESTS_ReceiveM0Cmd( TL_CmdPacket_t * Notbuffer );
+void TL_LLDTESTS_SendM0CmdAck( void );
+
+/******************************************************************************
+ * BLE LLD
+ ******************************************************************************/
+void TL_BLE_LLD_Init( TL_BLE_LLD_Config_t *p_Config );
+void TL_BLE_LLD_SendCliCmd( void );
+void TL_BLE_LLD_ReceiveCliRsp( TL_CmdPacket_t * Notbuffer );
+void TL_BLE_LLD_SendCliRspAck( void );
+void TL_BLE_LLD_ReceiveM0Cmd( TL_CmdPacket_t * Notbuffer );
+void TL_BLE_LLD_SendM0CmdAck( void );
+void TL_BLE_LLD_SendCmd( void );
+void TL_BLE_LLD_ReceiveRsp( TL_CmdPacket_t * Notbuffer );
+void TL_BLE_LLD_SendRspAck( void );
+/******************************************************************************
  * MEMORY MANAGER
  ******************************************************************************/
 void TL_MM_Init( TL_MM_Config_t *p_Config );
@@ -276,15 +353,16 @@ void TL_MAC_802_15_4_CmdEvtReceived( TL_EvtPacket_t * Otbuffer );
 void TL_MAC_802_15_4_NotReceived( TL_EvtPacket_t * Notbuffer );
 void TL_MAC_802_15_4_SendAck ( void );
 
-
 /******************************************************************************
  * ZIGBEE
  ******************************************************************************/
 void TL_ZIGBEE_Init( TL_ZIGBEE_Config_t *p_Config );
-void TL_ZIGBEE_SendAppliCmdToM0( void );
-void TL_ZIGBEE_SendAckAfterAppliNotifFromM0 ( void );
+void TL_ZIGBEE_SendM4RequestToM0( void );
+void TL_ZIGBEE_SendM4AckToM0Notify ( void );
 void TL_ZIGBEE_NotReceived( TL_EvtPacket_t * Notbuffer );
 void TL_ZIGBEE_CmdEvtReceived( TL_EvtPacket_t * Otbuffer );
+void TL_ZIGBEE_M0RequestReceived(TL_EvtPacket_t * Otbuffer );
+void TL_ZIGBEE_SendM4AckToM0Request(void);
 
 #ifdef __cplusplus
 } /* extern "C" */
@@ -292,4 +370,3 @@ void TL_ZIGBEE_CmdEvtReceived( TL_EvtPacket_t * Otbuffer );
 
 #endif /*__TL_H */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

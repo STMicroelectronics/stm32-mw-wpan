@@ -6,13 +6,12 @@
  ******************************************************************************
  * @attention
  *
- * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
- * All rights reserved.</center></h2>
+ * Copyright (c) 2018-2021 STMicroelectronics.
+ * All rights reserved.
  *
- * This software component is licensed by ST under Ultimate Liberty license
- * SLA0044, the "License"; You may not use this file except in compliance with
- * the License. You may obtain a copy of the License at:
- *                             www.st.com/SLA0044
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
  *
  ******************************************************************************
  */
@@ -116,7 +115,7 @@ PLACE_IN_SECTION("BLE_DRIVER_CONTEXT") static OTAS_Context_t OTAS_Context;
  */
 
 /* Private function prototypes -----------------------------------------------*/
-static SVCCTL_EvtAckStatus_t OTAS_Event_Handler(void *pckt);
+static SVCCTL_EvtAckStatus_t OTAS_Event_Handler(void *Event);
 
 
 /* Functions Definition ------------------------------------------------------*/
@@ -131,7 +130,7 @@ static SVCCTL_EvtAckStatus_t OTAS_Event_Handler(void *Event)
 {
   SVCCTL_EvtAckStatus_t return_value;
   hci_event_pckt *event_pckt;
-  evt_blue_aci *blue_evt;
+  evt_blecore_aci *blecore_evt;
   aci_gatt_attribute_modified_event_rp0    * attribute_modified;
   OTA_STM_Notification_t notification;
 
@@ -141,13 +140,13 @@ static SVCCTL_EvtAckStatus_t OTAS_Event_Handler(void *Event)
 
   switch(event_pckt->evt)
   {
-    case EVT_VENDOR:
+    case HCI_VENDOR_SPECIFIC_DEBUG_EVT_CODE:
     {
-      blue_evt = (evt_blue_aci*)event_pckt->data;
-      attribute_modified = (aci_gatt_attribute_modified_event_rp0*)blue_evt->data;
-      switch(blue_evt->ecode)
+      blecore_evt = (evt_blecore_aci*)event_pckt->data;
+      attribute_modified = (aci_gatt_attribute_modified_event_rp0*)blecore_evt->data;
+      switch(blecore_evt->ecode)
       {
-        case EVT_BLUE_GATT_ATTRIBUTE_MODIFIED:
+        case ACI_GATT_ATTRIBUTE_MODIFIED_VSEVT_CODE:
         {
           if(attribute_modified->Attr_Handle == (OTAS_Context.OTAS_Base_Addr_CharHdle + 1))
           {
@@ -176,7 +175,7 @@ static SVCCTL_EvtAckStatus_t OTAS_Event_Handler(void *Event)
         }
         break;
 
-        case EVT_BLUE_GATT_SERVER_CONFIRMATION_EVENT:
+        case ACI_GATT_SERVER_CONFIRMATION_VSEVT_CODE:
         {
           if( OTAS_Context.OTAS_Conf_Status != OTAS_Conf_Not_Pending)
           {
@@ -194,7 +193,24 @@ static SVCCTL_EvtAckStatus_t OTAS_Event_Handler(void *Event)
           }
         }
         break;
-
+      
+        case ACI_GATT_WRITE_PERMIT_REQ_VSEVT_CODE:
+          {
+            aci_gatt_write_permit_req_event_rp0 * write_perm_req;
+            write_perm_req = (aci_gatt_write_permit_req_event_rp0*)blecore_evt->data;
+                if(write_perm_req->Attribute_Handle == (OTAS_Context.OTAS_Raw_Data_CharHdle  + 1)) 
+                {
+                  return_value = SVCCTL_EvtAckFlowEnable;          
+                  aci_gatt_write_resp(write_perm_req->Connection_Handle,
+                                          write_perm_req->Attribute_Handle,
+                                          0x00, /* write_status = 0 (no error))*/
+                                          0x00, /* err_code */
+                                          write_perm_req->Data_Length,
+                                          (uint8_t *)&(write_perm_req->Data[0]));
+                }
+          }
+          break;
+   
         default:
           break;
       }
@@ -266,7 +282,7 @@ void OTAS_STM_Init(void)
                     OTA_RAW_DATA_CHAR_SIZE,
                     CHAR_PROP_WRITE_WITHOUT_RESP,
                     ATTR_PERMISSION_NONE,
-                    GATT_NOTIFY_ATTRIBUTE_WRITE,
+                    GATT_NOTIFY_ATTRIBUTE_WRITE | GATT_NOTIFY_WRITE_REQ_AND_WAIT_FOR_APPL_RESP,
                     10,
                     1,
                     &(OTAS_Context.OTAS_Raw_Data_CharHdle));
@@ -292,4 +308,4 @@ tBleStatus OTAS_STM_UpdateChar(OTAS_STM_ChardId_t  ChardId, uint8_t *p_payload)
 }
 
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+

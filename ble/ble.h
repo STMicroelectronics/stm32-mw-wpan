@@ -5,17 +5,16 @@
   * @brief   BLE interface
   ******************************************************************************
   * @attention
- *
- * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
- * All rights reserved.</center></h2>
- *
- * This software component is licensed by ST under Ultimate Liberty license
- * SLA0044, the "License"; You may not use this file except in compliance with
- * the License. You may obtain a copy of the License at:
- *                             www.st.com/SLA0044
- *
- ******************************************************************************
- */
+  *
+  * Copyright (c) 2018-2021 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
 
 
 /* Define to prevent recursive inclusion -------------------------------------*/
@@ -35,10 +34,12 @@ extern "C" {
 #include "core/ble_core.h"
 #include "core/ble_bufsize.h"
 #include "core/ble_defs.h"
+#include "core/auto/ble_vs_codes.h"
 #include "core/ble_legacy.h"
 #include "core/ble_std.h"
 
 /**< blesvc */
+#include "svc/Inc/bas.h"    
 #include "svc/Inc/bls.h"
 #include "svc/Inc/crs_stm.h"
 #include "svc/Inc/dis.h"
@@ -49,7 +50,9 @@ extern "C" {
 #include "svc/Inc/ias.h"
 #include "svc/Inc/lls.h"
 #include "svc/Inc/tps.h"
+#include "svc/Inc/motenv_stm.h"
 #include "svc/Inc/p2p_stm.h"
+#include "svc/Inc/zdd_stm.h"
 #include "svc/Inc/otas_stm.h"
 #include "svc/Inc/mesh.h"  
 #include "svc/Inc/template_stm.h"  
@@ -63,6 +66,17 @@ extern "C" {
 /* Exported constants --------------------------------------------------------*/
 /* External variables --------------------------------------------------------*/
 /* Exported macros -----------------------------------------------------------*/
+  /* -------------------------------- *
+   * [retrieved from ble_legacy file]
+   * Macro to get RSSI from advertising report #0.
+   * "p" must be a pointer to the event parameters buffer
+   * -------------------------------- */
+#define HCI_LE_ADVERTISING_REPORT_RSSI_0(p) \
+        (*(int8_t*)((&((hci_le_advertising_report_event_rp0*)(p))-> \
+                      Advertising_Report[0].Length_Data) + 1 + \
+                    ((hci_le_advertising_report_event_rp0*)(p))-> \
+                    Advertising_Report[0].Length_Data))
+
 /* Exported functions ------------------------------------------------------- */
 
 #ifdef __cplusplus
@@ -71,4 +85,4 @@ extern "C" {
 
 #endif /*__BLE_H */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+

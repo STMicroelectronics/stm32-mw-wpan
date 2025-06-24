@@ -4,18 +4,18 @@
  * @author  MCD Application Team
  * @brief   Virtual Com Port
  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics. 
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the 
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
-  ******************************************************************************
+ * @attention
+ *
+ * Copyright (c) 2018-2021 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ ******************************************************************************
  */
+
 /* Includes ------------------------------------------------------------------*/
 #include "app_common.h"
 
@@ -73,7 +73,7 @@ static int8_t Vcp_Itf_DeInit( void );
 static int8_t Vcp_Itf_Control( uint8_t cmd , uint8_t* pbuf , uint16_t length );
 static int8_t Vcp_Itf_Receive( uint8_t* pbuf , uint32_t *Len );
 
-static USBD_CDC_ItfTypeDef VCP_CDC_fops = { Vcp_Itf_Init, Vcp_Itf_DeInit, Vcp_Itf_Control, Vcp_Itf_Receive };
+static USBD_CDC_ItfTypeDef VCP_CDC_fops = { Vcp_Itf_Init, Vcp_Itf_DeInit, Vcp_Itf_Control, Vcp_Itf_Receive, VCP_TransmitCplt };
 
 /* Global variables ----------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
@@ -294,6 +294,11 @@ __weak void VCP_DataReceived( uint8_t* Buf , uint32_t *Len )
 {
   return;
 }
+__weak int8_t VCP_TransmitCplt( uint8_t *Buf, uint32_t *Len, uint8_t epnum )
+{
+  return(USBD_OK);
+}
+
+
 
 #endif /* (CFG_USB_INTERFACE_ENABLE != 0) */
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

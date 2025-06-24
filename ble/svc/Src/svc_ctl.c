@@ -6,13 +6,12 @@
  ******************************************************************************
  * @attention
  *
- * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
- * All rights reserved.</center></h2>
+ * Copyright (c) 2018-2021 STMicroelectronics.
+ * All rights reserved.
  *
- * This software component is licensed by ST under Ultimate Liberty license
- * SLA0044, the "License"; You may not use this file except in compliance with
- * the License. You may obtain a copy of the License at:
- *                             www.st.com/SLA0044
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
  *
  ******************************************************************************
  */
@@ -20,6 +19,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "common_blesvc.h"
+#include "cmsis_compiler.h"
 
 /* Private typedef -----------------------------------------------------------*/
 typedef struct
@@ -58,59 +58,78 @@ PLACE_IN_SECTION("BLE_DRIVER_CONTEXT") SVCCTL_CltHandler_t SVCCTL_CltHandler;
 
 /* Private functions ----------------------------------------------------------*/
 /* Weak functions ----------------------------------------------------------*/
-__weak void BLS_Init( void )
+void BVOPUS_STM_Init(void);
+
+__WEAK void BAS_Init( void )
 {
   return;
 }
-__weak void CRS_STM_Init( void )
+
+__WEAK void BLS_Init( void )
 {
   return;
 }
-__weak void DIS_Init( void )
+__WEAK void CRS_STM_Init( void )
 {
   return;
 }
-__weak void EDS_STM_Init( void )
+__WEAK void DIS_Init( void )
 {
   return;
 }
-__weak void HIDS_Init( void )
+__WEAK void EDS_STM_Init( void )
 {
   return;
 }
-__weak void HRS_Init( void )
+__WEAK void HIDS_Init( void )
 {
   return;
 }
-__weak void HTS_Init( void )
+__WEAK void HRS_Init( void )
 {
   return;
 }
-__weak void IAS_Init( void )
+__WEAK void HTS_Init( void )
 {
   return;
 }
-__weak void LLS_Init( void )
+__WEAK void IAS_Init( void )
 {
   return;
 }
-__weak void TPS_Init( void )
+__WEAK void LLS_Init( void )
 {
   return;
 }
-__weak void P2PS_STM_Init( void )
+__WEAK void TPS_Init( void )
 {
   return;
 }
-__weak void OTAS_STM_Init( void )
+__WEAK void MOTENV_STM_Init( void )
 {
   return;
 }
-__weak void MESH_Init( void )
+__WEAK void P2PS_STM_Init( void )
 {
   return;
 }
-__weak void SVCCTL_InitCustomSvc( void )
+__WEAK void ZDD_STM_Init( void )
+{
+  return;
+}
+__WEAK void OTAS_STM_Init( void )
+{
+  return;
+}
+__WEAK void MESH_Init( void )
+{
+  return;
+}
+__WEAK void BVOPUS_STM_Init( void )
+{
+  return;
+}
+__WEAK void SVCCTL_InitCustomSvc( void )
 {
   return;
 }
@@ -129,6 +148,14 @@ void SVCCTL_Init( void )
   /**
    * Add and Initialize requested services
    */
+  SVCCTL_SvcInit();
+
+  return;
+}
+
+__WEAK void SVCCTL_SvcInit(void)
+{
+  BAS_Init();
 
   BLS_Init();
 
@@ -150,14 +177,20 @@ void SVCCTL_Init( void )
 
   TPS_Init();
 
+  MOTENV_STM_Init();
+
   P2PS_STM_Init();
 
+  ZDD_STM_Init();
+
   OTAS_STM_Init();
+  
+  BVOPUS_STM_Init();
+
+  MESH_Init();
 
   SVCCTL_InitCustomSvc();
   
-  MESH_Init();
-
   return;
 }
 
@@ -170,8 +203,10 @@ void SVCCTL_RegisterSvcHandler( SVC_CTL_p_EvtHandler_t pfBLE_SVC_Service_Event_H
 {
 #if (BLE_CFG_SVC_MAX_NBR_CB > 0)
   SVCCTL_EvtHandler.SVCCTL__SvcHandlerTab[SVCCTL_EvtHandler.NbreOfRegisteredHandler] = pfBLE_SVC_Service_Event_Handler;
-#endif
   SVCCTL_EvtHandler.NbreOfRegisteredHandler++;
+#else
+  (void)(pfBLE_SVC_Service_Event_Handler);
+#endif
 
   return;
 }
@@ -185,16 +220,18 @@ void SVCCTL_RegisterCltHandler( SVC_CTL_p_EvtHandler_t pfBLE_SVC_Client_Event_Ha
 {
 #if (BLE_CFG_CLT_MAX_NBR_CB > 0)
   SVCCTL_CltHandler.SVCCTL_CltHandlerTable[SVCCTL_CltHandler.NbreOfRegisteredHandler] = pfBLE_SVC_Client_Event_Handler;
-#endif
   SVCCTL_CltHandler.NbreOfRegisteredHandler++;
+#else
+  (void)(pfBLE_SVC_Client_Event_Handler);
+#endif
 
   return;
 }
 
-SVCCTL_UserEvtFlowStatus_t SVCCTL_UserEvtRx( void *pckt )
+__WEAK SVCCTL_UserEvtFlowStatus_t SVCCTL_UserEvtRx( void *pckt )
 {
   hci_event_pckt *event_pckt;
-  evt_blue_aci *blue_evt;
+  evt_blecore_aci *blecore_evt;
   SVCCTL_EvtAckStatus_t event_notification_status;
   SVCCTL_UserEvtFlowStatus_t return_status;
   uint8_t index;
@@ -204,11 +241,11 @@ SVCCTL_UserEvtFlowStatus_t SVCCTL_UserEvtRx( void *pckt )
 
   switch (event_pckt->evt)
   {
-    case EVT_VENDOR:
+    case HCI_VENDOR_SPECIFIC_DEBUG_EVT_CODE:
     {
-      blue_evt = (evt_blue_aci*) event_pckt->data;
+      blecore_evt = (evt_blecore_aci*) event_pckt->data;
 
-      switch ((blue_evt->ecode) & SVCCTL_EGID_EVT_MASK)
+      switch ((blecore_evt->ecode) & SVCCTL_EGID_EVT_MASK)
       {
         case SVCCTL_GATT_EVT_TYPE:
 #if (BLE_CFG_SVC_MAX_NBR_CB > 0)
@@ -254,7 +291,7 @@ SVCCTL_UserEvtFlowStatus_t SVCCTL_UserEvtRx( void *pckt )
           break;
       }
     }
-      break; /* HCI_EVT_VENDOR_SPECIFIC */
+      break; /* HCI_HCI_VENDOR_SPECIFIC_DEBUG_EVT_CODE_SPECIFIC */
 
     default:
       break;
@@ -262,7 +299,7 @@ SVCCTL_UserEvtFlowStatus_t SVCCTL_UserEvtRx( void *pckt )
 
   /**
    * When no registered handlers (either Service or Client) has acknowledged the GATT event, it is reported to the application
-   * a GAP event is always reported to the applicaiton.
+   * a GAP event is always reported to the application.
    */
   switch (event_notification_status)
   {
@@ -290,4 +327,4 @@ SVCCTL_UserEvtFlowStatus_t SVCCTL_UserEvtRx( void *pckt )
   return (return_status);
 }
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+

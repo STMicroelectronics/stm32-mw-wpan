@@ -1,162 +1,169 @@
 /*****************************************************************************
  * @file    ble_legacy.h
- * @author  MCD Application Team
+ *
  * @brief   This file contains legacy definitions used for BLE.
  *****************************************************************************
  * @attention
  *
- * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
- * All rights reserved.</center></h2>
+ * Copyright (c) 2018-2025 STMicroelectronics.
+ * All rights reserved.
  *
- * This software component is licensed by ST under Ultimate Liberty license
- * SLA0044, the "License"; You may not use this file except in compliance with
- * the License. You may obtain a copy of the License at:
- *                             www.st.com/SLA0044
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
  *
- ******************************************************************************
+ *****************************************************************************
  */
 
 #ifndef BLE_LEGACY_H__
 #define BLE_LEGACY_H__
 
 
-/* ------------------------------------------------------------------------- */
-
-
-/*
- * The event code in the @ref hci_event_pckt structure.
- * If event code is EVT_VENDOR,  application can use @ref evt_blue_aci
- * structure to parse the packet.
+/* Various obsolete definitions
  */
-#define EVT_VENDOR                      0xFF
 
-#define EVT_CONN_COMPLETE               0x03
-#define EVT_DISCONN_COMPLETE            0x05
-#define EVT_LE_META_EVENT               0x3E
-#define EVT_LE_CONN_UPDATE_COMPLETE     0x03
-#define EVT_LE_CONN_COMPLETE            0x01
-#define EVT_LE_ADVERTISING_REPORT       0x02
-#define EVT_LE_PHY_UPDATE_COMPLETE      0x0C
-#define EVT_LE_ENHANCED_CONN_COMPLETE   0x0A
+#define PERIPHERAL_PRIVACY_FLAG_UUID             0x2A02U
+#define RECONNECTION_ADDR_UUID                   0x2A03U
 
-typedef PACKED(struct) _hci_uart_pckt
+#define OOB_AUTH_DATA_ABSENT                       0x00U
+#define OOB_AUTH_DATA_PRESENT                      0x01U
+
+#define BLE_STATUS_SEC_DB_FULL                     0x5DU
+#define BLE_STATUS_INSUFFICIENT_ENC_KEYSIZE        0x5FU
+#define BLE_STATUS_CHARAC_ALREADY_EXISTS           0x63U
+
+#define GAP_NAME_DISCOVERY_PROC                    0x04U
+
+/* Deprecated names for ACI/HCI commands and events
+ */
+
+#define aci_gap_configure_whitelist \
+        aci_gap_configure_filter_accept_list
+#define aci_gap_slave_security_req \
+        aci_gap_peripheral_security_req
+#define aci_hal_set_slave_latency \
+        aci_hal_set_peripheral_latency
+#define aci_gap_slave_security_initiated_event \
+        aci_gap_peripheral_security_initiated_event
+
+#define Whitelist_Entry_t \
+        Peer_Entry_t
+#define Whitelist_Identity_Entry_t \
+        Identity_Entry_t
+
+#define ACI_GAP_SLAVE_SECURITY_INITIATED_VSEVT_CODE \
+        ACI_GAP_PERIPHERAL_SECURITY_INITIATED_VSEVT_CODE
+
+#define ACI_HAL_FW_ERROR_VSEVT_CODE \
+        ACI_HAL_WARNING_VSEVT_CODE
+
+typedef __PACKED_STRUCT
 {
-  uint8_t type;
-  uint8_t data[1];
-} hci_uart_pckt;
+  uint8_t FW_Error_Type;
+  uint8_t Data_Length;
+  uint8_t Data[(BLE_EVT_MAX_PARAM_LEN - 2) - 2];
+} aci_hal_fw_error_event_rp0;
 
-typedef PACKED(struct) _hci_event_pckt
-{
-  uint8_t         evt;
-  uint8_t         plen;
-  uint8_t         data[1];
-} hci_event_pckt;
+/* Other deprecated names
+ */
 
-typedef PACKED(struct) _evt_le_meta_event
-{
-  uint8_t         subevent;
-  uint8_t         data[1];
-} evt_le_meta_event;
+#define HCI_ADV_FILTER_WHITELIST_SCAN \
+        HCI_ADV_FILTER_ACC_LIST_USED_FOR_SCAN
+#define HCI_ADV_FILTER_WHITELIST_CONNECT \
+        HCI_ADV_FILTER_ACC_LIST_USED_FOR_CONNECT
+#define HCI_ADV_FILTER_WHITELIST_SCAN_CONNECT \
+        HCI_ADV_FILTER_ACC_LIST_USED_FOR_ALL
+#define NO_WHITE_LIST_USE \
+        HCI_ADV_FILTER_NO
+#define WHITE_LIST_FOR_ONLY_SCAN \
+        HCI_ADV_FILTER_ACC_LIST_USED_FOR_SCAN
+#define WHITE_LIST_FOR_ONLY_CONN \
+        HCI_ADV_FILTER_ACC_LIST_USED_FOR_CONNECT
+#define WHITE_LIST_FOR_ALL \
+        HCI_ADV_FILTER_ACC_LIST_USED_FOR_ALL
+
+#define HCI_SCAN_FILTER_WHITELIST \
+        HCI_SCAN_FILTER_ACC_LIST_USED
+#define HCI_SCAN_FILTER_NO_EVEN_RPA  \
+        HCI_SCAN_FILTER_NO_EXT
+#define HCI_SCAN_FILTER_WHITELIST_BUT_RPA \
+        HCI_SCAN_FILTER_ACC_LIST_USED_EXT
+
+#define HCI_INIT_FILTER_WHITELIST \
+        HCI_INIT_FILTER_ACC_LIST_USED
+
+#define AD_TYPE_SLAVE_CONN_INTERVAL \
+        AD_TYPE_PERIPHERAL_CONN_INTERVAL
+
+#define OOB_NOT_AVAILABLE                 REASON_OOB_NOT_AVAILABLE
+#define AUTH_REQ_CANNOT_BE_MET            REASON_AUTHENTICATION_REQ
+#define CONFIRM_VALUE_FAILED              REASON_CONFIRM_VALUE_FAILED
+#define PAIRING_NOT_SUPPORTED             REASON_PAIRING_NOT_SUPPORTED
+#define INSUFF_ENCRYPTION_KEY_SIZE        REASON_ENCRYPTION_KEY_SIZE
+#define CMD_NOT_SUPPORTED                 REASON_COMMAND_NOT_SUPPORTED
+#define UNSPECIFIED_REASON                REASON_UNSPECIFIED_REASON
+#define VERY_EARLY_NEXT_ATTEMPT           REASON_REPEATED_ATTEMPTS
+#define SM_INVALID_PARAMS                 REASON_INVALID_PARAMETERS
+#define SMP_SC_DHKEY_CHECK_FAILED         REASON_DHKEY_CHECK_FAILED
+#define SMP_SC_NUMCOMPARISON_FAILED       REASON_NUM_COMPARISON_FAILED
+
+#define CONFIG_DATA_PUBADDR_OFFSET        CONFIG_DATA_PUBLIC_ADDRESS_OFFSET
+#define CONFIG_DATA_PUBADDR_LEN           CONFIG_DATA_PUBLIC_ADDRESS_LEN
+
+#define FW_L2CAP_RECOMBINATION_ERROR                 0x01U
+#define FW_GATT_UNEXPECTED_PEER_MESSAGE              0x02U
+#define FW_NVM_LEVEL_WARNING                         0x03U
+#define FW_COC_RX_DATA_LENGTH_TOO_LARGE              0x04U
+#define FW_ECOC_CONN_RSP_ALREADY_ASSIGNED_DCID       0x05U
+
+/* Deprecated commands
+ */
 
 /**
- * Vendor specific event for BLE core.
+ * @brief ACI_GAP_RESOLVE_PRIVATE_ADDR
+ * This command tries to resolve the address provided with the IRKs present in
+ * its database. If the address is resolved successfully with any one of the
+ * IRKs present in the database, it returns success and also the corresponding
+ * public/static random address stored with the IRK in the database.
+ * 
+ * @param Address Address to be resolved
+ * @param[out] Actual_Address The public or static random address of the peer
+ *        device, distributed during pairing phase.
+ * @return Value indicating success or error code.
  */
-typedef PACKED(struct) _evt_blue_aci
+__STATIC_INLINE
+tBleStatus aci_gap_resolve_private_addr( const uint8_t* Address,
+                                         uint8_t* Actual_Address )
 {
-  uint16_t ecode; /**< One of the BLE core event codes. */
-  uint8_t  data[1];
-} evt_blue_aci;
+  uint8_t type;
+  return aci_gap_check_bonded_device( 1, Address, &type, Actual_Address );
+}
 
-
-/* BLE core event codes */
-#define EVT_BLUE_GATT_ATTRIBUTE_MODIFIED          (0x0C01)
-#define EVT_BLUE_GATT_PROCEDURE_TIMEOUT           (0x0C02)
-#define EVT_BLUE_ATT_EXCHANGE_MTU_RESP            (0x0C03)
-#define EVT_BLUE_ATT_FIND_INFORMATION_RESP        (0x0C04)
-#define EVT_BLUE_ATT_FIND_BY_TYPE_VAL_RESP        (0x0C05)
-#define EVT_BLUE_ATT_READ_BY_TYPE_RESP            (0x0C06)
-#define EVT_BLUE_ATT_READ_RESP                    (0x0C07)
-#define EVT_BLUE_ATT_READ_BLOB_RESP               (0x0C08)
-#define EVT_BLUE_ATT_READ_MULTIPLE_RESP           (0x0C09)
-#define EVT_BLUE_ATT_READ_BY_GROUP_TYPE_RESP      (0x0C0A)
-#define EVT_BLUE_ATT_PREPARE_WRITE_RESP           (0x0C0C)
-#define EVT_BLUE_ATT_EXEC_WRITE_RESP              (0x0C0D)
-#define EVT_BLUE_GATT_INDICATION                  (0x0C0E)
-#define EVT_BLUE_GATT_NOTIFICATION                (0x0C0F)
-#define EVT_BLUE_GATT_PROCEDURE_COMPLETE          (0x0C10)
-#define EVT_BLUE_GATT_ERROR_RESP                  (0x0C11)
-#define EVT_BLUE_GATT_DISC_READ_CHAR_BY_UUID_RESP (0x0C12)
-#define EVT_BLUE_GATT_WRITE_PERMIT_REQ            (0x0C13)
-#define EVT_BLUE_GATT_READ_PERMIT_REQ             (0x0C14)
-#define EVT_BLUE_GATT_READ_MULTI_PERMIT_REQ       (0x0C15)
-#define EVT_BLUE_GATT_TX_POOL_AVAILABLE           (0x0C16)
-#define EVT_BLUE_GATT_SERVER_CONFIRMATION_EVENT   (0x0C17)
-#define EVT_BLUE_GATT_PREPARE_WRITE_PERMIT_REQ    (0x0C18)
-#define EVT_BLUE_GAP_LIMITED_DISCOVERABLE         (0x0400)
-#define EVT_BLUE_GAP_PAIRING_CMPLT                (0x0401)
-#define EVT_BLUE_GAP_PASS_KEY_REQUEST             (0x0402)
-#define EVT_BLUE_GAP_AUTHORIZATION_REQUEST        (0x0403)
-#define EVT_BLUE_GAP_SLAVE_SECURITY_INITIATED     (0X0404)
-#define EVT_BLUE_GAP_BOND_LOST                    (0X0405)
-#define EVT_BLUE_GAP_DEVICE_FOUND                 (0x0406)
-#define EVT_BLUE_GAP_PROCEDURE_COMPLETE           (0x0407)
-#define EVT_BLUE_GAP_ADDR_NOT_RESOLVED            (0x0408)
-#define EVT_BLUE_GAP_NUMERIC_COMPARISON_VALUE     (0x0409)
-#define EVT_BLUE_GAP_KEYPRESS_NOTIFICATION        (0x040A)
-#define EVT_BLUE_L2CAP_CONNECTION_UPDATE_REQ      (0x0802)
-#define EVT_BLUE_L2CAP_CONNECTION_UPDATE_RESP     (0x0800)
-
-
-/* ------------------------------------------------------------------------- */
-
-
-/* Bluetooth 48 bit address (in little-endian order).
+/**
+ * @brief ACI_GAP_IS_DEVICE_BONDED
+ * The command finds whether the device, whose address is specified in the
+ * command, is present in the bonding table. If the device is found, the
+ * command returns "Success".
+ * Note: the specified address can be a RPA. In this case, even if privacy is
+ * not enabled, this address is resolved to check the presence of the peer
+ * device in the bonding table.
+ * 
+ * @param Peer_Address_Type The address type of the peer device.
+ *        Values:
+ *        - 0x00: Public Device Address
+ *        - 0x01: Random Device Address
+ * @param Peer_Address Public Device Address or Random Device Address of the
+ *        peer device
+ * @return Value indicating success or error code.
  */
-typedef	uint8_t	tBDAddr[6];
-
-
-/* ------------------------------------------------------------------------- */
-
-
-/* Min. ATT MTU size
- */
-#define ATT_MTU                               23
-
-
-/* ------------------------------------------------------------------------- */
-
-
-/* Error Codes as specified by the specification 
- * according to the spec the error codes range from 0x00 to 0x3F 
- */
-#define ERR_CMD_SUCCESS                              0x00
-#define ERR_UNKNOWN_HCI_COMMAND	                     0x01
-#define ERR_UNKNOWN_CONN_IDENTIFIER                  0x02
-#define ERR_AUTH_FAILURE                             0x05
-#define ERR_PIN_OR_KEY_MISSING                       0x06
-#define ERR_MEM_CAPACITY_EXCEEDED                    0x07
-#define ERR_CONNECTION_TIMEOUT                       0x08
-#define ERR_COMMAND_DISALLOWED                       0x0C
-#define ERR_UNSUPPORTED_FEATURE                      0x11
-#define ERR_INVALID_HCI_CMD_PARAMS                   0x12
-#define ERR_RMT_USR_TERM_CONN                        0x13
-#define ERR_RMT_DEV_TERM_CONN_LOW_RESRCES            0x14
-#define ERR_RMT_DEV_TERM_CONN_POWER_OFF              0x15
-#define ERR_LOCAL_HOST_TERM_CONN                     0x16
-#define ERR_UNSUPP_RMT_FEATURE                       0x1A
-#define ERR_INVALID_LMP_PARAM                        0x1E
-#define ERR_UNSPECIFIED_ERROR                        0x1F
-#define ERR_LL_RESP_TIMEOUT                          0x22
-#define ERR_LMP_PDU_NOT_ALLOWED                      0x24
-#define ERR_INSTANT_PASSED                           0x28
-#define ERR_PAIR_UNIT_KEY_NOT_SUPP                   0x29
-#define ERR_CONTROLLER_BUSY                          0x3A
-#define ERR_DIRECTED_ADV_TIMEOUT                     0x3C
-#define ERR_CONN_END_WITH_MIC_FAILURE                0x3D
-#define ERR_CONN_FAILED_TO_ESTABLISH                 0x3E
-
-
-/* ------------------------------------------------------------------------- */
+__STATIC_INLINE
+tBleStatus aci_gap_is_device_bonded( uint8_t Peer_Address_Type,
+                                     const uint8_t* Peer_Address )
+{
+  uint8_t type, address[6];
+  return aci_gap_check_bonded_device( Peer_Address_Type, Peer_Address,
+                                      &type, address );
+}
 
 
 #endif /* BLE_LEGACY_H__ */

@@ -7,7 +7,7 @@
   *
   *          Usually, inside the OpenThread stack, the functions located under
   *          openthread/platform don't need to be exported on M4 side since
-  *          they are used internaly by the stack. It is why the functions
+  *          they are used internally by the stack. It is why the functions
   *          otPlatRadioXXX provided by OpenThread are not supposed to be
   *          expported to the Application layer.
   *          The only exception to this rule concerns the functions used to
@@ -16,13 +16,12 @@
   ******************************************************************************
   * @attention
  *
- * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
- * All rights reserved.</center></h2>
+ * Copyright (c) 2018-2021 STMicroelectronics.
+ * All rights reserved.
  *
- * This software component is licensed by ST under Ultimate Liberty license
- * SLA0044, the "License"; You may not use this file except in compliance with
- * the License. You may obtain a copy of the License at:
- *                             www.st.com/SLA0044
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
  *
  ******************************************************************************
  */
@@ -52,6 +51,8 @@
  */
 otError otPlatRadioGetTransmitPower(otInstance *aInstance, int8_t *aPower)
 {
+   otError rspData;
+   
    Pre_OtCmdProcessing();
    /* prepare buffer */
    Thread_OT_Cmd_Request_t* p_ot_req = THREAD_Get_OTCmdPayloadBuffer();
@@ -64,7 +65,11 @@ otError otPlatRadioGetTransmitPower(otInstance *aInstance, int8_t *aPower)
    Ot_Cmd_Transfer();
 
    p_ot_req = THREAD_Get_OTCmdRspPayloadBuffer();
-   return (otError) p_ot_req->Data[0];
+   rspData = (otError)p_ot_req->Data[0];
+  
+   Post_OtCmdProcessing();
+  
+   return rspData;
 }
 
 /**
@@ -79,6 +84,8 @@ otError otPlatRadioGetTransmitPower(otInstance *aInstance, int8_t *aPower)
  */
 otError otPlatRadioSetTransmitPower(otInstance *aInstance, int8_t aPower)
 {
+    otError rspData;
+	
     Pre_OtCmdProcessing();
     /* prepare buffer */
     Thread_OT_Cmd_Request_t* p_ot_req = THREAD_Get_OTCmdPayloadBuffer();
@@ -91,6 +98,10 @@ otError otPlatRadioSetTransmitPower(otInstance *aInstance, int8_t aPower)
     Ot_Cmd_Transfer();
 
     p_ot_req = THREAD_Get_OTCmdRspPayloadBuffer();
-    return (otError) p_ot_req->Data[0];
+    rspData = (otError)p_ot_req->Data[0];
+  
+    Post_OtCmdProcessing();
+  
+    return rspData;
 }
 

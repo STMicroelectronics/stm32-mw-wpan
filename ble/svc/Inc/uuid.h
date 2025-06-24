@@ -2,19 +2,16 @@
  ******************************************************************************
  * @file    uuid.h.h
  * @author  MCD Application Team
- * @version V1.0.0
- * @date    04-September-2018
  * @brief   Header containing the UUIDs of all the services and caharcteristics
  ******************************************************************************
  * @attention
  *
- * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
- * All rights reserved.</center></h2>
+ * Copyright (c) 2018-2021 STMicroelectronics.
+ * All rights reserved.
  *
- * This software component is licensed by ST under Ultimate Liberty license
- * SLA0044, the "License"; You may not use this file except in compliance with
- * the License. You may obtain a copy of the License at:
- *                             www.st.com/SLA0044
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
  *
  ******************************************************************************
  */
@@ -277,11 +274,15 @@
 #define OBJECT_ACTION_CONTROL_POINT_CHAR_UUID                          (0x2AC5)
 #define OBJECT_LIST_CONTROL_POINT_CHAR_UUID                            (0x2AC6)
    
+/* UUIDs for Zigbee Direct Service */
+#define ZIGBEE_DIRECT_COMM_SERVICE_UUID                                (0xFFF7)
+
 /* Custom Services*/
 /* UUIDs for data transfer service */
-#define DATA_TRANSFER_SERVICE_UUID                                     (0xFE80)
-#define DATA_TRANSFER_TX_CHAR_UUID                                     (0xFE81)
-#define DATA_TRANSFER_RX_CHAR_UUID                                     (0xFE82)    
+#define DT_SERVICE_UUID                                               (0xFE80)
+#define DT_TX_CHAR_UUID                                               (0xFE81)
+#define DT_RX_CHAR_UUID                                               (0xFE82)
+#define DT_THROUGHPUT_CHAR_UUID                                       (0xFE83)
 
 /* UUIDs for custom battery service */ 
 #define CUSTOM_BATTERY_SERVICE_UUID                                    (0xF2F0)
@@ -313,4 +314,15 @@
 #define CRS_TX_CHAR_UUID                                              (0xFE61)
 #define CRS_RX_CHAR_UUID                                              (0xFE62)
 
+/* UUIDs for Apple Notification Center Service */
+#define ANCS_SERVICE_UUID                                             (0xF431) 
+#define ANCS_NOTIFICATION_SOURCE_CHAR_UUID                            (0x120D) 
+#define ANCS_CONTROL_POINT_CHAR_UUID                                  (0xD8F3) 
+#define ANCS_DATA_SOURCE_CHAR_UUID                                    (0xC6E9) 
+
+/* UUIDs for Apple Media Service start from iOS 8*/
+#define AMS_SERVICE_UUID                                              (0x502B) 
+#define AMS_REMOTE_COMMAND_CHAR_UUID                                  (0x81D8) 
+#define AMS_ENTITY_UPDATE_CHAR_UUID                                   (0xABCE) 
+#define AMS_ENTITY_ATTRIBUTE_CHAR_UUID                                (0xF38C) 
 #endif  /* _UUID_H_ */

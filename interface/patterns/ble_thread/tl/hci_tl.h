@@ -5,22 +5,25 @@
  * @brief   Constants and functions for HCI layer. See Bluetooth Core
  *          v 4.0, Vol. 2, Part E.
  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics. 
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the 
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
-  ******************************************************************************
+ * @attention
+ *
+ * Copyright (c) 2018-2021 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ ******************************************************************************
  */
 
 
 #ifndef __HCI_TL_H_
 #define __HCI_TL_H_
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include "stm32_wpan_common.h"
 #include "tl.h"
@@ -87,9 +90,11 @@ typedef struct
 void hci_register_io_bus(tHciIO* fops);
 
 /**
- * @brief  Interrupt service routine that must be called when the BlueNRG 
- *         reports a packet received or an event to the host through the 
- *         BlueNRG-MS interrupt line.
+ * @brief  This callback is called from either
+ *          - IPCC RX interrupt context
+ *          - hci_user_evt_proc() context.
+ *          - hci_resume_flow() context
+ *         It requests hci_user_evt_proc() to be executed.
  *
  * @param  pdata Packet or event pointer
  * @retval None
@@ -107,12 +112,13 @@ void hci_resume_flow(void);
 
 
 /**
- * @brief  This function is called when an ACI/HCI command is sent and the response 
- *         is waited from the BLE core.
- *         The application shall implement a mechanism to not return from this function 
- *         until the waited event is received.
- *         This is notified to the application with hci_cmd_resp_release().
+ * @brief  This function is called when an ACI/HCI command is sent to the CPU2 and the response is waited.
  *         It is called from the same context the HCI command has been sent.
+ *         It shall not return until the command response notified by hci_cmd_resp_release() is received.
+ *         A weak implementation is available in hci_tl.c based on polling mechanism
+ *         The user may re-implement this function in the application to improve performance :
+ *         - It may use UTIL_SEQ_WaitEvt() API when using the Sequencer
+ *         - It may use a semaphore when using cmsis_os interface
  *
  * @param  timeout: Waiting timeout
  * @retval None
@@ -120,8 +126,11 @@ void hci_resume_flow(void);
 void hci_cmd_resp_wait(uint32_t timeout);
 
 /**
- * @brief  This function is called when an ACI/HCI command is sent and the response is
- *         received from the BLE core.
+ * @brief  This function is called when an ACI/HCI command response is received from the CPU2.
+ *         A weak implementation is available in hci_tl.c based on polling mechanism
+ *         The user may re-implement this function in the application to improve performance :
+ *         - It may use UTIL_SEQ_SetEvt() API when using the Sequencer
+ *         - It may use a semaphore when using cmsis_os interface
  *
  * @param  flag: Release flag
  * @retval None
@@ -142,7 +151,7 @@ void hci_cmd_resp_release(uint32_t flag);
  */
 
 /**
- * @brief  This process shall be called by the scheduler each time it is requested with TL_BLE_HCI_UserEvtProcReq()
+ * @brief  This process shall be called by the scheduler each time it is requested with hci_notify_asynch_evt()
  *         This process may send an ACI/HCI command when the svc_ctl.c module is used
  *
  * @param  None
@@ -179,5 +188,9 @@ void hci_init(void(* UserEvtRx)(void* pData), void* pConf);
  * END OF SECTION - INTERFACES USED BY THE BLE DRIVER
  *********************************************************************************************************************
  */
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __TL_BLE_HCI_H_ */

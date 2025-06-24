@@ -7,13 +7,12 @@
  ******************************************************************************
  * @attention
  *
- * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
- * All rights reserved.</center></h2>
+ * Copyright (c) 2018-2021 STMicroelectronics.
+ * All rights reserved.
  *
- * This software component is licensed by ST under Ultimate Liberty license
- * SLA0044, the "License"; You may not use this file except in compliance with
- * the License. You may obtain a copy of the License at:
- *                             www.st.com/SLA0044
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
  *
  ******************************************************************************
  */
@@ -31,9 +30,9 @@
 #include "channel_manager.h"
 
 
-#if OPENTHREAD_ENABLE_CHANNEL_MANAGER && OPENTHREAD_FTD
+#if OPENTHREAD_CONFIG_CHANNEL_MANAGER_ENABLE && OPENTHREAD_FTD
 
-void otChannelManagerRequestChannelChange(otInstance *aInstance, uint8_t aChannel)
+void otChannelManagerRequestChannelChange(otInstance *aInstance, uint8_t aChannel);
 {
   Pre_OtCmdProcessing();
   /* prepare buffer */
@@ -45,10 +44,14 @@ void otChannelManagerRequestChannelChange(otInstance *aInstance, uint8_t aChanne
   p_ot_req->Data[0] = (uint32_t) aChannel;
 
   Ot_Cmd_Transfer();
+  
+  Post_OtCmdProcessing();
 }
 
 uint8_t otChannelManagerGetRequestedChannel(otInstance *aInstance)
 {
+  uint8_t rspData;
+  
   Pre_OtCmdProcessing();
   /* prepare buffer */
   Thread_OT_Cmd_Request_t* p_ot_req = THREAD_Get_OTCmdPayloadBuffer();
@@ -60,11 +63,17 @@ uint8_t otChannelManagerGetRequestedChannel(otInstance *aInstance)
   Ot_Cmd_Transfer();
 
   p_ot_req = THREAD_Get_OTCmdRspPayloadBuffer();
-  return (uint8_t)p_ot_req->Data[0];
+  rspData = (uint8_t)p_ot_req->Data[0];
+  
+  Post_OtCmdProcessing();
+  
+  return rspData;
 }
 
 uint16_t otChannelManagerGetDelay(otInstance *aInstance)
 {
+  uint16_t rspData;	
+  
   Pre_OtCmdProcessing();
   /* prepare buffer */
   Thread_OT_Cmd_Request_t* p_ot_req = THREAD_Get_OTCmdPayloadBuffer();
@@ -76,11 +85,17 @@ uint16_t otChannelManagerGetDelay(otInstance *aInstance)
   Ot_Cmd_Transfer();
 
   p_ot_req = THREAD_Get_OTCmdRspPayloadBuffer();
-  return (uint16_t)p_ot_req->Data[0];
+  rspData = (uint16_t)p_ot_req->Data[0];
+  
+  Post_OtCmdProcessing();
+  
+  return rspData;
 }
 
 otError otChannelManagerSetDelay(otInstance *aInstance, uint16_t aDelay)
 {
+  otError rspData;
+  
   Pre_OtCmdProcessing();
   /* prepare buffer */
   Thread_OT_Cmd_Request_t* p_ot_req = THREAD_Get_OTCmdPayloadBuffer();
@@ -93,11 +108,17 @@ otError otChannelManagerSetDelay(otInstance *aInstance, uint16_t aDelay)
   Ot_Cmd_Transfer();
 
   p_ot_req = THREAD_Get_OTCmdRspPayloadBuffer();
-  return (otError)p_ot_req->Data[0];
+  rspData = (otError)p_ot_req->Data[0];
+  
+  Post_OtCmdProcessing();
+  
+  return rspData;
 }
 
 otError otChannelManagerRequestChannelSelect(otInstance *aInstance, bool aSkipQualityCheck)
 {
+  otError rspData;
+  
   Pre_OtCmdProcessing();
   /* prepare buffer */
   Thread_OT_Cmd_Request_t* p_ot_req = THREAD_Get_OTCmdPayloadBuffer();
@@ -110,7 +131,11 @@ otError otChannelManagerRequestChannelSelect(otInstance *aInstance, bool aSkipQu
   Ot_Cmd_Transfer();
 
   p_ot_req = THREAD_Get_OTCmdRspPayloadBuffer();
-  return (otError)p_ot_req->Data[0];
+  rspData = (otError)p_ot_req->Data[0];
+  
+  Post_OtCmdProcessing();
+  
+  return rspData;
 }
 
 void otChannelManagerSetAutoChannelSelectionEnabled(otInstance *aInstance, bool aEnabled)
@@ -125,10 +150,14 @@ void otChannelManagerSetAutoChannelSelectionEnabled(otInstance *aInstance, bool 
   p_ot_req->Data[0] = (uint32_t) aEnabled;
 
   Ot_Cmd_Transfer();
+  
+  Post_OtCmdProcessing();
 }
 
 bool otChannelManagerGetAutoChannelSelectionEnabled(otInstance *aInstance)
 {
+  bool rspData;
+  
   Pre_OtCmdProcessing();
   /* prepare buffer */
   Thread_OT_Cmd_Request_t* p_ot_req = THREAD_Get_OTCmdPayloadBuffer();
@@ -140,11 +169,17 @@ bool otChannelManagerGetAutoChannelSelectionEnabled(otInstance *aInstance)
   Ot_Cmd_Transfer();
 
   p_ot_req = THREAD_Get_OTCmdRspPayloadBuffer();
-  return (bool)p_ot_req->Data[0];
+  rspData = (bool)p_ot_req->Data[0];
+  
+  Post_OtCmdProcessing();
+	
+  return rspData;
 }
 
 otError otChannelManagerSetAutoChannelSelectionInterval(otInstance *aInstance, uint32_t aInterval)
 {
+  otError rspData;
+  
   Pre_OtCmdProcessing();
   /* prepare buffer */
   Thread_OT_Cmd_Request_t* p_ot_req = THREAD_Get_OTCmdPayloadBuffer();
@@ -157,11 +192,17 @@ otError otChannelManagerSetAutoChannelSelectionInterval(otInstance *aInstance, u
   Ot_Cmd_Transfer();
 
   p_ot_req = THREAD_Get_OTCmdRspPayloadBuffer();
-  return (otError)p_ot_req->Data[0];
+  rspData = (otError)p_ot_req->Data[0];
+  
+  Post_OtCmdProcessing();
+  
+  return rspData;
 }
 
 uint32_t otChannelManagerGetAutoChannelSelectionInterval(otInstance *aInstance)
 {
+  uint32_t rspData;
+  
   Pre_OtCmdProcessing();
   /* prepare buffer */
   Thread_OT_Cmd_Request_t* p_ot_req = THREAD_Get_OTCmdPayloadBuffer();
@@ -173,11 +214,17 @@ uint32_t otChannelManagerGetAutoChannelSelectionInterval(otInstance *aInstance)
   Ot_Cmd_Transfer();
 
   p_ot_req = THREAD_Get_OTCmdRspPayloadBuffer();
-  return (uint32_t)p_ot_req->Data[0];
+  rspData = (uint32_t)p_ot_req->Data[0];
+  
+  Post_OtCmdProcessing();
+  
+  return rspData;
 }
 
 uint32_t otChannelManagerGetSupportedChannels(otInstance *aInstance)
 {
+  uint32_t rspData;
+  
   Pre_OtCmdProcessing();
   /* prepare buffer */
   Thread_OT_Cmd_Request_t* p_ot_req = THREAD_Get_OTCmdPayloadBuffer();
@@ -189,7 +236,11 @@ uint32_t otChannelManagerGetSupportedChannels(otInstance *aInstance)
   Ot_Cmd_Transfer();
 
   p_ot_req = THREAD_Get_OTCmdRspPayloadBuffer();
-  return (uint32_t)p_ot_req->Data[0];
+  rspData = (uint32_t)p_ot_req->Data[0];
+  
+  Post_OtCmdProcessing();
+  
+  return rspData;
 }
 
 void otChannelManagerSetSupportedChannels(otInstance *aInstance, uint32_t aChannelMask)
@@ -205,11 +256,13 @@ void otChannelManagerSetSupportedChannels(otInstance *aInstance, uint32_t aChann
 
   Ot_Cmd_Transfer();
 
-  p_ot_req = THREAD_Get_OTCmdRspPayloadBuffer();
+  Post_OtCmdProcessing();
 }
 
 uint32_t otChannelManagerGetFavoredChannels(otInstance *aInstance)
 {
+  uint32_t rspData;
+  
   Pre_OtCmdProcessing();
   /* prepare buffer */
   Thread_OT_Cmd_Request_t* p_ot_req = THREAD_Get_OTCmdPayloadBuffer();
@@ -221,7 +274,11 @@ uint32_t otChannelManagerGetFavoredChannels(otInstance *aInstance)
   Ot_Cmd_Transfer();
 
   p_ot_req = THREAD_Get_OTCmdRspPayloadBuffer();
-  return (uint32_t)p_ot_req->Data[0];
+  rspData = (uint32_t)p_ot_req->Data[0];
+  
+  Post_OtCmdProcessing();
+  
+  return rspData;
 }
 
 void otChannelManagerSetFavoredChannels(otInstance *aInstance, uint32_t aChannelMask)
@@ -236,7 +293,45 @@ void otChannelManagerSetFavoredChannels(otInstance *aInstance, uint32_t aChannel
   p_ot_req->Data[0] = aChannelMask;
 
   Ot_Cmd_Transfer();
+  
+  Post_OtCmdProcessing();
 }
 
-#endif  /* OPENTHREAD_ENABLE_CHANNEL_MANAGER && OPENTHREAD_FTD */
+uint16_t otChannelManagerGetCcaFailureRateThreshold(otInstance *aInstance)
+{
+  uint16_t rspData;	
+  
+  Pre_OtCmdProcessing();
+  /* prepare buffer */
+  Thread_OT_Cmd_Request_t* p_ot_req = THREAD_Get_OTCmdPayloadBuffer();
+
+  p_ot_req->ID = MSG_M4TOM0_OT_CHANNEL_MANAGER_GET_CCA_FAILURE_RATE_THRESHOLD;
+
+  p_ot_req->Size=0;
+
+  Ot_Cmd_Transfer();
+  rspData = (uint16_t)p_ot_req->Data[0];
+  
+  Post_OtCmdProcessing();
+  
+  return rspData;
+}
+
+void otChannelManagerSetCcaFailureRateThreshold(otInstance *aInstance, uint16_t aThreshold)
+{
+  Pre_OtCmdProcessing();
+  /* prepare buffer */
+  Thread_OT_Cmd_Request_t* p_ot_req = THREAD_Get_OTCmdPayloadBuffer();
+
+  p_ot_req->ID = MSG_M4TOM0_OT_CHANNEL_MANAGER_SET_CCA_FAILURE_RATE_THRESHOLD;
+
+  p_ot_req->Size=1;
+  p_ot_req->Data[0] = aThreshold;
+
+  Ot_Cmd_Transfer();
+  
+  Post_OtCmdProcessing();
+}
+
+#endif  /* OPENTHREAD_CONFIG_CHANNEL_MANAGER_ENABLE && OPENTHREAD_FTD */
 

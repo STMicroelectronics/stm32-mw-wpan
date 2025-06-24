@@ -6,13 +6,12 @@
  ******************************************************************************
  * @attention
  *
- * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
- * All rights reserved.</center></h2>
+ * Copyright (c) 2018-2021 STMicroelectronics.
+ * All rights reserved.
  *
- * This software component is licensed by ST under Ultimate Liberty license
- * SLA0044, the "License"; You may not use this file except in compliance with
- * the License. You may obtain a copy of the License at:
- *                             www.st.com/SLA0044
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
  *
  ******************************************************************************
  */
@@ -92,7 +91,7 @@ static void HIDS_Handle_Control_Point_Write(uint8_t service_instance, uint8_t *a
   uint16_t length;
   uint8_t data;
   
-  hciCmdResult = aci_gatt_read_handle_value(HIDS_Context[service_instance].HidControlPointCharHdle + 1,
+  hciCmdResult = aci_gatt_read_handle_value((HIDS_Context[service_instance].HidControlPointCharHdle) + 1,
                                             0,
                                             1,
                                             &length,
@@ -104,7 +103,7 @@ static void HIDS_Handle_Control_Point_Write(uint8_t service_instance, uint8_t *a
   }
   else
   {
-    BLE_DBG_HIDS_MSG ("FAILED to read handle value, Error: %02X !!\n", 
+    BLE_DBG_HIDS_MSG ("FAILED to read handle value, Error: 0x%02X !!\n", 
                          hciCmdResult);
   }
 }
@@ -119,10 +118,10 @@ static void HIDS_Handle_Mouse_Input_Write(uint8_t service_instance, uint8_t *att
 {
   tBleStatus hciCmdResult;
   uint16_t length;
-  uint8_t *data = 0;
+  uint8_t data[BLE_CFG_HIDS_BOOT_MOUSE_INPUT_REPORT_MAX_LEN];
   HIDS_App_Notification_evt_t Notification;
   
-  hciCmdResult = aci_gatt_read_handle_value(HIDS_Context[service_instance].HidMouseReportInputCharHdle + 1,
+  hciCmdResult = aci_gatt_read_handle_value((HIDS_Context[service_instance].HidMouseReportInputCharHdle) + 1,
                                             0,
                                             BLE_CFG_HIDS_BOOT_MOUSE_INPUT_REPORT_MAX_LEN,
                                             &length,
@@ -137,7 +136,7 @@ static void HIDS_Handle_Mouse_Input_Write(uint8_t service_instance, uint8_t *att
   }
   else
   {
-    BLE_DBG_HIDS_MSG ("FAILED to read handle value, Error: %02X !!\n", 
+    BLE_DBG_HIDS_MSG ("FAILED to read handle value, Error: 0x%02X !!\n", 
                          hciCmdResult);
   }
   
@@ -163,10 +162,10 @@ static void HIDS_Handle_Keyboard_Output_Write(uint8_t service_instance, uint8_t 
 {
   tBleStatus hciCmdResult;
   uint16_t length;
-  uint8_t *data = 0;
+  uint8_t data[BLE_CFG_HIDS_BOOT_KEYBOARD_OUTPUT_REPORT_MAX_LEN];
   HIDS_App_Notification_evt_t Notification;
   
-  hciCmdResult = aci_gatt_read_handle_value(HIDS_Context[service_instance].HidKeyboardReportOutputCharHdle + 1, 
+  hciCmdResult = aci_gatt_read_handle_value((HIDS_Context[service_instance].HidKeyboardReportOutputCharHdle) + 1, 
                                             0,
                                             BLE_CFG_HIDS_BOOT_KEYBOARD_OUTPUT_REPORT_MAX_LEN,
                                             &length,
@@ -181,7 +180,7 @@ static void HIDS_Handle_Keyboard_Output_Write(uint8_t service_instance, uint8_t 
   }
   else
   {
-    BLE_DBG_HIDS_MSG ("FAILED to read handle value, Error: %02X !!\n", 
+    BLE_DBG_HIDS_MSG ("FAILED to read handle value, Error: 0x%02X !!\n", 
                          hciCmdResult);
   }
   
@@ -206,11 +205,11 @@ static void HIDS_Handle_Keyboard_Output_Write(uint8_t service_instance, uint8_t 
 static void HIDS_Handle_Keyboard_Input_Write(uint8_t service_instance, uint8_t *attVal)
 {
   tBleStatus hciCmdResult;
-  uint8_t *data = 0;
+  uint8_t data[BLE_CFG_HIDS_BOOT_KEYBOARD_INPUT_REPORT_MAX_LEN];
   uint16_t length;
   HIDS_App_Notification_evt_t Notification;
   
-  hciCmdResult = aci_gatt_read_handle_value(HIDS_Context[service_instance].HidKeyboardReportInputCharHdle + 1,
+  hciCmdResult = aci_gatt_read_handle_value((HIDS_Context[service_instance].HidKeyboardReportInputCharHdle) + 1,
                                             0,
                                             BLE_CFG_HIDS_BOOT_KEYBOARD_INPUT_REPORT_MAX_LEN,
                                             &length,
@@ -225,7 +224,7 @@ static void HIDS_Handle_Keyboard_Input_Write(uint8_t service_instance, uint8_t *
   }
   else
   {
-    BLE_DBG_HIDS_MSG ("FAILED to read handle value, Error: %02X !!\n", 
+    BLE_DBG_HIDS_MSG ("FAILED to read handle value, Error: 0x%02X !!\n", 
                          hciCmdResult);
   }
   
@@ -250,14 +249,14 @@ static void HIDS_Handle_Keyboard_Input_Write(uint8_t service_instance, uint8_t *
 static void HIDS_Handle_Report(uint8_t service_instance, uint8_t report_index, uint8_t *attVal)
 {
   tBleStatus hciCmdResult;
-  uint8_t *data = 0;
+  uint8_t data[BLE_CFG_HIDS_REPORT_MAX_LEN];
   uint16_t length;
   HIDS_App_Notification_evt_t Notification;
 
   /**
    * Category ID update
    */
-  hciCmdResult = aci_gatt_read_handle_value(HIDS_Context[service_instance].HidReportCharHdle[report_index] + 1,
+  hciCmdResult = aci_gatt_read_handle_value((HIDS_Context[service_instance].HidReportCharHdle[report_index]) + 1,
                                             0,
                                             BLE_CFG_HIDS_REPORT_MAX_LEN,
                                             &length,
@@ -272,8 +271,9 @@ static void HIDS_Handle_Report(uint8_t service_instance, uint8_t report_index, u
   }
   else
   {
-    BLE_DBG_HIDS_MSG ("FAILED to read handle value, Error: %02X !!\n", 
-                         hciCmdResult);
+    BLE_DBG_HIDS_MSG ("FAILED to read handle value of 0x%x, Error: 0x%02X !!\n", 
+                      (HIDS_Context[service_instance].HidReportCharHdle[report_index]) + 1,
+                      hciCmdResult);
   }
 
   /**
@@ -301,7 +301,7 @@ static void HIDS_Handle_Protocol_Mode(uint8_t service_instance, uint8_t *attVal)
   uint16_t length;
   uint8_t data;
   
-  hciCmdResult = aci_gatt_read_handle_value(HIDS_Context[service_instance].HidProtocolModeCharHdle + 1, 
+  hciCmdResult = aci_gatt_read_handle_value((HIDS_Context[service_instance].HidProtocolModeCharHdle) + 1, 
                                             0,
                                             1,
                                             &length,
@@ -313,7 +313,7 @@ static void HIDS_Handle_Protocol_Mode(uint8_t service_instance, uint8_t *attVal)
   }
   else
   {
-    BLE_DBG_HIDS_MSG ("FAILED to read handle value, Error: %02X !!\n", 
+    BLE_DBG_HIDS_MSG ("FAILED to read handle value, Error: 0x%02X !!\n", 
                          hciCmdResult);
   }
 }
@@ -329,7 +329,7 @@ static SVCCTL_EvtAckStatus_t HIDS_Event_Handler(void *Event)
 {
   SVCCTL_EvtAckStatus_t return_value;
   hci_event_pckt *event_pckt;
-  evt_blue_aci *blue_evt;
+  evt_blecore_aci *blecore_evt;
   aci_gatt_attribute_modified_event_rp0    * attribute_modified;
   uint8_t service_instance;
 #if (BLE_CFG_HIDS_REPORT_CHAR != 0)
@@ -341,18 +341,18 @@ static SVCCTL_EvtAckStatus_t HIDS_Event_Handler(void *Event)
 
   switch(event_pckt->evt)
   {
-    case EVT_VENDOR:
+    case HCI_VENDOR_SPECIFIC_DEBUG_EVT_CODE:
     {
-      blue_evt = (evt_blue_aci*)event_pckt->data;
-      switch(blue_evt->ecode)
+      blecore_evt = (evt_blecore_aci*)event_pckt->data;
+      switch(blecore_evt->ecode)
       {        
 #if ((BLE_CFG_HIDS_REPORT_CHAR != 0) || (BLE_CFG_HIDS_KEYBOARD_DEVICE != 0) || (BLE_CFG_HIDS_MOUSE_DEVICE != 0))
-        case EVT_BLUE_GATT_WRITE_PERMIT_REQ:
+        case ACI_GATT_WRITE_PERMIT_REQ_VSEVT_CODE:
         {
           aci_gatt_write_permit_req_event_rp0 * write_perm_req;
           
-          write_perm_req = (aci_gatt_write_permit_req_event_rp0*)blue_evt->data;
-
+          write_perm_req = (aci_gatt_write_permit_req_event_rp0*)blecore_evt->data;
+          
 #if ((BLE_CFG_HIDS_REPORT_CHAR != 0) || (BLE_CFG_HIDS_KEYBOARD_DEVICE != 0) || ((BLE_CFG_HIDS_MOUSE_DEVICE != 0) && (BLE_CFG_HIDS_MOUSE_INPUT_WRITE != 0)))
           for(service_instance = 0; service_instance < BLE_CFG_HIDS_NUMBER ; service_instance++)
           {
@@ -362,17 +362,14 @@ static SVCCTL_EvtAckStatus_t HIDS_Event_Handler(void *Event)
               if(write_perm_req->Attribute_Handle == (HIDS_Context[service_instance].HidReportCharHdle[i]) + 1) 
               {
                 return_value = SVCCTL_EvtAckFlowEnable;
-                /**
-                 * received a correct value
-                 */
 
                 aci_gatt_write_resp(write_perm_req->Connection_Handle,
-                                        write_perm_req->Attribute_Handle,
-                                        0x00, /* write_status = 0 (no error))*/
-                                        0x00, /* err_code */
-                                        write_perm_req->Data_Length,
-                                        (uint8_t *)&(write_perm_req->Data[0]));
-                BLE_DBG_HIDS_MSG("EVT_BLUE_GATT_WRITE_PERMIT_REQ, HidReportCharHdle[%d]: 0x%02X, Len: 0x%02X !!\n", 
+                                    write_perm_req->Attribute_Handle,
+                                    0x00, /* write_status = 0 (no error))*/
+                                    0x00, /* err_code */
+                                    write_perm_req->Data_Length,
+                                    (uint8_t *)&(write_perm_req->Data[0]));
+                BLE_DBG_HIDS_MSG("ACI_GATT_WRITE_PERMIT_REQ_VSEVT_CODE, HidReportCharHdle[%d]: 0x%02X, Len: 0x%02X !!\n", 
                                     i, write_perm_req->Attribute_Handle, write_perm_req->Data_Length); 
                 HIDS_Handle_Report(service_instance, i, write_perm_req->Data);
               }
@@ -385,12 +382,12 @@ static SVCCTL_EvtAckStatus_t HIDS_Event_Handler(void *Event)
               return_value = SVCCTL_EvtAckFlowEnable;
 
               aci_gatt_write_resp(write_perm_req->Connection_Handle,
-                                      write_perm_req->Attribute_Handle,
-                                      0x00, /* write_status = 0 (no error)) */
-                                      (uint8_t)0, /* err_code  */
-                                      write_perm_req->Data_Length,
-                                      (uint8_t *)&(write_perm_req->Data[0]));
-              BLE_DBG_HIDS_MSG("EVT_BLUE_GATT_WRITE_PERMIT_REQ, HidKeyboardReportInputCharHdle: 0x%02X, Len: 0x%02X !!\n", 
+                                  write_perm_req->Attribute_Handle,
+                                  0x00, /* write_status = 0 (no error)) */
+                                  (uint8_t)0, /* err_code  */
+                                  write_perm_req->Data_Length,
+                                  (uint8_t *)&(write_perm_req->Data[0]));
+              BLE_DBG_HIDS_MSG("ACI_GATT_WRITE_PERMIT_REQ_VSEVT_CODE, HidKeyboardReportInputCharHdle: 0x%02X, Len: 0x%02X !!\n", 
                                   write_perm_req->Attribute_Handle, write_perm_req->Data_Length); 
               HIDS_Handle_Keyboard_Input_Write(service_instance, write_perm_req->Data);
             }
@@ -400,12 +397,12 @@ static SVCCTL_EvtAckStatus_t HIDS_Event_Handler(void *Event)
               return_value = SVCCTL_EvtAckFlowEnable;
 
               aci_gatt_write_resp(write_perm_req->Connection_Handle,
-                                      write_perm_req->Attribute_Handle,
-                                      0x00, /* write_status = 0 (no error)) */
-                                      (uint8_t)0, /* err_code  */
-                                      write_perm_req->Data_Length,
-                                      (uint8_t *)&(write_perm_req->Data[0]));
-              BLE_DBG_HIDS_MSG("EVT_BLUE_GATT_WRITE_PERMIT_REQ, HidKeyboardReportOutputCharHdle: 0x%02X, Len: 0x%02X !!\n", 
+                                  write_perm_req->Attribute_Handle,
+                                  0x00, /* write_status = 0 (no error)) */
+                                  (uint8_t)0, /* err_code  */
+                                  write_perm_req->Data_Length,
+                                  (uint8_t *)&(write_perm_req->Data[0]));
+              BLE_DBG_HIDS_MSG("ACI_GATT_WRITE_PERMIT_REQ_VSEVT_CODE, HidKeyboardReportOutputCharHdle: 0x%02X, Len: 0x%02X !!\n", 
                                   write_perm_req->Attribute_Handle, write_perm_req->Data_Length); 
               HIDS_Handle_Keyboard_Output_Write(service_instance, write_perm_req->Data);
             }
@@ -416,12 +413,12 @@ static SVCCTL_EvtAckStatus_t HIDS_Event_Handler(void *Event)
               return_value = SVCCTL_EvtAckFlowEnable;
 
               aci_gatt_write_resp(write_perm_req->Connection_Handle,
-                                      write_perm_req->Attribute_Handle,
-                                      0x00, /* write_status = 0 (no error)) */
-                                      (uint8_t)0, /* err_code */
-                                      write_perm_req->Data_Length,
-                                      (uint8_t *)&(write_perm_req->Data[0]));
-              BLE_DBG_HIDS_MSG("EVT_BLUE_GATT_WRITE_PERMIT_REQ, HidMouseReportInputCharHdle: 0x%02X, Len: 0x%02X !!\n", 
+                                  write_perm_req->Attribute_Handle,
+                                  0x00, /* write_status = 0 (no error)) */
+                                  (uint8_t)0, /* err_code */
+                                  write_perm_req->Data_Length,
+                                  (uint8_t *)&(write_perm_req->Data[0]));
+              BLE_DBG_HIDS_MSG("ACI_GATT_WRITE_PERMIT_REQ_VSEVT_CODE, HidMouseReportInputCharHdle: 0x%02X, Len: 0x%02X !!\n", 
                                   write_perm_req->Attribute_Handle, write_perm_req->Data_Length); 
               HIDS_Handle_Mouse_Input_Write(service_instance, write_perm_req->Data);
             }
@@ -431,9 +428,9 @@ static SVCCTL_EvtAckStatus_t HIDS_Event_Handler(void *Event)
         }
         break;
 #endif
-        case EVT_BLUE_GATT_ATTRIBUTE_MODIFIED:
+        case ACI_GATT_ATTRIBUTE_MODIFIED_VSEVT_CODE:
         {
-          attribute_modified = (aci_gatt_attribute_modified_event_rp0*)blue_evt->data;
+          attribute_modified = (aci_gatt_attribute_modified_event_rp0*)blecore_evt->data;
           for(service_instance = 0; service_instance < BLE_CFG_HIDS_NUMBER ; service_instance++)
           {
 #if (BLE_CFG_HIDS_PROTOCOL_MODE_CHAR != 0)
@@ -441,7 +438,7 @@ static SVCCTL_EvtAckStatus_t HIDS_Event_Handler(void *Event)
             if(attribute_modified->Attr_Handle == (HIDS_Context[service_instance].HidProtocolModeCharHdle) + 1)
             {
               return_value = SVCCTL_EvtAckFlowEnable;
-              BLE_DBG_HIDS_MSG("EVT_BLUE_GATT_ATTRIBUTE_MODIFIED, HidProtocolModeCharHdle: 0x%02X, Len: 0x%02X !!\n", 
+              BLE_DBG_HIDS_MSG("ACI_GATT_ATTRIBUTE_MODIFIED_VSEVT_CODE, HidProtocolModeCharHdle: 0x%02X, Len: 0x%02X !!\n", 
                                   attribute_modified->Attr_Handle, attribute_modified->Attr_Data_Length); 
               HIDS_Handle_Protocol_Mode(service_instance, attribute_modified->Attr_Data);
             }
@@ -456,15 +453,15 @@ static SVCCTL_EvtAckStatus_t HIDS_Event_Handler(void *Event)
                 if(i < BLE_CFG_HIDS_INPUT_REPORT_NB)
                 {
                   aci_gatt_write_resp(attribute_modified->Connection_Handle,
-                                          attribute_modified->Attr_Handle,
-                                          0x00, /* write_status = 0 (no error))*/
-                                          0x00, /* err_code */
-                                          attribute_modified->Attr_Data_Length,
-                                          (uint8_t *)&(attribute_modified->Attr_Data[0]));
+                                      attribute_modified->Attr_Handle,
+                                      0x00, /* write_status = 0 (no error))*/
+                                      0x00, /* err_code */
+                                      attribute_modified->Attr_Data_Length,
+                                      (uint8_t *)&(attribute_modified->Attr_Data[0]));
                 }
-               BLE_DBG_HIDS_MSG("EVT_BLUE_GATT_ATTRIBUTE_MODIFIED, HidReportCharHdle[%d]: 0x%02X, Len: 0x%02X !!\n", 
-                                   i, attribute_modified->Attr_Handle, attribute_modified->Attr_Data_Length); 
-               HIDS_Handle_Report(service_instance, i, attribute_modified->Attr_Data);
+                BLE_DBG_HIDS_MSG("ACI_GATT_ATTRIBUTE_MODIFIED_VSEVT_CODE, HidReportCharHdle[%d]: 0x%02X, Len: 0x%02X !!\n", 
+                                 i, attribute_modified->Attr_Handle, attribute_modified->Attr_Data_Length); 
+                HIDS_Handle_Report(service_instance, i, attribute_modified->Attr_Data);
               }
               /* Report Client Characteristic Configuration descriptor write */
               if(attribute_modified->Attr_Handle == (HIDS_Context[service_instance].HidReportCharHdle[i]) + 2)
@@ -479,16 +476,17 @@ static SVCCTL_EvtAckStatus_t HIDS_Event_Handler(void *Event)
                 Notification.Index = i;
                 if(attribute_modified->Attr_Data[0] & COMSVC_Notification)
                 {
-                  BLE_DBG_HIDS_MSG("EVT_BLUE_GATT_ATTRIBUTE_MODIFIED HIDS_REPORT_NOTIFICATION_ENABLED\n");
+                  BLE_DBG_HIDS_MSG("ACI_GATT_ATTRIBUTE_MODIFIED_VSEVT_CODE HIDS_REPORT_NOTIFICATION_ENABLED\n");
                   Notification.HIDS_Evt_Opcode = HIDS_REPORT_NOTIFICATION_ENABLED;
                   HIDS_Notification(&Notification);
                 }
                 else
                 {
-                  BLE_DBG_HIDS_MSG("EVT_BLUE_GATT_ATTRIBUTE_MODIFIED HIDS_REPORT_NOTIFICATION_DISABLED\n");
+                  BLE_DBG_HIDS_MSG("ACI_GATT_ATTRIBUTE_MODIFIED_VSEVT_CODE HIDS_REPORT_NOTIFICATION_DISABLED\n");
                   Notification.HIDS_Evt_Opcode = HIDS_REPORT_NOTIFICATION_DISABLED;
                   HIDS_Notification(&Notification);
                 }
+                aci_gatt_store_db(); /* Store CCCD value in GATT database: CCCD state restored if reset */
               }
             } /* End for(i = 0; i < HIDS_INPUT_REPORT_NB + HIDS_OUTPUT_REPORT_NB + BLE_CFG_HIDS_FEATURE_REPORT_NB ; i++) */
 #endif
@@ -499,12 +497,12 @@ static SVCCTL_EvtAckStatus_t HIDS_Event_Handler(void *Event)
             {
               return_value = SVCCTL_EvtAckFlowEnable;
               aci_gatt_write_resp(attribute_modified->Connection_Handle,
-                                      attribute_modified->Attr_Handle,
-                                      0x00, /* write_status = 0 (no error))*/
-                                      0x00, /* err_code */
-                                      attribute_modified->Attr_Data_Length,
-                                      (uint8_t *)&(attribute_modified->Attr_Data[0]));
-              BLE_DBG_HIDS_MSG("EVT_BLUE_GATT_ATTRIBUTE_MODIFIED, HidKeyboardReportInputCharHdle: 0x%02X, Len: 0x%02X !!\n", 
+                                  attribute_modified->Attr_Handle,
+                                  0x00, /* write_status = 0 (no error))*/
+                                  0x00, /* err_code */
+                                  attribute_modified->Attr_Data_Length,
+                                  (uint8_t *)&(attribute_modified->Attr_Data[0]));
+              BLE_DBG_HIDS_MSG("ACI_GATT_ATTRIBUTE_MODIFIED_VSEVT_CODE, HidKeyboardReportInputCharHdle: 0x%02X, Len: 0x%02X !!\n", 
                                   attribute_modified->Attr_Handle, attribute_modified->Attr_Data_Length); 
               HIDS_Handle_Keyboard_Input_Write(service_instance, attribute_modified->Attr_Data);
             }
@@ -522,22 +520,23 @@ static SVCCTL_EvtAckStatus_t HIDS_Event_Handler(void *Event)
               Notification.Index = 0;
               if(attribute_modified->Attr_Data[0] & COMSVC_Notification)
               {
-                BLE_DBG_HIDS_MSG("EVT_BLUE_GATT_ATTRIBUTE_MODIFIED HIDS_KEYB_INPUT_NOTIFY_ENABLED\n");
+                BLE_DBG_HIDS_MSG("ACI_GATT_ATTRIBUTE_MODIFIED_VSEVT_CODE HIDS_KEYB_INPUT_NOTIFY_ENABLED\n");
                 Notification.HIDS_Evt_Opcode = HIDS_KEYB_INPUT_NOTIFY_ENABLED;
                 HIDS_Notification(&Notification);
               }
               else
               {
-                BLE_DBG_HIDS_MSG("EVT_BLUE_GATT_ATTRIBUTE_MODIFIED HIDS_KEYB_INPUT_NOTIFY_DISABLED\n");
+                BLE_DBG_HIDS_MSG("ACI_GATT_ATTRIBUTE_MODIFIED_VSEVT_CODE HIDS_KEYB_INPUT_NOTIFY_DISABLED\n");
                 Notification.HIDS_Evt_Opcode = HIDS_KEYB_INPUT_NOTIFY_DISABLED;
                 HIDS_Notification(&Notification);
               }
+              aci_gatt_store_db(); /* Store CCCD value in GATT database: CCCD state restored if reset */
             }
             /* Keyboard Report Output characteristic write */
             if(attribute_modified->Attr_Handle == (HIDS_Context[service_instance].HidKeyboardReportOutputCharHdle) + 1)
             {
               return_value = SVCCTL_EvtAckFlowEnable;
-              BLE_DBG_HIDS_MSG("EVT_BLUE_GATT_ATTRIBUTE_MODIFIED, HidKeyboardReportOutputCharHdle: 0x%02X, Len: 0x%02X !!\n", 
+              BLE_DBG_HIDS_MSG("ACI_GATT_ATTRIBUTE_MODIFIED_VSEVT_CODE, HidKeyboardReportOutputCharHdle: 0x%02X, Len: 0x%02X !!\n", 
                                   attribute_modified->Attr_Handle, attribute_modified->Attr_Data_Length); 
               HIDS_Handle_Keyboard_Output_Write(service_instance, attribute_modified->Attr_Data);
             }
@@ -549,12 +548,12 @@ static SVCCTL_EvtAckStatus_t HIDS_Event_Handler(void *Event)
             {
               return_value = SVCCTL_EvtAckFlowEnable;
               aci_gatt_write_resp(attribute_modified->Connection_Handle,
-                                      attribute_modified->Attr_Handle,
-                                      0x00, /* write_status = 0 (no error))*/
-                                      0x00, /* err_code */
-                                      attribute_modified->Attr_Data_Length,
-                                      (uint8_t *)&(attribute_modified->Attr_Data[0]));
-              BLE_DBG_HIDS_MSG("EVT_BLUE_GATT_ATTRIBUTE_MODIFIED, HidMouseReportInputCharHdle: 0x%02X, Len: 0x%02X !!\n", 
+                                  attribute_modified->Attr_Handle,
+                                  0x00, /* write_status = 0 (no error))*/
+                                  0x00, /* err_code */
+                                  attribute_modified->Attr_Data_Length,
+                                  (uint8_t *)&(attribute_modified->Attr_Data[0]));
+              BLE_DBG_HIDS_MSG("ACI_GATT_ATTRIBUTE_MODIFIED_VSEVT_CODE, HidMouseReportInputCharHdle: 0x%02X, Len: 0x%02X !!\n", 
                                   attribute_modified->Attr_Handle, attribute_modified->Attr_Data_Length); 
               HIDS_Handle_Mouse_Input_Write(service_instance, attribute_modified->Attr_Data);
             }
@@ -572,23 +571,24 @@ static SVCCTL_EvtAckStatus_t HIDS_Event_Handler(void *Event)
               Notification.Index = 0;
               if(attribute_modified->Attr_Data[0] & COMSVC_Notification)
               {
-                BLE_DBG_HIDS_MSG("EVT_BLUE_GATT_ATTRIBUTE_MODIFIED HIDS_MOUSE_INPUT_NOTIFY_ENABLED\n");
+                BLE_DBG_HIDS_MSG("ACI_GATT_ATTRIBUTE_MODIFIED_VSEVT_CODE HIDS_MOUSE_INPUT_NOTIFY_ENABLED\n");
                 Notification.HIDS_Evt_Opcode = HIDS_MOUSE_INPUT_NOTIFY_ENABLED;
                 HIDS_Notification(&Notification);
               }
               else
               {
-                BLE_DBG_HIDS_MSG("EVT_BLUE_GATT_ATTRIBUTE_MODIFIED HIDS_MOUSE_INPUT_NOTIFY_DISABLED\n");
+                BLE_DBG_HIDS_MSG("ACI_GATT_ATTRIBUTE_MODIFIED_VSEVT_CODE HIDS_MOUSE_INPUT_NOTIFY_DISABLED\n");
                 Notification.HIDS_Evt_Opcode = HIDS_MOUSE_INPUT_NOTIFY_DISABLED;
                 HIDS_Notification(&Notification);
               }
+              aci_gatt_store_db(); /* Store CCCD value in GATT database: CCCD state restored if reset */
             }
 #endif
             /*  Control Point Characteristic write */
             if(attribute_modified->Attr_Handle == (HIDS_Context[service_instance].HidControlPointCharHdle) + 1)
             {
               return_value = SVCCTL_EvtAckFlowEnable;
-              BLE_DBG_HIDS_MSG("EVT_BLUE_GATT_ATTRIBUTE_MODIFIED, HidControlPointCharHdle: 0x%02X, Len: 0x%02X !!\n", 
+              BLE_DBG_HIDS_MSG("ACI_GATT_ATTRIBUTE_MODIFIED_VSEVT_CODE, HidControlPointCharHdle: 0x%02X, Len: 0x%02X !!\n", 
                                   attribute_modified->Attr_Handle, attribute_modified->Attr_Data_Length); 
               HIDS_Handle_Control_Point_Write(0/*service_instance*/, attribute_modified->Attr_Data);
             }
@@ -600,7 +600,7 @@ static SVCCTL_EvtAckStatus_t HIDS_Event_Handler(void *Event)
           break;
       }
     }
-    break; /* HCI_EVT_VENDOR_SPECIFIC */
+    break; /* HCI_HCI_VENDOR_SPECIFIC_DEBUG_EVT_CODE_SPECIFIC */
 
     default:
       break;
@@ -679,13 +679,13 @@ void HIDS_Init(void)
                                          &(HIDS_Context[service_instance].HidSvcHdle));
     if (hciCmdResult == BLE_STATUS_SUCCESS)
     {
-      BLE_DBG_HIDS_MSG ("Human Interface Device Service (HIDS) is added Successfully %04X\n", 
-                           HIDS_Context[service_instance].HidSvcHdle);
+      BLE_DBG_HIDS_MSG ("Human Interface Device Service (HIDS) is added Successfully 0x%04X\n", 
+                        HIDS_Context[service_instance].HidSvcHdle);
     }
     else
     {
-      BLE_DBG_HIDS_MSG ("FAILED to add Human Interface Device Service (HIDS), Error: %02X !!\n", 
-                           hciCmdResult);
+      BLE_DBG_HIDS_MSG ("FAILED to add Human Interface Device Service (HIDS), Error: 0x%02X !!\n", 
+                        hciCmdResult);
     }
 
 
@@ -706,13 +706,13 @@ void HIDS_Init(void)
                                      &(HIDS_Context[service_instance].HidProtocolModeCharHdle));
     if (hciCmdResult == BLE_STATUS_SUCCESS)
     {
-      BLE_DBG_HIDS_MSG ("Protocol Mode Characterisitic is added Successfully %04X\n", 
-                           HIDS_Context[service_instance].HidProtocolModeCharHdle);
+      BLE_DBG_HIDS_MSG ("Protocol Mode Characteristic is added Successfully %04X\n", 
+                        HIDS_Context[service_instance].HidProtocolModeCharHdle);
     }
     else
     {
-      BLE_DBG_HIDS_MSG ("FAILED to add Protocol Mode Characterisitic, Error: %02X !!\n", 
-                           hciCmdResult);
+      BLE_DBG_HIDS_MSG ("FAILED to add Protocol Mode Characteristic, Error: %02X !!\n", 
+                        hciCmdResult);
     }
     protocol_mode = BLE_CFG_HIDS_PROTOCOL_MODE;
     hciCmdResult = aci_gatt_update_char_value(HIDS_Context[service_instance].HidSvcHdle, 
@@ -724,12 +724,12 @@ void HIDS_Init(void)
     if (hciCmdResult == BLE_STATUS_SUCCESS)
     {
       BLE_DBG_HIDS_MSG ("Protocol mode charact update is Successfully %04X\n", 
-                           HIDS_Context[service_instance].HidProtocolModeCharHdle);
+                        HIDS_Context[service_instance].HidProtocolModeCharHdle);
     }
     else 
     {
       BLE_DBG_HIDS_MSG ("FAILED to update Protocol mode charact, Error: %02X !!\n", 
-                           hciCmdResult);
+                        hciCmdResult);
     }   
 #endif
 
@@ -767,13 +767,13 @@ void HIDS_Init(void)
                                          &(HIDS_Context[service_instance].HidReportCharHdle[i]));
         if (hciCmdResult == BLE_STATUS_SUCCESS)
         {
-          BLE_DBG_HIDS_MSG ("Input Report Characterisitic is added Successfully %04X\n", 
-                               HIDS_Context[service_instance].HidReportCharHdle[i]);
+          BLE_DBG_HIDS_MSG ("Input Report Characteristic is added Successfully 0x%04X\n", 
+                            HIDS_Context[service_instance].HidReportCharHdle[i]);
         }
         else
         {
-          BLE_DBG_HIDS_MSG ("FAILED to add Input Report Characterisitic, Error: %02X !!\n", 
-                               hciCmdResult);
+          BLE_DBG_HIDS_MSG ("FAILED to add Input Report Characteristic, Error: 0x%02X !!\n", 
+                            hciCmdResult);
         }
         
         uuid = REPORT_REFERENCE_DESCRIPTOR_UUID;
@@ -795,13 +795,13 @@ void HIDS_Init(void)
                                               &HIDS_Context[service_instance].HidReportReferenceDescHdle[i]);
         if (hciCmdResult == BLE_STATUS_SUCCESS)
         {
-          BLE_DBG_HIDS_MSG ("Input Report Reference Descriptor is added Successfully %04X\n", 
-                               HIDS_Context[service_instance].HidReportReferenceDescHdle[i]);
+          BLE_DBG_HIDS_MSG ("Input Report Reference Descriptor is added Successfully 0x%04X\n", 
+                            HIDS_Context[service_instance].HidReportReferenceDescHdle[i]);
         }
         else
         {
-          BLE_DBG_HIDS_MSG ("FAILED to add Input Report Reference Descriptor, Error: %02X !!\n", 
-                               hciCmdResult);
+          BLE_DBG_HIDS_MSG ("FAILED to add Input Report Reference Descriptor, Error: 0x%02X !!\n", 
+                            hciCmdResult);
         }
       }
       else if((i - BLE_CFG_HIDS_INPUT_REPORT_NB) < BLE_CFG_HIDS_OUTPUT_REPORT_NB)
@@ -821,17 +821,17 @@ void HIDS_Init(void)
                                          &(HIDS_Context[service_instance].HidReportCharHdle[i]));
         if (hciCmdResult == BLE_STATUS_SUCCESS)
         {
-          BLE_DBG_HIDS_MSG ("Output Report Characterisitic is added Successfully %04X\n", 
-                               HIDS_Context[service_instance].HidReportReferenceDescHdle[i]);
+          BLE_DBG_HIDS_MSG ("Output Report Characteristic is added Successfully 0x%04X\n", 
+                            HIDS_Context[service_instance].HidReportCharHdle[i]);
         }
         else
         {
-          BLE_DBG_HIDS_MSG ("FAILED to add Output Report Characterisitic, Error: %02X !!\n", 
-                               hciCmdResult);
+          BLE_DBG_HIDS_MSG ("FAILED to add Output Report Characteristic, Error: 0x%02X !!\n", 
+                            hciCmdResult);
         }
 
         uuid = REPORT_REFERENCE_DESCRIPTOR_UUID;
-        buf[0] = i;
+        buf[0] = i - BLE_CFG_HIDS_INPUT_REPORT_NB;
         buf[1] = 2; /* Output Report */
         /* add the valid descriptor */
         hciCmdResult = aci_gatt_add_char_desc(HIDS_Context[service_instance].HidSvcHdle, 
@@ -849,13 +849,13 @@ void HIDS_Init(void)
                                               &HIDS_Context[service_instance].HidReportReferenceDescHdle[i]);
         if (hciCmdResult == BLE_STATUS_SUCCESS)
         {
-          BLE_DBG_HIDS_MSG ("Output Report Reference Descriptor is added Successfully %04X\n", 
-                               HIDS_Context[service_instance].HidReportReferenceDescHdle[i]);
+          BLE_DBG_HIDS_MSG ("Output Report Reference Descriptor is added Successfully 0x%04X\n", 
+                            HIDS_Context[service_instance].HidReportReferenceDescHdle[i]);
         }
         else
         {
-          BLE_DBG_HIDS_MSG ("FAILED to add Output Report Reference Descriptor, Error: %02X !!\n", 
-                               hciCmdResult);
+          BLE_DBG_HIDS_MSG ("FAILED to add Output Report Reference Descriptor, Error: 0x%02X !!\n", 
+                            hciCmdResult);
         }
       }
       else if((i - BLE_CFG_HIDS_INPUT_REPORT_NB - BLE_CFG_HIDS_OUTPUT_REPORT_NB) < BLE_CFG_HIDS_FEATURE_REPORT_NB)
@@ -875,18 +875,18 @@ void HIDS_Init(void)
                                          &(HIDS_Context[service_instance].HidReportCharHdle[i]));
         if (hciCmdResult == BLE_STATUS_SUCCESS)
         {
-          BLE_DBG_HIDS_MSG ("Feature Report Characterisitic is added Successfully %04X\n", 
-                               HIDS_Context[service_instance].HidReportReferenceDescHdle[i]);
+          BLE_DBG_HIDS_MSG ("Feature Report Characteristic is added Successfully 0x%04X\n", 
+                            HIDS_Context[service_instance].HidReportReferenceDescHdle[i]);
         }
         else
         {
-          BLE_DBG_HIDS_MSG ("FAILED to add Feature Report Characterisitic, Error: %02X !!\n", 
-                               hciCmdResult);
+          BLE_DBG_HIDS_MSG ("FAILED to add Feature Report Characteristic, Error: 0x%02X !!\n", 
+                            hciCmdResult);
         }
 
         uuid = REPORT_REFERENCE_DESCRIPTOR_UUID;
-        buf[0] = i;
-        buf[1] = 3; /* Input Report */
+        buf[0] = i - BLE_CFG_HIDS_INPUT_REPORT_NB - BLE_CFG_HIDS_OUTPUT_REPORT_NB;
+        buf[1] = 3; /* Feature Report */
         /* add the valid descriptor */
         hciCmdResult = aci_gatt_add_char_desc(HIDS_Context[service_instance].HidSvcHdle, 
                                               HIDS_Context[service_instance].HidReportCharHdle[i], 
@@ -903,13 +903,13 @@ void HIDS_Init(void)
                                               &HIDS_Context[service_instance].HidReportReferenceDescHdle[i]);
         if (hciCmdResult == BLE_STATUS_SUCCESS)
         {
-          BLE_DBG_HIDS_MSG ("Feature Report Reference Descriptor is added Successfully %04X\n", 
-                               HIDS_Context[service_instance].HidReportReferenceDescHdle[i]);
+          BLE_DBG_HIDS_MSG ("Feature Report Reference Descriptor is added Successfully 0x%04X\n", 
+                            HIDS_Context[service_instance].HidReportReferenceDescHdle[i]);
         }
         else
         {
-          BLE_DBG_HIDS_MSG ("FAILED to add Feature Report Reference Descriptor, Error: %02X !!\n", 
-                               hciCmdResult);
+          BLE_DBG_HIDS_MSG ("FAILED to add Feature Report Reference Descriptor, Error: 0x%02X !!\n", 
+                            hciCmdResult);
         }
       }
     }
@@ -924,20 +924,20 @@ void HIDS_Init(void)
                                      (Char_UUID_t *) &uuid ,
                                      BLE_CFG_HIDS_REPORT_MAP_MAX_LEN,
                                      CHAR_PROP_READ,
-                                     ATTR_PERMISSION_NONE,
+                                     ATTR_PERMISSION_ENCRY_READ,
                                      GATT_DONT_NOTIFY_EVENTS, /* gattEvtMask */
                                      10, /* encryKeySize */
                                      CHAR_VALUE_LEN_VARIABLE,
                                      &(HIDS_Context[service_instance].HidReportMapCharHdle));
     if (hciCmdResult == BLE_STATUS_SUCCESS)
     {
-      BLE_DBG_HIDS_MSG ("Report Map Characterisitic is added Successfully %04X\n", 
-                           HIDS_Context[service_instance].HidReportMapCharHdle);
+      BLE_DBG_HIDS_MSG ("Report Map Characteristic is added Successfully 0x%04X\n", 
+                        HIDS_Context[service_instance].HidReportMapCharHdle);
     }
     else
     {
-      BLE_DBG_HIDS_MSG ("FAILED to add Report Map Characterisitic, Error: %02X !!\n", 
-                           hciCmdResult);
+      BLE_DBG_HIDS_MSG ("FAILED to add Report Map Characteristic, Error: 0x%02X !!\n", 
+                        hciCmdResult);
     }
 
 #if (BLE_CFG_HIDS_EXTERNAL_REPORT_REFERENCE != 0)
@@ -962,13 +962,13 @@ void HIDS_Init(void)
                                             &HIDS_Context[service_instance].HidExternalReferenceDescHdle);
       if (hciCmdResult == BLE_STATUS_SUCCESS)
       {
-        BLE_DBG_HIDS_MSG ("External Report Reference Descriptor is added Successfully %04X\n", 
-                             HIDS_Context[service_instance].HidExternalReferenceDescHdle);
+        BLE_DBG_HIDS_MSG ("External Report Reference Descriptor is added Successfully 0x%04X\n", 
+                          HIDS_Context[service_instance].HidExternalReferenceDescHdle);
       }
       else
       {
-        BLE_DBG_HIDS_MSG ("FAILED to add External Report Reference Descriptor, Error: %02X !!\n", 
-                             hciCmdResult);
+        BLE_DBG_HIDS_MSG ("FAILED to add External Report Reference Descriptor, Error: 0x%02X !!\n", 
+                          hciCmdResult);
       }
     }
 #endif
@@ -995,13 +995,13 @@ void HIDS_Init(void)
                                      &(HIDS_Context[service_instance].HidKeyboardReportInputCharHdle));
     if (hciCmdResult == BLE_STATUS_SUCCESS)
     {
-      BLE_DBG_HIDS_MSG ("Boot Keyboard Input Report Characterisitic is added Successfully %04X\n", 
-                           HIDS_Context[service_instance].HidKeyboardReportInputCharHdle);
+      BLE_DBG_HIDS_MSG ("Boot Keyboard Input Report Characteristic is added Successfully 0x%04X\n", 
+                        HIDS_Context[service_instance].HidKeyboardReportInputCharHdle);
     }
     else
     {
-      BLE_DBG_HIDS_MSG ("FAILED to add Boot Keyboard Input Report Characterisitic, Error: %02X !!\n", 
-                           hciCmdResult);
+      BLE_DBG_HIDS_MSG ("FAILED to add Boot Keyboard Input Report Characteristic, Error: 0x%02X !!\n", 
+                        hciCmdResult);
     }
 
     /**
@@ -1020,13 +1020,13 @@ void HIDS_Init(void)
                                      &(HIDS_Context[service_instance].HidKeyboardReportOutputCharHdle));
     if (hciCmdResult == BLE_STATUS_SUCCESS)
     {
-      BLE_DBG_HIDS_MSG ("Boot Keyboard Output Report Characterisitic is added Successfully %04X\n", 
-                           HIDS_Context[service_instance].HidKeyboardReportOutputCharHdle);
+      BLE_DBG_HIDS_MSG ("Boot Keyboard Output Report Characteristic is added Successfully 0x%04X\n", 
+                        HIDS_Context[service_instance].HidKeyboardReportOutputCharHdle);
     }
     else
     {
-      BLE_DBG_HIDS_MSG ("FAILED to add Boot Keyboard Output Report Characterisitic, Error: %02X !!\n", 
-                           hciCmdResult);
+      BLE_DBG_HIDS_MSG ("FAILED to add Boot Keyboard Output Report Characteristic, Error: 0x%02X !!\n", 
+                        hciCmdResult);
     }
 #endif
 #if (BLE_CFG_HIDS_MOUSE_DEVICE != 0) 
@@ -1055,13 +1055,13 @@ void HIDS_Init(void)
                                      &(HIDS_Context[service_instance].HidMouseReportInputCharHdle));
     if (hciCmdResult == BLE_STATUS_SUCCESS)
     {
-      BLE_DBG_HIDS_MSG ("Boot Mouse Input Report Characterisitic is added Successfully %04X\n", 
-                           HIDS_Context[service_instance].HidMouseReportInputCharHdle);
+      BLE_DBG_HIDS_MSG ("Boot Mouse Input Report Characteristic is added Successfully 0x%04X\n", 
+                        HIDS_Context[service_instance].HidMouseReportInputCharHdle);
     }
     else
     {
-      BLE_DBG_HIDS_MSG ("FAILED to add Boot Mouse Input Report Characterisitic, Error: %02X !!\n", 
-                           hciCmdResult);
+      BLE_DBG_HIDS_MSG ("FAILED to add Boot Mouse Input Report Characteristic, Error: 0x%02X !!\n", 
+                        hciCmdResult);
     }
 #endif
 
@@ -1078,13 +1078,13 @@ void HIDS_Init(void)
                                      &(HIDS_Context[service_instance].HidInformationCharHdle));
     if (hciCmdResult == BLE_STATUS_SUCCESS)
     {
-      BLE_DBG_HIDS_MSG ("HID Information Characterisitic is added Successfully %04X\n", 
-                           HIDS_Context[service_instance].HidInformationCharHdle);
+      BLE_DBG_HIDS_MSG ("HID Information Characteristic is added Successfully 0x%04X\n", 
+                        HIDS_Context[service_instance].HidInformationCharHdle);
     }
     else
     {
-      BLE_DBG_HIDS_MSG ("FAILED to add HID Information Characterisitic, Error: %02X !!\n", 
-                           hciCmdResult);
+      BLE_DBG_HIDS_MSG ("FAILED to add HID Information Characteristic, Error: 0x%02X !!\n", 
+                        hciCmdResult);
     }
 
     uuid = HID_CONTROL_POINT_CHAR_UUID;
@@ -1100,13 +1100,13 @@ void HIDS_Init(void)
                                      &(HIDS_Context[service_instance].HidControlPointCharHdle));
     if (hciCmdResult == BLE_STATUS_SUCCESS)
     {
-      BLE_DBG_HIDS_MSG ("HID Control Point Characterisitic is added Successfully %04X\n", 
-                           HIDS_Context[service_instance].HidControlPointCharHdle);
+      BLE_DBG_HIDS_MSG ("HID Control Point Characteristic is added Successfully 0x%04X\n", 
+                        HIDS_Context[service_instance].HidControlPointCharHdle);
     }
     else
     {
-      BLE_DBG_HIDS_MSG ("FAILED to add HID Control Point Characterisitic, Error: %02X !!\n", 
-                           hciCmdResult);
+      BLE_DBG_HIDS_MSG ("FAILED to add HID Control Point Characteristic, Error: 0x%02X !!\n", 
+                        hciCmdResult);
     }
 
   }
@@ -1121,10 +1121,10 @@ void HIDS_Init(void)
  * @retval BodySensorLocationValue: The new value to be written
  */
 tBleStatus HIDS_Update_Char(uint16_t UUID, 
-                                   uint8_t service_instance, 
-                                   uint8_t Report_Index, 
-                                   uint8_t report_size,
-                                   uint8_t *pPayload)
+                            uint8_t service_instance, 
+                            uint8_t Report_Index, 
+                            uint8_t report_size,
+                            uint8_t *pPayload)
 {
   tBleStatus return_value = BLE_STATUS_FAILED;
   switch(UUID)
@@ -1189,4 +1189,4 @@ tBleStatus HIDS_Update_Char(uint16_t UUID,
 }/* end HIDS_Update_Char() */
 
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+

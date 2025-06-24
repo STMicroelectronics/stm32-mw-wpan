@@ -6,17 +6,16 @@
   * @brief   Header for ble_controller.c module
   ******************************************************************************
   * @attention
- *
- * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
- * All rights reserved.</center></h2>
- *
- * This software component is licensed by ST under Ultimate Liberty license
- * SLA0044, the "License"; You may not use this file except in compliance with
- * the License. You may obtain a copy of the License at:
- *                             www.st.com/SLA0044
- *
- ******************************************************************************
- */
+  *
+  * Copyright (c) 2018-2021 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
 
 
 /**
@@ -150,10 +149,23 @@ extern "C" {
    */
   void SVCCTL_InitCustomSvc( void );
 
+  /**
+   * @brief This API may be overloaded by the application to select a limited list of ble services to initialize.
+   *        It is called by SVCCTL_Init()
+   *        By default, SVCCTL_SvcInit() is implemented to initialize all BLE services which are included in the
+   *        application at build time
+   *        If it is required to initialize only limited part of the BLE service available in the application,
+   *        this API may be used to call the initialization API of the subset of needed services at run time.
+   *
+   * @param  None
+   * @retval None
+   */
+  void SVCCTL_SvcInit( void );
+
 #ifdef __cplusplus
 }
 #endif
 
 #endif /*__SVCCTL_H */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+

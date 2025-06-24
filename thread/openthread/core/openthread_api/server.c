@@ -7,13 +7,12 @@
   ******************************************************************************
   * @attention
  *
- * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
- * All rights reserved.</center></h2>
+ * Copyright (c) 2018-2021 STMicroelectronics.
+ * All rights reserved.
  *
- * This software component is licensed by ST under Ultimate Liberty license
- * SLA0044, the "License"; You may not use this file except in compliance with
- * the License. You may obtain a copy of the License at:
- *                             www.st.com/SLA0044
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
  *
  ******************************************************************************
  */
@@ -31,10 +30,12 @@
 #include "server.h"
 
 
-#if OPENTHREAD_ENABLE_SERVICE
+#if OPENTHREAD_CONFIG_TMF_NETDATA_SERVICE_ENABLE
 
-OTAPI otError OTCALL otServerGetNetDataLocal(otInstance *aInstance, bool aStable, uint8_t *aData, uint8_t *aDataLength)
+otError otServerGetNetDataLocal(otInstance *aInstance, bool aStable, uint8_t *aData, uint8_t *aDataLength)
 {
+	otError rspData;
+	
     Pre_OtCmdProcessing();
     /* prepare buffer */
     Thread_OT_Cmd_Request_t* p_ot_req = THREAD_Get_OTCmdPayloadBuffer();
@@ -49,11 +50,17 @@ OTAPI otError OTCALL otServerGetNetDataLocal(otInstance *aInstance, bool aStable
     Ot_Cmd_Transfer();
 
     p_ot_req = THREAD_Get_OTCmdRspPayloadBuffer();
-    return (otError)p_ot_req->Data[0];
+    rspData = (otError)p_ot_req->Data[0];
+  
+	Post_OtCmdProcessing();
+  
+	return rspData;
 }
 
 otError otServerAddService(otInstance *aInstance, const otServiceConfig *aConfig)
 {
+	otError rspData;
+	
     Pre_OtCmdProcessing();
     /* prepare buffer */
     Thread_OT_Cmd_Request_t* p_ot_req = THREAD_Get_OTCmdPayloadBuffer();
@@ -66,11 +73,20 @@ otError otServerAddService(otInstance *aInstance, const otServiceConfig *aConfig
     Ot_Cmd_Transfer();
 
     p_ot_req = THREAD_Get_OTCmdRspPayloadBuffer();
-    return (otError)p_ot_req->Data[0];
+    rspData = (otError)p_ot_req->Data[0];
+  
+	Post_OtCmdProcessing();
+  
+	return rspData;
 }
 
-otError otServerRemoveService(otInstance *aInstance, uint32_t aEnterpriseNumber, uint8_t * aServiceData, uint8_t aServiceDataLength)
+otError otServerRemoveService(otInstance *   aInstance,
+                              uint32_t       aEnterpriseNumber,
+                              const uint8_t *aServiceData,
+                              uint8_t        aServiceDataLength)
 {
+	otError rspData;
+	
     Pre_OtCmdProcessing();
     /* prepare buffer */
     Thread_OT_Cmd_Request_t* p_ot_req = THREAD_Get_OTCmdPayloadBuffer();
@@ -85,11 +101,17 @@ otError otServerRemoveService(otInstance *aInstance, uint32_t aEnterpriseNumber,
     Ot_Cmd_Transfer();
 
     p_ot_req = THREAD_Get_OTCmdRspPayloadBuffer();
-    return (otError)p_ot_req->Data[0];
+    rspData = (otError)p_ot_req->Data[0];
+  
+	Post_OtCmdProcessing();
+  
+	return rspData;
 }
 
 otError otServerGetNextService(otInstance *aInstance, otNetworkDataIterator *aIterator, otServiceConfig *aConfig)
 {
+	otError rspData;
+	
     Pre_OtCmdProcessing();
     /* prepare buffer */
     Thread_OT_Cmd_Request_t* p_ot_req = THREAD_Get_OTCmdPayloadBuffer();
@@ -103,29 +125,17 @@ otError otServerGetNextService(otInstance *aInstance, otNetworkDataIterator *aIt
     Ot_Cmd_Transfer();
 
     p_ot_req = THREAD_Get_OTCmdRspPayloadBuffer();
-    return (otError)p_ot_req->Data[0];
+    rspData = (otError)p_ot_req->Data[0];
+  
+	Post_OtCmdProcessing();
+  
+	return rspData;
 }
 
-otError otServerGetNextLeaderService(otInstance *aInstance, otNetworkDataIterator *aIterator, otServiceConfig *aConfig)
+otError otServerRegister(otInstance *aInstance)
 {
-    Pre_OtCmdProcessing();
-    /* prepare buffer */
-    Thread_OT_Cmd_Request_t* p_ot_req = THREAD_Get_OTCmdPayloadBuffer();
-
-    p_ot_req->ID = MSG_M4TOM0_OT_SERVER_GET_NEXT_LEADER_SERVICE;
-
-    p_ot_req->Size=2;
-    p_ot_req->Data[0] = (uint32_t)aIterator;
-    p_ot_req->Data[1] = (uint32_t)aConfig;
-
-    Ot_Cmd_Transfer();
-
-    p_ot_req = THREAD_Get_OTCmdRspPayloadBuffer();
-    return (otError)p_ot_req->Data[0];
-}
-
-OTAPI otError OTCALL otServerRegister(otInstance *aInstance)
-{
+	otError rspData;
+	
     Pre_OtCmdProcessing();
     /* prepare buffer */
     Thread_OT_Cmd_Request_t* p_ot_req = THREAD_Get_OTCmdPayloadBuffer();
@@ -137,7 +147,11 @@ OTAPI otError OTCALL otServerRegister(otInstance *aInstance)
     Ot_Cmd_Transfer();
 
     p_ot_req = THREAD_Get_OTCmdRspPayloadBuffer();
-    return (otError)p_ot_req->Data[0];
+    rspData = (otError)p_ot_req->Data[0];
+  
+	Post_OtCmdProcessing();
+  
+	return rspData;
 }
 
-#endif /* OPENTHREAD_ENABLE_SERVICE */
+#endif /* OPENTHREAD_CONFIG_TMF_NETDATA_SERVICE_ENABLE */

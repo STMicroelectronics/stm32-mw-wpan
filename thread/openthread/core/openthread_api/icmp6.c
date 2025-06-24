@@ -7,13 +7,12 @@
   ******************************************************************************
   * @attention
  *
- * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
- * All rights reserved.</center></h2>
+ * Copyright (c) 2018-2021 STMicroelectronics.
+ * All rights reserved.
  *
- * This software component is licensed by ST under Ultimate Liberty license
- * SLA0044, the "License"; You may not use this file except in compliance with
- * the License. You may obtain a copy of the License at:
- *                             www.st.com/SLA0044
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
  *
  ******************************************************************************
  */
@@ -35,6 +34,8 @@ extern otIcmp6ReceiveCallback otIcmp6ReceiveCb;
 
 otIcmp6EchoMode otIcmp6GetEchoMode(otInstance *aInstance)
 {
+	otIcmp6EchoMode rspData;
+	
     Pre_OtCmdProcessing();
     /* prepare buffer */
     Thread_OT_Cmd_Request_t* p_ot_req = THREAD_Get_OTCmdPayloadBuffer();
@@ -46,7 +47,11 @@ otIcmp6EchoMode otIcmp6GetEchoMode(otInstance *aInstance)
     Ot_Cmd_Transfer();
 
     p_ot_req = THREAD_Get_OTCmdRspPayloadBuffer();
-    return (otIcmp6EchoMode)p_ot_req->Data[0];
+    rspData = (otIcmp6EchoMode)p_ot_req->Data[0];
+  
+    Post_OtCmdProcessing();
+  
+    return rspData;
 }
 
 void otIcmp6SetEchoMode(otInstance *aInstance, otIcmp6EchoMode aMode)
@@ -62,11 +67,13 @@ void otIcmp6SetEchoMode(otInstance *aInstance, otIcmp6EchoMode aMode)
 
     Ot_Cmd_Transfer();
 
-    p_ot_req = THREAD_Get_OTCmdRspPayloadBuffer();
+    Post_OtCmdProcessing();
 }
 
 otError otIcmp6RegisterHandler(otInstance *aInstance, otIcmp6Handler *aHandler)
 {
+	otError rspData;
+	
     Pre_OtCmdProcessing();
     otIcmp6ReceiveCb = aHandler->mReceiveCallback;
     /* prepare buffer */
@@ -80,12 +87,20 @@ otError otIcmp6RegisterHandler(otInstance *aInstance, otIcmp6Handler *aHandler)
     Ot_Cmd_Transfer();
 
     p_ot_req = THREAD_Get_OTCmdRspPayloadBuffer();
-    return (otError)p_ot_req->Data[0];
+    rspData = (otError)p_ot_req->Data[0];
+  
+	Post_OtCmdProcessing();
+  
+	return rspData;
 }
 
-otError otIcmp6SendEchoRequest(otInstance *aInstance, otMessage *aMessage,
-                               const otMessageInfo *aMessageInfo, uint16_t aIdentifier)
+otError otIcmp6SendEchoRequest(otInstance *         aInstance,
+                               otMessage *          aMessage,
+                               const otMessageInfo *aMessageInfo,
+                               uint16_t             aIdentifier)
 {
+	otError rspData;
+	
     Pre_OtCmdProcessing();
     /* prepare buffer */
     Thread_OT_Cmd_Request_t* p_ot_req = THREAD_Get_OTCmdPayloadBuffer();
@@ -100,5 +115,9 @@ otError otIcmp6SendEchoRequest(otInstance *aInstance, otMessage *aMessage,
     Ot_Cmd_Transfer();
 
     p_ot_req = THREAD_Get_OTCmdRspPayloadBuffer();
-    return (otError)p_ot_req->Data[0];
+    rspData = (otError)p_ot_req->Data[0];
+  
+	Post_OtCmdProcessing();
+  
+	return rspData;
 }

@@ -2,39 +2,16 @@
 ******************************************************************************
 * @file   time_scene.h
 * @author  BLE Mesh Team
-* @version V1.10.000
-* @date    15-Jan-2019
 * @brief   Header file for the user application file 
 ******************************************************************************
 * @attention
 *
-* <h2><center>&copy; COPYRIGHT(c) 2017 STMicroelectronics</center></h2>
+* Copyright (c) 2018-2021 STMicroelectronics.
+* All rights reserved.
 *
-* Redistribution and use in source and binary forms, with or without modification,
-* are permitted provided that the following conditions are met:
-*   1. Redistributions of source code must retain the above copyright notice,
-*      this list of conditions and the following disclaimer.
-*   2. Redistributions in binary form must reproduce the above copyright notice,
-*      this list of conditions and the following disclaimer in the documentation
-*      and/or other materials provided with the distribution.
-*   3. Neither the name of STMicroelectronics nor the names of its contributors
-*      may be used to endorse or promote products derived from this software
-*      without specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-* AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-* IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-* FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-* DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-* SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-* CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-* OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*
-* Initial BLE-Mesh is built over Motorola’s Mesh over Bluetooth Low Energy 
-* (MoBLE) technology. The present solution is developed and maintained for both 
-* Mesh library and Applications solely by STMicroelectronics.
+* This software is licensed under terms that can be found in the LICENSE file
+* in the root directory of this software component.
+* If no LICENSE file comes with this software, it is provided AS-IS.
 *
 ******************************************************************************
 */
@@ -74,17 +51,8 @@
 #define SCENE_STORE_UNACK       0X8247
 #define SCENE_DELETE            0X829E
 #define SCENE_DELETE_UNACK      0X829F
-/******************************************************************************/
-/********** Following Section defines the SIG MODEL IDs            ************/
-/******************************************************************************/
-#define TIME_SERVER             0X1200
-#define TIME_SETUP_SERVER       0X1201
-#define SCENE_SERVER            0X1203
-#define SCENE_SETUP_SERVER      0X1204
 
-/******************************************************************************/
-/********** SIG MODEL IDs ends                                     ************/
-/******************************************************************************/ 
+
 MOBLE_RESULT Time_SceneModelServer_GetOpcodeTableCb(const MODEL_OpcodeTableParam_t **data, 
                                                         MOBLEUINT16 *length);
 
@@ -108,5 +76,5 @@ MOBLE_RESULT Time_SceneModelServer_ProcessMessageCb(MOBLE_ADDRESS peer_addr,
    
 #endif /* __TIME_SCENE_H */
 
-/******************* (C) COPYRIGHT 2017 STMicroelectronics *****END OF FILE****/
+
 

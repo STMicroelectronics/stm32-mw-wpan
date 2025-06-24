@@ -4,19 +4,17 @@
  * @author  MCD Application Team
  * @brief   This file implements the USB Device library callbacks and MSP
  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics. 
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the 
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
-  ******************************************************************************
+ * @attention
+ *
+ * Copyright (c) 2018-2021 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ ******************************************************************************
  */
-
 
 /* Includes ------------------------------------------------------------------*/
 #include "app_common.h"
@@ -367,7 +365,7 @@ USBD_StatusTypeDef USBD_LL_SetUSBAddress(USBD_HandleTypeDef * pdev,
  */
 USBD_StatusTypeDef USBD_LL_Transmit(USBD_HandleTypeDef * pdev,
         uint8_t ep_addr,
-        uint8_t * pbuf, uint16_t size)
+        uint8_t * pbuf, uint32_t size)
 {
     HAL_PCD_EP_Transmit(pdev->pData, ep_addr, pbuf, size);
     return USBD_OK;
@@ -383,7 +381,7 @@ USBD_StatusTypeDef USBD_LL_Transmit(USBD_HandleTypeDef * pdev,
  */
 USBD_StatusTypeDef USBD_LL_PrepareReceive(USBD_HandleTypeDef * pdev,
         uint8_t ep_addr,
-        uint8_t * pbuf, uint16_t size)
+        uint8_t * pbuf, uint32_t size)
 {
     HAL_PCD_EP_Receive(pdev->pData, ep_addr, pbuf, size);
     return USBD_OK;
@@ -393,7 +391,7 @@ USBD_StatusTypeDef USBD_LL_PrepareReceive(USBD_HandleTypeDef * pdev,
  * @brief  Returns the last transferred packet size.
  * @param  pdev: Device handle
  * @param  ep_addr: Endpoint Number
- * @retval Recived Data Size
+ * @retval Received Data Size
  */
 uint32_t USBD_LL_GetRxDataSize(USBD_HandleTypeDef *pdev, uint8_t ep_addr)
 {
@@ -432,4 +430,3 @@ void USBD_static_free(void *p)
 }
 
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

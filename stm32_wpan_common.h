@@ -6,13 +6,12 @@
  ******************************************************************************
  * @attention
  *
- * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
- * All rights reserved.</center></h2>
+ * Copyright (c) 2018-2021 STMicroelectronics.
+ * All rights reserved.
  *
- * This software component is licensed by ST under Ultimate Liberty license
- * SLA0044, the "License"; You may not use this file except in compliance with
- * the License. You may obtain a copy of the License at:
- *                             www.st.com/SLA0044
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
  *
  ******************************************************************************
  */
@@ -26,7 +25,7 @@
 extern "C" {
 #endif
 
-#if   defined ( __CC_ARM )
+#if   defined ( __CC_ARM )||defined (__ARMCC_VERSION)
  #define __ASM            __asm                                      /*!< asm keyword for ARM Compiler          */
  #define __INLINE         __inline                                   /*!< inline keyword for ARM Compiler       */
  #define __STATIC_INLINE  static __inline
@@ -45,6 +44,7 @@ extern "C" {
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include "cmsis_compiler.h"
 
   /* -------------------------------- *
    *  Basic definitions               *
@@ -84,10 +84,10 @@ extern "C" {
    *  Some useful macro definitions   *
    * -------------------------------- */
 #undef MAX
-#define MAX( x, y )          (((x)>(y))?(x):(y))
+#define MAX(a, b)  (((a) > (b)) ? (a) : (b))
 
 #undef MIN
-#define MIN( x, y )          (((x)<(y))?(x):(y))
+#define MIN(a, b)  (((a) < (b)) ? (a) : (b))
 
 #undef MODINC
 #define MODINC( a, m )       M_BEGIN  (a)++;  if ((a)>=(m)) (a)=0;  M_END
@@ -144,7 +144,11 @@ extern "C" {
 #undef PACKED_STRUCT
 
 #if defined ( __CC_ARM )
-  #if defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050U)
+  #if defined ( __GNUC__ )
+    /* GNU extension */
+    #define PACKED__ __attribute__((packed))
+    #define PACKED_STRUCT struct PACKED__
+  #elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050U)
     #define PACKED__ __attribute__((packed))
     #define PACKED_STRUCT struct PACKED__
   #else
@@ -156,7 +160,7 @@ extern "C" {
   #define PACKED_STRUCT struct PACKED__
 #elif defined (__ICCARM__)
   #define PACKED_STRUCT __packed struct
-#elif
+#else
   #define PACKED_STRUCT __packed struct
 #endif
 
@@ -165,5 +169,3 @@ extern "C" {
 #endif
 
 #endif /*__STM32_WPAN_COMMON_H */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

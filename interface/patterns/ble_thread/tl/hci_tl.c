@@ -4,17 +4,16 @@
  * @author  MCD Application Team
  * @brief   Function for managing HCI interface.
  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics. 
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the 
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
-  ******************************************************************************
+ * @attention
+ *
+ * Copyright (c) 2018-2021 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ ******************************************************************************
  */
 
 
@@ -26,8 +25,13 @@
 #include "tl.h"
 #include "hci_tl.h"
 
-
 /* Private typedef -----------------------------------------------------------*/
+typedef enum
+{
+  HCI_TL_CMD_RESP_RELEASE,
+  HCI_TL_CMD_RESP_WAIT,
+} HCI_TL_CmdRespStatus_t;
+
 /* Private defines -----------------------------------------------------------*/
 
 /**
@@ -52,6 +56,7 @@ PLACE_IN_SECTION("BLE_DRIVER_CONTEXT") HCI_TL_UserEventFlowStatus_t UserEventFlo
 static tHciContext hciContext;
 static tListNode HciCmdEventQueue;
 static void (* StatusNotCallBackFunction) (HCI_TL_CmdStatus_t status);
+static volatile HCI_TL_CmdRespStatus_t CmdRspStatusFlag;
 
 /* Private function prototypes -----------------------------------------------*/
 static void NotifyCmdStatus(HCI_TL_CmdStatus_t hcicmdstatus);
@@ -78,21 +83,34 @@ void hci_user_evt_proc(void)
   tHCI_UserEvtRxParam UserEvtRxParam;
 
   /**
+   * Up to release version v1.2.0, a while loop was implemented to read out events from the queue as long as
+   * it is not empty. However, in a bare metal implementation, this leads to calling in a "blocking" mode
+   * hci_user_evt_proc() as long as events are received without giving the opportunity to run other tasks
+   * in the background.
+   * From now, the events are reported one by one. When it is checked there is still an event pending in the queue,
+   * a request to the user is made to call again hci_user_evt_proc().
+   * This gives the opportunity to the application to run other background tasks between each event.
+   */
+
+  /**
    * It is more secure to use LST_remove_head()/LST_insert_head() compare to LST_get_next_node()/LST_remove_node()
    * in case the user overwrite the header where the next/prev pointers are located
    */
 
-  while((LST_is_empty(&HciAsynchEventQueue) == FALSE) && (UserEventFlow != HCI_TL_UserEventFlow_Disable))
+  if((LST_is_empty(&HciAsynchEventQueue) == FALSE) && (UserEventFlow != HCI_TL_UserEventFlow_Disable))
   {
     LST_remove_head ( &HciAsynchEventQueue, (tListNode **)&phcievtbuffer );
-
-    UserEventFlow = HCI_TL_UserEventFlow_Enable;
 
     if (hciContext.UserEvtRx != NULL)
     {
       UserEvtRxParam.pckt = phcievtbuffer;
+      UserEvtRxParam.status = HCI_TL_UserEventFlow_Enable;
       hciContext.UserEvtRx((void *)&UserEvtRxParam);
       UserEventFlow = UserEvtRxParam.status;
+    }
+    else
+    {
+      UserEventFlow = HCI_TL_UserEventFlow_Enable;
     }
 
     if(UserEventFlow != HCI_TL_UserEventFlow_Disable)
@@ -107,6 +125,12 @@ void hci_user_evt_proc(void)
       LST_insert_head ( &HciAsynchEventQueue, (tListNode *)phcievtbuffer );
     }
   }
+
+  if((LST_is_empty(&HciAsynchEventQueue) == FALSE) && (UserEventFlow != HCI_TL_UserEventFlow_Disable))
+  {
+    hci_notify_asynch_evt((void*) &HciAsynchEventQueue);
+  }
+
 
   return;
 }
@@ -126,6 +150,7 @@ void hci_resume_flow( void )
 
 int hci_send_req(struct hci_request *p_cmd, uint8_t async)
 {
+  (void)(async);
   uint16_t opcode;
   TL_CcEvt_t  *pcommand_complete_event;
   TL_CsEvt_t    *pcommand_status_event;
@@ -136,6 +161,8 @@ int hci_send_req(struct hci_request *p_cmd, uint8_t async)
   NotifyCmdStatus(HCI_TL_CmdBusy);
   local_cmd_status = HCI_TL_CmdBusy;
   opcode = ((p_cmd->ocf) & 0x03ff) | ((p_cmd->ogf) << 10);
+  
+  CmdRspStatusFlag = HCI_TL_CMD_RESP_WAIT;
   SendCmd(opcode, p_cmd->clen, p_cmd->cparam);
 
   while(local_cmd_status == HCI_TL_CmdBusy)
@@ -257,6 +284,25 @@ static void TlEvtReceived(TL_EvtPacket_t *hcievt)
     LST_insert_tail(&HciAsynchEventQueue, (tListNode *)hcievt);
     hci_notify_asynch_evt((void*) &HciAsynchEventQueue); /**< Notify the application a full HCI event has been received */
   }
+
+  return;
+}
+
+/* Weak implementation ----------------------------------------------------------------*/
+__WEAK void hci_cmd_resp_wait(uint32_t timeout)
+{
+  (void)timeout;
+
+  while(CmdRspStatusFlag != HCI_TL_CMD_RESP_RELEASE);
+
+  return;
+}
+
+__WEAK void hci_cmd_resp_release(uint32_t flag)
+{
+  (void)flag;
+
+  CmdRspStatusFlag = HCI_TL_CMD_RESP_RELEASE;
 
   return;
 }

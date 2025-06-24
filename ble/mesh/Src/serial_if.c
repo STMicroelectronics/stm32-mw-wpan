@@ -1,40 +1,17 @@
 /**
 ******************************************************************************
 * @file    serial_if.c
-* @author  BLE Mesh Team
-* @version V1.10.000
-* @date    15-Jan-2019
+* @author  MCD Application Team
 * @brief   Serial Interface file 
 ******************************************************************************
 * @attention
 *
-* <h2><center>&copy; COPYRIGHT(c) 2018 STMicroelectronics</center></h2>
+* Copyright (c) 2018-2021 STMicroelectronics.
+* All rights reserved.
 *
-* Redistribution and use in source and binary forms, with or without modification,
-* are permitted provided that the following conditions are met:
-*   1. Redistributions of source code must retain the above copyright notice,
-*      this list of conditions and the following disclaimer.
-*   2. Redistributions in binary form must reproduce the above copyright notice,
-*      this list of conditions and the following disclaimer in the documentation
-*      and/or other materials provided with the distribution.
-*   3. Neither the name of STMicroelectronics nor the names of its contributors
-*      may be used to endorse or promote products derived from this software
-*      without specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-* AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-* IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-* FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-* DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-* SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-* CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-* OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*
-* Initial BLE-Mesh is built over Motorola’s Mesh over Bluetooth Low Energy 
-* (MoBLE) technology. The present solution is developed and maintained for both 
-* Mesh library and Applications solely by STMicroelectronics.
+* This software is licensed under terms that can be found in the LICENSE file
+* in the root directory of this software component.
+* If no LICENSE file comes with this software, it is provided AS-IS.
 *
 ******************************************************************************
 */
@@ -42,17 +19,33 @@
 #include <string.h>
 #include <stdio.h>
 #include <errno.h>
+#include "serial_if.h"
+#include "ble_common.h"
 #include "hal_common.h"
 #include "mesh_cfg.h"
-#include "serial_if.h"
 #if ENABLE_SERIAL_CONTROL
 #include "serial_ctrl.h"
 #endif
 #if ENABLE_UT
 #include "serial_ut.h"
 #endif
+#if ENABLE_APPLI_TEST
+#include "appli_test.h"
+#endif
+#include "stm_queue.h"
+#include "stm32_seq.h"
+#if ENABLE_SERIAL_PRVN
+#include "serial_prvn.h"
+#endif
+#ifdef ENABLE_SENSOR_MODEL_SERVER_SETUP
+#include "appli_sensor.h"
+#endif
 
-/** @addtogroup BLE_Mesh
+#ifdef ENABLE_LIGHT_MODEL_SERVER_LC_SETUP
+#include "appli_light_lc.h"
+#endif
+
+/** @addtogroup BlueNRG_Mesh
 *  @{
 */
 
@@ -61,29 +54,94 @@
 */
 
 /* Private define ------------------------------------------------------------*/
-#define RECEIVE_STRING_SIZE     48
+#define C_SIZE_CMD_STRING                                                   256U
+#define RX_BUFFER_SIZE                                                        8U
+
+#define ESC                                                                 0x1b
 
 /* Private macro -------------------------------------------------------------*/
 typedef enum 
 {
-    STATE_IDLE,
-    STATE_INPUT_ENTERED,
+  STATE_IDLE,
+  STATE_INPUT_ENTERED,
 }tSerialState;
 
 /* Private variables ---------------------------------------------------------*/
-static char Rcvd_String[RECEIVE_STRING_SIZE];
+uint8_t button_emulation; /* Button emulation state */
+uint8_t LongPressButton; /* Button press state */
 tSerialState SerialCurrentState = STATE_IDLE;
 
+static uint8_t aRxBuffer[RX_BUFFER_SIZE];
+static uint8_t CommandString[C_SIZE_CMD_STRING];
+static uint16_t indexReceiveChar = 0;
+
+extern EXTI_HandleTypeDef exti_handle;
+
 /* Private function prototypes -----------------------------------------------*/
-static int Serial_GetString(MOBLEUINT8*, MOBLEUINT8);
 #if (!ENABLE_UT)
 __weak void SerialUt_Process(char *rcvdStringBuff, uint16_t rcvdStringSize);
 #endif 
 #if (!ENABLE_SERIAL_CONTROL)
 __weak void SerialCtrl_Process(char *rcvdStringBuff, uint16_t rcvdStringSize);
 #endif
+#if (!ENABLE_APPLI_TEST)
+__weak void SerialResponse_Process(char *rcvdStringBuff, uint16_t rcvdStringSize);
+#endif
+#if (!ENABLE_SERIAL_PRVN)
+__weak void SerialPrvn_Process(char *rcvdStringBuff, uint16_t rcvdStringSize);
+#endif
 
 /* Private functions ---------------------------------------------------------*/
+/**
+ * @brief  DBG_TRACE USART Rx Transfer completed callback
+ * @retval None
+ */
+static void Serial_RxCpltCallback( void )
+{
+  /* Filling buffer and wait for '\r' char */
+  if (indexReceiveChar < C_SIZE_CMD_STRING)
+  {
+    if (aRxBuffer[0] == '\r')
+    {
+      CommandString[indexReceiveChar] = 0; /* Make last char NULL for string comp */
+        
+      TRACE_I(TF_SERIAL_PRINTS,"received %s\n", CommandString);
+      
+      UTIL_SEQ_SetTask( 1<<CFG_TASK_MESH_SERIAL_REQ_ID, CFG_SCH_PRIO_0);
+    }
+#if 1
+    else if (aRxBuffer[0] == '\b')
+    {
+      if (indexReceiveChar > 1)
+      {
+        indexReceiveChar--;
+      }
+      UTIL_SEQ_SetTask( 1<< CFG_TASK_MESH_UART_RX_REQ_ID, CFG_SCH_PRIO_0);
+    }
+#endif
+    else
+    {
+      if ((aRxBuffer[0] >= 'a') && (aRxBuffer[0] <= 'z'))
+      {
+        aRxBuffer[0] = aRxBuffer[0] + 'A' - 'a';
+      }
+      CommandString[indexReceiveChar++] = aRxBuffer[0];
+      UTIL_SEQ_SetTask( 1<< CFG_TASK_MESH_UART_RX_REQ_ID, CFG_SCH_PRIO_0);
+    }
+  }
+
+  return;
+ }
+ 
+/**
+ * @brief  DBG_TRACE USART Rx Transfer completed callback
+ * @retval None
+ */
+static void Serial_Uart_Rx_Task( void )
+{
+  HW_UART_Receive_IT(CFG_DEBUG_TRACE_UART, aRxBuffer, 1U, Serial_RxCpltCallback);
+}
+ 
 /**
 * @brief  This funcrion is used to parse the string given by the user(If 
 *         implemented in application, 
@@ -94,8 +152,11 @@ __weak void SerialCtrl_Process(char *rcvdStringBuff, uint16_t rcvdStringSize);
 */ 
 #if (!ENABLE_SERIAL_CONTROL)
 __weak void SerialCtrl_Process(char *rcvdStringBuff, uint16_t rcvdStringSize)
-{
-}
+{}
+__weak void SerialCtrlVendorRead_Process(char *rcvdStringBuff, uint16_t rcvdStringSize)
+{}
+__weak void SerialCtrlVendorWrite_Process(char *rcvdStringBuff, uint16_t rcvdStringSize)
+{}
 #endif
 /**
 * @brief  Upper Tester control commands (If implemented in application, 
@@ -108,6 +169,18 @@ __weak void SerialUt_Process(char *rcvdStringBuff, uint16_t rcvdStringSize)
 {
 }
 #endif 
+
+#if (!ENABLE_APPLI_TEST)
+__weak void SerialResponse_Process(char *rcvdStringBuff, uint16_t rcvdStringSize)
+{
+}
+#endif
+
+#if (!ENABLE_SERIAL_PRVN)
+__weak void SerialPrvn_Process(char *rcvdStringBuff, uint16_t rcvdStringSize)
+{
+}
+#endif
 /**
 * @brief  Processes data coming from serial port   
 * @param  void  
@@ -115,90 +188,95 @@ __weak void SerialUt_Process(char *rcvdStringBuff, uint16_t rcvdStringSize)
 */
 void Serial_InterfaceProcess(void)
 {
-    int stringSize = 0;
-    
-    stringSize = Serial_GetString((MOBLEUINT8*)Rcvd_String, sizeof(Rcvd_String) - 1);
-    /* Check if no input has come from user */
-    if (!stringSize)
-    {
-        return;
-    }
-    else
-    {
-        Rcvd_String[stringSize] = 0; /* Make last char NULL for string comp */
-
-        /* Check if correct string has been entered or not */
-        if (!strncmp(Rcvd_String, "ctrl", 4))
-        {            
-            SerialCtrl_Process(Rcvd_String, stringSize);
-        }
-        else if(!strncmp(Rcvd_String, "test", 4))
-        {
-            SerialUt_Process(Rcvd_String, stringSize);  
-        }
-        else
-        {
-            TRACE_M(TF_SERIAL_CTRL,"Not Entered valid test parameters\r\n");  
-            SerialCurrentState = STATE_IDLE;
-        }      
-    }
-}
-
-/**
-* @brief  Gets the input from user from Serial port
-* @param  text: String to take input 
-* @param  size: Size of string
-* @retval int: Running Status of the test case
-*/
-static int Serial_GetString(MOBLEUINT8* text, MOBLEUINT8 size)
-{
-    static int index = 0;
-    int stringSize = 0;
-    
-#ifndef __IAR_SYSTEMS_ICC__
-        clearerr(stdin);
+  /* Reset button emulation state */
+  button_emulation = 0;
+  LongPressButton = 0;
+#ifdef ENABLE_SERIAL_CONTROL
+  if (!strncmp((char const*)CommandString, "ATCL", 4))
+  {            
+    SerialCtrl_Process((char *)CommandString, indexReceiveChar);
+  }
+  else if (!strncmp((char const*)CommandString, "ATVR", 4))
+  {            
+    SerialCtrlVendorRead_Process((char *)CommandString, indexReceiveChar);
+  }
+  else if (!strncmp((char const*)CommandString, "ATVW", 4))
+  {            
+    SerialCtrlVendorWrite_Process((char *)CommandString, indexReceiveChar);
+  }
 #endif
-    int ch = getchar();
-    /* Note: Please use Full Library configuration in project options to use the full 
-         configuration of the C/C++ runtime library for printf and scanf functionality */
-    /* Check for error in get function */
-    if (ch == EOF)
-    {                       
-#ifndef __IAR_SYSTEMS_ICC__
-        clearerr(stdin);
+#if ENABLE_UT
+  else if(!strncmp((char const*)CommandString, "ATUT", 4))
+  {
+    SerialUt_Process((char *)CommandString, indexReceiveChar);  
+  }
 #endif
-    }
-    /* check for backspace press */
-    else if (ch == 0x7F)
-    {
-        if (index) --index;
-        TRACE_M(TF_SERIAL_CTRL,"\b");
-    }
-    /* Check for the enter key*/
-    else if ((ch == 0x0D) || (ch == 0xFFFFFF0D))
-    {
-        /* check for first time enter to display help message */
-        if (!index)
-        {
-            stringSize = 1;
-        }
-        else
-        {
-            stringSize = index;
-        }
-        index = 0;
-        TRACE_M(TF_SERIAL_CTRL,"\n\r");
-        return stringSize;    
-    }
-    else
-    {
-      TRACE_M(TF_SERIAL_CTRL,"%c", ch);
-        if (index < size)
-        {
-            text[index++] = (char)ch;
-        }
-    }
-    return stringSize;
+#if ENABLE_APPLI_TEST
+  else if(!strncmp((char const*)CommandString, "ATAP", 4))
+  {
+    SerialResponse_Process((char *)CommandString, indexReceiveChar);  
+  }
+#endif
+#ifdef ENABLE_AUTH_TYPE_INPUT_OOB        
+  else if(!strncmp((char const*)CommandString, "ATIN", 4))
+  {
+    Appli_BleSerialInputOOBValue((char *)CommandString, indexReceiveChar);  
+  }
+#endif
+#if ENABLE_SERIAL_PRVN        
+  else if(!strncmp((char const*)CommandString, "ATEP", 4))
+  {
+     SerialPrvn_Process((char *)CommandString, indexReceiveChar);
+  }
+#endif        
+#ifdef ENABLE_SENSOR_MODEL_SERVER_SETUP
+  else if(!strncmp((char const*)CommandString, "ATSNR", 5))
+  {
+    Appli_Sensor_SerialCmd((char *)CommandString, indexReceiveChar);
+  }
+#endif
+#ifdef ENABLE_LIGHT_MODEL_SERVER_LC
+  else if(!strncmp((char const*)CommandString, "ATLLC", 5))
+  {
+    Appli_Light_LC_SerialCmd((char *)CommandString, indexReceiveChar);
+  }
+#endif
+  else if(!strncmp((char const*)CommandString, "SW1", 3))
+  {
+    button_emulation = 1; /* Set the button emulation */
+    TRACE_I(TF_SERIAL_PRINTS,"SW1 OK\r\n");
+    exti_handle.Line = EXTI_LINE_4;
+    HAL_EXTI_GenerateSWI(&exti_handle);
+  }
+  else if(!strncmp((char const*)CommandString, "SW2", 3))
+  {
+    button_emulation = 1; /* Set the button emulation */
+    TRACE_I(TF_SERIAL_PRINTS,"SW2 OK\r\n");
+    exti_handle.Line = EXTI_LINE_0;
+    HAL_EXTI_GenerateSWI(&exti_handle);
+  }
+  else if(!strncmp((char const*)CommandString, "SW3", 3))
+  {
+    button_emulation = 1; /* Set the button emulation */
+    TRACE_I(TF_SERIAL_PRINTS,"SW3 OK\r\n");
+    exti_handle.Line = EXTI_LINE_1;
+    HAL_EXTI_GenerateSWI(&exti_handle);
+  }
+  else if (strcmp((char const*)CommandString, "LONG_PRESS") == 0)
+  {
+    TRACE_I(TF_SERIAL_PRINTS,"LONG_PRESS OK\r\n");
+    LongPressButton=1;
+  } 
+  else
+  {
+    TRACE_I(TF_SERIAL_PRINTS,"Not Entered valid test parameters\r\n");  
+    SerialCurrentState = STATE_IDLE;
+  }      
+  while(indexReceiveChar)
+  {
+    CommandString[--indexReceiveChar] = 0;
+  }
+  UTIL_SEQ_SetTask( 1<<CFG_TASK_MESH_UART_RX_REQ_ID, CFG_SCH_PRIO_0);
 }
 
 /**
@@ -207,7 +285,7 @@ static int Serial_GetString(MOBLEUINT8* text, MOBLEUINT8 size)
 * @retval MOBLEUINT8
 */ 
 
- MOBLEUINT8 Serial_CharToHexConvert(char addr)
+MOBLEUINT8 Serial_CharToHexConvert(char addr)
 {
   MOBLEUINT8 retVal=0;
   if (addr >= '0' && addr <= '9')
@@ -216,10 +294,29 @@ static int Serial_GetString(MOBLEUINT8* text, MOBLEUINT8 size)
         retVal = addr+10-'a';
   else if (addr >= 'A' && addr <= 'F')
         retVal = addr+10-'A';
+  else if (addr == ' ')
+        retVal = addr+10-' ';
   else
        return 0xFF;
     
   return retVal;
+}
+
+/**
+  * @brief  This function initialize the Rx from UART
+  * @param  None
+  * @retval None
+  */
+void Serial_Init(void)
+{
+  button_emulation = 0; /* Reset the button emulation state */
+  LongPressButton = 0; /* Reset the button press state */
+  
+  UTIL_SEQ_RegTask( 1<< CFG_TASK_MESH_SERIAL_REQ_ID, UTIL_SEQ_RFU, Serial_InterfaceProcess);
+  UTIL_SEQ_RegTask( 1<< CFG_TASK_MESH_UART_RX_REQ_ID, UTIL_SEQ_RFU, Serial_Uart_Rx_Task );
+  UTIL_SEQ_SetTask( 1<< CFG_TASK_MESH_UART_RX_REQ_ID, CFG_SCH_PRIO_0);
+
+  return;
 }
 
 /**
@@ -229,7 +326,7 @@ static int Serial_GetString(MOBLEUINT8* text, MOBLEUINT8 size)
 */
 void BLEMesh_PrintStringCb(const char *message)
 {
-    TRACE_M(TF_SERIAL_CTRL,"%s", (char*)message);
+    TRACE_I(TF_SERIAL_PRINTS,"%s\n\r", (char*)message);
 }
 /**
 * @brief  Callback function to print data array on screen LSB first 
@@ -241,9 +338,10 @@ void BLEMesh_PrintDataCb(MOBLEUINT8* data, MOBLEUINT16 size)
 {
     for (int count=0; count<size; ++count)
     {
-        TRACE_M(TF_SERIAL_CTRL,"%02X", data[count]);
+        TRACE_I(TF_SERIAL_PRINTS,"%02X", data[count]);
     }
-    TRACE_M(TF_SERIAL_CTRL,"\n\r");
+    
+    TRACE_I(TF_SERIAL_PRINTS,"\n\r");
 }
 /**
 * @}
@@ -252,4 +350,4 @@ void BLEMesh_PrintDataCb(MOBLEUINT8* data, MOBLEUINT16 size)
 /**
 * @}
 */
-/******************* (C) COPYRIGHT 2018 STMicroelectronics *****END OF FILE****/
+

@@ -7,13 +7,12 @@
   ******************************************************************************
   * @attention
  *
- * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
- * All rights reserved.</center></h2>
+ * Copyright (c) 2018-2021 STMicroelectronics.
+ * All rights reserved.
  *
- * This software component is licensed by ST under Ultimate Liberty license
- * SLA0044, the "License"; You may not use this file except in compliance with
- * the License. You may obtain a copy of the License at:
- *                             www.st.com/SLA0044
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
  *
  ******************************************************************************
  */
@@ -28,16 +27,20 @@
 #endif
 
 /* Includes ------------------------------------------------------------------*/
+#include "backbone_router_ftd.h"
+#include "backbone_router.h"
+#include "dns_client.h"
+#include "dnssd_server.h"
 #include "link.h"
 #include "ip6.h"
 #include "instance.h"
 #include "thread.h"
 #include "commissioner.h"
-#include "dns.h"
 #include "udp.h"
 #include "icmp6.h"
 #include "joiner.h"
 #include "link_raw.h"
+#include "link_metrics.h"
 #include "coap.h"
 #include "channel_manager.h"
 #include "channel_monitor.h"
@@ -45,6 +48,19 @@
 #include "jam_detection.h"
 #include "server.h"
 #include "thread_ftd.h"
+#include "network_time.h"
+#include "coap_secure.h"
+#include "sntp.h"
+#include "coap_secure.h"
+#include "dataset_updater.h"
+#include "srp_client.h"
+#include "srp_client_buffers.h"
+#include "srp_server.h"
+#include "netdata_publisher.h"
+#include "netdiag.h"
+#include "ping_sender.h"
+#include "tcp.h"
+#include "mesh_diag.h"
 
 #include "stm32wbxx_core_interface_def.h"
 #include "stm32wbxx_hal.h"

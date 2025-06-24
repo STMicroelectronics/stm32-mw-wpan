@@ -2,39 +2,16 @@
 ******************************************************************************
 * @file    types.h
 * @author  BLE Mesh Team
-* @version V1.10.000
-* @date    15-Jan-2019
 * @brief   Header file for various type declarations 
 ******************************************************************************
 * @attention
 *
-* <h2><center>&copy; COPYRIGHT(c) 2017 STMicroelectronics</center></h2>
+* Copyright (c) 2018-2021 STMicroelectronics.
+* All rights reserved.
 *
-* Redistribution and use in source and binary forms, with or without modification,
-* are permitted provided that the following conditions are met:
-*   1. Redistributions of source code must retain the above copyright notice,
-*      this list of conditions and the following disclaimer.
-*   2. Redistributions in binary form must reproduce the above copyright notice,
-*      this list of conditions and the following disclaimer in the documentation
-*      and/or other materials provided with the distribution.
-*   3. Neither the name of STMicroelectronics nor the names of its contributors
-*      may be used to endorse or promote products derived from this software
-*      without specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-* AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-* IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-* FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-* DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-* SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-* CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-* OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-* OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*
-* Initial BLE-Mesh is built over Motorola’s Mesh over Bluetooth Low Energy 
-* (MoBLE) technology. The present solution is developed and maintained for both 
-* Mesh library and Applications solely by STMicroelectronics.
+* This software is licensed under terms that can be found in the LICENSE file
+* in the root directory of this software component.
+* If no LICENSE file comes with this software, it is provided AS-IS.
 *
 ******************************************************************************
 */
@@ -47,8 +24,8 @@
 * \file types.h
 * \brief This file defines Motorola Solutions Bluetooth LE Mesh Library types.
 *
-* This file contains data types defined in the ST BlueNRG-Mesh Library . Please refer to the
-* desription of each type to get the information on it's purpose.
+* This file contains data types defined in the ST BLE-Mesh Library . Please refer to the
+* description of each type to get the information on it's purpose.
 */
 
 #ifndef NULL
@@ -153,6 +130,22 @@ typedef MOBLE_RESULT (*MOBLE_HEARTBEAT_CB)(MOBLE_ADDRESS src, MOBLE_ADDRESS dst,
 */
 typedef MOBLE_RESULT (*MOBLE_ATTENTION_TIMER_CB)(void);
 
+//typedef __packed struct
+typedef struct __attribute__((packed))
+{
+  MOBLEUINT8 length;
+  MOBLEUINT8 type;
+  MOBLEUINT8 data[];
+} LE_ADV;
+
+/**
+  * @brief  WEAK_FUNCTION
+  *         Use the WEAK_FUNCTION macro to declare a weak function.
+  *         Usage:  WEAK_FUNCTION(int my_weak_function(void))
+  */
+#define WEAK_FUNCTION(function)        __weak function
+
+
 #endif /* _TYPES_H */
-/******************* (C) COPYRIGHT 2017 STMicroelectronics *****END OF FILE****/
+
 

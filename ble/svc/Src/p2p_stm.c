@@ -5,17 +5,16 @@
   * @brief   Peer to Peer Service (Custom STM)
   ******************************************************************************
   * @attention
- *
- * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
- * All rights reserved.</center></h2>
- *
- * This software component is licensed by ST under Ultimate Liberty license
- * SLA0044, the "License"; You may not use this file except in compliance with
- * the License. You may obtain a copy of the License at:
- *                             www.st.com/SLA0044
- *
- ******************************************************************************
- */
+  *
+  * Copyright (c) 2018-2021 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
 
 
 /* Includes ------------------------------------------------------------------*/
@@ -70,7 +69,7 @@ PLACE_IN_SECTION("BLE_DRIVER_CONTEXT") static PeerToPeerContext_t aPeerToPeerCon
  * END of Section BLE_DRIVER_CONTEXT
  */
 /* Private function prototypes -----------------------------------------------*/
-static SVCCTL_EvtAckStatus_t PeerToPeer_Event_Handler(void *pckt);
+static SVCCTL_EvtAckStatus_t PeerToPeer_Event_Handler(void *Event);
 
 
 /* Functions Definition ------------------------------------------------------*/
@@ -107,7 +106,7 @@ static SVCCTL_EvtAckStatus_t PeerToPeer_Event_Handler(void *Event)
 {
   SVCCTL_EvtAckStatus_t return_value;
   hci_event_pckt *event_pckt;
-  evt_blue_aci *blue_evt;
+  evt_blecore_aci *blecore_evt;
   aci_gatt_attribute_modified_event_rp0    * attribute_modified;
   P2PS_STM_App_Notification_evt_t Notification;
 
@@ -116,14 +115,14 @@ static SVCCTL_EvtAckStatus_t PeerToPeer_Event_Handler(void *Event)
 
   switch(event_pckt->evt)
   {
-    case EVT_VENDOR:
+    case HCI_VENDOR_SPECIFIC_DEBUG_EVT_CODE:
     {
-      blue_evt = (evt_blue_aci*)event_pckt->data;
-      switch(blue_evt->ecode)
+      blecore_evt = (evt_blecore_aci*)event_pckt->data;
+      switch(blecore_evt->ecode)
       {
-        case EVT_BLUE_GATT_ATTRIBUTE_MODIFIED:
+        case ACI_GATT_ATTRIBUTE_MODIFIED_VSEVT_CODE:
        {
-          attribute_modified = (aci_gatt_attribute_modified_event_rp0*)blue_evt->data;
+          attribute_modified = (aci_gatt_attribute_modified_event_rp0*)blecore_evt->data;
             if(attribute_modified->Attr_Handle == (aPeerToPeerContext.P2PNotifyServerToClientCharHdle + 2))
             {
               /**
@@ -170,7 +169,7 @@ static SVCCTL_EvtAckStatus_t PeerToPeer_Event_Handler(void *Event)
           break;
       }
     }
-    break; /* HCI_EVT_VENDOR_SPECIFIC */
+    break; /* HCI_HCI_VENDOR_SPECIFIC_DEBUG_EVT_CODE_SPECIFIC */
 
     default:
       break;
@@ -211,7 +210,10 @@ void P2PS_STM_Init(void)
     aci_gatt_add_service(UUID_TYPE_128,
                       (Service_UUID_t *) &uuid16,
                       PRIMARY_SERVICE,
-                      8,
+#if (BLE_CFG_OTA_REBOOT_CHAR != 0)
+                      2+
+#endif                      
+                      6,
                       &(aPeerToPeerContext.PeerToPeerSvcHdle));
 
     /**
@@ -290,4 +292,4 @@ tBleStatus P2PS_STM_App_Update_Char(uint16_t UUID, uint8_t *pPayload)
   return result;
 }/* end P2PS_STM_Init() */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+

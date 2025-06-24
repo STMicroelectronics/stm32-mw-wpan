@@ -6,13 +6,12 @@
  ******************************************************************************
  * @attention
  *
- * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
- * All rights reserved.</center></h2>
+ * Copyright (c) 2018-2021 STMicroelectronics.
+ * All rights reserved.
  *
- * This software component is licensed by ST under Ultimate Liberty license
- * SLA0044, the "License"; You may not use this file except in compliance with
- * the License. You may obtain a copy of the License at:
- *                             www.st.com/SLA0044
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
  *
  ******************************************************************************
  */
@@ -608,7 +607,7 @@ typedef struct {
     uint8_t status;
     /*! The name of the PIB attribute attempted to read*/
     uint8_t PIB_attribute;
-    /*! The lenght of the PIB attribute Value return*/
+    /*! The length of the PIB attribute Value return*/
     uint8_t PIB_attribute_value_len;
    /*! Byte Stuffing to keep 32 bit alignment*/
     uint8_t a_stuffing[1];
@@ -1058,6 +1057,8 @@ typedef struct {
     uint32_t ranging_offset;
     /*! The FoM characterizing the ranging measurement*/
     uint8_t ranging_FOM;
+    /*! The Received Signal Strength Indicator measured*/
+    int8_t rssi;
 } MAC_dataInd_t;
 
 /******************************************************************************/
@@ -1208,44 +1209,49 @@ typedef MAC_Status_t (* MAC_MCPSDataIndCbPtr) ( const MAC_dataInd_t * pDataInd )
 MLME POLL Indication*/
 typedef MAC_Status_t (*MAC_MLMEPollIndCbPtr) ( const MAC_pollInd_t * pPollInd );
 
+/**
+  * @}
+  */
+
+/**@addtogroup  STM32WB55_MAC
+  * @{
+  */
+
 /******************************************************************************/
 /** @brief Defines callback init structure to be set by NWK upper layer before
  MAC Initialisation */
+
 typedef struct {
-  MAC_MLMEAssociateCnfCbPtr  mlmeAssociateCnfCb;
-  MAC_MLMEAssociateIndCbPtr  mlmeAssociateIndCb;
-  MAC_MLMEBeaconNotifyIndCbPtr  mlmeBeaconNotifyIndCb;
-  MAC_MLMECalibrateCnfCbPtr  mlmeCalibrateCnfCb;
-  MAC_MLMECommStatusIndCbPtr  mlmeCommStatusIndCb;
-  MAC_MLMEDisassociateCnfCbPtr   mlmeDisassociateCnfCb;
-  MAC_MLMEDisassociateIndCbPtr  mlmeDisassociateIndCb;
-  MAC_MLMEDpsCnfCbPtr  mlmeDpsCnfCb;
-  MAC_MLMEDpsIndCbPtr  mlmeDpsIndCb;
-  MAC_MLMEGetCnfCbPtr  mlmeGetCnfCb;
-  MAC_MLMEGtsCnfCbPtr  mlmeGtsCnfCb;
-  MAC_MLMEGtsIndCbPtr  mlmeGtsIndCb;
-  MAC_MLMEOrphanIndCbPtr  mlmeOrphanIndCb;
-  MAC_MLMEPollCnfCbPtr  mlmePollCnfCb;
-  MAC_MLMEResetCnfCbPtr  mlmeResetCnfCb;
-  MAC_MLMERxEnableCnfCbPtr  mlmeRxEnableCnfCb;
-  MAC_MLMEScanCnfCbPtr  mlmeScanCnfCb;
-  MAC_MLMESetCnfCbPtr  mlmeSetCnfCb;
-  MAC_MLMESoundingCnfCbPtr  mlmeSoundingCnfCb;
-  MAC_MLMEStartCnfCbPtr  mlmeStartCnfCb;
-  MAC_MLMESyncLossIndCbPtr  mlmeSyncLossIndCb;
-  MAC_MCPSDataIndCbPtr  mcpsDataIndCb;
-  MAC_MCPSDataCnfCbPtr  mcpsDataCnfCb;
-  MAC_MCPSPurgeCnfCbPtr mcpsPurgeCnfCb;
-  MAC_MLMEPollIndCbPtr mlmePollIndCb;
+  MAC_MLMEAssociateCnfCbPtr       mlmeAssociateCnfCb;
+  MAC_MLMEAssociateIndCbPtr       mlmeAssociateIndCb;
+  MAC_MLMEBeaconNotifyIndCbPtr    mlmeBeaconNotifyIndCb;
+  MAC_MLMECalibrateCnfCbPtr       mlmeCalibrateCnfCb;
+  MAC_MLMECommStatusIndCbPtr      mlmeCommStatusIndCb;
+  MAC_MLMEDisassociateCnfCbPtr    mlmeDisassociateCnfCb;
+  MAC_MLMEDisassociateIndCbPtr    mlmeDisassociateIndCb;
+  MAC_MLMEDpsCnfCbPtr             mlmeDpsCnfCb;
+  MAC_MLMEDpsIndCbPtr             mlmeDpsIndCb;
+  MAC_MLMEGetCnfCbPtr             mlmeGetCnfCb;
+  MAC_MLMEGtsCnfCbPtr             mlmeGtsCnfCb;
+  MAC_MLMEGtsIndCbPtr             mlmeGtsIndCb;
+  MAC_MLMEOrphanIndCbPtr          mlmeOrphanIndCb;
+  MAC_MLMEPollCnfCbPtr            mlmePollCnfCb;
+  MAC_MLMEResetCnfCbPtr           mlmeResetCnfCb;
+  MAC_MLMERxEnableCnfCbPtr        mlmeRxEnableCnfCb;
+  MAC_MLMEScanCnfCbPtr            mlmeScanCnfCb;
+  MAC_MLMESetCnfCbPtr             mlmeSetCnfCb;
+  MAC_MLMESoundingCnfCbPtr        mlmeSoundingCnfCb;
+  MAC_MLMEStartCnfCbPtr           mlmeStartCnfCb;
+  MAC_MLMESyncLossIndCbPtr        mlmeSyncLossIndCb;
+  MAC_MCPSDataIndCbPtr            mcpsDataIndCb;
+  MAC_MCPSDataCnfCbPtr            mcpsDataCnfCb;
+  MAC_MCPSPurgeCnfCbPtr           mcpsPurgeCnfCb;
+  MAC_MLMEPollIndCbPtr            mlmePollIndCb;
 } MAC_callbacks_t;
 
 
 /**
   * @}
   */
-
-
-
-
 
 #endif /* _INC_802_15_4_MAC_TYPES_H_ */

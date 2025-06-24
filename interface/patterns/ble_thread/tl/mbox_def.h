@@ -4,17 +4,16 @@
  * @author  MCD Application Team
  * @brief   Mailbox definition
  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics. 
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the 
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
-  ******************************************************************************
+ * @attention
+ *
+ * Copyright (c) 2018-2021 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ ******************************************************************************
  */
 
 
@@ -92,12 +91,26 @@ extern "C" {
     uint8_t   *notack_buffer;
     uint8_t   *clicmdrsp_buffer;
     uint8_t   *otcmdrsp_buffer;
+    uint8_t   *clinot_buffer;
   } MB_ThreadTable_t;
+
+  typedef struct
+  {
+    uint8_t   *clicmdrsp_buffer;
+    uint8_t   *m0cmd_buffer;
+  } MB_LldTestsTable_t;
+
+  typedef struct
+  {
+    uint8_t   *cmdrsp_buffer;
+    uint8_t   *m0cmd_buffer;
+  } MB_BleLldTable_t;
 
   typedef struct
   {
     uint8_t   *notifM0toM4_buffer;
     uint8_t   *appliCmdM4toM0_buffer;
+    uint8_t   *requestM0toM4_buffer;
   } MB_ZigbeeTable_t;
   /**
    * msg
@@ -143,7 +156,32 @@ extern "C" {
     MB_TracesTable_t        *p_traces_table;
     MB_Mac_802_15_4_t       *p_mac_802_15_4_table;
     MB_ZigbeeTable_t        *p_zigbee_table;
+    MB_LldTestsTable_t      *p_lld_tests_table;
+    MB_BleLldTable_t        *p_ble_lld_table;
 } MB_RefTable_t;
+
+/**
+ * This table shall be used only in the case the CPU2 runs the FUS.
+ * It is used by the command SHCI_GetWirelessFwInfo()
+ */
+typedef struct
+{
+  uint32_t  DeviceInfoTableState;
+  uint8_t   Reserved1;
+  uint8_t   LastFusActiveState;
+  uint8_t   LastWirelessStackState;
+  uint8_t   CurrentWirelessStackType;
+  uint32_t  SafeBootVersion;
+  uint32_t  FusVersion;
+  uint32_t  FusMemorySize;
+  uint32_t  WirelessStackVersion;
+  uint32_t  WirelessStackMemorySize;
+  uint32_t  WirelessFirmwareBleInfo;
+  uint32_t  WirelessFirmwareThreadInfo;
+  uint32_t  Reserved2;
+  uint64_t  UID64;
+  uint16_t  DeviceId;
+} MB_FUS_DeviceInfoTable_t ;
 
 #ifdef __cplusplus
 }
@@ -186,6 +224,13 @@ extern "C" {
  *   |                                                 |
  *   |<---HW_IPCC_BLE_EVENT_CHANNEL--------------------|
  *   |                                                 |
+ *   |             (BLE LLD)                           |
+ *   |----HW_IPCC_BLE_LLD_CMD_CHANNEL----------------->|
+ *   |                                                 |
+ *   |<---HW_IPCC_BLE_LLD_RSP_CHANNEL------------------|
+ *   |                                                 |
+ *   |<---HW_IPCC_BLE_LLD_M0_CMD_CHANNEL---------------|
+ *   |                                                 |
  *   |             (MAC)                               |
  *   |----HW_IPCC_MAC_802_15_4_CMD_RSP_CHANNEL-------->|
  *   |                                                 |
@@ -210,8 +255,11 @@ extern "C" {
 #define HW_IPCC_THREAD_OT_CMD_RSP_CHANNEL               LL_IPCC_CHANNEL_3
 #define HW_IPCC_ZIGBEE_CMD_APPLI_CHANNEL                LL_IPCC_CHANNEL_3
 #define HW_IPCC_MAC_802_15_4_CMD_RSP_CHANNEL            LL_IPCC_CHANNEL_3
-#define HW_IPCC_THREAD_CLI_CMD_CHANNEL                  LL_IPCC_CHANNEL_5
 #define HW_IPCC_MM_RELEASE_BUFFER_CHANNEL               LL_IPCC_CHANNEL_4
+#define HW_IPCC_THREAD_CLI_CMD_CHANNEL                  LL_IPCC_CHANNEL_5
+#define HW_IPCC_LLDTESTS_CLI_CMD_CHANNEL                LL_IPCC_CHANNEL_5
+#define HW_IPCC_BLE_LLD_CLI_CMD_CHANNEL                 LL_IPCC_CHANNEL_5
+#define HW_IPCC_BLE_LLD_CMD_CHANNEL                     LL_IPCC_CHANNEL_5
 #define HW_IPCC_HCI_ACL_DATA_CHANNEL                    LL_IPCC_CHANNEL_6
 
 /** CPU2 */
@@ -220,8 +268,13 @@ extern "C" {
 #define HW_IPCC_THREAD_NOTIFICATION_ACK_CHANNEL         LL_IPCC_CHANNEL_3
 #define HW_IPCC_ZIGBEE_APPLI_NOTIF_ACK_CHANNEL          LL_IPCC_CHANNEL_3
 #define HW_IPCC_MAC_802_15_4_NOTIFICATION_ACK_CHANNEL   LL_IPCC_CHANNEL_3
+#define HW_IPCC_LLDTESTS_M0_CMD_CHANNEL                 LL_IPCC_CHANNEL_3
+#define HW_IPCC_BLE_LLD_M0_CMD_CHANNEL                  LL_IPCC_CHANNEL_3
 #define HW_IPCC_TRACES_CHANNEL                          LL_IPCC_CHANNEL_4
 #define HW_IPCC_THREAD_CLI_NOTIFICATION_ACK_CHANNEL     LL_IPCC_CHANNEL_5
+#define HW_IPCC_LLDTESTS_CLI_RSP_CHANNEL                LL_IPCC_CHANNEL_5
+#define HW_IPCC_BLE_LLD_CLI_RSP_CHANNEL                 LL_IPCC_CHANNEL_5
+#define HW_IPCC_BLE_LLD_RSP_CHANNEL                     LL_IPCC_CHANNEL_5
+#define HW_IPCC_ZIGBEE_M0_REQUEST_CHANNEL               LL_IPCC_CHANNEL_5
 #endif /*__MBOX_H */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
