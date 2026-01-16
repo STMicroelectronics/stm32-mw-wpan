@@ -15,25 +15,7 @@
  *****************************************************************************
  */
 
-#include "ble_hal_aci.h"
-
-tBleStatus aci_hal_get_fw_build_number( uint16_t* Build_Number )
-{
-  struct hci_request rq;
-  aci_hal_get_fw_build_number_rp0 resp;
-  Osal_MemSet( &resp, 0, sizeof(resp) );
-  Osal_MemSet( &rq, 0, sizeof(rq) );
-  rq.ogf = 0x3f;
-  rq.ocf = 0x000;
-  rq.rparam = &resp;
-  rq.rlen = sizeof(resp);
-  if ( hci_send_req(&rq, FALSE) < 0 )
-    return BLE_STATUS_TIMEOUT;
-  if ( resp.Status )
-    return resp.Status;
-  *Build_Number = resp.Build_Number;
-  return BLE_STATUS_SUCCESS;
-}
+#include "auto/ble_hal_aci.h"
 
 tBleStatus aci_hal_write_config_data( uint8_t Offset,
                                       uint8_t Length,
@@ -252,28 +234,6 @@ tBleStatus aci_hal_set_event_mask( uint32_t Event_Mask )
   return status;
 }
 
-tBleStatus aci_hal_get_pm_debug_info( uint8_t* Allocated_For_TX,
-                                      uint8_t* Allocated_For_RX,
-                                      uint8_t* Allocated_MBlocks )
-{
-  struct hci_request rq;
-  aci_hal_get_pm_debug_info_rp0 resp;
-  Osal_MemSet( &resp, 0, sizeof(resp) );
-  Osal_MemSet( &rq, 0, sizeof(rq) );
-  rq.ogf = 0x3f;
-  rq.ocf = 0x01c;
-  rq.rparam = &resp;
-  rq.rlen = sizeof(resp);
-  if ( hci_send_req(&rq, FALSE) < 0 )
-    return BLE_STATUS_TIMEOUT;
-  if ( resp.Status )
-    return resp.Status;
-  *Allocated_For_TX = resp.Allocated_For_TX;
-  *Allocated_For_RX = resp.Allocated_For_RX;
-  *Allocated_MBlocks = resp.Allocated_MBlocks;
-  return BLE_STATUS_SUCCESS;
-}
-
 tBleStatus aci_hal_set_peripheral_latency( uint8_t Enable )
 {
   struct hci_request rq;
@@ -449,20 +409,6 @@ tBleStatus aci_hal_rx_stop( void )
   Osal_MemSet( &rq, 0, sizeof(rq) );
   rq.ogf = 0x3f;
   rq.ocf = 0x034;
-  rq.rparam = &status;
-  rq.rlen = 1;
-  if ( hci_send_req(&rq, FALSE) < 0 )
-    return BLE_STATUS_TIMEOUT;
-  return status;
-}
-
-tBleStatus aci_hal_stack_reset( void )
-{
-  struct hci_request rq;
-  tBleStatus status = 0;
-  Osal_MemSet( &rq, 0, sizeof(rq) );
-  rq.ogf = 0x3f;
-  rq.ocf = 0x03b;
   rq.rparam = &status;
   rq.rlen = 1;
   if ( hci_send_req(&rq, FALSE) < 0 )

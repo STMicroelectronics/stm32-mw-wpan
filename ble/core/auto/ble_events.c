@@ -15,7 +15,7 @@
  *****************************************************************************
  */
 
-#include "ble_events.h"
+#include "auto/ble_events.h"
 
 /* Event process functions declaration */
 static void hci_disconnection_complete_event_process( const uint8_t* in );
@@ -27,7 +27,7 @@ static void hci_encryption_key_refresh_complete_event_process( const uint8_t* in
 static void hci_le_connection_complete_event_process( const uint8_t* in );
 static void hci_le_advertising_report_event_process( const uint8_t* in );
 static void hci_le_connection_update_complete_event_process( const uint8_t* in );
-static void hci_le_read_remote_features_complete_event_process( const uint8_t* in );
+static void hci_le_read_remote_features_page_0_complete_event_process( const uint8_t* in );
 static void hci_le_long_term_key_request_event_process( const uint8_t* in );
 static void hci_le_data_length_change_event_process( const uint8_t* in );
 static void hci_le_read_local_p256_public_key_complete_event_process( const uint8_t* in );
@@ -40,9 +40,7 @@ static void hci_le_scan_timeout_event_process( const uint8_t* in );
 static void hci_le_advertising_set_terminated_event_process( const uint8_t* in );
 static void hci_le_scan_request_received_event_process( const uint8_t* in );
 static void hci_le_channel_selection_algorithm_event_process( const uint8_t* in );
-static void aci_hal_end_of_radio_activity_event_process( const uint8_t* in );
-static void aci_hal_scan_req_report_event_process( const uint8_t* in );
-static void aci_hal_warning_event_process( const uint8_t* in );
+static void aci_warning_event_process( const uint8_t* in );
 static void aci_gap_limited_discoverable_event_process( const uint8_t* in );
 static void aci_gap_pairing_complete_event_process( const uint8_t* in );
 static void aci_gap_pass_key_req_event_process( const uint8_t* in );
@@ -94,6 +92,8 @@ static void aci_gatt_notification_complete_event_process( const uint8_t* in );
 static void aci_gatt_read_ext_event_process( const uint8_t* in );
 static void aci_gatt_indication_ext_event_process( const uint8_t* in );
 static void aci_gatt_notification_ext_event_process( const uint8_t* in );
+static void aci_hal_end_of_radio_activity_event_process( const uint8_t* in );
+static void aci_hal_scan_req_report_event_process( const uint8_t* in );
 
 /* HCI event process functions table */
 const hci_event_table_t hci_event_table[HCI_EVENT_TABLE_SIZE] =
@@ -112,7 +112,7 @@ const hci_event_table_t hci_le_event_table[HCI_LE_EVENT_TABLE_SIZE] =
   { 0x0001U, hci_le_connection_complete_event_process },
   { 0x0002U, hci_le_advertising_report_event_process },
   { 0x0003U, hci_le_connection_update_complete_event_process },
-  { 0x0004U, hci_le_read_remote_features_complete_event_process },
+  { 0x0004U, hci_le_read_remote_features_page_0_complete_event_process },
   { 0x0005U, hci_le_long_term_key_request_event_process },
   { 0x0007U, hci_le_data_length_change_event_process },
   { 0x0008U, hci_le_read_local_p256_public_key_complete_event_process },
@@ -130,9 +130,7 @@ const hci_event_table_t hci_le_event_table[HCI_LE_EVENT_TABLE_SIZE] =
 /* HCI VS event process functions table */
 const hci_event_table_t hci_vs_event_table[HCI_VS_EVENT_TABLE_SIZE] =
 {
-  { 0x0004U, aci_hal_end_of_radio_activity_event_process },
-  { 0x0005U, aci_hal_scan_req_report_event_process },
-  { 0x0006U, aci_hal_warning_event_process },
+  { 0x0006U, aci_warning_event_process },
   { 0x0400U, aci_gap_limited_discoverable_event_process },
   { 0x0401U, aci_gap_pairing_complete_event_process },
   { 0x0402U, aci_gap_pass_key_req_event_process },
@@ -184,6 +182,8 @@ const hci_event_table_t hci_vs_event_table[HCI_VS_EVENT_TABLE_SIZE] =
   { 0x0C1DU, aci_gatt_read_ext_event_process },
   { 0x0C1EU, aci_gatt_indication_ext_event_process },
   { 0x0C1FU, aci_gatt_notification_ext_event_process },
+  { 0x1804U, aci_hal_end_of_radio_activity_event_process },
+  { 0x1805U, aci_hal_scan_req_report_event_process },
 };
 
 /* HCI_DISCONNECTION_COMPLETE_EVENT callback function */
@@ -349,20 +349,20 @@ static void hci_le_connection_update_complete_event_process( const uint8_t* in )
                                            rp0->Supervision_Timeout );
 }
 
-/* HCI_LE_READ_REMOTE_FEATURES_COMPLETE_EVENT callback function */
-__WEAK void hci_le_read_remote_features_complete_event( uint8_t Status,
-                                                        uint16_t Connection_Handle,
-                                                        const uint8_t* LE_Features )
+/* HCI_LE_READ_REMOTE_FEATURES_PAGE_0_COMPLETE_EVENT callback function */
+__WEAK void hci_le_read_remote_features_page_0_complete_event( uint8_t Status,
+                                                               uint16_t Connection_Handle,
+                                                               const uint8_t* LE_Features )
 {
 }
 
-/* HCI_LE_READ_REMOTE_FEATURES_COMPLETE_EVENT process function */
-static void hci_le_read_remote_features_complete_event_process( const uint8_t* in )
+/* HCI_LE_READ_REMOTE_FEATURES_PAGE_0_COMPLETE_EVENT process function */
+static void hci_le_read_remote_features_page_0_complete_event_process( const uint8_t* in )
 {
-  hci_le_read_remote_features_complete_event_rp0 *rp0 = (void*)in;
-  hci_le_read_remote_features_complete_event( rp0->Status,
-                                              rp0->Connection_Handle,
-                                              rp0->LE_Features );
+  hci_le_read_remote_features_page_0_complete_event_rp0 *rp0 = (void*)in;
+  hci_le_read_remote_features_page_0_complete_event( rp0->Status,
+                                                     rp0->Connection_Handle,
+                                                     rp0->LE_Features );
 }
 
 /* HCI_LE_LONG_TERM_KEY_REQUEST_EVENT callback function */
@@ -590,56 +590,20 @@ static void hci_le_channel_selection_algorithm_event_process( const uint8_t* in 
                                             rp0->Channel_Selection_Algorithm );
 }
 
-/* ACI_HAL_END_OF_RADIO_ACTIVITY_EVENT callback function */
-__WEAK void aci_hal_end_of_radio_activity_event( uint8_t Last_State,
-                                                 uint8_t Next_State,
-                                                 uint32_t Next_State_SysTime,
-                                                 uint8_t Last_State_Slot,
-                                                 uint8_t Next_State_Slot )
+/* ACI_WARNING_EVENT callback function */
+__WEAK void aci_warning_event( uint8_t Warning_Type,
+                               uint8_t Data_Length,
+                               const uint8_t* Data )
 {
 }
 
-/* ACI_HAL_END_OF_RADIO_ACTIVITY_EVENT process function */
-static void aci_hal_end_of_radio_activity_event_process( const uint8_t* in )
+/* ACI_WARNING_EVENT process function */
+static void aci_warning_event_process( const uint8_t* in )
 {
-  aci_hal_end_of_radio_activity_event_rp0 *rp0 = (void*)in;
-  aci_hal_end_of_radio_activity_event( rp0->Last_State,
-                                       rp0->Next_State,
-                                       rp0->Next_State_SysTime,
-                                       rp0->Last_State_Slot,
-                                       rp0->Next_State_Slot );
-}
-
-/* ACI_HAL_SCAN_REQ_REPORT_EVENT callback function */
-__WEAK void aci_hal_scan_req_report_event( uint8_t RSSI,
-                                           uint8_t Peer_Address_Type,
-                                           const uint8_t* Peer_Address )
-{
-}
-
-/* ACI_HAL_SCAN_REQ_REPORT_EVENT process function */
-static void aci_hal_scan_req_report_event_process( const uint8_t* in )
-{
-  aci_hal_scan_req_report_event_rp0 *rp0 = (void*)in;
-  aci_hal_scan_req_report_event( rp0->RSSI,
-                                 rp0->Peer_Address_Type,
-                                 rp0->Peer_Address );
-}
-
-/* ACI_HAL_WARNING_EVENT callback function */
-__WEAK void aci_hal_warning_event( uint8_t Warning_Type,
-                                   uint8_t Data_Length,
-                                   const uint8_t* Data )
-{
-}
-
-/* ACI_HAL_WARNING_EVENT process function */
-static void aci_hal_warning_event_process( const uint8_t* in )
-{
-  aci_hal_warning_event_rp0 *rp0 = (void*)in;
-  aci_hal_warning_event( rp0->Warning_Type,
-                         rp0->Data_Length,
-                         rp0->Data );
+  aci_warning_event_rp0 *rp0 = (void*)in;
+  aci_warning_event( rp0->Warning_Type,
+                     rp0->Data_Length,
+                     rp0->Data );
 }
 
 /* ACI_GAP_LIMITED_DISCOVERABLE_EVENT callback function */
@@ -1365,9 +1329,10 @@ static void aci_gatt_prepare_write_permit_req_event_process( const uint8_t* in )
 }
 
 /* ACI_GATT_EATT_BEARER_EVENT callback function */
-__WEAK void aci_gatt_eatt_bearer_event( uint8_t Channel_Index,
+__WEAK void aci_gatt_eatt_bearer_event( uint16_t Connection_Handle,
+                                        uint8_t Channel_Index,
                                         uint8_t EAB_State,
-                                        uint8_t Status )
+                                        uint16_t MTU )
 {
 }
 
@@ -1375,9 +1340,10 @@ __WEAK void aci_gatt_eatt_bearer_event( uint8_t Channel_Index,
 static void aci_gatt_eatt_bearer_event_process( const uint8_t* in )
 {
   aci_gatt_eatt_bearer_event_rp0 *rp0 = (void*)in;
-  aci_gatt_eatt_bearer_event( rp0->Channel_Index,
+  aci_gatt_eatt_bearer_event( rp0->Connection_Handle,
+                              rp0->Channel_Index,
                               rp0->EAB_State,
-                              rp0->Status );
+                              rp0->MTU );
 }
 
 /* ACI_GATT_MULT_NOTIFICATION_EVENT callback function */
@@ -1466,5 +1432,41 @@ static void aci_gatt_notification_ext_event_process( const uint8_t* in )
                                    rp0->Offset,
                                    rp0->Attribute_Value_Length,
                                    rp0->Attribute_Value );
+}
+
+/* ACI_HAL_END_OF_RADIO_ACTIVITY_EVENT callback function */
+__WEAK void aci_hal_end_of_radio_activity_event( uint8_t Last_State,
+                                                 uint8_t Next_State,
+                                                 uint32_t Next_State_SysTime,
+                                                 uint8_t Last_State_Slot,
+                                                 uint8_t Next_State_Slot )
+{
+}
+
+/* ACI_HAL_END_OF_RADIO_ACTIVITY_EVENT process function */
+static void aci_hal_end_of_radio_activity_event_process( const uint8_t* in )
+{
+  aci_hal_end_of_radio_activity_event_rp0 *rp0 = (void*)in;
+  aci_hal_end_of_radio_activity_event( rp0->Last_State,
+                                       rp0->Next_State,
+                                       rp0->Next_State_SysTime,
+                                       rp0->Last_State_Slot,
+                                       rp0->Next_State_Slot );
+}
+
+/* ACI_HAL_SCAN_REQ_REPORT_EVENT callback function */
+__WEAK void aci_hal_scan_req_report_event( uint8_t RSSI,
+                                           uint8_t Peer_Address_Type,
+                                           const uint8_t* Peer_Address )
+{
+}
+
+/* ACI_HAL_SCAN_REQ_REPORT_EVENT process function */
+static void aci_hal_scan_req_report_event_process( const uint8_t* in )
+{
+  aci_hal_scan_req_report_event_rp0 *rp0 = (void*)in;
+  aci_hal_scan_req_report_event( rp0->RSSI,
+                                 rp0->Peer_Address_Type,
+                                 rp0->Peer_Address );
 }
 
