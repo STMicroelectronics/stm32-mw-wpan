@@ -303,7 +303,7 @@
 
 /*
  * BAP_MEM_BLOCKS_CIG_SIZE_BYTES: this macro returns the amount of memory, in bytes, needed for the storage of the
- * Isocrhronous Channel information whose size depends on the number of supported CIGes and CISes per CIG.
+ * Isochronous Channel information whose size depends on the number of supported CIGes and CISes per CIG.
  *
  * @param max_num_cig: Maximum number of CIGes
  *
@@ -472,6 +472,17 @@
                                                                                 max_metadata_length_per_bsrc, \
                                                                                 max_num_base_subgroups)))
 
+/* #############################################################################
+   #       Defines and MACRO used to allocate memory resource required to      #
+   #       rebuild the BASE structure.                                         #
+   ############################################################################ */
+
+/*
+ * BAP_MAX_BASE_STRUCTURE_SIZE_BYTES: memory size used for BASE structure reassembly
+ */
+#define BAP_MAX_BASE_STRUCTURE_SIZE_BYTES               (255u)
+
+#define BAP_BASE_TOTAL_BUFFER_SIZE                      BAP_MAX_BASE_STRUCTURE_SIZE_BYTES
 
 /* #############################################################################
    #       Defines and MACRO used to allocate memory resource required to      #

@@ -1,6 +1,6 @@
 # STM32 WPAN Middleware Library MCU Software Component
 
-![tag](https://img.shields.io/badge/tag-v2.8.0-brightgreen.svg)
+![tag](https://img.shields.io/badge/tag-v2.9.0-brightgreen.svg)
 
 ## Overview of the STM32Cube MCU offer on GitHub
 

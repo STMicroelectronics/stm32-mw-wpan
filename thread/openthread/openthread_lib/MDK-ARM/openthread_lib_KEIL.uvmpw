@@ -25,11 +25,11 @@
 
   <project>
     <PathAndName>.\thread_ftd_matter_keil_config\thread_ftd_matter_keil_config.uvprojx</PathAndName>
+    <NodeIsExpanded>1</NodeIsExpanded>
   </project>
 
   <project>
     <PathAndName>.\thread_mtd_light_no_tcp_matter_keil_config\thread_mtd_light_no_tcp_matter_keil_config.uvprojx</PathAndName>
-    <NodeIsActive>1</NodeIsActive>
   </project>
 
   <project>
@@ -42,6 +42,15 @@
 
   <project>
     <PathAndName>.\thread_mtd_light_no_tcp_matter_mbedtls_config\thread_mtd_light_no_tcp_matter_mbedtls_config.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\thread_mtd_light_with_tcp_matter_keil_config\thread_mtd_light_with_tcp_matter_keil_config.uvprojx</PathAndName>
+  </project>
+
+  <project>
+    <PathAndName>.\thread_mtd_light_with_tcp_matter_mbedtls_config\thread_mtd_light_with_tcp_matter_mbedtls_config.uvprojx</PathAndName>
+    <NodeIsActive>1</NodeIsActive>
   </project>
 
 </ProjectWorkspace>

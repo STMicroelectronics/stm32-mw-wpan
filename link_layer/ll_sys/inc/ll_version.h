@@ -58,7 +58,7 @@
 /**
  * @brief Get the brief Link Layer firmware version
  * 
- * @details This function retunrs the brief firmware version of the Link Layer.
+ * @details This function returns the brief firmware version of the Link Layer.
  *          The version is represented as a single byte and follow this organization:
  *          - Bits 7-6: Major version
  *          - Bits 5-2: Minor version

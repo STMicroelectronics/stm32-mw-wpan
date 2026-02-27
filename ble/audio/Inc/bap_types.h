@@ -162,6 +162,21 @@ typedef struct
                                          */
 } BAP_AudioStreamCtrlCltConfig_t;
 
+/* Configuration settings of Base structure
+ * These configuration settings are required by Broadcast Sink or BASS for rebuilding a fragmented base structure 
+ * over several AUX_CHAIN_IND
+ */
+typedef struct
+{
+  uint8_t       *pStartRamAddr;         /* Start address of the RAM buffer allocated for memory resource of
+                                         * Base structure management.
+                                         * It must be a 32bit aligned RAM area.
+                                         */
+  uint16_t      RamSize;                /* Size of the RAM allocated at pStartRamAddr pointer
+                                         * Computed thanks to BAP_BASE_TOTAL_BUFFER_SIZE macro
+                                         */
+} BAP_BroadcastBASEStruct_t;
+
 /* Configuration settings of Isochronous Channels Management.
  * These configuration settings are required by Unicast Client and Unicast Server.
  */
@@ -265,8 +280,9 @@ typedef struct
                                                          */
   BAP_AudioStreamCtrlSrvConfig_t        ASCSSrvConfig;  /* Audio Stream Endpoint Management Unicast Server */
   BAP_AudioStreamCtrlCltConfig_t        ASCSCltConfig;  /* Audio Stream Endpoint Management Unicast Client */
-  BAP_BroadcastAudioScanCltConfig_t     BASSCltConfig;  /* Broadcast Audio Scan Broadcast Assistant */
-  BAP_BroadcastAudioScanSrvConfig_t     BASSSrvConfig;  /* Broadcast Audio Scan Scan Delegator */
+  BAP_BroadcastAudioScanCltConfig_t     BASSCltConfig;  /* Broadcast Audio Broadcast Assistant */
+  BAP_BroadcastAudioScanSrvConfig_t     BASSSrvConfig;  /* Broadcast Audio Scan Delegator */
+  BAP_BroadcastBASEStruct_t             BASEStrConfig;  /* Base structure */
   BAP_ISOChannelConfig_t                ISOChnlConfig;  /* Isochronous Channels Configuration*/
   BAP_NvmMgmtConfig_t                   NvmMgmtConfig;  /* Non-Volatile Memory Management for BAP Services restoration
                                                          * Unicast Client, Unicast Server, Scan Delegator and
@@ -335,20 +351,20 @@ typedef struct
   uint8_t               PrefRetransmissionNumber;       /* Server preferred value for the Retransmission_Number
                                                          * parameter to be written by the client for the ASE in
                                                          * the Config QoS operation
-                                                         * Range: 0x00–0xFF
-                                                         * 0xFF = Don’t care
+                                                         * Range: 0x00-0xFF
+                                                         * 0xFF = Don't care
                                                          */
   uint16_t              MaxTransportLatency;            /* Maximum Server supported value for the Max_Transport_Latency
                                                          * parameter to be written by the client for the ASE in
                                                          * the Config QoS operation defined.
-                                                         * Range: 0x0005–0x0FA0
+                                                         * Range: 0x0005-0x0FA0
                                                          * Units: ms
                                                          */
   uint32_t              PresentationDelayMin;           /* Minimum server supported Presentation_Delay for the ASE
-                                                         * Units: µs
+                                                         * Units: us
                                                          */
   uint32_t              PresentationDelayMax;           /* Maximum server supported Presentation_Delay for the ASE
-                                                         * Units: µs
+                                                         * Units: us
                                                          */
   uint32_t              PrefPresentationDelayMin;       /* Server preferred minimum Presentation_Delay for the ASE.
                                                          * The server can use this parameter and
@@ -357,7 +373,7 @@ typedef struct
                                                          * operate in.
                                                          * If nonzero, shall be = Presentation_Delay_Min
                                                          * A value of 0x000000 indicates no preference.
-                                                         * Units: µs
+                                                         * Units: us
                                                          */
   uint32_t              PrefPresentationDelayMax;       /* Server preferred maximum Presentation_Delay for the ASE.
                                                          * The server can use this parameter and
@@ -366,7 +382,7 @@ typedef struct
                                                          * prefers to operate in.
                                                          * If nonzero, shall be = Presentation_Delay_Max
                                                          * A value of 0x000000 indicates no preference.
-                                                         * Units: µs
+                                                         * Units: us
                                                          */
 
 }BAP_PrefQoSConf_t;
@@ -670,8 +686,8 @@ typedef struct
   uint8_t aBroadcastId[3u];                     /* Broadcast_ID of the Broadcast Source */
 
   uint8_t PaSync;                               /* 0x00: Do not synchronize to PA
-                                                 * 0x01: Synchronize to PA – PAST available
-                                                 * 0x02: Synchronize to PA – PAST not available
+                                                 * 0x01: Synchronize to PA - PAST available
+                                                 * 0x02: Synchronize to PA - PAST not available
                                                  */
 
   uint16_t PaInterval;                           /* SyncInfo field Interval parameter value
@@ -691,8 +707,8 @@ typedef struct
                                                          */
 
   uint8_t       PaSync;                                 /* 0x00: Do not synchronize to PA
-                                                         * 0x01: Synchronize to PA – PAST available
-                                                         * 0x02: Synchronize to PA – PAST not available
+                                                         * 0x01: Synchronize to PA - PAST available
+                                                         * 0x02: Synchronize to PA - PAST not available
                                                          */
 
   uint16_t      PaInterval;                             /* SyncInfo field Interval parameter value

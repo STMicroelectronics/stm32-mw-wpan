@@ -637,7 +637,7 @@ padding-right: 0px;
 
 td.gsib_a {padding:0px;padding-top:4px;padding-left:3px;}
 </style></head><body><font face="arial"><h1>STM32WBA BLE Wireless Interface</h1><p>This document specifies the commands and events that constitute the Application Command Interface (ACI) and Host Controller Interface (HCI) of the Bluetooth<span style="font-size:smaller;"><sup>&reg;</sup></span> LE Host and Controller protocol stack (BLE stack) dedicated to the STM32WBA wireless microcontroller.</p><i>Notes:<br>
-- In this document, the term "Core Specification" refers to the Bluetooth Core Specification Version 6.1.<br>
+- In this document, the term "Core Specification" refers to the Bluetooth Core Specification Version 6.2.<br>
 - ACI commands and events follow the HCI data formats as defined in the Core Specification [Vol 4, Part E, 5], using HCI vendor-specific codes.<br>
 </i><p>See also:</p><p><a href="https://www.st.com/en/microcontrollers-microprocessors/stm32wba-series.html">STM32WBA Series website</a></p><p><a href="https://wiki.st.com/stm32mcu/wiki/Connectivity:STM32WBA_BLE_Stack_Integration">STM32WBA BLE stack software integration wiki page</a></p><p><a href="https://www.st.com/resource/en/programming_manual/pm0271-guidelines-for-bluetooth-low-energy-stack-programming-on-stm32wb-stm32wba-mcus-stmicroelectronics.pdf">Guidelines for BLE stack programming on STM32WB/STM32WBA MCUs</a></p><h2>Contents</h2><p><a href="#HCI/ACI commands_anchor">HCI/ACI commands</a></p><p><a href="#HCI/ACI events_anchor">HCI/ACI events</a></p><p><a href="#Annex_anchor">Annex</a></p><p><a href="#Revision history_anchor">Revision history</a></p><p></p><h1><a name="HCI/ACI commands_anchor">HCI/ACI commands</a></h1><p><a href="#HCI commands_anchor">HCI commands</a></p><p><a href="#HCI Test commands_anchor">HCI Test commands</a></p><p><a href="#ACI General commands_anchor">ACI General commands</a></p><p><a href="#ACI GAP commands_anchor">ACI GAP commands</a></p><p><a href="#ACI GATT/ATT commands_anchor">ACI GATT/ATT commands</a></p><p><a href="#ACI L2CAP commands_anchor">ACI L2CAP commands</a></p><p><a href="#ACI HAL commands_anchor">ACI HAL commands</a></p><p>Note: in the command tables, a "Y" in the "BP", "BF", "PO" or "LO" column, means that the corresponding command applies to the "Basic Plus", "Basic Features", "Peripheral Only" or "Link Layer Only" variant of the BLE stack, respectively.</p><h2><a name="HCI commands_anchor">HCI commands</a></h2><h2></h2><table width="800" border="1" class="reference">
 <tr><th>Command</th><th>Opcode</th><th>BP</th><th>BF</th><th>PO</th><th>LO</th></tr>
@@ -690,15 +690,22 @@ td.gsib_a {padding:0px;padding-top:4px;padding-left:3px;}
 </td><td></td><td></td><td></td><td><p>Y</p>
 </td></tr>
 <tr><td><a href="#HCI_SET_EVENT_MASK_PAGE_2_anchor">HCI_SET_EVENT_MASK_PAGE_2</a></td><td><p>0x0C63</p>
-</td><td></td><td></td><td></td><td><p>Y</p>
+</td><td><p>Y</p>
+</td><td><p>Y</p>
+</td><td><p>Y</p>
+</td><td><p>Y</p>
 </td></tr>
 <tr><td><a href="#HCI_READ_AUTHENTICATED_PAYLOAD_TIMEOUT_anchor">HCI_READ_AUTHENTICATED_PAYLOAD_TIMEOUT</a></td><td><p>0x0C7B</p>
 </td><td><p>Y</p>
-</td><td></td><td></td><td><p>Y</p>
+</td><td><p>Y</p>
+</td><td><p>Y</p>
+</td><td><p>Y</p>
 </td></tr>
 <tr><td><a href="#HCI_WRITE_AUTHENTICATED_PAYLOAD_TIMEOUT_anchor">HCI_WRITE_AUTHENTICATED_PAYLOAD_TIMEOUT</a></td><td><p>0x0C7C</p>
 </td><td><p>Y</p>
-</td><td></td><td></td><td><p>Y</p>
+</td><td><p>Y</p>
+</td><td><p>Y</p>
+</td><td><p>Y</p>
 </td></tr>
 <tr><td><a href="#HCI_SET_ECOSYSTEM_BASE_INTERVAL_anchor">HCI_SET_ECOSYSTEM_BASE_INTERVAL</a></td><td><p>0x0C82</p>
 </td><td></td><td></td><td></td><td><p>Y</p>
@@ -1284,7 +1291,7 @@ td.gsib_a {padding:0px;padding-top:4px;padding-left:3px;}
 </td><td><p>1</p>
 </td><td><p>Status error code.</p>
 </td><td></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_READ_CONNECTION_ACCEPT_TIMEOUT_anchor">HCI_READ_CONNECTION_ACCEPT_TIMEOUT</a></h2><h3>Description</h3><p>This command reads the value for the Connection Accept Timeout configuration parameter.<br>See Core Specification [Vol 4, Part E, 7.3.13].</p><h3>Input parameters</h3><p>None</p><h3>Output parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_READ_CONNECTION_ACCEPT_TIMEOUT_anchor">HCI_READ_CONNECTION_ACCEPT_TIMEOUT</a></h2><h3>Description</h3><p>This command reads the value for the Connection Accept Timeout configuration parameter.<br>See Core Specification [Vol 4, Part E, 7.3.13].</p><i>This command is not available on STM32WBA25/28.</i><h3>Input parameters</h3><p>None</p><h3>Output parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Status</p>
 </td><td><p>1</p>
@@ -1293,7 +1300,7 @@ td.gsib_a {padding:0px;padding-top:4px;padding-left:3px;}
 <tr><td><p>Connection_Accept_Timeout</p>
 </td><td><p>2</p>
 </td><td></td><td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_WRITE_CONNECTION_ACCEPT_TIMEOUT_anchor">HCI_WRITE_CONNECTION_ACCEPT_TIMEOUT</a></h2><h3>Description</h3><p>This command writes the value for the Connection Accept Timeout configuration parameter.<br>See Core Specification [Vol 4, Part E, 7.3.14].</p><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_WRITE_CONNECTION_ACCEPT_TIMEOUT_anchor">HCI_WRITE_CONNECTION_ACCEPT_TIMEOUT</a></h2><h3>Description</h3><p>This command writes the value for the Connection Accept Timeout configuration parameter.<br>See Core Specification [Vol 4, Part E, 7.3.14].</p><i>This command is not available on STM32WBA25/28.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Connection_Accept_Timeout</p>
 </td><td><p>2</p>
@@ -1460,7 +1467,7 @@ Time = N * 10 ms</p>
 </td><td><p>2</p>
 </td><td><p>Connection handle for which the event applies.</p>
 </td><td><li>0x0000 ... 0x0EFF</li></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_SET_ECOSYSTEM_BASE_INTERVAL_anchor">HCI_SET_ECOSYSTEM_BASE_INTERVAL</a></h2><h3>Description</h3><p>This command provides a hint to the Controller specifying the base communication interval the Controller can expect current and future communications to use.<br>See Core Specification [Vol 4, Part E, 7.3.100].</p><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_SET_ECOSYSTEM_BASE_INTERVAL_anchor">HCI_SET_ECOSYSTEM_BASE_INTERVAL</a></h2><h3>Description</h3><p>This command provides a hint to the Controller specifying the base communication interval the Controller can expect current and future communications to use.<br>See Core Specification [Vol 4, Part E, 7.3.100].</p><i>This command is not available on STM32WBA25/28.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Interval</p>
 </td><td><p>2</p>
@@ -1473,7 +1480,7 @@ Time = N * 1.25 ms</p>
 </td><td><p>1</p>
 </td><td><p>Status error code.</p>
 </td><td></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_CONFIGURE_DATA_PATH_anchor">HCI_CONFIGURE_DATA_PATH</a></h2><h3>Description</h3><p>This command is used to request the Controller to configure the data transport path in a given direction between the Controller and the Host.<br>See Core Specification [Vol 4, Part E, 7.3.101].</p><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_CONFIGURE_DATA_PATH_anchor">HCI_CONFIGURE_DATA_PATH</a></h2><h3>Description</h3><p>This command is used to request the Controller to configure the data transport path in a given direction between the Controller and the Host.<br>See Core Specification [Vol 4, Part E, 7.3.101].</p><i>This command is not available on STM32WBA25/28.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Data_Path_Direction</p>
 </td><td><p>1</p>
@@ -1557,7 +1564,7 @@ Unsupported or undefined commands shall be set to 0.</p>
 </td><td><p>6</p>
 </td><td><p>BD_ADDR (Bluetooth Device Address) of the device.</p>
 </td><td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_READ_LOCAL_SUPPORTED_CODECS_V2_anchor">HCI_READ_LOCAL_SUPPORTED_CODECS_V2</a></h2><h3>Description</h3><p>This command reads a list of the Bluetooth SIG approved codecs supported by the Controller, as well as vendor specific codecs, which are defined by an individual manufacturer.<br>See Core Specification [Vol 4, Part E, 7.4.8].</p><h3>Input parameters</h3><p>None</p><h3>Output parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_READ_LOCAL_SUPPORTED_CODECS_V2_anchor">HCI_READ_LOCAL_SUPPORTED_CODECS_V2</a></h2><h3>Description</h3><p>This command reads a list of the Bluetooth SIG approved codecs supported by the Controller, as well as vendor specific codecs, which are defined by an individual manufacturer.<br>See Core Specification [Vol 4, Part E, 7.4.8].</p><i>This command is not available on STM32WBA25/28.</i><h3>Input parameters</h3><p>None</p><h3>Output parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Status</p>
 </td><td><p>1</p>
@@ -1579,7 +1586,7 @@ Unsupported or undefined commands shall be set to 0.</p>
 </td><td><p>Num_Supported_Vendor_Specific_Codecs * 5</p>
 </td><td><p>Vendor specific codec ID and Transport</p>
 </td><td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_READ_LOCAL_SUPPORTED_CODEC_CAPABILITIES_anchor">HCI_READ_LOCAL_SUPPORTED_CODEC_CAPABILITIES</a></h2><h3>Description</h3><p>This command returns a list of codec capabilities supported by the Controller for a given codec. Only capabilities for the codec specified by the Codec_ID parameter and that match the transport specified by the Logical_Transport_Type parameter and direction specified by the Direction parameter are returned.<br>See Core Specification [Vol 4, Part E, 7.4.10].</p><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_READ_LOCAL_SUPPORTED_CODEC_CAPABILITIES_anchor">HCI_READ_LOCAL_SUPPORTED_CODEC_CAPABILITIES</a></h2><h3>Description</h3><p>This command returns a list of codec capabilities supported by the Controller for a given codec. Only capabilities for the codec specified by the Codec_ID parameter and that match the transport specified by the Logical_Transport_Type parameter and direction specified by the Direction parameter are returned.<br>See Core Specification [Vol 4, Part E, 7.4.10].</p><i>This command is not available on STM32WBA25/28.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Codec_ID</p>
 </td><td><p>5</p>
@@ -1608,7 +1615,7 @@ Unsupported or undefined commands shall be set to 0.</p>
 <tr><td><p>Codec_Capabilities</p>
 </td><td><p>250</p>
 </td><td></td><td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_READ_LOCAL_SUPPORTED_CONTROLLER_DELAY_anchor">HCI_READ_LOCAL_SUPPORTED_CONTROLLER_DELAY</a></h2><h3>Description</h3><p>This command returns the range of supported Controller delays for the codec specified by the Codec_ID parameter on a given transport type specified by the Logical_Transport_Type parameter, in the direction specified by the Direction parameter, and with the codec configuration specified by the Codec_Configuration parameter.<br>See Core Specification [Vol 4, Part E, 7.4.11].</p><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_READ_LOCAL_SUPPORTED_CONTROLLER_DELAY_anchor">HCI_READ_LOCAL_SUPPORTED_CONTROLLER_DELAY</a></h2><h3>Description</h3><p>This command returns the range of supported Controller delays for the codec specified by the Codec_ID parameter on a given transport type specified by the Logical_Transport_Type parameter, in the direction specified by the Direction parameter, and with the codec configuration specified by the Codec_Configuration parameter.<br>See Core Specification [Vol 4, Part E, 7.4.11].</p><i>This command is not available on STM32WBA25/28.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Codec_ID</p>
 </td><td><p>5</p>
@@ -3487,7 +3494,7 @@ Little Endian Format</p>
 </td><td><p>1</p>
 </td><td><p>Status error code.</p>
 </td><td></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_STATUS_EVENT_anchor">HCI_COMMAND_STATUS_EVENT</a></li><li><a href="#HCI_LE_GENERATE_DHKEY_COMPLETE_EVENT_anchor">HCI_LE_GENERATE_DHKEY_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_READ_BUFFER_SIZE_V2_anchor">HCI_LE_READ_BUFFER_SIZE_V2</a></h2><h3>Description</h3><p>This command is used to read the maximum size of the data portion of ACL data packets and isochronous data packets sent from the Host to the Controller.<br>See Core Specification [Vol 4, Part E, 7.8.2].</p><h3>Input parameters</h3><p>None</p><h3>Output parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_STATUS_EVENT_anchor">HCI_COMMAND_STATUS_EVENT</a></li><li><a href="#HCI_LE_GENERATE_DHKEY_COMPLETE_EVENT_anchor">HCI_LE_GENERATE_DHKEY_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_READ_BUFFER_SIZE_V2_anchor">HCI_LE_READ_BUFFER_SIZE_V2</a></h2><h3>Description</h3><p>This command is used to read the maximum size of the data portion of ACL data packets and isochronous data packets sent from the Host to the Controller.<br>See Core Specification [Vol 4, Part E, 7.8.2].</p><i>This command is not available on STM32WBA25/28.</i><h3>Input parameters</h3><p>None</p><h3>Output parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Status</p>
 </td><td><p>1</p>
@@ -3509,7 +3516,7 @@ Little Endian Format</p>
 </td><td><p>1</p>
 </td><td><p>Contains the total number of isochronous data packets that can be stored in the data buffers of the Controller.</p>
 </td><td><li>0x00: No dedicated ISO Buffer exists.</li><li>0x01 ... 0xFF: The total number of HCI ISO data packets that can be stored in the ISO buffers of the Controller.</li></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_READ_ISO_TX_SYNC_anchor">HCI_LE_READ_ISO_TX_SYNC</a></h2><h3>Description</h3><p>This command is used to read the TX_Time_Stamp and Time_Offset of a transmitted SDU identified by the Packet_Sequence_Number on a CIS or BIS identified by the Connection_Handle parameter on the Central or Peripheral.<br>See Core Specification [Vol 4, Part E, 7.8.96].</p><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_READ_ISO_TX_SYNC_anchor">HCI_LE_READ_ISO_TX_SYNC</a></h2><h3>Description</h3><p>This command is used to read the TX_Time_Stamp and Time_Offset of a transmitted SDU identified by the Packet_Sequence_Number on a CIS or BIS identified by the Connection_Handle parameter on the Central or Peripheral.<br>See Core Specification [Vol 4, Part E, 7.8.96].</p><i>This command is not available on STM32WBA25/28.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Connection_Handle</p>
 </td><td><p>2</p>
@@ -3537,7 +3544,7 @@ Little Endian Format</p>
 </td><td><p>3</p>
 </td><td><p>The time offset, in microseconds, that is associated with a transmitted SDU.</p>
 </td><td><li>0x000000 ... 0xFFFFFF</li></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_SET_CIG_PARAMETERS_anchor">HCI_LE_SET_CIG_PARAMETERS</a></h2><h3>Description</h3><p>This command is used by a Central's Host to create a CIG and to set the parameters of one or more CISes that are associated with a CIG in the Controller.<br>See Core Specification [Vol 4, Part E, 7.8.97].</p><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_SET_CIG_PARAMETERS_anchor">HCI_LE_SET_CIG_PARAMETERS</a></h2><h3>Description</h3><p>This command is used by a Central's Host to create a CIG and to set the parameters of one or more CISes that are associated with a CIG in the Controller.<br>See Core Specification [Vol 4, Part E, 7.8.97].</p><i>This command is not available on STM32WBA25/28.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>CIG_ID</p>
 </td><td><p>1</p>
@@ -3620,7 +3627,7 @@ Little Endian Format</p>
 <tr><td><p>Connection_Handle</p>
 </td><td><p>CIS_Count_Ret</p>
 </td><td></td><td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_SET_CIG_PARAMETERS_TEST_anchor">HCI_LE_SET_CIG_PARAMETERS_TEST</a></h2><h3>Description</h3><p>This command is used for testing purposes by a Central's Host to create a CIG and to set the parameters of one or more CISes that are associated with a CIG in the Controller.<br>See Core Specification [Vol 4, Part E, 7.8.98].</p><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_SET_CIG_PARAMETERS_TEST_anchor">HCI_LE_SET_CIG_PARAMETERS_TEST</a></h2><h3>Description</h3><p>This command is used for testing purposes by a Central's Host to create a CIG and to set the parameters of one or more CISes that are associated with a CIG in the Controller.<br>See Core Specification [Vol 4, Part E, 7.8.98].</p><i>This command is not available on STM32WBA25/28.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>CIG_ID</p>
 </td><td><p>1</p>
@@ -3720,7 +3727,7 @@ Time = N * 1.25 ms.</p>
 <tr><td><p>Connection_Handle</p>
 </td><td><p>CIS_Count_Ret</p>
 </td><td></td><td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_CREATE_CIS_anchor">HCI_LE_CREATE_CIS</a></h2><h3>Description</h3><p>This command is used by the Central's Host to create one or more CISes using the connections identified by the ACL_Connection_Handle arrayed parameter.<br>See Core Specification [Vol 4, Part E, 7.8.99].</p><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_CREATE_CIS_anchor">HCI_LE_CREATE_CIS</a></h2><h3>Description</h3><p>This command is used by the Central's Host to create one or more CISes using the connections identified by the ACL_Connection_Handle arrayed parameter.<br>See Core Specification [Vol 4, Part E, 7.8.99].</p><i>This command is not available on STM32WBA25/28.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>CIS_Count</p>
 </td><td><p>1</p>
@@ -3740,7 +3747,7 @@ Time = N * 1.25 ms.</p>
 </td><td><p>1</p>
 </td><td><p>Status error code.</p>
 </td><td></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_STATUS_EVENT_anchor">HCI_COMMAND_STATUS_EVENT</a></li><li><a href="#HCI_LE_CIS_ESTABLISHED_EVENT_anchor">HCI_LE_CIS_ESTABLISHED_EVENT</a></li><h2><a name="HCI_LE_REMOVE_CIG_anchor">HCI_LE_REMOVE_CIG</a></h2><h3>Description</h3><p>This command is used by the Central's Host to remove the CIG identified by CIG_ID.<br>See Core Specification [Vol 4, Part E, 7.8.100].</p><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_STATUS_EVENT_anchor">HCI_COMMAND_STATUS_EVENT</a></li><li><a href="#HCI_LE_CIS_ESTABLISHED_EVENT_anchor">HCI_LE_CIS_ESTABLISHED_EVENT</a></li><h2><a name="HCI_LE_REMOVE_CIG_anchor">HCI_LE_REMOVE_CIG</a></h2><h3>Description</h3><p>This command is used by the Central's Host to remove the CIG identified by CIG_ID.<br>See Core Specification [Vol 4, Part E, 7.8.100].</p><i>This command is not available on STM32WBA25/28.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>CIG_ID</p>
 </td><td><p>1</p>
@@ -3756,7 +3763,7 @@ Time = N * 1.25 ms.</p>
 </td><td><p>1</p>
 </td><td><p>CIG identifier.</p>
 </td><td><li>0x00 ... 0xEF</li></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_ACCEPT_CIS_REQUEST_anchor">HCI_LE_ACCEPT_CIS_REQUEST</a></h2><h3>Description</h3><p>This command is used by the Peripheral's Host to inform the Controller to accept the request for the CIS that is identified by the Connection_Handle.<br>See Core Specification [Vol 4, Part E, 7.8.101].</p><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_ACCEPT_CIS_REQUEST_anchor">HCI_LE_ACCEPT_CIS_REQUEST</a></h2><h3>Description</h3><p>This command is used by the Peripheral's Host to inform the Controller to accept the request for the CIS that is identified by the Connection_Handle.<br>See Core Specification [Vol 4, Part E, 7.8.101].</p><i>This command is not available on STM32WBA25/28.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Connection_Handle</p>
 </td><td><p>2</p>
@@ -3768,7 +3775,7 @@ Time = N * 1.25 ms.</p>
 </td><td><p>1</p>
 </td><td><p>Status error code.</p>
 </td><td></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_STATUS_EVENT_anchor">HCI_COMMAND_STATUS_EVENT</a></li><li><a href="#HCI_LE_CIS_ESTABLISHED_EVENT_anchor">HCI_LE_CIS_ESTABLISHED_EVENT</a></li><h2><a name="HCI_LE_REJECT_CIS_REQUEST_anchor">HCI_LE_REJECT_CIS_REQUEST</a></h2><h3>Description</h3><p>This command is used by the Peripheral's Host to inform the Controller to reject the request for the CIS that is identified by the Connection_Handle.<br>See Core Specification [Vol 4, Part E, 7.8.102].</p><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_STATUS_EVENT_anchor">HCI_COMMAND_STATUS_EVENT</a></li><li><a href="#HCI_LE_CIS_ESTABLISHED_EVENT_anchor">HCI_LE_CIS_ESTABLISHED_EVENT</a></li><h2><a name="HCI_LE_REJECT_CIS_REQUEST_anchor">HCI_LE_REJECT_CIS_REQUEST</a></h2><h3>Description</h3><p>This command is used by the Peripheral's Host to inform the Controller to reject the request for the CIS that is identified by the Connection_Handle.<br>See Core Specification [Vol 4, Part E, 7.8.102].</p><i>This command is not available on STM32WBA25/28.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Connection_Handle</p>
 </td><td><p>2</p>
@@ -3788,7 +3795,7 @@ Time = N * 1.25 ms.</p>
 </td><td><p>2</p>
 </td><td><p>Connection handle for which the event applies.</p>
 </td><td><li>0x0000 ... 0x0EFF</li></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_CREATE_BIG_anchor">HCI_LE_CREATE_BIG</a></h2><h3>Description</h3><p>This command is used to create a BIG with one or more BISes. All BISes in a BIG have the same value for all parameters.<br>See Core Specification [Vol 4, Part E, 7.8.103].</p><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_CREATE_BIG_anchor">HCI_LE_CREATE_BIG</a></h2><h3>Description</h3><p>This command is used to create a BIG with one or more BISes. All BISes in a BIG have the same value for all parameters.<br>See Core Specification [Vol 4, Part E, 7.8.103].</p><i>This command is not available on STM32WBA25/28.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>BIG_Handle</p>
 </td><td><p>1</p>
@@ -3844,7 +3851,7 @@ Time = N * 1.25 ms.</p>
 </td><td><p>1</p>
 </td><td><p>Status error code.</p>
 </td><td></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_STATUS_EVENT_anchor">HCI_COMMAND_STATUS_EVENT</a></li><li><a href="#HCI_LE_CREATE_BIG_COMPLETE_EVENT_anchor">HCI_LE_CREATE_BIG_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_CREATE_BIG_TEST_anchor">HCI_LE_CREATE_BIG_TEST</a></h2><h3>Description</h3><p>This command is used for testing purposes to create one or more BISes of a BIG. All BISes in the BIG have the same values for all parameters.<br>See Core Specification [Vol 4, Part E, 7.8.104].</p><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_STATUS_EVENT_anchor">HCI_COMMAND_STATUS_EVENT</a></li><li><a href="#HCI_LE_CREATE_BIG_COMPLETE_EVENT_anchor">HCI_LE_CREATE_BIG_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_CREATE_BIG_TEST_anchor">HCI_LE_CREATE_BIG_TEST</a></h2><h3>Description</h3><p>This command is used for testing purposes to create one or more BISes of a BIG. All BISes in the BIG have the same values for all parameters.<br>See Core Specification [Vol 4, Part E, 7.8.104].</p><i>This command is not available on STM32WBA25/28.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>BIG_Handle</p>
 </td><td><p>1</p>
@@ -3917,7 +3924,7 @@ Time = N * 1.25 ms.</p>
 </td><td><p>1</p>
 </td><td><p>Status error code.</p>
 </td><td></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_STATUS_EVENT_anchor">HCI_COMMAND_STATUS_EVENT</a></li><li><a href="#HCI_LE_CREATE_BIG_COMPLETE_EVENT_anchor">HCI_LE_CREATE_BIG_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_TERMINATE_BIG_anchor">HCI_LE_TERMINATE_BIG</a></h2><h3>Description</h3><p>This command is used to terminate a BIG identified by the BIG_Handle parameter. The command also terminates the transmission of all BISes of the BIG, destroys the associated connection handles of the BISes in the BIG and removes the data paths for all BISes in the BIG.<br>See Core Specification [Vol 4, Part E, 7.8.105].</p><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_STATUS_EVENT_anchor">HCI_COMMAND_STATUS_EVENT</a></li><li><a href="#HCI_LE_CREATE_BIG_COMPLETE_EVENT_anchor">HCI_LE_CREATE_BIG_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_TERMINATE_BIG_anchor">HCI_LE_TERMINATE_BIG</a></h2><h3>Description</h3><p>This command is used to terminate a BIG identified by the BIG_Handle parameter. The command also terminates the transmission of all BISes of the BIG, destroys the associated connection handles of the BISes in the BIG and removes the data paths for all BISes in the BIG.<br>See Core Specification [Vol 4, Part E, 7.8.105].</p><i>This command is not available on STM32WBA25/28.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>BIG_Handle</p>
 </td><td><p>1</p>
@@ -3933,7 +3940,7 @@ Time = N * 1.25 ms.</p>
 </td><td><p>1</p>
 </td><td><p>Status error code.</p>
 </td><td></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_STATUS_EVENT_anchor">HCI_COMMAND_STATUS_EVENT</a></li><li><a href="#HCI_LE_TERMINATE_BIG_COMPLETE_EVENT_anchor">HCI_LE_TERMINATE_BIG_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_BIG_CREATE_SYNC_anchor">HCI_LE_BIG_CREATE_SYNC</a></h2><h3>Description</h3><p>This command is used to synchronize to a BIG described in the periodic advertising train specified by the Sync_Handle parameter.<br>See Core Specification [Vol 4, Part E, 7.8.106].</p><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_STATUS_EVENT_anchor">HCI_COMMAND_STATUS_EVENT</a></li><li><a href="#HCI_LE_TERMINATE_BIG_COMPLETE_EVENT_anchor">HCI_LE_TERMINATE_BIG_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_BIG_CREATE_SYNC_anchor">HCI_LE_BIG_CREATE_SYNC</a></h2><h3>Description</h3><p>This command is used to synchronize to a BIG described in the periodic advertising train specified by the Sync_Handle parameter.<br>See Core Specification [Vol 4, Part E, 7.8.106].</p><i>This command is not available on STM32WBA25/28.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>BIG_Handle</p>
 </td><td><p>1</p>
@@ -3973,7 +3980,7 @@ Time = N * 10 ms.</p>
 </td><td><p>1</p>
 </td><td><p>Status error code.</p>
 </td><td></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_STATUS_EVENT_anchor">HCI_COMMAND_STATUS_EVENT</a></li><li><a href="#HCI_LE_BIG_SYNC_ESTABLISHED_EVENT_anchor">HCI_LE_BIG_SYNC_ESTABLISHED_EVENT</a></li><h2><a name="HCI_LE_BIG_TERMINATE_SYNC_anchor">HCI_LE_BIG_TERMINATE_SYNC</a></h2><h3>Description</h3><p>This command is used to stop synchronizing or cancel the process of synchronizing to the BIG identified by the BIG_Handle parameter. The command also terminates the reception of BISes in the BIG specified in the HCI_LE_BIG_Create_Sync command, destroys the associated connection handles of the BISes in the BIG and removes the data paths for all BISes in the BIG.<br>See Core Specification [Vol 4, Part E, 7.8.107].</p><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_STATUS_EVENT_anchor">HCI_COMMAND_STATUS_EVENT</a></li><li><a href="#HCI_LE_BIG_SYNC_ESTABLISHED_EVENT_anchor">HCI_LE_BIG_SYNC_ESTABLISHED_EVENT</a></li><h2><a name="HCI_LE_BIG_TERMINATE_SYNC_anchor">HCI_LE_BIG_TERMINATE_SYNC</a></h2><h3>Description</h3><p>This command is used to stop synchronizing or cancel the process of synchronizing to the BIG identified by the BIG_Handle parameter. The command also terminates the reception of BISes in the BIG specified in the HCI_LE_BIG_Create_Sync command, destroys the associated connection handles of the BISes in the BIG and removes the data paths for all BISes in the BIG.<br>See Core Specification [Vol 4, Part E, 7.8.107].</p><i>This command is not available on STM32WBA25/28.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>BIG_Handle</p>
 </td><td><p>1</p>
@@ -4001,7 +4008,7 @@ Time = N * 10 ms.</p>
 </td><td><p>1</p>
 </td><td><p>Status error code.</p>
 </td><td></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_STATUS_EVENT_anchor">HCI_COMMAND_STATUS_EVENT</a></li><li><a href="#HCI_LE_REQUEST_PEER_SCA_COMPLETE_EVENT_anchor">HCI_LE_REQUEST_PEER_SCA_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_SETUP_ISO_DATA_PATH_anchor">HCI_LE_SETUP_ISO_DATA_PATH</a></h2><h3>Description</h3><p>This command is used to identify and create the isochronous data path between the Host and the Controller for a CIS, CIS configuration, or BIS identified by the Connection_Handle parameter. This command can also be used to configure a codec for each data path. When a connection is created no data paths are set up for that connection.<br>See Core Specification [Vol 4, Part E, 7.8.109].</p><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_STATUS_EVENT_anchor">HCI_COMMAND_STATUS_EVENT</a></li><li><a href="#HCI_LE_REQUEST_PEER_SCA_COMPLETE_EVENT_anchor">HCI_LE_REQUEST_PEER_SCA_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_SETUP_ISO_DATA_PATH_anchor">HCI_LE_SETUP_ISO_DATA_PATH</a></h2><h3>Description</h3><p>This command is used to identify and create the isochronous data path between the Host and the Controller for a CIS, CIS configuration, or BIS identified by the Connection_Handle parameter. This command can also be used to configure a codec for each data path. When a connection is created no data paths are set up for that connection.<br>See Core Specification [Vol 4, Part E, 7.8.109].</p><i>This command is not available on STM32WBA25/28.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Connection_Handle</p>
 </td><td><p>2</p>
@@ -4042,7 +4049,7 @@ Octets 3 to 4 Vendor-defined codec ID (Shall be ignored if octet 0 is not 0xFF).
 </td><td><p>2</p>
 </td><td><p>Connection handle for which the event applies.</p>
 </td><td><li>0x0000 ... 0x0EFF</li></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_REMOVE_ISO_DATA_PATH_anchor">HCI_LE_REMOVE_ISO_DATA_PATH</a></h2><h3>Description</h3><p>This command is used to remove the input and/or output data path(s) associated with a CIS, CIS configuration, or BIS identified by the Connection_Handle parameter.<br>See Core Specification [Vol 4, Part E, 7.8.110].</p><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_REMOVE_ISO_DATA_PATH_anchor">HCI_LE_REMOVE_ISO_DATA_PATH</a></h2><h3>Description</h3><p>This command is used to remove the input and/or output data path(s) associated with a CIS, CIS configuration, or BIS identified by the Connection_Handle parameter.<br>See Core Specification [Vol 4, Part E, 7.8.110].</p><i>This command is not available on STM32WBA25/28.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Connection_Handle</p>
 </td><td><p>2</p>
@@ -4078,7 +4085,7 @@ Octets 3 to 4 Vendor-defined codec ID (Shall be ignored if octet 0 is not 0xFF).
 </td><td><p>1</p>
 </td><td><p>Status error code.</p>
 </td><td></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_READ_ISO_LINK_QUALITY_anchor">HCI_LE_READ_ISO_LINK_QUALITY</a></h2><h3>Description</h3><p>This command returns the values of various counters related to link quality that are associated with the isochronous stream specified by the Connection_Handle parameter.<br>See Core Specification [Vol 4, Part E, 7.8.116].</p><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_READ_ISO_LINK_QUALITY_anchor">HCI_LE_READ_ISO_LINK_QUALITY</a></h2><h3>Description</h3><p>This command returns the values of various counters related to link quality that are associated with the isochronous stream specified by the Connection_Handle parameter.<br>See Core Specification [Vol 4, Part E, 7.8.116].</p><i>This command is not available on STM32WBA25/28.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Connection_Handle</p>
 </td><td><p>2</p>
@@ -4669,7 +4676,7 @@ Time = N * 0.125 ms.</p>
 </td><td><p>1</p>
 </td><td><p>Status error code.</p>
 </td><td></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_STATUS_EVENT_anchor">HCI_COMMAND_STATUS_EVENT</a></li><li><a href="#HCI_LE_READ_ALL_REMOTE_FEATURES_COMPLETE_EVENT_anchor">HCI_LE_READ_ALL_REMOTE_FEATURES_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_CS_READ_LOCAL_SUPPORTED_CAPABILITIES_anchor">HCI_LE_CS_READ_LOCAL_SUPPORTED_CAPABILITIES</a></h2><h3>Description</h3><p>This command allows a Host to read the CS capabilities that are supported by the local Controller. This command may be used along with the local supported features to provide additional details of the supported CS capabilities.<br>See Core Specification [Vol 4, Part E, 7.8.130].</p><i>This command is not available on STM32WBA5/6.</i><h3>Input parameters</h3><p>None</p><h3>Output parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_STATUS_EVENT_anchor">HCI_COMMAND_STATUS_EVENT</a></li><li><a href="#HCI_LE_READ_ALL_REMOTE_FEATURES_COMPLETE_EVENT_anchor">HCI_LE_READ_ALL_REMOTE_FEATURES_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_CS_READ_LOCAL_SUPPORTED_CAPABILITIES_anchor">HCI_LE_CS_READ_LOCAL_SUPPORTED_CAPABILITIES</a></h2><h3>Description</h3><p>This command allows a Host to read the CS capabilities that are supported by the local Controller. This command may be used along with the local supported features to provide additional details of the supported CS capabilities.<br>See Core Specification [Vol 4, Part E, 7.8.130].</p><i>This command is not available on STM32WBA5/6/25.</i><h3>Input parameters</h3><p>None</p><h3>Output parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Status</p>
 </td><td><p>1</p>
@@ -4755,7 +4762,7 @@ Time = N * 0.125 ms.</p>
 </td><td><p>1</p>
 </td><td><p>Indicates the supported SNR levels used in RTT packets.</p>
 </td><td><p>Bitmask of:</p><li>0x01: 18 dB supported</li><li>0x02: 21 dB supported</li><li>0x04: 24 dB supported</li><li>0x08: 27 dB supported</li><li>0x10: 30 dB supported</li></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_CS_READ_REMOTE_SUPPORTED_CAPABILITIES_anchor">HCI_LE_CS_READ_REMOTE_SUPPORTED_CAPABILITIES</a></h2><h3>Description</h3><p>This command allows a Host to query the CS capabilities that are supported by the remote Controller. If no Channel Sounding Capability Exchange procedure has been initiated on the ACL connection specified by the Connection_Handle and if no prior HCI_LE_CS_Write_Cached_Remote_Supported_Capabilities command has been issued by the Host, then the Controller shall initiate a Channel Sounding Capability Exchange procedure on the ACL. Otherwise, the Controller may use a cached copy of the capabilities of the remote device.<br>See Core Specification [Vol 4, Part E, 7.8.131].</p><i>This command is not available on STM32WBA5/6.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_CS_READ_REMOTE_SUPPORTED_CAPABILITIES_anchor">HCI_LE_CS_READ_REMOTE_SUPPORTED_CAPABILITIES</a></h2><h3>Description</h3><p>This command allows a Host to query the CS capabilities that are supported by the remote Controller. If no Channel Sounding Capability Exchange procedure has been initiated on the ACL connection specified by the Connection_Handle and if no prior HCI_LE_CS_Write_Cached_Remote_Supported_Capabilities command has been issued by the Host, then the Controller shall initiate a Channel Sounding Capability Exchange procedure on the ACL. Otherwise, the Controller may use a cached copy of the capabilities of the remote device.<br>See Core Specification [Vol 4, Part E, 7.8.131].</p><i>This command is not available on STM32WBA5/6/25.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Connection_Handle</p>
 </td><td><p>2</p>
@@ -4767,7 +4774,7 @@ Time = N * 0.125 ms.</p>
 </td><td><p>1</p>
 </td><td><p>Status error code.</p>
 </td><td></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_STATUS_EVENT_anchor">HCI_COMMAND_STATUS_EVENT</a></li><li><a href="#HCI_LE_CS_READ_REMOTE_SUPPORTED_CAPABILITIES_COMPLETE_EVENT_anchor">HCI_LE_CS_READ_REMOTE_SUPPORTED_CAPABILITIES_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_CS_WRITE_CACHED_REMOTE_SUPPORTED_CAPABILITIES_anchor">HCI_LE_CS_WRITE_CACHED_REMOTE_SUPPORTED_CAPABILITIES</a></h2><h3>Description</h3><p>This command allows a Host to write the cached copy of the CS capabilities that are supported by the remote Controller for the connection identified by the Connection_Handle parameter.<br>See Core Specification [Vol 4, Part E, 7.8.132].</p><i>This command is not available on STM32WBA5/6.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_STATUS_EVENT_anchor">HCI_COMMAND_STATUS_EVENT</a></li><li><a href="#HCI_LE_CS_READ_REMOTE_SUPPORTED_CAPABILITIES_COMPLETE_EVENT_anchor">HCI_LE_CS_READ_REMOTE_SUPPORTED_CAPABILITIES_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_CS_WRITE_CACHED_REMOTE_SUPPORTED_CAPABILITIES_anchor">HCI_LE_CS_WRITE_CACHED_REMOTE_SUPPORTED_CAPABILITIES</a></h2><h3>Description</h3><p>This command allows a Host to write the cached copy of the CS capabilities that are supported by the remote Controller for the connection identified by the Connection_Handle parameter.<br>See Core Specification [Vol 4, Part E, 7.8.132].</p><i>This command is not available on STM32WBA5/6/25.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Connection_Handle</p>
 </td><td><p>2</p>
@@ -4863,7 +4870,7 @@ Time = N * 0.125 ms.</p>
 </td><td><p>2</p>
 </td><td><p>Connection handle for which the command applies.</p>
 </td><td><li>0x0000 ... 0x0EFF</li></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_CS_SECURITY_ENABLE_anchor">HCI_LE_CS_SECURITY_ENABLE</a></h2><h3>Description</h3><p>This command is used by a Host to start or restart the Channel Sounding Security Start procedure in the local Controller for the ACL connection identified by the Connection_Handle parameter.<br>See Core Specification [Vol 4, Part E, 7.8.133].</p><i>This command is not available on STM32WBA5/6.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_CS_SECURITY_ENABLE_anchor">HCI_LE_CS_SECURITY_ENABLE</a></h2><h3>Description</h3><p>This command is used by a Host to start or restart the Channel Sounding Security Start procedure in the local Controller for the ACL connection identified by the Connection_Handle parameter.<br>See Core Specification [Vol 4, Part E, 7.8.133].</p><i>This command is not available on STM32WBA5/6/25.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Connection_Handle</p>
 </td><td><p>2</p>
@@ -4875,7 +4882,7 @@ Time = N * 0.125 ms.</p>
 </td><td><p>1</p>
 </td><td><p>Status error code.</p>
 </td><td></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_STATUS_EVENT_anchor">HCI_COMMAND_STATUS_EVENT</a></li><li><a href="#HCI_LE_CS_SECURITY_ENABLE_COMPLETE_EVENT_anchor">HCI_LE_CS_SECURITY_ENABLE_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_CS_SET_DEFAULT_SETTINGS_anchor">HCI_LE_CS_SET_DEFAULT_SETTINGS</a></h2><h3>Description</h3><p>This command is used by a Host to set default CS settings in the local Controller for the connection identified by the Connection_Handle parameter. The default settings specify that all roles are disabled in a Controller and CS_SYNC_Antenna_Selection is set to 0x01.<br>See Core Specification [Vol 4, Part E, 7.8.134].</p><i>This command is not available on STM32WBA5/6.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_STATUS_EVENT_anchor">HCI_COMMAND_STATUS_EVENT</a></li><li><a href="#HCI_LE_CS_SECURITY_ENABLE_COMPLETE_EVENT_anchor">HCI_LE_CS_SECURITY_ENABLE_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_CS_SET_DEFAULT_SETTINGS_anchor">HCI_LE_CS_SET_DEFAULT_SETTINGS</a></h2><h3>Description</h3><p>This command is used by a Host to set default CS settings in the local Controller for the connection identified by the Connection_Handle parameter. The default settings specify that all roles are disabled in a Controller and CS_SYNC_Antenna_Selection is set to 0x01.<br>See Core Specification [Vol 4, Part E, 7.8.134].</p><i>This command is not available on STM32WBA5/6/25.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Connection_Handle</p>
 </td><td><p>2</p>
@@ -4904,7 +4911,7 @@ Units: dBm.</p>
 </td><td><p>2</p>
 </td><td><p>Connection handle for which the command applies.</p>
 </td><td><li>0x0000 ... 0x0EFF</li></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_CS_READ_REMOTE_FAE_TABLE_anchor">HCI_LE_CS_READ_REMOTE_FAE_TABLE</a></h2><h3>Description</h3><p>This command is used by a Host to read the per-channel mode 0 Frequency Actuation Error table of the remote Controller.<br>See Core Specification [Vol 4, Part E, 7.8.135].</p><i>This command is not available on STM32WBA5/6.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_CS_READ_REMOTE_FAE_TABLE_anchor">HCI_LE_CS_READ_REMOTE_FAE_TABLE</a></h2><h3>Description</h3><p>This command is used by a Host to read the per-channel mode 0 Frequency Actuation Error table of the remote Controller.<br>See Core Specification [Vol 4, Part E, 7.8.135].</p><i>This command is not available on STM32WBA5/6/25.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Connection_Handle</p>
 </td><td><p>2</p>
@@ -4916,7 +4923,7 @@ Units: dBm.</p>
 </td><td><p>1</p>
 </td><td><p>Status error code.</p>
 </td><td></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_STATUS_EVENT_anchor">HCI_COMMAND_STATUS_EVENT</a></li><li><a href="#HCI_LE_CS_READ_REMOTE_FAE_TABLE_COMPLETE_EVENT_anchor">HCI_LE_CS_READ_REMOTE_FAE_TABLE_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_CS_WRITE_CACHED_REMOTE_FAE_TABLE_anchor">HCI_LE_CS_WRITE_CACHED_REMOTE_FAE_TABLE</a></h2><h3>Description</h3><p>This command is used by a Host to write a cached copy of the per-channel mode 0 Frequency Actuation Error table of the remote device in the local Controller.<br>See Core Specification [Vol 4, Part E, 7.8.136].</p><i>This command is not available on STM32WBA5/6.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_STATUS_EVENT_anchor">HCI_COMMAND_STATUS_EVENT</a></li><li><a href="#HCI_LE_CS_READ_REMOTE_FAE_TABLE_COMPLETE_EVENT_anchor">HCI_LE_CS_READ_REMOTE_FAE_TABLE_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_CS_WRITE_CACHED_REMOTE_FAE_TABLE_anchor">HCI_LE_CS_WRITE_CACHED_REMOTE_FAE_TABLE</a></h2><h3>Description</h3><p>This command is used by a Host to write a cached copy of the per-channel mode 0 Frequency Actuation Error table of the remote device in the local Controller.<br>See Core Specification [Vol 4, Part E, 7.8.136].</p><i>This command is not available on STM32WBA5/6/25.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Connection_Handle</p>
 </td><td><p>2</p>
@@ -4936,7 +4943,7 @@ Units: dBm.</p>
 </td><td><p>2</p>
 </td><td><p>Connection handle for which the command applies.</p>
 </td><td><li>0x0000 ... 0x0EFF</li></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_CS_CREATE_CONFIG_anchor">HCI_LE_CS_CREATE_CONFIG</a></h2><h3>Description</h3><p>This command is used by a Host to create a new CS configuration or update an existing CS configuration with the identifier Config_ID on the connection identified by the Connection_Handle in the local and/or the remote Controller.<br>See Core Specification [Vol 4, Part E, 7.8.137].</p><i>This command is not available on STM32WBA5/6.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_CS_CREATE_CONFIG_anchor">HCI_LE_CS_CREATE_CONFIG</a></h2><h3>Description</h3><p>This command is used by a Host to create a new CS configuration or update an existing CS configuration with the identifier Config_ID on the connection identified by the Connection_Handle in the local and/or the remote Controller.<br>See Core Specification [Vol 4, Part E, 7.8.137].</p><i>This command is not available on STM32WBA5/6/25.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Connection_Handle</p>
 </td><td><p>2</p>
@@ -5021,7 +5028,7 @@ The most significant bit (bit 79) is reserved for future use.</p>
 </td><td><p>1</p>
 </td><td><p>Status error code.</p>
 </td><td></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_STATUS_EVENT_anchor">HCI_COMMAND_STATUS_EVENT</a></li><li><a href="#HCI_LE_CS_CONFIG_COMPLETE_EVENT_anchor">HCI_LE_CS_CONFIG_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_CS_REMOVE_CONFIG_anchor">HCI_LE_CS_REMOVE_CONFIG</a></h2><h3>Description</h3><p>This command is used to remove a CS configuration identified by Config_ID from the local Controller for the connection identified by the Connection_Handle parameter. When the Host issues this command, the local Controller shall initiate a Channel Sounding Configuration procedure to remove the CS configuration from both the local and remote device.<br>See Core Specification [Vol 4, Part E, 7.8.138].</p><i>This command is not available on STM32WBA5/6.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_STATUS_EVENT_anchor">HCI_COMMAND_STATUS_EVENT</a></li><li><a href="#HCI_LE_CS_CONFIG_COMPLETE_EVENT_anchor">HCI_LE_CS_CONFIG_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_CS_REMOVE_CONFIG_anchor">HCI_LE_CS_REMOVE_CONFIG</a></h2><h3>Description</h3><p>This command is used to remove a CS configuration identified by Config_ID from the local Controller for the connection identified by the Connection_Handle parameter. When the Host issues this command, the local Controller shall initiate a Channel Sounding Configuration procedure to remove the CS configuration from both the local and remote device.<br>See Core Specification [Vol 4, Part E, 7.8.138].</p><i>This command is not available on STM32WBA5/6/25.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Connection_Handle</p>
 </td><td><p>2</p>
@@ -5037,7 +5044,7 @@ The most significant bit (bit 79) is reserved for future use.</p>
 </td><td><p>1</p>
 </td><td><p>Status error code.</p>
 </td><td></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_STATUS_EVENT_anchor">HCI_COMMAND_STATUS_EVENT</a></li><li><a href="#HCI_LE_CS_CONFIG_COMPLETE_EVENT_anchor">HCI_LE_CS_CONFIG_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_CS_SET_CHANNEL_CLASSIFICATION_anchor">HCI_LE_CS_SET_CHANNEL_CLASSIFICATION</a></h2><h3>Description</h3><p>This command is used by a Host to update the channel classification based on its local information. This channel classification persists until overwritten with a subsequent HCI_LE_CS_Set_CS_Channel_Classification command or until the Controller is reset. The Controller may combine the channel classification information provided by the Host along with local channel classification information to send an updated CS channel map to the remote Controller.<br>See Core Specification [Vol 4, Part E, 7.8.139].</p><i>This command is not available on STM32WBA5/6.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_STATUS_EVENT_anchor">HCI_COMMAND_STATUS_EVENT</a></li><li><a href="#HCI_LE_CS_CONFIG_COMPLETE_EVENT_anchor">HCI_LE_CS_CONFIG_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_CS_SET_CHANNEL_CLASSIFICATION_anchor">HCI_LE_CS_SET_CHANNEL_CLASSIFICATION</a></h2><h3>Description</h3><p>This command is used by a Host to update the channel classification based on its local information. This channel classification persists until overwritten with a subsequent HCI_LE_CS_Set_CS_Channel_Classification command or until the Controller is reset. The Controller may combine the channel classification information provided by the Host along with local channel classification information to send an updated CS channel map to the remote Controller.<br>See Core Specification [Vol 4, Part E, 7.8.139].</p><i>This command is not available on STM32WBA5/6/25.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Channel_Classification</p>
 </td><td><p>10</p>
@@ -5054,7 +5061,7 @@ The most significant bit (bit 79) is reserved for future use.</p>
 </td><td><p>1</p>
 </td><td><p>Status error code.</p>
 </td><td></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_CS_SET_PROCEDURE_PARAMETERS_anchor">HCI_LE_CS_SET_PROCEDURE_PARAMETERS</a></h2><h3>Description</h3><p>This command is used by a Host to set the parameters for the scheduling of one or more CS procedures by the local Controller, with the remote device for the CS configuration identified by Config_ID and the connection identified by the Connection_Handle parameter.<br>See Core Specification [Vol 4, Part E, 7.8.140].</p><i>This command is not available on STM32WBA5/6.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_CS_SET_PROCEDURE_PARAMETERS_anchor">HCI_LE_CS_SET_PROCEDURE_PARAMETERS</a></h2><h3>Description</h3><p>This command is used by a Host to set the parameters for the scheduling of one or more CS procedures by the local Controller, with the remote device for the CS configuration identified by Config_ID and the connection identified by the Connection_Handle parameter.<br>See Core Specification [Vol 4, Part E, 7.8.140].</p><i>This command is not available on STM32WBA5/6/25.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Connection_Handle</p>
 </td><td><p>2</p>
@@ -5123,7 +5130,7 @@ Time = N * 0.625 ms.</p>
 </td><td><p>2</p>
 </td><td><p>Connection handle for which the command applies.</p>
 </td><td><li>0x0000 ... 0x0EFF</li></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_CS_PROCEDURE_ENABLE_anchor">HCI_LE_CS_PROCEDURE_ENABLE</a></h2><h3>Description</h3><p>This command is used by a Host to enable or disable the scheduling of CS procedures by the local Controller, with the remote device for the connection identified by the Connection_Handle parameter.<br>See Core Specification [Vol 4, Part E, 7.8.141].</p><i>This command is not available on STM32WBA5/6.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_CS_PROCEDURE_ENABLE_anchor">HCI_LE_CS_PROCEDURE_ENABLE</a></h2><h3>Description</h3><p>This command is used by a Host to enable or disable the scheduling of CS procedures by the local Controller, with the remote device for the connection identified by the Connection_Handle parameter.<br>See Core Specification [Vol 4, Part E, 7.8.141].</p><i>This command is not available on STM32WBA5/6/25.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Connection_Handle</p>
 </td><td><p>2</p>
@@ -5477,7 +5484,7 @@ Frequency Range : 2402 MHz to 2480 MHz</p>
 </td><td><p>1</p>
 </td><td><p>Status error code.</p>
 </td><td></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_ISO_TRANSMIT_TEST_anchor">HCI_LE_ISO_TRANSMIT_TEST</a></h2><h3>Description</h3><p>This command is used for testing purposes to configure an established CIS or BIS specified by the Connection_Handle parameter, and transmit test payloads which are generated by the Controller.<br>See Core Specification [Vol 4, Part E, 7.8.111].</p><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_ISO_TRANSMIT_TEST_anchor">HCI_LE_ISO_TRANSMIT_TEST</a></h2><h3>Description</h3><p>This command is used for testing purposes to configure an established CIS or BIS specified by the Connection_Handle parameter, and transmit test payloads which are generated by the Controller.<br>See Core Specification [Vol 4, Part E, 7.8.111].</p><i>This command is not available on STM32WBA25/28.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Connection_Handle</p>
 </td><td><p>2</p>
@@ -5497,7 +5504,7 @@ Frequency Range : 2402 MHz to 2480 MHz</p>
 </td><td><p>2</p>
 </td><td><p>Connection handle for which the event applies.</p>
 </td><td><li>0x0000 ... 0x0EFF</li></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_ISO_RECEIVE_TEST_anchor">HCI_LE_ISO_RECEIVE_TEST</a></h2><h3>Description</h3><p>This command is used for testing purposes to configure an established CIS or a synchronized BIG specified by the Connection_Handle parameter to receive payloads.<br>See Core Specification [Vol 4, Part E, 7.8.112].</p><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_ISO_RECEIVE_TEST_anchor">HCI_LE_ISO_RECEIVE_TEST</a></h2><h3>Description</h3><p>This command is used for testing purposes to configure an established CIS or a synchronized BIG specified by the Connection_Handle parameter to receive payloads.<br>See Core Specification [Vol 4, Part E, 7.8.112].</p><i>This command is not available on STM32WBA25/28.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Connection_Handle</p>
 </td><td><p>2</p>
@@ -5517,7 +5524,7 @@ Frequency Range : 2402 MHz to 2480 MHz</p>
 </td><td><p>2</p>
 </td><td><p>Connection handle for which the event applies.</p>
 </td><td><li>0x0000 ... 0x0EFF</li></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_ISO_READ_TEST_COUNTERS_anchor">HCI_LE_ISO_READ_TEST_COUNTERS</a></h2><h3>Description</h3><p>This command is used for testing purposes to read the test counters in the Controller which is configured in ISO Receive Test mode for a CIS or BIS specified by the Connection_Handle. Reading the test counters does not reset the test counters.<br>See Core Specification [Vol 4, Part E, 7.8.113].</p><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_ISO_READ_TEST_COUNTERS_anchor">HCI_LE_ISO_READ_TEST_COUNTERS</a></h2><h3>Description</h3><p>This command is used for testing purposes to read the test counters in the Controller which is configured in ISO Receive Test mode for a CIS or BIS specified by the Connection_Handle. Reading the test counters does not reset the test counters.<br>See Core Specification [Vol 4, Part E, 7.8.113].</p><i>This command is not available on STM32WBA25/28.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Connection_Handle</p>
 </td><td><p>2</p>
@@ -5545,7 +5552,7 @@ Frequency Range : 2402 MHz to 2480 MHz</p>
 </td><td><p>4</p>
 </td><td><p>Number in the Failed_SDU_Count.</p>
 </td><td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_ISO_TEST_END_anchor">HCI_LE_ISO_TEST_END</a></h2><h3>Description</h3><p>This command is used for testing purposes to terminate the ISO Transmit and/or Receive Test mode for a CIS or BIS specified by the Connection_Handle parameter but does not terminate the CIS or BIS.<br>See Core Specification [Vol 4, Part E, 7.8.114].</p><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_ISO_TEST_END_anchor">HCI_LE_ISO_TEST_END</a></h2><h3>Description</h3><p>This command is used for testing purposes to terminate the ISO Transmit and/or Receive Test mode for a CIS or BIS specified by the Connection_Handle parameter but does not terminate the CIS or BIS.<br>See Core Specification [Vol 4, Part E, 7.8.114].</p><i>This command is not available on STM32WBA25/28.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Connection_Handle</p>
 </td><td><p>2</p>
@@ -5619,7 +5626,7 @@ Units: dBm.</p>
 </td><td><p>1</p>
 </td><td><p>Status error code.</p>
 </td><td></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_CS_TEST_anchor">HCI_LE_CS_TEST</a></h2><h3>Description</h3><p>This command is used to start a CS test where the Device Under Test (DUT) is placed in the role of either the initiator or reflector.<br>See Core Specification [Vol 4, Part E, 7.8.142].</p><i>This command is not available on STM32WBA5/6.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="HCI_LE_CS_TEST_anchor">HCI_LE_CS_TEST</a></h2><h3>Description</h3><p>This command is used to start a CS test where the Device Under Test (DUT) is placed in the role of either the initiator or reflector.<br>See Core Specification [Vol 4, Part E, 7.8.142].</p><i>This command is not available on STM32WBA5/6/25.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Main_Mode_Type</p>
 </td><td><p>1</p>
@@ -5735,7 +5742,7 @@ See Core Specification.</p>
 </td><td><p>1</p>
 </td><td><p>Status error code.</p>
 </td><td></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><li><a href="#HCI_LE_CS_SUBEVENT_RESULT_EVENT_anchor">HCI_LE_CS_SUBEVENT_RESULT_EVENT</a></li><li><a href="#HCI_LE_CS_SUBEVENT_RESULT_CONTINUE_EVENT_anchor">HCI_LE_CS_SUBEVENT_RESULT_CONTINUE_EVENT</a></li><h2><a name="HCI_LE_CS_TEST_END_anchor">HCI_LE_CS_TEST_END</a></h2><h3>Description</h3><p>This command is used to stop any CS test that is in progress.<br>See Core Specification [Vol 4, Part E, 7.8.143].</p><i>This command is not available on STM32WBA5/6.</i><h3>Input parameters</h3><p>None</p><h3>Output parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><li><a href="#HCI_LE_CS_SUBEVENT_RESULT_EVENT_anchor">HCI_LE_CS_SUBEVENT_RESULT_EVENT</a></li><li><a href="#HCI_LE_CS_SUBEVENT_RESULT_CONTINUE_EVENT_anchor">HCI_LE_CS_SUBEVENT_RESULT_CONTINUE_EVENT</a></li><h2><a name="HCI_LE_CS_TEST_END_anchor">HCI_LE_CS_TEST_END</a></h2><h3>Description</h3><p>This command is used to stop any CS test that is in progress.<br>See Core Specification [Vol 4, Part E, 7.8.143].</p><i>This command is not available on STM32WBA5/6/25.</i><h3>Input parameters</h3><p>None</p><h3>Output parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Status</p>
 </td><td><p>1</p>
@@ -7830,6 +7837,11 @@ Time = N * 0.625 ms.</p>
 </td><td><p>Y</p>
 </td><td><p>Y</p>
 </td><td></td></tr>
+<tr><td><a href="#ACI_GATT_GET_ATTRIBUTE_VALUE_anchor">ACI_GATT_GET_ATTRIBUTE_VALUE</a></td><td><p>0xFD2B</p>
+</td><td><p>Y</p>
+</td><td><p>Y</p>
+</td><td><p>Y</p>
+</td><td></td></tr>
 <tr><td><a href="#ACI_GATT_UPDATE_CHAR_VALUE_EXT_anchor">ACI_GATT_UPDATE_CHAR_VALUE_EXT</a></td><td><p>0xFD2C</p>
 </td><td><p>Y</p>
 </td><td><p>Y</p>
@@ -8739,8 +8751,44 @@ If the Val_Offset is set to a value greater than 0, then the length of the attri
 </td><td><p>1</p>
 </td><td><p>Status error code.</p>
 </td><td></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="ACI_GATT_READ_HANDLE_VALUE_anchor">ACI_GATT_READ_HANDLE_VALUE</a></h2><h3>Description</h3><p>Reads the value of the attribute handle specified from the local GATT database.</p><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="ACI_GATT_READ_HANDLE_VALUE_anchor">ACI_GATT_READ_HANDLE_VALUE</a></h2><h3>Description</h3><p>Reads the value of the attribute handle specified from the local GATT database.<br>Note: this command is deprecated: <a href="#ACI_GATT_GET_ATTRIBUTE_VALUE_anchor">ACI_GATT_GET_ATTRIBUTE_VALUE</a> shall be used instead.</p><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
+<tr><td><p>Attr_Handle</p>
+</td><td><p>2</p>
+</td><td><p>Handle of the attribute to read</p>
+</td><td></tr>
+<tr><td><p>Offset</p>
+</td><td><p>2</p>
+</td><td><p>Offset from which the value needs to be read</p>
+</td><td></tr>
+<tr><td><p>Value_Length_Requested</p>
+</td><td><p>2</p>
+</td><td><p>Maximum number of octets to be returned as attribute value</p>
+</td><td></tr>
+</table><h3>Output parameters</h3><table width="800" border="1" class="reference">
+<tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
+<tr><td><p>Status</p>
+</td><td><p>1</p>
+</td><td><p>Status error code.</p>
+</td><td></td></tr>
+<tr><td><p>Length</p>
+</td><td><p>2</p>
+</td><td><p>Length of the attribute value</p>
+</td><td></tr>
+<tr><td><p>Value_Length</p>
+</td><td><p>2</p>
+</td><td><p>Length in octets of the Value parameter</p>
+</td><td></tr>
+<tr><td><p>Value</p>
+</td><td><p>Value_Length</p>
+</td><td><p>Attribute value</p>
+</td><td></tr>
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="ACI_GATT_GET_ATTRIBUTE_VALUE_anchor">ACI_GATT_GET_ATTRIBUTE_VALUE</a></h2><h3>Description</h3><p>Retrieves the value of the specified attribute from the local GATT database. The connection handle parameter is used only when the attribute value has multiple instances (for example, a CCCD value).</p><h3>Input parameters</h3><table width="800" border="1" class="reference">
+<tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
+<tr><td><p>Connection_Handle</p>
+</td><td><p>2</p>
+</td><td><p>Connection handle for which the command applies.</p>
+</td><td><li>0x0000 ... 0x0EFF</li></td></tr>
 <tr><td><p>Attr_Handle</p>
 </td><td><p>2</p>
 </td><td><p>Handle of the attribute to read</p>
@@ -8776,7 +8824,7 @@ If the Val_Offset is set to a value greater than 0, then the length of the attri
 <tr><td><p>Conn_Handle_To_Notify</p>
 </td><td><p>2</p>
 </td><td><p>Specifies the client(s) to be notified.</p>
-</td><td><li>0x0000: Notify all subscribed clients on their unenhanced ATT bearer</li><li>0x0001 ... 0x0EFF: Notify one client on the specified unenhanced ATT bearer (the parameter is the connection handle)</li><li>0xEA00 ... 0xEA3F: Notify one client on the specified enhanced ATT bearer (the LSB-byte of the parameter is the connection-oriented channel index)</li></td></tr>
+</td><td><li>0x0FFF: Notify all subscribed clients on their unenhanced ATT bearer</li><li>0x0000 ... 0x0EFF: Notify one client on the specified unenhanced ATT bearer (the parameter is the connection handle)</li><li>0xEA00 ... 0xEA3F: Notify one client on the specified enhanced ATT bearer (the LSB-byte of the parameter is the connection-oriented channel index)</li></td></tr>
 <tr><td><p>Service_Handle</p>
 </td><td><p>2</p>
 </td><td><p>Handle of service to which the characteristic belongs</p>
@@ -9442,7 +9490,7 @@ Device will continuously emit 0s, that means that the tone will be at the channe
 </td><td><p>1</p>
 </td><td><p>Status error code.</p>
 </td><td></td></tr>
-</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="ACI_HAL_SET_SYNC_EVENT_CONFIG_anchor">ACI_HAL_SET_SYNC_EVENT_CONFIG</a></h2><h3>Description</h3><p>This command is used to configure <a href="#ACI_HAL_SYNC_EVENT_anchor">ACI_HAL_SYNC_EVENT</a>.</p><h3>Input parameters</h3><table width="800" border="1" class="reference">
+</table><h3>Events generated</h3><li><a href="#HCI_COMMAND_COMPLETE_EVENT_anchor">HCI_COMMAND_COMPLETE_EVENT</a></li><h2><a name="ACI_HAL_SET_SYNC_EVENT_CONFIG_anchor">ACI_HAL_SET_SYNC_EVENT_CONFIG</a></h2><h3>Description</h3><p>This command is used to configure <a href="#ACI_HAL_SYNC_EVENT_anchor">ACI_HAL_SYNC_EVENT</a>.</p><i>This command is not available on STM32WBA25/28.</i><h3>Input parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Group_Id</p>
 </td><td><p>1</p>
@@ -9585,7 +9633,9 @@ Units: dBm.</p>
 </td></tr>
 <tr><td><a href="#HCI_AUTHENTICATED_PAYLOAD_TIMEOUT_EXPIRED_EVENT_anchor">HCI_AUTHENTICATED_PAYLOAD_TIMEOUT_EXPIRED_EVENT</a></td><td><p>0x57</p>
 </td><td><p>Y</p>
-</td><td></td><td></td><td><p>Y</p>
+</td><td><p>Y</p>
+</td><td><p>Y</p>
+</td><td><p>Y</p>
 </td></tr>
 </table><p>Note: all HCI events are enabled by default. See <a href="#HCI_SET_EVENT_MASK_anchor">HCI_SET_EVENT_MASK</a>.</p><h2><a name="HCI_DISCONNECTION_COMPLETE_EVENT_anchor">HCI_DISCONNECTION_COMPLETE_EVENT</a></h2><h3>Description</h3><p>This event occurs when a connection is terminated. The status parameter indicates if the disconnection was successful or not. The reason parameter indicates the reason for the disconnection if the disconnection was successful. If the disconnection was not successful, the value of the reason parameter shall be ignored by the Host.<br>Note: if the connection is terminated by the remote device, the reason parameter of this event is set to the reason specified by the remote device only if it has an allowed value, otherwise the reason is forced to Remote User Terminated Connection error code (0x13). Allowed remote reason values are: Authentication Failure error code (0x05), Other End Terminated Connection error codes (0x13 to 0x15), Unsupported Remote Feature error code (0x1A), and Unacceptable Connection Parameters error code (0x3B).<br>See Core Specification [Vol 4, Part E, 7.7.5].</p><h3>Event parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
@@ -10530,7 +10580,7 @@ Time = N * 1.25 ms.</p>
 </td><td><p>1</p>
 </td><td><p>Advertiser clock accuracy.</p>
 </td><td><li>0x00: 500 ppm</li><li>0x01: 250 ppm</li><li>0x02: 150 ppm</li><li>0x03: 100 ppm</li><li>0x04: 75 ppm</li><li>0x05: 50 ppm</li><li>0x06: 30 ppm</li><li>0x07: 20 ppm</li></td></tr>
-</table><h2><a name="HCI_LE_CIS_ESTABLISHED_EVENT_anchor">HCI_LE_CIS_ESTABLISHED_EVENT</a></h2><h3>Description</h3><p>This event indicates that a CIS has been established, was considered lost before being established, or, on the Central, was rejected by the Peripheral. It is generated by the Controller in the Central and Peripheral. The Connection_Handle parameter shall be set to the value provided in the HCI_LE_Create_CIS command on the Central and in the HCI_LE_CIS_Request event on the Peripheral.<br>See Core Specification [Vol 4, Part E, 7.7.65.25].</p><h3>Event parameters</h3><table width="800" border="1" class="reference">
+</table><h2><a name="HCI_LE_CIS_ESTABLISHED_EVENT_anchor">HCI_LE_CIS_ESTABLISHED_EVENT</a></h2><h3>Description</h3><p>This event indicates that a CIS has been established, was considered lost before being established, or, on the Central, was rejected by the Peripheral. It is generated by the Controller in the Central and Peripheral. The Connection_Handle parameter shall be set to the value provided in the HCI_LE_Create_CIS command on the Central and in the HCI_LE_CIS_Request event on the Peripheral.<br>See Core Specification [Vol 4, Part E, 7.7.65.25].</p><i>This event is not used on STM32WBA25/28.</i><h3>Event parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Status</p>
 </td><td><p>1</p>
@@ -10597,7 +10647,7 @@ Time = N * 1.25 ms.</p>
 </td><td><p>Time between consecutive BIG anchor points.
 Time = N * 1.25 ms.</p>
 </td><td><li>0x0004 (5.00 ms)  ... 0x0C80 (4000.00 ms) </li></td></tr>
-</table><h2><a name="HCI_LE_CIS_REQUEST_EVENT_anchor">HCI_LE_CIS_REQUEST_EVENT</a></h2><h3>Description</h3><p>This event indicates that a Controller has received a request to establish a CIS. If the Controller receives such a request while the HCI_LE_CIS_Request event is masked away, it shall reject it. Otherwise the Controller shall assign a connection handle for the requested CIS and send the handle in the CIS_Connection_Handle parameter of the event.<br>See Core Specification [Vol 4, Part E, 7.7.65.26].</p><h3>Event parameters</h3><table width="800" border="1" class="reference">
+</table><h2><a name="HCI_LE_CIS_REQUEST_EVENT_anchor">HCI_LE_CIS_REQUEST_EVENT</a></h2><h3>Description</h3><p>This event indicates that a Controller has received a request to establish a CIS. If the Controller receives such a request while the HCI_LE_CIS_Request event is masked away, it shall reject it. Otherwise the Controller shall assign a connection handle for the requested CIS and send the handle in the CIS_Connection_Handle parameter of the event.<br>See Core Specification [Vol 4, Part E, 7.7.65.26].</p><i>This event is not used on STM32WBA25/28.</i><h3>Event parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>ACL_Connection_Handle</p>
 </td><td><p>2</p>
@@ -10615,7 +10665,7 @@ Time = N * 1.25 ms.</p>
 </td><td><p>1</p>
 </td><td><p>CIS identifier.</p>
 </td><td><li>0x00 ... 0xEF</li></td></tr>
-</table><h2><a name="HCI_LE_CREATE_BIG_COMPLETE_EVENT_anchor">HCI_LE_CREATE_BIG_COMPLETE_EVENT</a></h2><h3>Description</h3><p>This event indicates that the HCI_LE_Create_BIG command has completed.<br>See Core Specification [Vol 4, Part E, 7.7.65.27].</p><h3>Event parameters</h3><table width="800" border="1" class="reference">
+</table><h2><a name="HCI_LE_CREATE_BIG_COMPLETE_EVENT_anchor">HCI_LE_CREATE_BIG_COMPLETE_EVENT</a></h2><h3>Description</h3><p>This event indicates that the HCI_LE_Create_BIG command has completed.<br>See Core Specification [Vol 4, Part E, 7.7.65.27].</p><i>This event is not used on STM32WBA25/28.</i><h3>Event parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Status</p>
 </td><td><p>1</p>
@@ -10669,7 +10719,7 @@ Time = N * 1.25 ms.</p>
 <tr><td><p>Connection_Handle[i]</p>
 </td><td><p>2</p>
 </td><td></td><td></tr>
-</table><h2><a name="HCI_LE_TERMINATE_BIG_COMPLETE_EVENT_anchor">HCI_LE_TERMINATE_BIG_COMPLETE_EVENT</a></h2><h3>Description</h3><p>This event indicates that the transmission of all the BISes in the BIG are terminated.<br>See Core Specification [Vol 4, Part E, 7.7.65.28].</p><h3>Event parameters</h3><table width="800" border="1" class="reference">
+</table><h2><a name="HCI_LE_TERMINATE_BIG_COMPLETE_EVENT_anchor">HCI_LE_TERMINATE_BIG_COMPLETE_EVENT</a></h2><h3>Description</h3><p>This event indicates that the transmission of all the BISes in the BIG are terminated.<br>See Core Specification [Vol 4, Part E, 7.7.65.28].</p><i>This event is not used on STM32WBA25/28.</i><h3>Event parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>BIG_Handle</p>
 </td><td><p>1</p>
@@ -10679,7 +10729,7 @@ Time = N * 1.25 ms.</p>
 </td><td><p>1</p>
 </td><td><p>See &quot;Status error codes&quot; section.</p>
 </td><td></tr>
-</table><h2><a name="HCI_LE_BIG_SYNC_ESTABLISHED_EVENT_anchor">HCI_LE_BIG_SYNC_ESTABLISHED_EVENT</a></h2><h3>Description</h3><p>This event indicates that the HCI_LE_BIG_Create_Sync command has completed.<br>See Core Specification [Vol 4, Part E, 7.7.65.29].</p><h3>Event parameters</h3><table width="800" border="1" class="reference">
+</table><h2><a name="HCI_LE_BIG_SYNC_ESTABLISHED_EVENT_anchor">HCI_LE_BIG_SYNC_ESTABLISHED_EVENT</a></h2><h3>Description</h3><p>This event indicates that the HCI_LE_BIG_Create_Sync command has completed.<br>See Core Specification [Vol 4, Part E, 7.7.65.29].</p><i>This event is not used on STM32WBA25/28.</i><h3>Event parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Status</p>
 </td><td><p>1</p>
@@ -10725,7 +10775,7 @@ Time = N * 1.25 ms.</p>
 <tr><td><p>Connection_Handle[i]</p>
 </td><td><p>2</p>
 </td><td></td><td></tr>
-</table><h2><a name="HCI_LE_BIG_SYNC_LOST_EVENT_anchor">HCI_LE_BIG_SYNC_LOST_EVENT</a></h2><h3>Description</h3><p>This event indicates that the Controller has not received any PDUs on a BIG within the timeout period BIG_Sync_Timeout or the BIG has been terminated by the remote device.<br>See Core Specification [Vol 4, Part E, 7.7.65.30].</p><h3>Event parameters</h3><table width="800" border="1" class="reference">
+</table><h2><a name="HCI_LE_BIG_SYNC_LOST_EVENT_anchor">HCI_LE_BIG_SYNC_LOST_EVENT</a></h2><h3>Description</h3><p>This event indicates that the Controller has not received any PDUs on a BIG within the timeout period BIG_Sync_Timeout or the BIG has been terminated by the remote device.<br>See Core Specification [Vol 4, Part E, 7.7.65.30].</p><i>This event is not used on STM32WBA25/28.</i><h3>Event parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>BIG_Handle</p>
 </td><td><p>1</p>
@@ -10796,7 +10846,7 @@ Units: dBm.</p>
 </td><td><p>Change in transmit power level (signed integer - positive indicates increased power, negative indicates decreased power, zero indicates unchanged).
 Units: dB.</p>
 </td><td><li>127: Change is not available or is out of range</li><li>-127 ... 126</li></td></tr>
-</table><h2><a name="HCI_LE_BIGINFO_ADVERTISING_REPORT_EVENT_anchor">HCI_LE_BIGINFO_ADVERTISING_REPORT_EVENT</a></h2><h3>Description</h3><p>This event indicates that the Controller has received an Advertising PDU that contained a BIGInfo field. If the Controller also generates an HCI_LE_Periodic_Advertising_Report event, the HCI_LE_BIGInfo_Advertising_Report event shall immediately follow that event.<br>See Core Specification [Vol 4, Part E, 7.7.65.34].</p><h3>Event parameters</h3><table width="800" border="1" class="reference">
+</table><h2><a name="HCI_LE_BIGINFO_ADVERTISING_REPORT_EVENT_anchor">HCI_LE_BIGINFO_ADVERTISING_REPORT_EVENT</a></h2><h3>Description</h3><p>This event indicates that the Controller has received an Advertising PDU that contained a BIGInfo field. If the Controller also generates an HCI_LE_Periodic_Advertising_Report event, the HCI_LE_BIGInfo_Advertising_Report event shall immediately follow that event.<br>See Core Specification [Vol 4, Part E, 7.7.65.34].</p><i>This event is not used on STM32WBA25/28.</i><h3>Event parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Sync_Handle</p>
 </td><td><p>2</p>
@@ -11130,7 +11180,7 @@ Time = N * 10 ms.</p>
 </td><td><p>2</p>
 </td><td><p>Handle identifying the periodic advertising train.</p>
 </td><td><li>0xFFFF: No Sync Handle</li><li>0x0000 ... 0x0EFF</li></td></tr>
-</table><h2><a name="HCI_LE_CIS_ESTABLISHED_V2_EVENT_anchor">HCI_LE_CIS_ESTABLISHED_V2_EVENT</a></h2><h3>Description</h3><p>This event indicates that a CIS has been established, was considered lost before being established, or - on the Central - was rejected by the Peripheral.<br>See Core Specification [Vol 4, Part E, 7.7.65.25].</p><h3>Event parameters</h3><table width="800" border="1" class="reference">
+</table><h2><a name="HCI_LE_CIS_ESTABLISHED_V2_EVENT_anchor">HCI_LE_CIS_ESTABLISHED_V2_EVENT</a></h2><h3>Description</h3><p>This event indicates that a CIS has been established, was considered lost before being established, or - on the Central - was rejected by the Peripheral.<br>See Core Specification [Vol 4, Part E, 7.7.65.25].</p><i>This event is not used on STM32WBA25/28.</i><h3>Event parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Status</p>
 </td><td><p>1</p>
@@ -11243,7 +11293,7 @@ Time = N * 1.25 ms.</p>
 </td><td><p>248</p>
 </td><td><p>Bit Mask List of the supported LE features. See Core Specification [Vol 6, Part B, 4.6].</p>
 </td><td></tr>
-</table><h2><a name="HCI_LE_CS_READ_REMOTE_SUPPORTED_CAPABILITIES_COMPLETE_EVENT_anchor">HCI_LE_CS_READ_REMOTE_SUPPORTED_CAPABILITIES_COMPLETE_EVENT</a></h2><h3>Description</h3><p>This event is generated when a locally initiated CS Capabilities Exchange procedure has completed or when the local Controller has received an LL_CS_CAPABILITIES_REQ from the remote Controller.<br>See Core Specification [Vol 4, Part E, 7.7.65.39].</p><i>This event is not used on STM32WBA5/6.</i><h3>Event parameters</h3><table width="800" border="1" class="reference">
+</table><h2><a name="HCI_LE_CS_READ_REMOTE_SUPPORTED_CAPABILITIES_COMPLETE_EVENT_anchor">HCI_LE_CS_READ_REMOTE_SUPPORTED_CAPABILITIES_COMPLETE_EVENT</a></h2><h3>Description</h3><p>This event is generated when a locally initiated CS Capabilities Exchange procedure has completed or when the local Controller has received an LL_CS_CAPABILITIES_REQ from the remote Controller.<br>See Core Specification [Vol 4, Part E, 7.7.65.39].</p><i>This event is not used on STM32WBA5/6/25.</i><h3>Event parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Status</p>
 </td><td><p>1</p>
@@ -11333,7 +11383,7 @@ Time = N * 1.25 ms.</p>
 </td><td><p>1</p>
 </td><td><p>Indicates the supported SNR levels used in RTT packets.</p>
 </td><td><p>Bitmask of:</p><li>0x01: 18 dB supported</li><li>0x02: 21 dB supported</li><li>0x04: 24 dB supported</li><li>0x08: 27 dB supported</li><li>0x10: 30 dB supported</li></td></tr>
-</table><h2><a name="HCI_LE_CS_READ_REMOTE_FAE_TABLE_COMPLETE_EVENT_anchor">HCI_LE_CS_READ_REMOTE_FAE_TABLE_COMPLETE_EVENT</a></h2><h3>Description</h3><p>This event is generated when a locally initiated CS Mode 0 Frequency Actuation Error Table Update procedure has completed.<br>See Core Specification [Vol 4, Part E, 7.7.65.40].</p><i>This event is not used on STM32WBA5/6.</i><h3>Event parameters</h3><table width="800" border="1" class="reference">
+</table><h2><a name="HCI_LE_CS_READ_REMOTE_FAE_TABLE_COMPLETE_EVENT_anchor">HCI_LE_CS_READ_REMOTE_FAE_TABLE_COMPLETE_EVENT</a></h2><h3>Description</h3><p>This event is generated when a locally initiated CS Mode 0 Frequency Actuation Error Table Update procedure has completed.<br>See Core Specification [Vol 4, Part E, 7.7.65.40].</p><i>This event is not used on STM32WBA5/6/25.</i><h3>Event parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Status</p>
 </td><td><p>1</p>
@@ -11347,7 +11397,7 @@ Time = N * 1.25 ms.</p>
 </td><td><p>72</p>
 </td><td><p>Per-channel mode-0 Frequency Actuation Error table of the remote Controller as described in Core Specification [Vol 6, Part B, 2.4.2.53].</p>
 </td><td></tr>
-</table><h2><a name="HCI_LE_CS_SECURITY_ENABLE_COMPLETE_EVENT_anchor">HCI_LE_CS_SECURITY_ENABLE_COMPLETE_EVENT</a></h2><h3>Description</h3><p>This event is generated when a locally initiated CS Security Start procedure has completed or when the local Controller has responded to a CS security request from the remote Controller.<br>See Core Specification [Vol 4, Part E, 7.7.65.41].</p><i>This event is not used on STM32WBA5/6.</i><h3>Event parameters</h3><table width="800" border="1" class="reference">
+</table><h2><a name="HCI_LE_CS_SECURITY_ENABLE_COMPLETE_EVENT_anchor">HCI_LE_CS_SECURITY_ENABLE_COMPLETE_EVENT</a></h2><h3>Description</h3><p>This event is generated when a locally initiated CS Security Start procedure has completed or when the local Controller has responded to a CS security request from the remote Controller.<br>See Core Specification [Vol 4, Part E, 7.7.65.41].</p><i>This event is not used on STM32WBA5/6/25.</i><h3>Event parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Status</p>
 </td><td><p>1</p>
@@ -11357,7 +11407,7 @@ Time = N * 1.25 ms.</p>
 </td><td><p>2</p>
 </td><td><p>Connection handle for which the event applies.</p>
 </td><td><li>0x0000 ... 0x0EFF</li></td></tr>
-</table><h2><a name="HCI_LE_CS_CONFIG_COMPLETE_EVENT_anchor">HCI_LE_CS_CONFIG_COMPLETE_EVENT</a></h2><h3>Description</h3><p>This event is generated when a locally initiated Channel Sounding Configuration procedure has completed or when the local Controller has responded to a CS configuration request from the remote Controller for the CS configuration identified by Config_ID or when a CS configuration is created only with local context. The Action parameter indicates if a CS configuration was requested to be created or removed. The Status parameter indicates whether the request indicated by the Action parameter was successful.<br>See Core Specification [Vol 4, Part E, 7.7.65.42].</p><i>This event is not used on STM32WBA5/6.</i><h3>Event parameters</h3><table width="800" border="1" class="reference">
+</table><h2><a name="HCI_LE_CS_CONFIG_COMPLETE_EVENT_anchor">HCI_LE_CS_CONFIG_COMPLETE_EVENT</a></h2><h3>Description</h3><p>This event is generated when a locally initiated Channel Sounding Configuration procedure has completed or when the local Controller has responded to a CS configuration request from the remote Controller for the CS configuration identified by Config_ID or when a CS configuration is created only with local context. The Action parameter indicates if a CS configuration was requested to be created or removed. The Status parameter indicates whether the request indicated by the Action parameter was successful.<br>See Core Specification [Vol 4, Part E, 7.7.65.42].</p><i>This event is not used on STM32WBA5/6/25.</i><h3>Event parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Status</p>
 </td><td><p>1</p>
@@ -11456,7 +11506,7 @@ The most significant bit (bit 79) is reserved for future use.</p>
 </td><td><p>1</p>
 </td><td><p>Time in microseconds for the phase measurement period of the CS tones.</p>
 </td><td><li>10</li><li>20</li><li>40</li></td></tr>
-</table><h2><a name="HCI_LE_CS_PROCEDURE_ENABLE_COMPLETE_EVENT_anchor">HCI_LE_CS_PROCEDURE_ENABLE_COMPLETE_EVENT</a></h2><h3>Description</h3><p>This event is generated when the local or remote Controller has scheduled a new CS procedure measurement or disabled an ongoing CS procedure measurement as a result of an HCI_LE_CS_Procedure_Enable command. When a new CS procedure measurement is enabled, the HCI_LE_CS_Procedure_Enable_Complete event shall be sent to the Host after the LL_CS_IND is transmitted or received and before any CS subevent results are available.<br>See Core Specification [Vol 4, Part E, 7.7.65.43].</p><i>This event is not used on STM32WBA5/6.</i><h3>Event parameters</h3><table width="800" border="1" class="reference">
+</table><h2><a name="HCI_LE_CS_PROCEDURE_ENABLE_COMPLETE_EVENT_anchor">HCI_LE_CS_PROCEDURE_ENABLE_COMPLETE_EVENT</a></h2><h3>Description</h3><p>This event is generated when the local or remote Controller has scheduled a new CS procedure measurement or disabled an ongoing CS procedure measurement as a result of an HCI_LE_CS_Procedure_Enable command. When a new CS procedure measurement is enabled, the HCI_LE_CS_Procedure_Enable_Complete event shall be sent to the Host after the LL_CS_IND is transmitted or received and before any CS subevent results are available.<br>See Core Specification [Vol 4, Part E, 7.7.65.43].</p><i>This event is not used on STM32WBA5/6/25.</i><h3>Event parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Status</p>
 </td><td><p>1</p>
@@ -11513,7 +11563,7 @@ Time = N * 0.625 ms.</p>
 </td><td><p>Maximum duration for each CS procedure.
 Time = N * 0.625 ms.</p>
 </td><td><li>0x0001 (0.625 ms)  ... 0xFFFF (40959.375 ms) </li></td></tr>
-</table><h2><a name="HCI_LE_CS_SUBEVENT_RESULT_EVENT_anchor">HCI_LE_CS_SUBEVENT_RESULT_EVENT</a></h2><h3>Description</h3><p>This event is generated when the local Controller has results to report for a CS subevent during the CS procedure. Depending on the number of CS steps in the CS subevent, the Controller may choose to report complete or partial results. When the number of CS steps exceeds the maximum HCI event size, the Controller may report further results for the CS subevent using the HCI_LE_CS_Subevent_Result_Continue event.<br>See Core Specification [Vol 4, Part E, 7.7.65.44].</p><i>This event is not used on STM32WBA5/6.</i><h3>Event parameters</h3><table width="800" border="1" class="reference">
+</table><h2><a name="HCI_LE_CS_SUBEVENT_RESULT_EVENT_anchor">HCI_LE_CS_SUBEVENT_RESULT_EVENT</a></h2><h3>Description</h3><p>This event is generated when the local Controller has results to report for a CS subevent during the CS procedure. Depending on the number of CS steps in the CS subevent, the Controller may choose to report complete or partial results. When the number of CS steps exceeds the maximum HCI event size, the Controller may report further results for the CS subevent using the HCI_LE_CS_Subevent_Result_Continue event.<br>See Core Specification [Vol 4, Part E, 7.7.65.44].</p><i>This event is not used on STM32WBA5/6/25.</i><h3>Event parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Connection_Handle</p>
 </td><td><p>2</p>
@@ -11564,7 +11614,7 @@ Units: dBm.</p>
 </td><td><p>239</p>
 </td><td><p>Must be composed of the following fields: Step_Mode (1 byte), Step_Channel (1 byte), Step_Data_Length (1 byte), Step_Data ('Step_Data_Length' bytes). All fields are repeated 'Num_Steps_Reported' times. Note: the indicated size is the maximum size.</p>
 </td><td></tr>
-</table><h2><a name="HCI_LE_CS_SUBEVENT_RESULT_CONTINUE_EVENT_anchor">HCI_LE_CS_SUBEVENT_RESULT_CONTINUE_EVENT</a></h2><h3>Description</h3><p>This event is generated after the local Controller has completed a new CS subevent measurement and has already sent an HCI_LE_CS_Subevent_Result event for the specified CS subevent.<br>See Core Specification [Vol 4, Part E, 7.7.65.45].</p><i>This event is not used on STM32WBA5/6.</i><h3>Event parameters</h3><table width="800" border="1" class="reference">
+</table><h2><a name="HCI_LE_CS_SUBEVENT_RESULT_CONTINUE_EVENT_anchor">HCI_LE_CS_SUBEVENT_RESULT_CONTINUE_EVENT</a></h2><h3>Description</h3><p>This event is generated after the local Controller has completed a new CS subevent measurement and has already sent an HCI_LE_CS_Subevent_Result event for the specified CS subevent.<br>See Core Specification [Vol 4, Part E, 7.7.65.45].</p><i>This event is not used on STM32WBA5/6/25.</i><h3>Event parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Connection_Handle</p>
 </td><td><p>2</p>
@@ -11598,7 +11648,7 @@ Units: dBm.</p>
 </td><td><p>246</p>
 </td><td><p>Must be composed of the following fields: Step_Mode (1 byte), Step_Channel (1 byte), Step_Data_Length (1 byte), Step_Data ('Step_Data_Length' bytes). All fields are repeated 'Num_Steps_Reported' times. Note: the indicated size is the maximum size.</p>
 </td><td></tr>
-</table><h2><a name="HCI_LE_CS_TEST_END_COMPLETE_EVENT_anchor">HCI_LE_CS_TEST_END_COMPLETE_EVENT</a></h2><h3>Description</h3><p>This event is generated when the local Controller has stopped an ongoing CS test as a result of the <a href="#HCI_LE_CS_TEST_END_anchor">HCI_LE_CS_TEST_END</a> command.<br>See Core Specification [Vol 4, Part E, 7.7.65.46].</p><i>This event is not used on STM32WBA5/6.</i><h3>Event parameters</h3><table width="800" border="1" class="reference">
+</table><h2><a name="HCI_LE_CS_TEST_END_COMPLETE_EVENT_anchor">HCI_LE_CS_TEST_END_COMPLETE_EVENT</a></h2><h3>Description</h3><p>This event is generated when the local Controller has stopped an ongoing CS test as a result of the <a href="#HCI_LE_CS_TEST_END_anchor">HCI_LE_CS_TEST_END</a> command.<br>See Core Specification [Vol 4, Part E, 7.7.65.46].</p><i>This event is not used on STM32WBA5/6/25.</i><h3>Event parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Status</p>
 </td><td><p>1</p>
@@ -11737,6 +11787,10 @@ Units: dBm.</p>
 </td><td><p>2</p>
 </td><td><p>Handle of the connection where this event occurred.</p>
 </td><td><li>0x0000 ... 0x0EFF</li></td></tr>
+<tr><td><p>IO_Capability</p>
+</td><td><p>1</p>
+</td><td><p>IO capability of the remote device.</p>
+</td><td><li>0x00: IO_CAP_DISPLAY_ONLY</li><li>0x01: IO_CAP_DISPLAY_YES_NO</li><li>0x02: IO_CAP_KEYBOARD_ONLY</li><li>0x03: IO_CAP_NO_INPUT_NO_OUTPUT</li><li>0x04: IO_CAP_KEYBOARD_DISPLAY</li></td></tr>
 </table><h2><a name="ACI_GAP_AUTHORIZATION_REQ_EVENT_anchor">ACI_GAP_AUTHORIZATION_REQ_EVENT</a></h2><h3>Description</h3><p>This event is generated by the Security manager to the application when the application has set that authorization is required for reading/writing of attributes. This event will be generated as soon as the pairing is complete. When this event is received, <a href="#ACI_GAP_AUTHORIZATION_RESP_anchor">ACI_GAP_AUTHORIZATION_RESP</a> command should be used to respond by the application.</p><h3>Event parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Connection_Handle</p>
@@ -12554,7 +12608,7 @@ Time = N * 1.25 ms.</p>
 <tr><td><p>Result</p>
 </td><td><p>2</p>
 </td><td><p>Indicates the outcome of the request. See Core Specification [Vol 3, Part A, Table 4.16] for LE credit based connection-oriented channels, or [Vol 3, Part A, Table 4.17] for enhanced credit based connection-oriented channels.</p>
-</td><td><li>0x0000 ... 0x000F</li></td></tr>
+</td><td><li>0xFFFF: Invalid response</li><li>0x0000 ... 0x000F</li></td></tr>
 <tr><td><p>Channel_Number</p>
 </td><td><p>1</p>
 </td><td><p>Number of created channels. It is the length of Channel_Index_List.</p>
@@ -12594,7 +12648,7 @@ Time = N * 1.25 ms.</p>
 <tr><td><p>Result</p>
 </td><td><p>2</p>
 </td><td><p>Indicates the outcome of the request. See Core Specification [Vol 3, Part A, Table 4.18].</p>
-</td><td><li>0x0000 ... 0x0004</li></td></tr>
+</td><td><li>0xFFFF: Invalid response</li><li>0x0000 ... 0x0004</li></td></tr>
 </table><h2><a name="ACI_L2CAP_COC_DISCONNECT_EVENT_anchor">ACI_L2CAP_COC_DISCONNECT_EVENT</a></h2><h3>Description</h3><p>This event is generated when a connection-oriented channel is disconnected following an L2CAP channel termination procedure.<br>See Core Specification [Vol 3, Part A].</p><h3>Event parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Channel_Index</p>
@@ -12658,7 +12712,7 @@ Time = N * 1.25 ms.</p>
 </td><td><p>1</p>
 </td><td><p>Not used.</p>
 </td><td><li>0xFF: Idle</li><li>0x00 ... 0x07</li></td></tr>
-</table><h2><a name="ACI_HAL_SYNC_EVENT_anchor">ACI_HAL_SYNC_EVENT</a></h2><h3>Description</h3><p>This event is generated after the execution of CIG or BIG is completed on hardware. The command <a href="#ACI_HAL_SET_SYNC_EVENT_CONFIG_anchor">ACI_HAL_SET_SYNC_EVENT_CONFIG</a> must be used to configure the generation of this event.</p><h3>Event parameters</h3><table width="800" border="1" class="reference">
+</table><h2><a name="ACI_HAL_SYNC_EVENT_anchor">ACI_HAL_SYNC_EVENT</a></h2><h3>Description</h3><p>This event is generated after the execution of CIG or BIG is completed on hardware. The command <a href="#ACI_HAL_SET_SYNC_EVENT_CONFIG_anchor">ACI_HAL_SET_SYNC_EVENT_CONFIG</a> must be used to configure the generation of this event.</p><i>This event is not used on STM32WBA25/28.</i><h3>Event parameters</h3><table width="800" border="1" class="reference">
 <tr><th>Parameter</th><th>Size</th><th>Description</th><th>Possible values</th></tr>
 <tr><td><p>Group_Id</p>
 </td><td><p>1</p>
@@ -13003,4 +13057,4 @@ Time = N * 1.25 ms.</p>
 <tr><td><p>0x8A</p>
 </td><td><p>unexpected_adv_state_error: unexpected advertising state</p>
 </td></tr>
-</table><p>Other values are reserved.</p><p></p><h1><a name="Revision history_anchor">Revision history</a></h1><p>June 2022 - Rev 1.0 - First release.</p><p>July 2022 - Rev 1.1 - Fixed Event_Mask default value.</p><p>August 2022 - Rev 1.2 - Fixed HCI_READ_LOCAL_SUPPORTED_CODECS_V2; Removed "SCA Updates" feature; Fixed some spelling issues.</p><p>October 2022 - Rev 1.3 - Added Enhanced ATT feature; Added new commands: ACI_HAL_CONTINUOUS_TX_START, ACI_GATT_SEND_MULT_NOTIFICATION and ACI_GATT_READ_MULTIPLE_VAR_CHAR_VALUE; Added new events: ACI_GATT_EATT_BEARER_EVENT and ACI_GATT_MULT_NOTIFICATION_EVENT; Changed ACI_GATT_ADD_CHAR and ACI_GATT_TX_POOL_AVAILABLE_EVENT descriptions; Added note for GAP peripheral commands that only support legacy advertising; Fixed formula of RF_Channel; Added possible values for HCI_HOST_BUFFER_SIZE and HCI_WRITE_CONNECTION_ACCEPT_TIMEOUT; Created annex for TX Power Level; Replaced ACI_HAL_GET_LINK_STATUS by ACI_HAL_GET_LINK_STATUS_V2.</p><p>January 2023 - Rev 1.4 - Completed the description of Connection_Handle for some primitives; Completed the description of ACI_GAP_ADDR_NOT_RESOLVED_EVENT.</p><p>January 2023 - Rev 1.5 - Added new ATT error codes; Added ACI_HAL_SYNC_EVENT in ACI_HAL_SET_EVENT_MASK; Completed possible values of ACI_HAL_SET_RADIO_ACTIVITY_MASK and ACI_HAL_END_OF_RADIO_ACTIVITY_EVENT.</p><p>March 2023 - Rev 1.6 - Updated HCI status error codes; Added HCI_LE_REQUEST_PEER_SCA and HCI_LE_REQUEST_PEER_SCA_COMPLETE_EVENT; Fixed possible values for HCI_LE_READ_ANTENNA_INFORMATION; Added ACI_GATT_NOTIFICATION_COMPLETE_EVENT; Added GAP service additional record number in ACI_HAL_WRITE_CONFIG_DATA; Completed description of ACI_GATT_ADD_CHAR and ACI_GATT_ADD_CHAR_DESC; Modified ACI_HAL_SYNC_EVENT.</p><p>March 2023 - Rev 1.7 - Added HCI_LE_GENERATE_DHKEY_V2 in LB variant; Completed some missing descriptions and possible values; Fixed description of HCI_ENCRYPTION_KEY_REFRESH_COMPLETE_EVENT, ACI_GATT_SET_EVENT_MASK, ACI_GAP_SET_EVENT_MASK and ACI_HAL_SET_EVENT_MASK; Added SC key type in ACI_HAL_WRITE_CONFIG_DATA.</p><p>May 2023 - Rev 1.8 - Changed description of ACI_GAP_SET_OOB_DATA, ACI_GAP_GET_OOB_DATA and ACI_GAP_SET_DIRECT_CONNECTABLE; Updated description of scanning and initiator filter policy; Renamed ACI_GAP_CONFIGURE_WHITELIST, ACI_HAL_SET_SLAVE_LATENCY, ACI_GAP_SLAVE_SECURITY_REQ and ACI_GAP_SLAVE_SECURITY_INITIATED_EVENT, as well as some parameter names; Replaced ACI_HAL_GET_PM_DEBUG_INFO by ACI_HAL_GET_PM_DEBUG_INFO_V2.</p><p>May 2023 - Rev 1.9 - Changed description of ACI_HAL_SET_TX_POWER_LEVEL; Fixed some spelling issues.</p><p>June 2023 - Rev 1.10 - Fixed maximum value of MPS; Changed note for ACI_GATT_UPDATE_CHAR_VALUE; Changed description of PHY_options.</p><p>August 2023 - Rev 1.11 - Added HCI_LE_ENHANCED_CONNECTION_COMPLETE_EVENT as "Events generated"; Updated HCI_READ_LOCAL_VERSION_INFORMATION; Added some details about bonding table; Added new mode in ACI_GAP_ADV_SET_CONFIGURATION; Added ACI_GAP_EXT_START_SCAN and ACI_GAP_EXT_CREATE_CONNECTION; Added ACI_GAP_ADV_SET_PERIODIC_PARAMETERS, ACI_GAP_ADV_SET_PERIODIC_DATA and ACI_GAP_ADV_SET_PERIODIC_ENABLE; Added possible values for FW_Error_Type; Updated HCI_LE_SET_EVENT_MASK possible values.</p><p>September 2023 - Rev 1.12 - Fixed possible values of Advertising_TX_Power.</p><p>November 2023 - Rev 1.13 - Added Connection Subrating and Channel Classification features. Added HCI_LE_SET_DATA_RELATED_ADDRESS_CHANGES command; Updated description of ACI_GATT_UPDATE_CHAR_VALUE and ACI_GATT_TX_POOL_AVAILABLE_EVENT; Updated description and possible values of ACI_HAL_WRITE_CONFIG_DATA; Upgraded ACI_HAL_GET_LINK_STATUS_V2 command to support 22 links.</p><p>February 2024 - Rev 1.14 - Added "no peer debug key" bit for SMP mode in ACI_HAL_WRITE_CONFIG_DATA.</p><p>April 2024 - Rev 1.15 - Added BP and PO variants; Added ACI_HAL_EAD_ENCRYPT_DECRYPT command.</p><p>August 2024 - Rev 1.16 - Removed ACI_HAL_SCAN_REQ_REPORT_EVENT; Fixed possible values for Enable of periodic advertising; Added configuration of RSSI golden range; Updated description of ACI_HAL_END_OF_RADIO_ACTIVITY_EVENT parameters; Changed description of ACI_GAP_IS_DEVICE_BONDED; Fixed possible values of PHY for receiver test; Added bits for SMP mode in ACI_HAL_WRITE_CONFIG_DATA; Added ACI_GAP_ADV_SET_CONFIGURATION_V2 and HCI_LE_SET_EXTENDED_ADVERTISING_PARAMETERS_V2 to support Advertising Coding Selection; Added HCI_LE_LONG_TERM_KEY_REQUEST_REPLY, HCI_LE_LONG_TERM_KEY_REQUEST_NEGATIVE_REPLY and HCI_LE_SET_HOST_CHANNEL_CLASSIFICATION in BP, BF and PO variants; Removed HCI_DISCONNECT and HCI_LE_CONNECTION_UPDATE from BP, BF and PO variants; Added ACI_GAP_PAIRING_REQUEST_EVENT and ACI_GAP_PAIRING_REQUEST_REPLY.</p><p>September 2024 - Rev 1.17 - Aligned with Bluetooth Core v.6.0; Added LL RX ACL control in ACI_HAL_WRITE_CONFIG_DATA.</p><p>September 2024 - Rev 1.18 - Added LL error in HCI_HARDWARE_ERROR_EVENT.</p><p>December 2024 - Rev 1.19 - Created annex for configuration data and hardware codes; Added HCI_LE_GENERATE_DHKEY and HCI_LE_GENERATE_DHKEY_COMPLETE_EVENT in BP, BF and PO variants; Fixed possible values for HCI_LE_SET_PHY, HCI_LE_SET_DEFAULT_PHY, HCI_LE_SET_PERIODIC_ADVERTISING_RECEIVE_ENABLE, HCI_LE_ADD_DEVICE_TO_FILTER_ACCEPT_LIST, HCI_LE_REMOVE_DEVICE_FROM_FILTER_ACCEPT_LIST, ACI_GAP_START_GENERAL_DISCOVERY_PROC and ACI_GAP_EXT_START_SCAN; Added HCI_LE_CIS_ESTABLISHED_V2_EVENT. Rework notes for legacy advertising commands; Renamed ACI_HAL_FW_ERROR_EVENT to ACI_HAL_WARNING_EVENT; Added parameter in ACI_GAP_BOND_LOST_EVENT; Removed ACI_GAP_PERIPHERAL_SECURITY_INITIATED_EVENT; Added "SMP unexpected LTK request" warning.</p><p>January 2025 - Rev 1.20 - Changed description of ACI_HAL_GET_LINK_STATUS_V2; Removed ACI_GAP_RESOLVE_PRIVATE_ADDR and ACI_GAP_IS_DEVICE_BONDED; Added ACI_GAP_CHECK_BONDED_DEVICE; Added "Connection Parameters Request" feature on all variants.</p><p>March 2025 - Rev 1.21 - Added LL features: Periodic Advertising with Responses, Channel Sounding, Monitoring Advertisers, LE Frame Space Update and LL Extended Feature Set; Fixed possible values of Data_Path_Direction for HCI_LE_REMOVE_ISO_DATA_PATH; Fixed possible values of CTE_Type for HCI_LE_TRANSMITTER_TEST_V3 and HCI_LE_TRANSMITTER_TEST_V4; Fixed maximum SDU size in HCI_LE_SET_CIG_PARAMETERS, HCI_LE_SET_CIG_PARAMETERS_TEST and HCI_LE_CIS_ESTABLISHED_V2_EVENT; Added new value for warning type; Added note about event mask after the event tables; Fixed description of ACI_HAL_SET_EVENT_MASK, ACI_GATT_SET_EVENT_MASK and ACI_GAP_SET_EVENT_MASK; Added new pairing failed reason; Changed description of ACI_GATT_DISC_ALL_CHAR_DESC; Removed ACI_GAP_ADD_DEVICES_TO_RESOLVING_LIST; Changed description of ACI_GATT_SET_SECURITY_PERMISSION.</p><p>April 2025 - Rev 1.22 - Changed description of ACI_GAP_UPDATE_ADV_DATA; Changed parameters of ACI_GATT_EATT_BEARER_EVENT; Added Max_Channel_Number parameter to ACI_L2CAP_COC_CONNECT_CONFIRM; Changed description of ACI_L2CAP_COMMAND_REJECT_EVENT; Changed description of HCI_LE_SET_RESOLVABLE_PRIVATE_ADDRESS_TIMEOUT.</p><p>April 2025 - Rev 1.23 - Removed references to STM32WB in descriptions; Added note for ACI_HAL_READ_RSSI; Added ACI_RESET, ACI_GET_INFORMATION, ACI_WRITE_CONFIG_DATA and ACI_READ_CONFIG_DATA; Renamed ACI_HAL_WARNING_EVENT to ACI_WARNING_EVENT; Removed ACI_HAL_GET_FW_BUILD_NUMBER and ACI_HAL_GET_PM_DEBUG_INFO_V2.</p><p>May 2025 - Rev 1.24 - Aligned with Bluetooth Core v.6.1.</p><p>June 2025 - Rev 1.25 - Added ACI_GATT_WRITE_WITHOUT_RESP_EXT and ACI_GATT_WRITE_WITH_RESP_EXT; Removed ACI_GATT_READ_CHAR_DESC, ACI_GATT_READ_LONG_CHAR_DESC, ACI_GATT_WRITE_CHAR_DESC and ACI_GATT_WRITE_LONG_CHAR_DESC; Added possible values for Security_Permissions and MITM_Mode; Renamed ACI_GATT_WRITE_RESP to ACI_GATT_PERMIT_WRITE; Replaced ACI_GATT_ALLOW_READ and ACI_GATT_DENY_READ by ACI_GATT_PERMIT_READ; Reworked description of HCI_SET_CONTROLLER_TO_HOST_FLOW_CONTROL, HCI_HOST_BUFFER_SIZE and HCI_HOST_NUMBER_OF_COMPLETED_PACKETS; Changed subevent code of ACI HAL events.</p><p>August 2025 - Rev 1.26 - Completed description of HCI_READ_LOCAL_VERSION_INFORMATION; Declared the use of fixed pin deprecated; Added ACI_HAL_EAD_ENCRYPT_DECRYPT in LO variant; Added ACI_HAL_SET_EVENT_MASK in all variants; Removed LB variant; Completed description of ACI_HAL_SET_SYNC_EVENT_CONFIG.</p><p></p><i>&copy; 2018-2025 STMicroelectronics. All rights reserved.</i></font></body></html>
+</table><p>Other values are reserved.</p><p></p><h1><a name="Revision history_anchor">Revision history</a></h1><p>June 2022 - Rev 1.0 - First release.</p><p>July 2022 - Rev 1.1 - Fixed Event_Mask default value.</p><p>August 2022 - Rev 1.2 - Fixed HCI_READ_LOCAL_SUPPORTED_CODECS_V2; Removed "SCA Updates" feature; Fixed some spelling issues.</p><p>October 2022 - Rev 1.3 - Added Enhanced ATT feature; Added new commands: ACI_HAL_CONTINUOUS_TX_START, ACI_GATT_SEND_MULT_NOTIFICATION and ACI_GATT_READ_MULTIPLE_VAR_CHAR_VALUE; Added new events: ACI_GATT_EATT_BEARER_EVENT and ACI_GATT_MULT_NOTIFICATION_EVENT; Changed ACI_GATT_ADD_CHAR and ACI_GATT_TX_POOL_AVAILABLE_EVENT descriptions; Added note for GAP peripheral commands that only support legacy advertising; Fixed formula of RF_Channel; Added possible values for HCI_HOST_BUFFER_SIZE and HCI_WRITE_CONNECTION_ACCEPT_TIMEOUT; Created annex for TX Power Level; Replaced ACI_HAL_GET_LINK_STATUS by ACI_HAL_GET_LINK_STATUS_V2.</p><p>January 2023 - Rev 1.4 - Completed the description of Connection_Handle for some primitives; Completed the description of ACI_GAP_ADDR_NOT_RESOLVED_EVENT.</p><p>January 2023 - Rev 1.5 - Added new ATT error codes; Added ACI_HAL_SYNC_EVENT in ACI_HAL_SET_EVENT_MASK; Completed possible values of ACI_HAL_SET_RADIO_ACTIVITY_MASK and ACI_HAL_END_OF_RADIO_ACTIVITY_EVENT.</p><p>March 2023 - Rev 1.6 - Updated HCI status error codes; Added HCI_LE_REQUEST_PEER_SCA and HCI_LE_REQUEST_PEER_SCA_COMPLETE_EVENT; Fixed possible values for HCI_LE_READ_ANTENNA_INFORMATION; Added ACI_GATT_NOTIFICATION_COMPLETE_EVENT; Added GAP service additional record number in ACI_HAL_WRITE_CONFIG_DATA; Completed description of ACI_GATT_ADD_CHAR and ACI_GATT_ADD_CHAR_DESC; Modified ACI_HAL_SYNC_EVENT.</p><p>March 2023 - Rev 1.7 - Added HCI_LE_GENERATE_DHKEY_V2 in LB variant; Completed some missing descriptions and possible values; Fixed description of HCI_ENCRYPTION_KEY_REFRESH_COMPLETE_EVENT, ACI_GATT_SET_EVENT_MASK, ACI_GAP_SET_EVENT_MASK and ACI_HAL_SET_EVENT_MASK; Added SC key type in ACI_HAL_WRITE_CONFIG_DATA.</p><p>May 2023 - Rev 1.8 - Changed description of ACI_GAP_SET_OOB_DATA, ACI_GAP_GET_OOB_DATA and ACI_GAP_SET_DIRECT_CONNECTABLE; Updated description of scanning and initiator filter policy; Renamed ACI_GAP_CONFIGURE_WHITELIST, ACI_HAL_SET_SLAVE_LATENCY, ACI_GAP_SLAVE_SECURITY_REQ and ACI_GAP_SLAVE_SECURITY_INITIATED_EVENT, as well as some parameter names; Replaced ACI_HAL_GET_PM_DEBUG_INFO by ACI_HAL_GET_PM_DEBUG_INFO_V2.</p><p>May 2023 - Rev 1.9 - Changed description of ACI_HAL_SET_TX_POWER_LEVEL; Fixed some spelling issues.</p><p>June 2023 - Rev 1.10 - Fixed maximum value of MPS; Changed note for ACI_GATT_UPDATE_CHAR_VALUE; Changed description of PHY_options.</p><p>August 2023 - Rev 1.11 - Added HCI_LE_ENHANCED_CONNECTION_COMPLETE_EVENT as "Events generated"; Updated HCI_READ_LOCAL_VERSION_INFORMATION; Added some details about bonding table; Added new mode in ACI_GAP_ADV_SET_CONFIGURATION; Added ACI_GAP_EXT_START_SCAN and ACI_GAP_EXT_CREATE_CONNECTION; Added ACI_GAP_ADV_SET_PERIODIC_PARAMETERS, ACI_GAP_ADV_SET_PERIODIC_DATA and ACI_GAP_ADV_SET_PERIODIC_ENABLE; Added possible values for FW_Error_Type; Updated HCI_LE_SET_EVENT_MASK possible values.</p><p>September 2023 - Rev 1.12 - Fixed possible values of Advertising_TX_Power.</p><p>November 2023 - Rev 1.13 - Added Connection Subrating and Channel Classification features. Added HCI_LE_SET_DATA_RELATED_ADDRESS_CHANGES command; Updated description of ACI_GATT_UPDATE_CHAR_VALUE and ACI_GATT_TX_POOL_AVAILABLE_EVENT; Updated description and possible values of ACI_HAL_WRITE_CONFIG_DATA; Upgraded ACI_HAL_GET_LINK_STATUS_V2 command to support 22 links.</p><p>February 2024 - Rev 1.14 - Added "no peer debug key" bit for SMP mode in ACI_HAL_WRITE_CONFIG_DATA.</p><p>April 2024 - Rev 1.15 - Added BP and PO variants; Added ACI_HAL_EAD_ENCRYPT_DECRYPT command.</p><p>August 2024 - Rev 1.16 - Removed ACI_HAL_SCAN_REQ_REPORT_EVENT; Fixed possible values for Enable of periodic advertising; Added configuration of RSSI golden range; Updated description of ACI_HAL_END_OF_RADIO_ACTIVITY_EVENT parameters; Changed description of ACI_GAP_IS_DEVICE_BONDED; Fixed possible values of PHY for receiver test; Added bits for SMP mode in ACI_HAL_WRITE_CONFIG_DATA; Added ACI_GAP_ADV_SET_CONFIGURATION_V2 and HCI_LE_SET_EXTENDED_ADVERTISING_PARAMETERS_V2 to support Advertising Coding Selection; Added HCI_LE_LONG_TERM_KEY_REQUEST_REPLY, HCI_LE_LONG_TERM_KEY_REQUEST_NEGATIVE_REPLY and HCI_LE_SET_HOST_CHANNEL_CLASSIFICATION in BP, BF and PO variants; Removed HCI_DISCONNECT and HCI_LE_CONNECTION_UPDATE from BP, BF and PO variants; Added ACI_GAP_PAIRING_REQUEST_EVENT and ACI_GAP_PAIRING_REQUEST_REPLY.</p><p>September 2024 - Rev 1.17 - Aligned with Bluetooth Core v.6.0; Added LL RX ACL control in ACI_HAL_WRITE_CONFIG_DATA.</p><p>September 2024 - Rev 1.18 - Added LL error in HCI_HARDWARE_ERROR_EVENT.</p><p>December 2024 - Rev 1.19 - Created annex for configuration data and hardware codes; Added HCI_LE_GENERATE_DHKEY and HCI_LE_GENERATE_DHKEY_COMPLETE_EVENT in BP, BF and PO variants; Fixed possible values for HCI_LE_SET_PHY, HCI_LE_SET_DEFAULT_PHY, HCI_LE_SET_PERIODIC_ADVERTISING_RECEIVE_ENABLE, HCI_LE_ADD_DEVICE_TO_FILTER_ACCEPT_LIST, HCI_LE_REMOVE_DEVICE_FROM_FILTER_ACCEPT_LIST, ACI_GAP_START_GENERAL_DISCOVERY_PROC and ACI_GAP_EXT_START_SCAN; Added HCI_LE_CIS_ESTABLISHED_V2_EVENT. Rework notes for legacy advertising commands; Renamed ACI_HAL_FW_ERROR_EVENT to ACI_HAL_WARNING_EVENT; Added parameter in ACI_GAP_BOND_LOST_EVENT; Removed ACI_GAP_PERIPHERAL_SECURITY_INITIATED_EVENT; Added "SMP unexpected LTK request" warning.</p><p>January 2025 - Rev 1.20 - Changed description of ACI_HAL_GET_LINK_STATUS_V2; Removed ACI_GAP_RESOLVE_PRIVATE_ADDR and ACI_GAP_IS_DEVICE_BONDED; Added ACI_GAP_CHECK_BONDED_DEVICE; Added "Connection Parameters Request" feature on all variants.</p><p>March 2025 - Rev 1.21 - Added LL features: Periodic Advertising with Responses, Channel Sounding, Monitoring Advertisers, LE Frame Space Update and LL Extended Feature Set; Fixed possible values of Data_Path_Direction for HCI_LE_REMOVE_ISO_DATA_PATH; Fixed possible values of CTE_Type for HCI_LE_TRANSMITTER_TEST_V3 and HCI_LE_TRANSMITTER_TEST_V4; Fixed maximum SDU size in HCI_LE_SET_CIG_PARAMETERS, HCI_LE_SET_CIG_PARAMETERS_TEST and HCI_LE_CIS_ESTABLISHED_V2_EVENT; Added new value for warning type; Added note about event mask after the event tables; Fixed description of ACI_HAL_SET_EVENT_MASK, ACI_GATT_SET_EVENT_MASK and ACI_GAP_SET_EVENT_MASK; Added new pairing failed reason; Changed description of ACI_GATT_DISC_ALL_CHAR_DESC; Removed ACI_GAP_ADD_DEVICES_TO_RESOLVING_LIST; Changed description of ACI_GATT_SET_SECURITY_PERMISSION.</p><p>April 2025 - Rev 1.22 - Changed description of ACI_GAP_UPDATE_ADV_DATA; Changed parameters of ACI_GATT_EATT_BEARER_EVENT; Added Max_Channel_Number parameter to ACI_L2CAP_COC_CONNECT_CONFIRM; Changed description of ACI_L2CAP_COMMAND_REJECT_EVENT; Changed description of HCI_LE_SET_RESOLVABLE_PRIVATE_ADDRESS_TIMEOUT.</p><p>April 2025 - Rev 1.23 - Removed references to STM32WB in descriptions; Added note for ACI_HAL_READ_RSSI; Added ACI_RESET, ACI_GET_INFORMATION, ACI_WRITE_CONFIG_DATA and ACI_READ_CONFIG_DATA; Renamed ACI_HAL_WARNING_EVENT to ACI_WARNING_EVENT; Removed ACI_HAL_GET_FW_BUILD_NUMBER and ACI_HAL_GET_PM_DEBUG_INFO_V2.</p><p>May 2025 - Rev 1.24 - Aligned with Bluetooth Core v.6.1.</p><p>June 2025 - Rev 1.25 - Added ACI_GATT_WRITE_WITHOUT_RESP_EXT and ACI_GATT_WRITE_WITH_RESP_EXT; Removed ACI_GATT_READ_CHAR_DESC, ACI_GATT_READ_LONG_CHAR_DESC, ACI_GATT_WRITE_CHAR_DESC and ACI_GATT_WRITE_LONG_CHAR_DESC; Added possible values for Security_Permissions and MITM_Mode; Renamed ACI_GATT_WRITE_RESP to ACI_GATT_PERMIT_WRITE; Replaced ACI_GATT_ALLOW_READ and ACI_GATT_DENY_READ by ACI_GATT_PERMIT_READ; Reworked description of HCI_SET_CONTROLLER_TO_HOST_FLOW_CONTROL, HCI_HOST_BUFFER_SIZE and HCI_HOST_NUMBER_OF_COMPLETED_PACKETS; Changed subevent code of ACI HAL events.</p><p>August 2025 - Rev 1.26 - Completed description of HCI_READ_LOCAL_VERSION_INFORMATION; Declared the use of fixed pin deprecated; Added ACI_HAL_EAD_ENCRYPT_DECRYPT in LO variant; Added ACI_HAL_SET_EVENT_MASK in all variants; Removed LB variant; Completed description of ACI_HAL_SET_SYNC_EVENT_CONFIG.</p><p>December 2025 - Rev 1.27 - Aligned with Bluetooth Core v.6.2; Added ACI_GATT_GET_ATTRIBUTE_VALUE; Added possible values for Result in ACI_L2CAP_COC_CONNECT_CONFIRM_EVENT and ACI_L2CAP_COC_RECONF_CONFIRM_EVENT; Added parameter in ACI_GAP_PASS_KEY_REQ_EVENT.</p><p>January 2026 - Rev 1.28 - Changed possible values of Conn_Handle_To_Notify.</p><p></p><i>&copy; 2018-2026 STMicroelectronics. All rights reserved.</i></font></body></html>

@@ -407,7 +407,7 @@ extern tBleStatus BLE_AUDIO_STACK_DB_CheckBondedDevice(uint8_t PeerAddressType,
                                                        const uint8_t* pPeerAddress);
 
 /**
-  * @brief This function is used to remove all Audio Informations associated to the Bonded Bluetooth device present
+  * @brief This function is used to remove all Audio Information associated to the Bonded Bluetooth device present
   *        in the Database reserved to the Audio Profile information.
   *        The Audio Profile information are associated to the profiles of the Generic Audio Framework saved by the
   *        Audio IP itself and also to the types saved thanks to the BLE_AUDIO_STACK_DB_AddRecord() function.

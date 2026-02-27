@@ -60,7 +60,8 @@ typedef enum
   FIFO_UNDERRUN_EVT,
   FIFO_OVERRUN_EVT,
   SYNC_EVT,
-  IRREGULARITY_EVT
+  IRREGULARITY_EVT,
+  CODEC_TO_LL_MEM_OVRFLW_EVT,
 } CODEC_TraceEvnt_t;
 
 /* Exported functions prototypes ---------------------------------------------*/

@@ -5,7 +5,7 @@
  *****************************************************************************
  * @attention
  *
- * Copyright (c) 2018-2025 STMicroelectronics.
+ * Copyright (c) 2018-2026 STMicroelectronics.
  * All rights reserved.
  *
  * This software is licensed under terms that can be found in the LICENSE file
@@ -2843,9 +2843,17 @@ tBleStatus aci_gap_pairing_complete_event( uint16_t Connection_Handle,
  * @param Connection_Handle Handle of the connection where this event occurred.
  *        Values:
  *        - 0x0000 ... 0x0EFF
+ * @param IO_Capability IO capability of the remote device.
+ *        Values:
+ *        - 0x00: IO_CAP_DISPLAY_ONLY
+ *        - 0x01: IO_CAP_DISPLAY_YES_NO
+ *        - 0x02: IO_CAP_KEYBOARD_ONLY
+ *        - 0x03: IO_CAP_NO_INPUT_NO_OUTPUT
+ *        - 0x04: IO_CAP_KEYBOARD_DISPLAY
  * @return Value indicating success or error code.
  */
-tBleStatus aci_gap_pass_key_req_event( uint16_t Connection_Handle );
+tBleStatus aci_gap_pass_key_req_event( uint16_t Connection_Handle,
+                                       uint8_t IO_Capability );
 
 /**
  * @brief ACI_GAP_AUTHORIZATION_REQ_EVENT
@@ -3846,6 +3854,7 @@ tBleStatus aci_l2cap_coc_connect_event( uint16_t Connection_Handle,
  *        channels, or [Vol 3, Part A, Table 4.17] for enhanced credit based
  *        connection-oriented channels.
  *        Values:
+ *        - 0xFFFF: Invalid response
  *        - 0x0000 ... 0x000F
  * @param Channel_Number Number of created channels. It is the length of
  *        Channel_Index_List.
@@ -3906,6 +3915,7 @@ tBleStatus aci_l2cap_coc_reconf_event( uint16_t Connection_Handle,
  * @param Result Indicates the outcome of the request. See Core Specification
  *        [Vol 3, Part A, Table 4.18].
  *        Values:
+ *        - 0xFFFF: Invalid response
  *        - 0x0000 ... 0x0004
  * @return Value indicating success or error code.
  */

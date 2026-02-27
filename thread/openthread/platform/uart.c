@@ -80,7 +80,7 @@ bool otUART_RX_Schdl = FALSE;
    prevent linking errors when not defined in application */
 __WEAK void APP_THREAD_ScheduleUART(void)
 {
-  /* Need to be implemented by user (os dependant) */
+  /* Need to be implemented by user (os dependent) */
   while(1);
 }
 
@@ -251,7 +251,7 @@ int CliUartOutput(void *aContext, const char *aFormat, va_list aArguments)
   ret = (uint16_t)vsnprintf(&cli_cmd_buffer[uart_buf_idx].cli_buffer[size],
                             BUFFER_SIZE, aFormat, aArguments);
 
-  /* Do not print "> ", allign with WB for CubeMonitorRF */
+  /* Do not print "> ", align with WB for CubeMonitorRF */
   if ((strncmp(&cli_cmd_buffer[uart_buf_idx].cli_buffer[size], "> ", 2) != 0)&&(ret != 0))
   {
     cli_cmd_buffer[uart_buf_idx].size += ret;

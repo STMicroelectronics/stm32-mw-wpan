@@ -60,8 +60,8 @@ static uint32_t GetSettingsBuffer_Base(void);
    prevent linking errors when not defined in application */
 __WEAK void APP_THREAD_SettingsUpdated(settings_type_t SettingType)
 {
-  /* Can be implemented by user for NVM managment (os dependant) */
-  /* empty, by default OT settings are saved in RAM, user responsability to save parameter in ROM */
+  /* Can be implemented by user for NVM management (os dependent) */
+  /* empty, by default OT settings are saved in RAM, user responsibility to save parameter in ROM */
 }
 
 uint32_t GetSettingsBuffer_Base(void)

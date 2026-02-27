@@ -16,7 +16,7 @@
         <TargetCommonOption>
           <Device>STM32WBA52CGUx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32WBAxx_DFP.1.6.0-B01</PackID>
+          <PackID>Keil.STM32WBAxx_DFP.2.0.0</PackID>
           <PackURL>https://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000-0x2001FFFF) IROM(0x8000000-0x80FFFFF) CLOCK(8000000) FPU3(SFPU) CPUTYPE("Cortex-M33") ELITTLE TZ</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -338,7 +338,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fshort-enums -mno-unaligned-access</MiscControls>
-              <Define>_AEABI_PORTABILITY_LEVEL=1,WBx_OTLIB_BUILD_IAR_KEIL,USE_HAL_DRIVER,MBEDTLS_CONFIG_FILE=&lt;mbedtls-config.h&gt;,MBEDTLS_USER_CONFIG_FILE=&lt;stm32wba-mbedtls-config.h&gt;,OPENTHREAD_CONFIG_FILE=&lt;stm32wba-openthread-ftd-config.h&gt;,OPENTHREAD_PROJECT_CORE_CONFIG_FILE=&lt;stm32wba-openthread-ftd-config.h&gt;,OPENTHREAD_FTD</Define>
+              <Define>_AEABI_PORTABILITY_LEVEL=1,WBx_OTLIB_BUILD_IAR_KEIL,USE_HAL_DRIVER,MBEDTLS_CONFIG_FILE=&lt;mbedtls-config.h&gt;,MBEDTLS_USER_CONFIG_FILE=&lt;stm32wba-mbedtls-config.h&gt;,OPENTHREAD_CONFIG_FILE=&lt;stm32wba-openthread-ftd-config.h&gt;,OPENTHREAD_PROJECT_CORE_CONFIG_FILE=&lt;stm32wba-openthread-ftd-config.h&gt;,OPENTHREAD_FTD,memmove=ble_memmov,memcpy=ble_memcpy</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\..\stack\src\diag;..\..\..\stack\src;..\..\..\stack\src\core;..\..\..\stack\include;..\..\..\stack\include\openthread;..\..\..\stack\include\openthread\platform;..\..\..\stack\examples\platforms;..\..\..\stack\examples\platforms\utils;..\..\..\stack\third_party\mbedtls;..\..\..\config;..\..\..\stack\wbx_include;..\..\..\stack\wbx_include\sys;..\..\..\platform;..\..\..\..\..\..\..\..\Drivers\CMSIS\Include;..\..\..\..\..\..\..\..\Drivers\STM32WBAxx_HAL_Driver\Inc;..\..\..\..\..\..\mbedtls_alt\include\hal;..\..\..\..\..\..\..\Third_Party\mbedtls\include;..\..\..\stack\src\include;..\..\..\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32WBAxx\Include\;..\..\..\..\..\..\mbedtls_alt\interfaces\patterns</IncludePath>
             </VariousControls>

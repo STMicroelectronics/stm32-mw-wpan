@@ -30,14 +30,14 @@
 <h1 id="purpose">Purpose</h1>
 <p>Wireless Personal Area Network Middleware supporting:</p>
 <ul>
-<li><p>Bluetooth Low Energy 6.0</p></li>
+<li><p>Bluetooth Low Energy (Qualified against Bluetooth® Core 6.2)</p></li>
 <li><p>Zigbee stack Revision 23 (R23) and Revision 22 (R22), Zigbee Clusters ZCL 8.0</p></li>
-<li><p>OpenThread: compliant Thread 1.1, 1.2 and 1.3  </p></li>
+<li><p>OpenThread: compliant Thread 1.1, 1.2, 1.3 and 1.4  </p></li>
 <li><p>Mac 802.15.4: compliant Zigbee IEEE 802.15.4 MAC Test Plan V 2.0</p></li>
 <li><p>BLE-Thread and BLE-Zigbee dynamic concurrent modes</p></li>
 <li><p>All libraries are compiled with MDK-ARM (KEIL) ARMCLANG V6.19 AEABI format.</p></li>
 </ul>
-<p>The following features are supported for <strong>BLE</strong> 6.0:</p>
+<p>The following features are supported for <strong>BLE</strong>:</p>
 <ul>
 <li>Advertising</li>
 <li>Scanning</li>
@@ -52,19 +52,30 @@
 <li>Direct Test Mode</li>
 <li>GATT Client / Server</li>
 <li>Extended Advertising/Scanning</li>
-<li>Periodic Advertising/Synchronisation</li>
-<li>Periodic Sync Transfer</li>
+<li>Periodic Advertising/Synchronization</li>
+<li>AOA/AOD</li>
+<li>Periodic Advertising Sync Transfer</li>
 <li>GATT Caching</li>
 <li>LE L2CAP Connection Oriented channel</li>
 <li>Enhanced ATT</li>
-<li>Isochronous Broadcaster / Synchronizer</li>
-<li>Connected Isochronous</li>
+<li><em>Isochronous Broadcaster / Synchronizer*</em></li>
+<li><em>Connected Isochronous*</em></li>
 <li>LE Power Control</li>
 <li>Connection Subrating</li>
+<li>Advertising Coding Selection</li>
 <li>Channel Classification Enhancement</li>
-<li>Periodic Advertising Enhancement</li>
+<li>Periodic Advertising ADI support</li>
 </ul>
-<p>The maximum number of connections is limited to 20.</p>
+<p><em>*: Not supported on the WBA25 series.</em></p>
+<p>The following features are now supported on the WBA25 series:</p>
+<ul>
+<li>Periodic Advertising with Responses (PAwR)<br />
+</li>
+<li>LE Frame Space Update</li>
+<li>Monitoring Advertisers</li>
+<li>LL Extended Feature Set</li>
+</ul>
+<p>The maximum number of connections is limited to 20.</p>
 <p>The list of BLE commands is documented in the following file: <a href="ble/stack/doc/STM32WBA_BLE_Wireless_Interface.html">STM32WBA_BLE_Wireless_Interface.html</a></p>
 <p>The BLE Stack user manual is available at following location: <a href="ble/stack/doc/STM32WBA_BLE_Stack_User_Manual.html">STM32WBA_BLE_Stack_User_Manual.html</a></p>
 <p>Different Bluetooth® Low Energy Host Stack variants are available in the STM32WBA package, depending on project requirements. Depending on the variant, the associated Link Layer library must be included in the project:</p>
@@ -176,9 +187,118 @@
 <div class="col-sm-12 col-lg-8">
 <h1 id="update-history">Update History</h1>
 <div class="collapse">
-<input type="checkbox" id="collapse-section11" checked aria-hidden="true"> <label for="collapse-section11" aria-hidden="false">V2.8.0 / 24-October-2025</label>
+<input type="checkbox" id="collapse-section12" checked aria-hidden="true"> <label for="collapse-section12" aria-hidden="false">V2.9.0 / 03-February-2026</label>
 <div>
 <h2 id="main-changes">Main Changes</h2>
+<ul>
+<li>Link Layer:
+<ul>
+<li>The following libraries have been added for the new WBA25 series :
+<ul>
+<li>WBA2_LinkLayer_BLE_Basic_20_links_lib</li>
+<li>WBA2_LinkLayer_BLE_Basic_lib</li>
+<li>WBA2_LinkLayer_BLE_Basic_Plus_lib</li>
+<li>WBA2_LinkLayer_BLE_Full_lib</li>
+<li>WBA2_LinkLayer_BLE_Peripheral_Only_lib</li>
+<li>WBA2_LinkLayer_RawMac_lib</li>
+<li>WBA2_LinkLayer_Thread_lib</li>
+<li>WBA2_LinkLayer15_4</li>
+</ul></li>
+</ul></li>
+<li>BLE:
+<ul>
+<li>Changes :
+<ul>
+<li>ID 217322 : HCI event architecture has been reworked for Flash memory footprint improvement.
+<ul>
+<li>Impact :
+<ul>
+<li>The connection handle now starts from 0 instead from 1.</li>
+<li>The ISO information needs to be handled in the codec module.</li>
+<li>HCI Raw event callback cannot be redefined anymore. For dedicated event callback, the wrapper and the callbacks declared in “ble_events.h” should be used.</li>
+<li>To notify all subscribed clients on their unenhanced ATT bearer the “Conn_Handle_To_Notify” in the aci_gatt_update_char_value_ext is now set to 0x0FFF instead of 0x0000<br />
+</li>
+</ul></li>
+</ul></li>
+<li>ID 223204 : To reduce the Flash memory footprint in “Link-Layer Only” mode, it is now possible to use specific compile options with “ble_wrap.c” file that remove unused commands</li>
+<li>ID 213837 : Implement changes linked to the Core Spec Erratum 26770 – Legacy Pairing passkey entry security assessment</li>
+<li>ID 221801 : The command ACI_GATT_GET_ATTRIBUTE_VALUE is added. The command ACI_GATT_READ_HANDLE_VALUE is now deprecated</li>
+<li>ID 223171 : The parameter “IO_Capability” is added to ACI_GAP_PASS_KEY_REQ_EVENT</li>
+<li>ID 224810 : Add proprietary commands to support ADV and Conn Interval of 5ms.</li>
+<li>ID 143245 : Add the command ACI_HAL_SET_PERIPHERAL_LATENCY</li>
+</ul></li>
+<li>Issues fixed:
+<ul>
+<li>ID 222251 : Fix an issue related to the memory induced by the deletion of a GATT characteristic including CCCD field</li>
+<li>ID 224617 : Fix the memory issue induced by the deletion of a GATT service including other services</li>
+<li>ID 224547 : Fix an issue with the Val_Offset parameter of ACI_GATT_SET_DESC_VALUE</li>
+<li>ID 212635 : Fix the issue with RCO calibration blocked when called twice in a row</li>
+<li>ID 213713: Fix an issue with the duplicate list when the advertiser is using both extended and legacy adv packets</li>
+<li>ID 216839: Fix an assert when HCI commands using the connection handle of a connection waiting to be established, are sent</li>
+</ul></li>
+</ul></li>
+<li>BLE Audio:
+<ul>
+<li>Changes :
+<ul>
+<li>ID 223606 : Handle fragmented base report</li>
+<li>Enable SDU fragmentation on codec to link layer interface.</li>
+<li>Change way of registering or unregistering ISO group</li>
+<li>ID 220364 : allow media packet buffering at source in case of Link Layer memory overflow</li>
+</ul></li>
+<li>Issues fixed:
+<ul>
+<li>Fix Issue on a ASE source Stream only</li>
+<li>Fix wrong first media packet used at sink</li>
+</ul></li>
+</ul></li>
+<li>Zigbee:
+<ul>
+<li>Changes :
+<ul>
+<li>Memory optimization : By default, all Zigbee applications are linked with the ZigBeeProXXX.a libraries, which do not include logging. If you need additional trace logging, link your application with the ZigBeeProXXX_with_logs.a library instead. Please note that this will increase the flash memory usage.</li>
+</ul></li>
+<li>Issues fixed:
+<ul>
+<li>ID 220158 : Fixed Long term Zigbee_TempMeas SED failing after 38H</li>
+</ul></li>
+</ul></li>
+<li>BLE Thread:
+<ul>
+<li>Issues fixed:
+<ul>
+<li>ID 222874 : ACK handling for data requests (with no frame pending bit set) on SED devices.</li>
+</ul></li>
+</ul></li>
+<li><strong>Known limitations</strong>:
+<ul>
+<li>BLE:
+<ul>
+<li>ID 143245 : ACI_HAL_GET_ANCHOR_PERIOD is not yet supported.</li>
+</ul></li>
+<li>BLE Audio:
+<ul>
+<li>Framed mode not supported (44.1 KHz).</li>
+</ul></li>
+<li>MAC 802.15.4:
+<ul>
+<li>ID 170274 : Temperature calibration - compatibility with 802.15.4</li>
+<li>ID 188347 : [WBA6] Too high PER (&gt; 1%) observed for Packet size modulo 16</li>
+</ul></li>
+<li>Zigbee:
+<ul>
+<li>ZigbeeDirect stack (ZigBeeProR23_ZDD.a) official certification has not been executed (but precertification is done inhouse successfully).</li>
+<li>ID 218229 : Coordinator Server stops responding during Long-Term concurrent test Impacts : Concurrent BLE Zigbee Longterm</li>
+<li>ID 221263 : Memory exhaust on OnOff server after minus one hours</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section11" aria-hidden="true"> <label for="collapse-section11" aria-hidden="false">V2.8.0 / 24-October-2025</label>
+<div>
+<h2 id="main-changes-1">Main Changes</h2>
 <ul>
 <li>BLE:
 <ul>
@@ -189,7 +309,7 @@
 <li>ID 212828 : The subevent codes of the ACI_HAL_END_OF_RADIO_ACTIVITY_EVENT and ACI_HAL_SYNC_EVENT have changed.</li>
 <li>ID 211412 : The MITM mode from the ACI_GAP_SET_AUTHENTICATION_REQUIREMENT command can take a new value: 0x02 = “MITM protection required as optional”</li>
 <li>ID 212391 : The BLE stack commands ACI_GATT_ALLOW_READ and ACI_GATT_DENY_READ are replaced by ACI_GATT_PERMIT_READ. ACI_GATT_WRITE_RESP is renamed to ACI_GATT_PERMIT_WRITE.</li>
-<li>ID 214976 : Increase the max nuber of supported BIS from 2 to 6</li>
+<li>ID 214976 : Increase the max number of supported BIS from 2 to 6</li>
 <li>ID 218497 : Rename the preprocessor symbols of BLE Stack variants</li>
 <li>ID 196671 : Add BLE timing profiling framework</li>
 <li>ID 134358 : Add BLE Host Stack events FIFO buffer mechanism</li>
@@ -290,7 +410,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section10" aria-hidden="true"> <label for="collapse-section10" aria-hidden="false">V2.7.0 / 02-June-2025</label>
 <div>
-<h2 id="main-changes-1">Main Changes</h2>
+<h2 id="main-changes-2">Main Changes</h2>
 <ul>
 <li>BLE:
 <ul>
@@ -426,7 +546,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section9" aria-hidden="true"> <label for="collapse-section9" aria-hidden="false">V2.6.1 / 14-April-2025</label>
 <div>
-<h2 id="main-changes-2">Main Changes</h2>
+<h2 id="main-changes-3">Main Changes</h2>
 <ul>
 <li>BLE:
 <ul>
@@ -503,7 +623,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section8" aria-hidden="true"> <label for="collapse-section8" aria-hidden="false">V2.6.0 / 04-February-2025</label>
 <div>
-<h2 id="main-changes-3">Main Changes</h2>
+<h2 id="main-changes-4">Main Changes</h2>
 <ul>
 <li>BLE:
 <ul>
@@ -547,7 +667,7 @@
 <ul>
 <li>ID 187013 : ACI_GATT_NOTIFICATION_COMPLETE_VSEVT_CODE event is not generated after MCP_SERVER_SetTrackTitle() is called</li>
 <li>ID 192029 : Add process during CAP Audio Unicast Start procedure to fix remote Unicast Server’s issue when remote Unicast Server doesn’t notify Sink ASE change from ENABLING State to STREAMING state</li>
-<li>ID 193036 : Fix issue in PAC Records reporting : PACS Records are not read correcly</li>
+<li>ID 193036 : Fix issue in PAC Records reporting : PACS Records are not read correctly</li>
 <li>ID 192029 : CAP Unicast Audio Start procedure is not aborted in Telephony mode (only one ASE out of 2 went to streaming state)</li>
 <li>ID 192711 : start audio telephony is using 2 sink ASEs on 1 earbud instead of 1 Source ASE + 1 Sink ASE</li>
 <li>ID 193397 : Unicast Client releases ASE if Enabling Notification is received when associated CIS already up</li>
@@ -582,8 +702,8 @@
 </ul></li>
 <li>Zigbee:
 <ul>
-<li>A new stack library is available adressing ZigbeeDirect: <em>ZigBeeProR23_ZDD.a</em>. Zigbee Direct is a new communication protocol designed to enable direct communication between Zigbee devices and smartphones.</li>
-<li>MISRA compliancy corrections.</li>
+<li>A new stack library is available addressing ZigbeeDirect: <em>ZigBeeProR23_ZDD.a</em>. Zigbee Direct is a new communication protocol designed to enable direct communication between Zigbee devices and smartphones.</li>
+<li>MISRA compliance corrections.</li>
 <li>Zigbee Touchlink :
 <ul>
 <li>Zigbee Touchlink interoperability improved.</li>
@@ -666,7 +786,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section7" aria-hidden="true"> <label for="collapse-section7" aria-hidden="false">V2.5.0 / 29-October-2024</label>
 <div>
-<h2 id="main-changes-4">Main Changes</h2>
+<h2 id="main-changes-5">Main Changes</h2>
 <ul>
 <li>BLE:
 <ul>
@@ -811,7 +931,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section6" aria-hidden="true"> <label for="collapse-section6" aria-hidden="false">V2.4.0 / 03-June-2024</label>
 <div>
-<h2 id="main-changes-5">Main Changes</h2>
+<h2 id="main-changes-6">Main Changes</h2>
 <ul>
 <li>BLE:
 <ul>
@@ -878,7 +998,7 @@
 <li>Clusters:
 <ul>
 <li>OTA cluster enhancements (Writing to File Version attribute at end of OTA upgrade, Improve OTA robustness and transfer error management, etc.. )</li>
-<li>ZCL library enhancement especially for Colour and Level clusters (MISRA rules compliancy update)</li>
+<li>ZCL library enhancement especially for Colour and Level clusters (MISRA rules compliance update)</li>
 </ul></li>
 </ul></li>
 <li><strong>Known limitations</strong>:
@@ -920,7 +1040,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section5" aria-hidden="true"> <label for="collapse-section5" aria-hidden="false">V2.3.1 / 22-March-2024</label>
 <div>
-<h2 id="main-changes-6">Main Changes</h2>
+<h2 id="main-changes-7">Main Changes</h2>
 <ul>
 <li><p>Productive RF-PHY settings.</p></li>
 <li>Zigbee:
@@ -990,7 +1110,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section4" aria-hidden="true"> <label for="collapse-section4" aria-hidden="false">V2.3.0 / 05-Feb-2024</label>
 <div>
-<h2 id="main-changes-7">Main Changes</h2>
+<h2 id="main-changes-8">Main Changes</h2>
 <ul>
 <li><p>Adding support of BLE-Thread and BLE-Zigbee Dynamic Concurrent Modes.</p></li>
 <li><p>All libraries are now compiled with MDK-ARM (KEIL) ARMCLANG V6.19 AEABI format.</p></li>
@@ -1029,7 +1149,7 @@
 <li>Parent Link Failure is now triggred for every EDKA failure.</li>
 <li>Added ZB_MSG_STACK_EVENT_PARENT_LINK_FAIL, to separate out ZB_MSG_STACK_EVENT_ATTEMPT_REJOIN which is called on a NWK Leave with rejoin bit set.<br />
 </li>
-<li>Application can now more easily distinguish aParent Link Failure from a Leave with Rejoin.</li>
+<li>Application can now more easily distinguish a Parent Link Failure from a Leave with Rejoin.</li>
 </ul></li>
 <li>Several fixes and enhancement has been introduced in the Zigbee cluster library including:
 <ul>
@@ -1104,7 +1224,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section3" aria-hidden="true"> <label for="collapse-section3" aria-hidden="false">V2.2.0 / 22-Sept-2023</label>
 <div>
-<h2 id="main-changes-8">Main Changes</h2>
+<h2 id="main-changes-9">Main Changes</h2>
 <ul>
 <li>BLE:
 <ul>
@@ -1174,7 +1294,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section2" aria-hidden="true"> <label for="collapse-section2" aria-hidden="false">V2.1.0 / 30-May-2023</label>
 <div>
-<h2 id="main-changes-9">Main Changes</h2>
+<h2 id="main-changes-10">Main Changes</h2>
 <ul>
 <li>BLE:
 <ul>
@@ -1202,7 +1322,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section1" aria-hidden="true"> <label for="collapse-section1" aria-hidden="false">V2.0.0 / 08-February-2023</label>
 <div>
-<h2 id="main-changes-10">Main Changes</h2>
+<h2 id="main-changes-11">Main Changes</h2>
 <p>First official release for WBA</p>
 <ul>
 <li>Known limitations:

@@ -159,7 +159,7 @@ typedef struct
   void *pStackStart;            /* pointer to the allocated RAM for LC3 stack */
 } CODEC_LC3Config_t;
 
-/* bandwith used by the codec */
+/* bandwidth used by the codec */
 typedef enum
 {
   CODEC_NB =    1, /* narrow band,          sampling at 8kHz */
@@ -195,6 +195,19 @@ typedef __PACKED_STRUCT
   uint8_t codec_conf[19];
 } CODEC_SetupIsoDataPathCmd_t;
 
+typedef enum
+{
+  GRP_TYPE_CIG    =  0,
+  GRP_TYPE_BIG    =  1
+} grp_type_t;
+
+typedef enum
+{
+  FIRST_SDU_FRAG  =  0,
+  CONT_SDU_FRAG   =  1,
+  FULL_SDU_FRAG   =  2,
+  LAST_SDU_FRAG   =  3
+} iso_sdu_fragment_t;
 
 /*********************************************************************************************/
 /******************************** interface with local application ***************************/
@@ -395,9 +408,9 @@ void AUDIO_SyncEventClbk(uint8_t group_id, uint32_t next_anchor_point, uint32_t 
 void AUDIO_CalibrationClbk(uint32_t timestamp);
 
 /**
-  * @brief Function for notifying the codec manager that a ISO group has been created
+  * @brief Function for notifying the codec manager a stream or group has been created
   * @note if the group already exists, the connection handle is added to that group
-  * @param type : 0 for CIS and 1 for BIS
+  * @param type : CIG or BIG type
   * @param id : id of the CIG or BIG
   * @param num_str : streams numbers
   * @param iso_con_hdl : pointer to an array of ISO connection handles of size num_str
@@ -405,26 +418,41 @@ void AUDIO_CalibrationClbk(uint32_t timestamp);
   * @param is_peripheral : set to 1 if the CIG group is on the peripheral side, 0 otherwise
   * @param m2s_transport_latency : master to slave transport latency
   * @param s2m_transport_latency : slave to master transport latency
-  * @retval None
+  * @retval 0 if group is registered, 1 is group already exists, -1 for invalid parameter
   */
-void AUDIO_RegisterGroup(uint8_t type, uint8_t id, uint8_t num_str, uint16_t* iso_con_hdl, uint16_t interval,
-                         uint8_t is_peripheral, uint32_t m2s_transport_latency, uint32_t s2m_transport_latency);
+int8_t AUDIO_RegisterStream(grp_type_t type, uint8_t id, uint8_t num_str, uint16_t* iso_con_hdl, uint16_t interval,
+                            uint8_t is_peripheral, uint32_t m2s_transport_latency, uint32_t s2m_transport_latency);
 
 /**
-  * @brief Notify the codec manager that a ISO group has been killed
-  * @param type : 0 for CIS and 1 for BIS
-  * @param id : id of the CIG or BIG
-  * @retval None
+  * @brief Notify the codec manager a stream or group has been killed
+  * @param type : 0 CIG or BIG type
+  * @param big_id : BIG id if type is BIG, not used otherwise
+  * @param cis_handle : CIS handle if type is CIG, not used otherwise
+  * @retval 0 if group is unregistered, 1 is group still is use, -1 for invalid parameters
   */
-void AUDIO_UnregisterGroup(uint8_t type, uint8_t id);
+int8_t AUDIO_UnregisterStream(grp_type_t type, uint8_t big_id, uint16_t cis_handle);
 
 /*-------------------------------------- Audio Data -----------------------------------------*/
 /**
-  * @brief  Function for receiving a media packet from the Link Layer
+  * @brief Function for receiving a media packet from the Link Layer
   * @param list of HCI ISO data params
   * @retval status of type codec_rcv_status_t
   */
 codec_rcv_status_t CODEC_ReceiveMediaPacket(uint16_t iso_con_hdl, uint8_t pb_flag, uint8_t ts_flag, uint32_t timestamp,
-                                  uint16_t PSN, uint8_t pkt_status_flag, uint16_t len, uint8_t* pdata);
+                                            uint16_t PSN, uint8_t pkt_status_flag, uint16_t len, uint8_t* pdata);
 
+/**
+  * @brief Function called by the Codec Manager for releasing flow control, to be implemented at the interface
+  * @param iso_con_hdl : isochronous connection handle
+  * @retval none
+  */
+void CODEC_CB_ReceiveMediaPacketReady(uint16_t iso_con_hdl);
+
+/**
+  * @brief Function called by the Codec Manager for sending a media packet from the codec manager to the link layer
+  * @param list of HCI ISO data params
+  * @retval status of type codec_rcv_status_t
+  */
+uint8_t CODEC_CB_SendMediaPacket(uint16_t iso_con_hdl, uint8_t pb_flag, uint8_t ts_flag, uint32_t timestamp,
+                                  uint16_t PSN, uint16_t iso_data_load_length, uint16_t total_sdu_len, uint8_t* pdata);
 #endif /* __CODEC_MNGR_H__ */

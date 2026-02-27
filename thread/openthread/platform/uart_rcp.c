@@ -44,11 +44,11 @@ static void otUart_RxEvntCpltCallback(UART_HandleTypeDef *huart, uint16_t size);
 
 /** RX RCP Spinel Uart buffer number, min 2 (one buffer used for reception while 
  *  the second one is used for processing 
- *   Can be increased in case of high trafic on spinel 
+ *   Can be increased in case of high traffic on spinel 
 **/
 #define SPIN_BUFFER_NB 2
 
-#define HDLC_FANION  0x7E /* Do not modify, standart HDLC fanion (HDLC lite is used to encapsulate spinel) */
+#define HDLC_FANION  0x7E /* Do not modify, standard HDLC fanion (HDLC lite is used to encapsulate spinel) */
 /* Private macro -------------------------------------------------------------*/
 
 /** Spinel Rx buffer with size 
@@ -83,7 +83,7 @@ char spineldbgin[32];
    prevent linking errors when not defined in application */
 __WEAK void APP_THREAD_ScheduleRcpSpinelRx(void)
 {
-  /* Need to be implemented by user (os dependant) */
+  /* Need to be implemented by user (os dependent) */
   while(1);
 }
 

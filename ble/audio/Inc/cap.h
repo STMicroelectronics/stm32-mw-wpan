@@ -892,7 +892,7 @@ tBleStatus CAP_StopCoordinatedSetMemberDiscoveryProcedure(uint16_t ConnHandle);
 /**
   * @brief  Update the SIRK in the instance of CSIS of the Coordinated Set Member
   * @note   Supported only if CAP Acceptor role & Set Member are initialized.
-  * @param  Instance_ID: Coordinated Set Indentification Instance of the Set Member
+  * @param  Instance_ID: Coordinated Set Identification Instance of the Set Member
   * @param  SIRK : new SIRK (16 bytes)
   * @param  SIRK_type : new SIRK type (0 is encrypted, 1 is not - plain text)
   * @param  SIRK_OOB : if SIRK OOB (0 SIRK is set for classic; 1 SIRK is given to client over OOB)
@@ -903,7 +903,7 @@ tBleStatus CAP_CSIP_UpdateSIRK(uint8_t Instance_ID, uint8_t *SIRK, uint8_t SIRK_
 /**
   * @brief  Update the Size in the instance of CSIS of the Coordinated Set Member
   * @note   Supported only if CAP Acceptor role & Set Member are initialized.
-  * @param  Instance_ID: Coordinated Set Indentification Instance of the Set Member
+  * @param  Instance_ID: Coordinated Set Identification Instance of the Set Member
   * @param  Size : new Size value (shall be superior to 1 and superior or equal to the rank)
   * @retval status of the update
   */

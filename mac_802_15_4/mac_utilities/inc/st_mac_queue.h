@@ -50,10 +50,10 @@
  id to be dequeued */
 #define QUEUE_HEAD    ( ( uint8_t ) ( 0x01 ) )
 
-/** @brief Used to intialize a queue */
+/** @brief Used to initialize a queue */
 #define Init_Queue( queue , size ) queueMgmt_Init ( &queue , size )
 
-/** @brief Used to intialize a queue, with queue pointer passed */
+/** @brief Used to initialize a queue, with queue pointer passed */
 #define Init_QueuePtr( queue , size ) queueMgmt_Init ( queue , size )
 
 /** @brief Used to enqueue a buffer id into the queue */

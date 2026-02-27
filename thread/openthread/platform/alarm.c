@@ -83,13 +83,13 @@ static uint32_t notnull_intance;
    prevent linking errors when not defined in application */
 __WEAK void APP_THREAD_ScheduleAlarm(void)
 {
-  /* Need to be implemented by user (os dependant) */
+  /* Need to be implemented by user (os dependent) */
   while(1);
 }
 
 __WEAK void APP_THREAD_ScheduleUsAlarm(void)
 {
-  /* Need to be implemented by user (os dependant) */
+  /* Need to be implemented by user (os dependent) */
   while(1);
 }
 

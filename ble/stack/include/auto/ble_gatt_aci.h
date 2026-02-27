@@ -5,7 +5,7 @@
  *****************************************************************************
  * @attention
  *
- * Copyright (c) 2018-2025 STMicroelectronics.
+ * Copyright (c) 2018-2026 STMicroelectronics.
  * All rights reserved.
  *
  * This software is licensed under terms that can be found in the LICENSE file
@@ -1021,6 +1021,8 @@ tBleStatus aci_gatt_set_desc_value( uint16_t Serv_Handle,
  * @brief ACI_GATT_READ_HANDLE_VALUE
  * Reads the value of the attribute handle specified from the local GATT
  * database.
+ * Note: this command is deprecated: ACI_GATT_GET_ATTRIBUTE_VALUE shall be used
+ * instead.
  *
  * @param Attr_Handle Handle of the attribute to read
  * @param Offset Offset from which the value needs to be read
@@ -1039,6 +1041,32 @@ tBleStatus aci_gatt_read_handle_value( uint16_t Attr_Handle,
                                        uint8_t* Value );
 
 /**
+ * @brief ACI_GATT_GET_ATTRIBUTE_VALUE
+ * Retrieves the value of the specified attribute from the local GATT database.
+ * The connection handle parameter is used only when the attribute value has
+ * multiple instances (for example, a CCCD value).
+ *
+ * @param Connection_Handle Connection handle for which the command applies.
+ *        Values:
+ *        - 0x0000 ... 0x0EFF
+ * @param Attr_Handle Handle of the attribute to read
+ * @param Offset Offset from which the value needs to be read
+ * @param Value_Length_Requested Maximum number of octets to be returned as
+ *        attribute value
+ * @param[out] Length Length of the attribute value
+ * @param[out] Value_Length Length in octets of the Value parameter
+ * @param[out] Value Attribute value
+ * @return Value indicating success or error code.
+ */
+tBleStatus aci_gatt_get_attribute_value( uint16_t Connection_Handle,
+                                         uint16_t Attr_Handle,
+                                         uint16_t Offset,
+                                         uint16_t Value_Length_Requested,
+                                         uint16_t* Length,
+                                         uint16_t* Value_Length,
+                                         uint8_t* Value );
+
+/**
  * @brief ACI_GATT_UPDATE_CHAR_VALUE_EXT
  * This command is a more flexible version of ACI_GATT_UPDATE_CHAR_VALUE to
  * support update of long attribute up to 512 bytes and indicate selectively
@@ -1048,9 +1076,9 @@ tBleStatus aci_gatt_read_handle_value( uint16_t Attr_Handle,
  *
  * @param Conn_Handle_To_Notify Specifies the client(s) to be notified.
  *        Values:
- *        - 0x0000: Notify all subscribed clients on their unenhanced ATT
+ *        - 0x0FFF: Notify all subscribed clients on their unenhanced ATT
  *          bearer
- *        - 0x0001 ... 0x0EFF: Notify one client on the specified unenhanced
+ *        - 0x0000 ... 0x0EFF: Notify one client on the specified unenhanced
  *          ATT bearer (the parameter is the connection handle)
  *        - 0xEA00 ... 0xEA3F: Notify one client on the specified enhanced ATT
  *          bearer (the LSB-byte of the parameter is the connection-oriented

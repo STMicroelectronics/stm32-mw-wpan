@@ -45,7 +45,8 @@
 /*Configurations of BLE will apply only when BLE is enabled*/
 
 /* Variant configuration */
-#define CFG_LL_BLE_FULL                                 1
+#define CFG_LL_BLE_FULL                             1
+#define CFG_LL_BLE_INTERFACE_COMPATIBILITY          1
 
 /* Roles configurations */
 #ifndef SUPPORT_EXPLCT_OBSERVER_ROLE
@@ -98,15 +99,27 @@
 #endif /* SUPPORT_SLEEP_CLOCK_ACCURCY_UPDATES */
 
 #ifndef SUPPORT_CONNECTED_ISOCHRONOUS
+#if (defined(STM32WBA25xx) || defined(STM32WBA26xx)) && !defined(CFG_LL_BLE_FULL_INTERFACE)
+#define SUPPORT_CONNECTED_ISOCHRONOUS               0 /* Enable\Disable Connected Isochronous Channel Feature. Enable:1 - Disable:0 */
+#else 
 #define SUPPORT_CONNECTED_ISOCHRONOUS               1 /* Enable\Disable Connected Isochronous Channel Feature. Enable:1 - Disable:0 */
+#endif 
 #endif /* SUPPORT_CONNECTED_ISOCHRONOUS */
 
 #ifndef SUPPORT_BRD_ISOCHRONOUS
+#if (defined(STM32WBA25xx) || defined(STM32WBA26xx)) && !defined(CFG_LL_BLE_FULL_INTERFACE)
+#define SUPPORT_BRD_ISOCHRONOUS                     0 /* Enable\Disable Broadcast Isochronous Channel Feature. Enable:1 - Disable:0 */
+#else 
 #define SUPPORT_BRD_ISOCHRONOUS                     1 /* Enable\Disable Broadcast Isochronous Channel Feature. Enable:1 - Disable:0 */
+#endif 
 #endif /* SUPPORT_BRD_ISOCHRONOUS */
 
 #ifndef SUPPORT_SYNC_ISOCHRONOUS
-#define SUPPORT_SYNC_ISOCHRONOUS                    1 /* Enable\Disable Broadcast Isochronous Synchronizer Channel Feature. Enable:1 - Disable:0 */ 
+#if (defined(STM32WBA25xx) || defined(STM32WBA26xx)) && !defined(CFG_LL_BLE_FULL_INTERFACE)
+#define SUPPORT_SYNC_ISOCHRONOUS                    0 /* Enable\Disable Broadcast Isochronous Synchronizer Channel Feature. Enable:1 - Disable:0 */
+#else 
+#define SUPPORT_SYNC_ISOCHRONOUS                    1 /* Enable\Disable Broadcast Isochronous Synchronizer Channel Feature. Enable:1 - Disable:0 */
+#endif 
 #endif /* SUPPORT_SYNC_ISOCHRONOUS */
 
 #ifndef SUPPORT_LE_POWER_CONTROL
@@ -130,23 +143,44 @@
 #endif /* SUPPORT_CSSA */
 
 #ifndef SUPPORT_LE_PAWR_ADVERTISER_ROLE
+#if defined(STM32WBA25xx) || defined(STM32WBA26xx) || defined(CFG_LL_BLE_FULL_INTERFACE)
+#define SUPPORT_LE_PAWR_ADVERTISER_ROLE             1 /* Enable\Disable PAwR Advertiser role. Enable:1 - Disable:0 */
+#else
 #define SUPPORT_LE_PAWR_ADVERTISER_ROLE             0 /* Enable\Disable PAwR Advertiser role. Enable:1 - Disable:0 */
+#endif 
 #endif /* SUPPORT_LE_PAWR_ADVERTISER_ROLE */
 
 #ifndef SUPPORT_LE_PAWR_SYNC_ROLE
-#define SUPPORT_LE_PAWR_SYNC_ROLE                   0 /* Enable\Disable PAwR Synchronizer role. Enable:1 - Disable:0 */ 
+#if defined(STM32WBA25xx) || defined(STM32WBA26xx) || defined(CFG_LL_BLE_FULL_INTERFACE)
+#define SUPPORT_LE_PAWR_SYNC_ROLE                   1 /* Enable\Disable PAwR Synchronizer role. Enable:1 - Disable:0 */
+#else
+#define SUPPORT_LE_PAWR_SYNC_ROLE                   0 /* Enable\Disable PAwR Synchronizer role. Enable:1 - Disable:0 */
+#endif 
 #endif /* SUPPORT_LE_PAWR_SYNC_ROLE */
 
+
 #ifndef SUPPORT_CHANNEL_SOUNDING
-#define SUPPORT_CHANNEL_SOUNDING										0 /* Enable\Disable Channel Sounding Feature.   Enable:1 - Disable:0 */
-#endif /* SUPPORT_CHANNEL_SOUNDING */
- 
+#if defined(CFG_LL_BLE_FULL_INTERFACE)
+#define SUPPORT_CHANNEL_SOUNDING              1 /* Channel Sounding Feature.   Enable:1 - Disable:0 */
+#else
+#define SUPPORT_CHANNEL_SOUNDING              0 /* Channel Sounding Feature.   Enable:1 - Disable:0 */
+#endif
+#endif
+
 #ifndef SUPPORT_FRAME_SPACE_UPDATE
+#if defined(STM32WBA25xx) || defined(STM32WBA26xx) || defined(CFG_LL_BLE_FULL_INTERFACE)
+#define SUPPORT_FRAME_SPACE_UPDATE									1 /* Enable\Disable Frame Space Update Feature. Enable:1 - Disable:0 */
+#else
 #define SUPPORT_FRAME_SPACE_UPDATE									0 /* Enable\Disable Frame Space Update Feature. Enable:1 - Disable:0 */
+#endif 
 #endif /* SUPPORT_FRAME_SPACE_UPDATE */
  
 #ifndef SUPPORT_EXT_FEATURE_SET
-#define SUPPORT_EXT_FEATURE_SET                     0 /* Enable\Disable Extended Feature Set Exchange. Enable:1 - Disable:0 */ 
+#if defined(STM32WBA25xx) || defined(STM32WBA26xx) || defined(CFG_LL_BLE_FULL_INTERFACE)
+#define SUPPORT_EXT_FEATURE_SET                     1 /* Enable\Disable Extended Feature Set Exchange. Enable:1 - Disable:0 */
+#else
+#define SUPPORT_EXT_FEATURE_SET                     0 /* Enable\Disable Extended Feature Set Exchange. Enable:1 - Disable:0 */
+#endif 
 #endif /* SUPPORT_EXT_FEATURE_SET */
  
 #ifndef SUPPORT_ISO_UNSEG_MODE
@@ -154,7 +188,11 @@
 #endif /* SUPPORT_ISO_UNSEG_MODE */
  
 #ifndef SUPPORT_LE_ADVERTISERS_MONITORING
+#if defined(STM32WBA25xx) || defined(STM32WBA26xx) || defined(CFG_LL_BLE_FULL_INTERFACE)
+#define SUPPORT_LE_ADVERTISERS_MONITORING       		1 /* Enable\Disable Advertisers Monitoring Feature. Enable:1 - Disable:0 */
+#else
 #define SUPPORT_LE_ADVERTISERS_MONITORING           0 /* Enable\Disable Advertisers Monitoring Feature. Enable:1 - Disable:0 */
+#endif 
 #endif /* SUPPORT_LE_ADVERTISERS_MONITORING */
 
 /* Capabilities configurations */
