@@ -139,8 +139,7 @@ template <> otError Dns::Process<Cmd("config")>(Arg aArgs[])
         OutputSockAddrLine(defaultConfig->mServerSockAddr);
         OutputLine("ResponseTimeout: %lu ms", ToUlong(defaultConfig->mResponseTimeout));
         OutputLine("MaxTxAttempts: %u", defaultConfig->mMaxTxAttempts);
-        OutputLine("RecursionDesired: %s",
-                   (defaultConfig->mRecursionFlag == OT_DNS_FLAG_RECURSION_DESIRED) ? "yes" : "no");
+        OutputLine("RecursionDesired: %s", ToYesNo(defaultConfig->mRecursionFlag == OT_DNS_FLAG_RECURSION_DESIRED));
         OutputLine("ServiceMode: %s", DnsConfigServiceModeToString(defaultConfig->mServiceMode));
 #if OPENTHREAD_CONFIG_DNS_CLIENT_NAT64_ENABLE
         OutputLine("Nat64Mode: %s", (defaultConfig->mNat64Mode == OT_DNS_NAT64_ALLOW) ? "allow" : "disallow");
@@ -825,10 +824,7 @@ exit:
 
 otError Dns::Process(Arg aArgs[])
 {
-#define CmdEntry(aCommandString)                           \
-    {                                                      \
-        aCommandString, &Dns::Process<Cmd(aCommandString)> \
-    }
+#define CmdEntry(aCommandString) {aCommandString, &Dns::Process<Cmd(aCommandString)>}
 
     static constexpr Command kCommands[] = {
 
@@ -852,8 +848,7 @@ otError Dns::Process(Arg aArgs[])
         CmdEntry("server"),
 #endif
 #if OPENTHREAD_CONFIG_DNS_CLIENT_ENABLE && OPENTHREAD_CONFIG_DNS_CLIENT_SERVICE_DISCOVERY_ENABLE
-        CmdEntry("service"),
-        CmdEntry("servicehost"),
+        CmdEntry("service"),     CmdEntry("servicehost"),
 #endif
     };
 

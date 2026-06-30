@@ -1,4 +1,4 @@
-/*$Id: //dwh/bluetooth/DWC_ble154combo/firmware/rel/2.00a-lca04/firmware/public_inc/ll_fw_config.h#1 $*/
+/*$Id: //dwh/bluetooth/DWC_ble154combo/firmware/rel/2.00a-lca06/firmware/public_inc/ll_fw_config.h#1 $*/
 /**
  ********************************************************************************
  * @file    ll_fw_config.h
@@ -192,17 +192,9 @@
 #define CHECK_ANY_MISSED_EVENT_ON_DEEP_SLEEP_EXIT   1 /* Enable\Disable calling event scheduler handler function at the end of deep sleep exit*/
 #endif /* CHECK_ANY_MISSED_EVENT_ON_DEEP_SLEEP_EXIT */
 
-#ifndef SUPPORT_AUTONOMOUS_POWER_CONTROL_REQ
-#define SUPPORT_AUTONOMOUS_POWER_CONTROL_REQ        0
-#endif /* SUPPORT_AUTONOMOUS_POWER_CONTROL_REQ */
-
 #ifndef SUPPORT_PROFILE
 #define SUPPORT_PROFILE                             PROFILE_LIGHTWEIGHT /* Enable\Disable profiling LL timing framework */
 #endif /* SUPPORT_PROFILE */
-
-#ifndef LL_BASIC
-#define LL_BASIC                                    1
-#endif /* LL_BASIC */
 
 /*************************** MAC Configuration *************************************/
 /*Configurations of MAC will apply only when MAC is enabled*/

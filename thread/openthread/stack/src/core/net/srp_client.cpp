@@ -241,27 +241,17 @@ uint32_t Client::TxJitter::DetermineDelay(void)
 #if OT_SHOULD_LOG_AT(OT_LOG_LEVEL_INFO)
 const char *Client::TxJitter::ReasonToString(Reason aReason)
 {
-    static const char *const kReasonStrings[] = {
-        "OnDeviceReboot",    // (0) kOnDeviceReboot
-        "OnServerStart",     // (1) kOnServerStart
-        "OnServerRestart",   // (2) kOnServerRestart
-        "OnServerSwitch",    // (3) kOnServerSwitch
-        "OnSlaacAddrAdd",    // (4) kOnSlaacAddrAdd
-        "OnSlaacAddrRemove", // (5) kOnSlaacAddrRemove
-    };
+#define ReasonMapList(_)                   \
+    _(kOnDeviceReboot, "OnDeviceReboot")   \
+    _(kOnServerStart, "OnServerStart")     \
+    _(kOnServerRestart, "OnServerRestart") \
+    _(kOnServerSwitch, "OnServerSwitch")   \
+    _(kOnSlaacAddrAdd, "OnSlaacAddrAdd")   \
+    _(kOnSlaacAddrRemove, "OnSlaacAddrRemove")
 
-    struct EnumCheck
-    {
-        InitEnumValidatorCounter();
-        ValidateNextEnum(kOnDeviceReboot);
-        ValidateNextEnum(kOnServerStart);
-        ValidateNextEnum(kOnServerRestart);
-        ValidateNextEnum(kOnServerSwitch);
-        ValidateNextEnum(kOnSlaacAddrAdd);
-        ValidateNextEnum(kOnSlaacAddrRemove);
-    };
+    DefineEnumStringArray(ReasonMapList);
 
-    return kReasonStrings[aReason];
+    return kStrings[aReason];
 }
 #endif
 
@@ -314,27 +304,17 @@ void Client::AutoStart::InvokeCallback(const Ip6::SockAddr *aServerSockAddr) con
 #if OT_SHOULD_LOG_AT(OT_LOG_LEVEL_INFO)
 const char *Client::AutoStart::StateToString(State aState)
 {
-    static const char *const kStateStrings[] = {
-        "Disabled",      // (0) kDisabled
-        "1stTimeSelect", // (1) kFirstTimeSelecting
-        "Reselect",      // (2) kReselecting
-        "Unicast-prf",   // (3) kSelectedUnicastPreferred
-        "Anycast",       // (4) kSelectedAnycast
-        "Unicast",       // (5) kSelectedUnicast
-    };
+#define AutoStartStateMapList(_)                \
+    _(kDisabled, "Disabled")                    \
+    _(kFirstTimeSelecting, "1stTimeSelect")     \
+    _(kReselecting, "Reselect")                 \
+    _(kSelectedUnicastPreferred, "Unicast-prf") \
+    _(kSelectedAnycast, "Anycast")              \
+    _(kSelectedUnicast, "Unicast")
 
-    struct EnumCheck
-    {
-        InitEnumValidatorCounter();
-        ValidateNextEnum(kDisabled);
-        ValidateNextEnum(kFirstTimeSelecting);
-        ValidateNextEnum(kReselecting);
-        ValidateNextEnum(kSelectedUnicastPreferred);
-        ValidateNextEnum(kSelectedAnycast);
-        ValidateNextEnum(kSelectedUnicast);
-    };
+    DefineEnumStringArray(AutoStartStateMapList);
 
-    return kStateStrings[aState];
+    return kStrings[aState];
 }
 #endif
 
@@ -350,13 +330,11 @@ Client::Client(Instance &aInstance)
     , mState(kStateStopped)
     , mTxFailureRetryCount(0)
     , mShouldRemoveKeyLease(false)
-    , mSingleServiceMode(false)
 #if OPENTHREAD_CONFIG_REFERENCE_DEVICE_ENABLE
     , mServiceKeyRecordEnabled(false)
     , mUseShortLeaseOption(false)
 #endif
-    , mNextMessageId(0)
-    , mResponseMessageId(0)
+    , mCurMessageId(0)
     , mAutoHostAddressCount(0)
     , mRetryWaitInterval(kMinRetryWaitInterval)
     , mTtl(0)
@@ -454,8 +432,6 @@ void Client::Stop(Requester aRequester, StopMode aMode)
 
     VerifyOrExit(GetState() != kStateStopped);
 
-    mSingleServiceMode = false;
-
     // State changes:
     //   kAdding     -> kToRefresh
     //   kRefreshing -> kToRefresh
@@ -468,7 +444,6 @@ void Client::Stop(Requester aRequester, StopMode aMode)
 
     mShouldRemoveKeyLease = false;
     mTxFailureRetryCount  = 0;
-    mResponseMessageId    = mNextMessageId;
 
     if (aMode == kResetRetryInterval)
     {
@@ -518,8 +493,6 @@ void Client::Pause(void)
         /* (6) kRegistered -> */ kRegistered,
         /* (7) kRemoved    -> */ kRemoved,
     };
-
-    mSingleServiceMode = false;
 
     // State changes:
     //   kAdding     -> kToRefresh
@@ -955,11 +928,11 @@ bool Client::ChangeHostAndServiceStates(const ItemState *aNewStates, ServiceStat
         case AutoStart::kSelectedUnicast:
             info.SetServerAddress(GetServerAddress().GetAddress());
             info.SetServerPort(GetServerAddress().GetPort());
-            IgnoreError(Get<Settings>().Save(info));
+            Get<Settings>().Save(info);
             break;
 
         case AutoStart::kSelectedAnycast:
-            IgnoreError(Get<Settings>().Delete<Settings::SrpClientInfo>());
+            Get<Settings>().Delete<Settings::SrpClientInfo>();
             break;
         }
     }
@@ -988,6 +961,17 @@ void Client::SendUpdate(void)
         /* (7) kRemoved    -> */ kRemoved,
     };
 
+    static const ItemState kNewStateOnSingleServiceMode[]{
+        /* (0) kToAdd      -> */ kToAdd,
+        /* (1) kAdding     -> */ kToRefresh,
+        /* (2) kToRefresh  -> */ kToRefresh,
+        /* (3) kRefreshing -> */ kToRefresh,
+        /* (4) kToRemove   -> */ kToRemove,
+        /* (5) kRemoving   -> */ kToRemove,
+        /* (6) kRegistered -> */ kRegistered,
+        /* (7) kRemoved    -> */ kRemoved,
+    };
+
     Error    error = kErrorNone;
     MsgInfo  info;
     uint32_t length;
@@ -996,6 +980,7 @@ void Client::SendUpdate(void)
     info.mMessage.Reset(mSocket.NewMessage());
     VerifyOrExit(info.mMessage != nullptr, error = kErrorNoBufs);
 
+    info.mSingleServiceMode = false;
     SuccessOrExit(error = PrepareUpdateMessage(info));
 
     length = info.mMessage->GetLength() + sizeof(Ip6::Udp::Header) + sizeof(Ip6::Header);
@@ -1003,19 +988,19 @@ void Client::SendUpdate(void)
     if (length >= Ip6::kMaxDatagramLength)
     {
         LogInfo("Msg len %lu is larger than MTU, enabling single service mode", ToUlong(length));
-        mSingleServiceMode = true;
+
+        info.mSingleServiceMode = true;
         IgnoreError(info.mMessage->SetLength(0));
+
+        // State changes:
+        //   kAdding     -> kToRefresh
+        //   kRefreshing -> kToRefresh
+        //   kRemoving   -> kToRemove
+
+        ChangeHostAndServiceStates(kNewStateOnSingleServiceMode, kForServicesAppendedInMessage);
+
         SuccessOrExit(error = PrepareUpdateMessage(info));
     }
-
-    SuccessOrExit(error = mSocket.SendTo(*info.mMessage, Ip6::MessageInfo()));
-
-    // Ownership of the message is transferred to the socket upon a
-    // successful `SendTo()` call.
-
-    info.mMessage.Release();
-
-    LogInfo("Send update, msg-id:0x%x", mNextMessageId);
 
     // State changes:
     //   kToAdd     -> kAdding
@@ -1024,26 +1009,21 @@ void Client::SendUpdate(void)
 
     anyChanged = ChangeHostAndServiceStates(kNewStateOnMessageTx, kForServicesAppendedInMessage);
 
-    // `mNextMessageId` tracks the message ID used in the prepared
-    // update message. It is incremented after a successful
-    // `mSocket.SendTo()` call. If unsuccessful, the same ID can be
-    // reused for the next update.
-    //
-    // Acceptable response message IDs fall within the range starting
-    // at `mResponseMessageId ` and ending before `mNextMessageId`.
-    //
-    // `anyChanged` tracks if any host or service states have changed.
-    // If not, the prepared message is identical to the last one with
-    // the same hosts/services, allowing us to accept earlier message
-    // IDs. If changes occur, `mResponseMessageId ` is updated to
-    // ensure only responses to the latest message are accepted.
-
     if (anyChanged)
     {
-        mResponseMessageId = mNextMessageId;
+        SelectNewMessageId();
     }
 
-    mNextMessageId++;
+    SuccessOrExit(error = UpdateIdAndSignatureInUpdateMessage(info));
+
+    SuccessOrExit(error = mSocket.SendTo(*info.mMessage, Ip6::MessageInfo()));
+
+    // Ownership of the message is transferred to the socket upon a
+    // successful `SendTo()` call.
+
+    info.mMessage.Release();
+
+    LogInfo("Send update, msg-id:0x%x", mCurMessageId);
 
     // Remember the update message tx time to use later to determine the
     // lease renew time.
@@ -1071,8 +1051,6 @@ exit:
 
         LogInfo("Failed to send update: %s", ErrorToString(error));
 
-        mSingleServiceMode = false;
-
         SetState(kStateToRetry);
 
         if (mTxFailureRetryCount < kMaxTxFailureRetries)
@@ -1090,8 +1068,15 @@ exit:
         }
         else
         {
+            uint16_t retryJitter;
+
             LogRetryWaitInterval();
-            mTimer.Start(Random::NonCrypto::AddJitter(GetRetryWaitInterval(), kRetryIntervalJitter));
+
+            // Use a divisor of current retry interval for jitter
+            retryJitter = ClampToUint16(GetRetryWaitInterval() / kRetryJitterDivisor);
+            retryJitter = Max(retryJitter, kRetryIntervalJitter);
+            mTimer.Start(Random::NonCrypto::AddJitter(GetRetryWaitInterval(), retryJitter));
+
             GrowRetryWaitInterval();
             InvokeCallback(error);
         }
@@ -1115,7 +1100,7 @@ Error Client::PrepareUpdateMessage(MsgInfo &aInfo)
 
     SuccessOrExit(error = ReadOrGenerateKey(aInfo.mKeyInfo));
 
-    header.SetMessageId(mNextMessageId);
+    header.SetMessageId(mCurMessageId);
 
     // SRP Update (DNS Update) message must have exactly one record in
     // Zone section, no records in Prerequisite Section, can have
@@ -1148,7 +1133,24 @@ Error Client::PrepareUpdateMessage(MsgInfo &aInfo)
     // Prepare Additional Data section
 
     SuccessOrExit(error = AppendUpdateLeaseOptRecord(aInfo));
-    SuccessOrExit(error = AppendSignature(aInfo));
+    SuccessOrExit(error = AppendSignature(aInfo, kAppendEmptySignature));
+
+exit:
+    return error;
+}
+
+Error Client::UpdateIdAndSignatureInUpdateMessage(MsgInfo &aInfo)
+{
+    constexpr uint16_t kHeaderOffset = 0;
+
+    Error             error;
+    Dns::UpdateHeader header;
+
+    IgnoreError(aInfo.mMessage->Read(kHeaderOffset, header));
+    header.SetMessageId(mCurMessageId);
+    aInfo.mMessage->Write(kHeaderOffset, header);
+
+    SuccessOrExit(error = AppendSignature(aInfo, kOverwriteWithNewSignature));
 
     header.SetAdditionalRecordCount(2); // Lease OPT and SIG RRs
     aInfo.mMessage->Write(kHeaderOffset, header);
@@ -1172,7 +1174,7 @@ Error Client::ReadOrGenerateKey(KeyInfo &aKeyInfo)
         {
             SuccessOrExit(error = aKeyInfo.Generate());
         }
-        IgnoreError(Get<Settings>().Delete<Settings::SrpEcdsaKey>());
+        Get<Settings>().Delete<Settings::SrpEcdsaKey>();
     }
     else
     {
@@ -1199,7 +1201,7 @@ Error Client::ReadOrGenerateKey(KeyInfo &aKeyInfo)
     }
 
     SuccessOrExit(error = aKeyInfo.Generate());
-    IgnoreError(Get<Settings>().Save<Settings::SrpEcdsaKey>(aKeyInfo));
+    Get<Settings>().Save<Settings::SrpEcdsaKey>(aKeyInfo);
 
 exit:
     return error;
@@ -1280,7 +1282,7 @@ Error Client::AppendServiceInstructions(MsgInfo &aInfo)
         {
             SuccessOrExit(error = AppendServiceInstruction(service, aInfo));
 
-            if (mSingleServiceMode)
+            if (aInfo.mSingleServiceMode)
             {
                 // In "single service mode", we allow only one service
                 // to be appended in the message.
@@ -1289,7 +1291,7 @@ Error Client::AppendServiceInstructions(MsgInfo &aInfo)
         }
     }
 
-    if (!mSingleServiceMode)
+    if (!aInfo.mSingleServiceMode)
     {
         for (Service &service : mServices)
         {
@@ -1674,7 +1676,7 @@ exit:
     return error;
 }
 
-Error Client::AppendSignature(MsgInfo &aInfo)
+Error Client::AppendSignature(MsgInfo &aInfo, SignatureAppendMode aMode)
 {
     Error                          error;
     Dns::SigRecord                 sig;
@@ -1694,37 +1696,49 @@ Error Client::AppendSignature(MsgInfo &aInfo)
     sig.Init(Dns::ResourceRecord::kClassAny);
     sig.SetAlgorithm(Dns::KeyRecord::kAlgorithmEcdsaP256Sha256);
 
-    // Append the SIG RR with full uncompressed form of the host name
-    // as the signer's name. This is used for SIG(0) calculation only.
-    // It will be overwritten with host name compressed.
+    switch (aMode)
+    {
+    case kAppendEmptySignature:
+        aInfo.mSigRecordOffset = aInfo.mMessage->GetLength();
+        break;
 
-    offset = aInfo.mMessage->GetLength();
-    SuccessOrExit(error = aInfo.mMessage->Append(sig));
-    SuccessOrExit(error = AppendHostName(aInfo, /* aDoNotCompress */ true));
+    case kOverwriteWithNewSignature:
+        // Revert back to the start of signature record.
+        IgnoreError(aInfo.mMessage->SetLength(aInfo.mSigRecordOffset));
 
-    // Calculate signature (RFC 2931): Calculated over "data" which is
-    // concatenation of (1) the SIG RR RDATA wire format (including
-    // the canonical form of the signer's name), entirely omitting the
-    // signature subfield, (2) DNS query message, including DNS header
-    // but not UDP/IP header before the header RR counts have been
-    // adjusted for the inclusion of SIG(0).
+        // Append the SIG RR with full uncompressed form of the host name
+        // as the signer's name. This is used for SIG(0) calculation only.
+        // It will be overwritten with host name compressed.
 
-    sha256.Start();
+        offset = aInfo.mMessage->GetLength();
+        SuccessOrExit(error = aInfo.mMessage->Append(sig));
+        SuccessOrExit(error = AppendHostName(aInfo, /* aDoNotCompress */ true));
 
-    // (1) SIG RR RDATA wire format
-    len = aInfo.mMessage->GetLength() - offset - sizeof(Dns::ResourceRecord);
-    sha256.Update(*aInfo.mMessage, offset + sizeof(Dns::ResourceRecord), len);
+        // Calculate signature (RFC 2931): Calculated over "data" which is
+        // concatenation of (1) the SIG RR RDATA wire format (including
+        // the canonical form of the signer's name), entirely omitting the
+        // signature subfield, (2) DNS query message, including DNS header
+        // but not UDP/IP header before the header RR counts have been
+        // adjusted for the inclusion of SIG(0).
 
-    // (2) Message from DNS header before SIG
-    sha256.Update(*aInfo.mMessage, 0, offset);
+        sha256.Start();
 
-    sha256.Finish(hash);
-    SuccessOrExit(error = aInfo.mKeyInfo.Sign(hash, signature));
+        // (1) SIG RR RDATA wire format
+        len = aInfo.mMessage->GetLength() - offset - sizeof(Dns::ResourceRecord);
+        sha256.Update(*aInfo.mMessage, offset + sizeof(Dns::ResourceRecord), len);
 
-    // Move back in message and append SIG RR now with compressed host
-    // name (as signer's name) along with the calculated signature.
+        // (2) Message from DNS header before SIG
+        sha256.Update(*aInfo.mMessage, 0, offset);
 
-    IgnoreError(aInfo.mMessage->SetLength(offset));
+        sha256.Finish(hash);
+        SuccessOrExit(error = aInfo.mKeyInfo.Sign(hash, signature));
+
+        // Move back in message and append SIG RR now with compressed host
+        // name (as signer's name) along with the calculated signature.
+
+        IgnoreError(aInfo.mMessage->SetLength(offset));
+        break;
+    }
 
     // SIG(0) uses owner name of root (single zero byte).
     SuccessOrExit(error = Dns::Name::AppendTerminator(*aInfo.mMessage));
@@ -1782,8 +1796,7 @@ void Client::ProcessResponse(Message &aMessage)
     VerifyOrExit(header.GetType() == Dns::Header::kTypeResponse, error = kErrorParse);
     VerifyOrExit(header.GetQueryType() == Dns::Header::kQueryTypeUpdate, error = kErrorParse);
 
-    VerifyOrExit(IsResponseMessageIdValid(header.GetMessageId()), error = kErrorDrop);
-    mResponseMessageId = header.GetMessageId() + 1;
+    VerifyOrExit(header.GetMessageId() == mCurMessageId, error = kErrorDrop);
 
     if (!Get<Mle::Mle>().IsRxOnWhenIdle())
     {
@@ -1921,11 +1934,14 @@ exit:
     }
 }
 
-bool Client::IsResponseMessageIdValid(uint16_t aId) const
+void Client::SelectNewMessageId(void)
 {
-    // Semantically equivalent to `(aId >= mResponseMessageId) && (aId < mNextMessageId)`
+    uint16_t oldId = mCurMessageId;
 
-    return !SerialNumber::IsLess(aId, mResponseMessageId) && SerialNumber::IsLess(aId, mNextMessageId);
+    do
+    {
+        mCurMessageId = Random::NonCrypto::GetUint16();
+    } while (oldId == mCurMessageId);
 }
 
 void Client::HandleUpdateDone(void)
@@ -2029,7 +2045,7 @@ void Client::UpdateState(void)
 
         mHostInfo.SetState(kToRefresh);
 
-        // Fall through
+        OT_FALL_THROUGH;
 
     case kToAdd:
     case kToRefresh:
@@ -2039,7 +2055,7 @@ void Client::UpdateState(void)
         // for empty service list.
         VerifyOrExit(!mServices.IsEmpty() && (mHostInfo.IsAutoAddressEnabled() || (mHostInfo.GetNumAddresses() > 0)));
 
-        // Fall through
+        OT_FALL_THROUGH;
 
     case kToRemove:
         shouldUpdate = true;
@@ -2177,7 +2193,6 @@ void Client::HandleTimer(void)
         break;
 
     case kStateUpdating:
-        mSingleServiceMode = false;
         LogRetryWaitInterval();
         LogInfo("Timed out, no response");
         GrowRetryWaitInterval();
@@ -2385,9 +2400,9 @@ exit:
 
 Error Client::SelectUnicastEntry(DnsSrpUnicastType aType, DnsSrpUnicastInfo &aInfo) const
 {
-    Error                                   error = kErrorNotFound;
-    DnsSrpUnicastInfo                       unicastInfo;
-    NetworkData::Service::Manager::Iterator iterator;
+    Error                          error = kErrorNotFound;
+    DnsSrpUnicastInfo              unicastInfo;
+    NetworkData::Service::Iterator iterator(GetInstance());
 #if OPENTHREAD_CONFIG_SRP_CLIENT_SAVE_SELECTED_SERVER_ENABLE
     Settings::SrpClientInfo savedInfo;
     bool                    hasSavedServerInfo = false;
@@ -2398,7 +2413,7 @@ Error Client::SelectUnicastEntry(DnsSrpUnicastType aType, DnsSrpUnicastInfo &aIn
     }
 #endif
 
-    while (Get<NetworkData::Service::Manager>().GetNextDnsSrpUnicastInfo(iterator, aType, unicastInfo) == kErrorNone)
+    while (iterator.GetNextDnsSrpUnicastInfo(aType, unicastInfo) == kErrorNone)
     {
         bool preferNewEntry;
 
@@ -2491,10 +2506,10 @@ void Client::SelectNextServer(bool aDisallowSwitchOnRegisteredHost)
 
     do
     {
-        DnsSrpUnicastInfo                       unicastInfo;
-        NetworkData::Service::Manager::Iterator iterator;
+        DnsSrpUnicastInfo              unicastInfo;
+        NetworkData::Service::Iterator iterator(GetInstance());
 
-        while (Get<NetworkData::Service::Manager>().GetNextDnsSrpUnicastInfo(iterator, type, unicastInfo) == kErrorNone)
+        while (iterator.GetNextDnsSrpUnicastInfo(type, unicastInfo) == kErrorNone)
         {
             if (selectNext)
             {
@@ -2541,45 +2556,36 @@ exit:
 
 const char *Client::ItemStateToString(ItemState aState)
 {
-    static const char *const kItemStateStrings[] = {
-        "ToAdd",      // kToAdd      (0)
-        "Adding",     // kAdding     (1)
-        "ToRefresh",  // kToRefresh  (2)
-        "Refreshing", // kRefreshing (3)
-        "ToRemove",   // kToRemove   (4)
-        "Removing",   // kRemoving   (5)
-        "Registered", // kRegistered (6)
-        "Removed",    // kRemoved    (7)
-    };
+#define ItemStateMapList(_)      \
+    _(kToAdd, "ToAdd")           \
+    _(kAdding, "Adding")         \
+    _(kToRefresh, "ToRefresh")   \
+    _(kRefreshing, "Refreshing") \
+    _(kToRemove, "ToRemove")     \
+    _(kRemoving, "Removing")     \
+    _(kRegistered, "Registered") \
+    _(kRemoved, "Removed")
 
-    return kItemStateStrings[aState];
+    DefineEnumStringArray(ItemStateMapList);
+
+    return kStrings[aState];
 }
 
 #if OT_SHOULD_LOG_AT(OT_LOG_LEVEL_INFO)
 
 const char *Client::StateToString(State aState)
 {
-    static const char *const kStateStrings[] = {
-        "Stopped",  // kStateStopped  (0)
-        "Paused",   // kStatePaused   (1)
-        "ToUpdate", // kStateToUpdate (2)
-        "Updating", // kStateUpdating (3)
-        "Updated",  // kStateUpdated  (4)
-        "ToRetry",  // kStateToRetry  (5)
-    };
+#define StateMapList(_)           \
+    _(kStateStopped, "Stopped")   \
+    _(kStatePaused, "Paused")     \
+    _(kStateToUpdate, "ToUpdate") \
+    _(kStateUpdating, "Updating") \
+    _(kStateUpdated, "Updated")   \
+    _(kStateToRetry, "ToRetry")
 
-    struct EnumCheck
-    {
-        InitEnumValidatorCounter();
-        ValidateNextEnum(kStateStopped);
-        ValidateNextEnum(kStatePaused);
-        ValidateNextEnum(kStateToUpdate);
-        ValidateNextEnum(kStateUpdating);
-        ValidateNextEnum(kStateUpdated);
-        ValidateNextEnum(kStateToRetry);
-    };
+    DefineEnumStringArray(StateMapList);
 
-    return kStateStrings[aState];
+    return kStrings[aState];
 }
 
 void Client::LogRetryWaitInterval(void) const

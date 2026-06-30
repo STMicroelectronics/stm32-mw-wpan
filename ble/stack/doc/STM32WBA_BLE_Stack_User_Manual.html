@@ -22,6 +22,8 @@
 @font-face
 	{font-family:Aptos;}
 @font-face
+	{font-family:"Yu Mincho";}
+@font-face
 	{font-family:Cambria;
 	panose-1:2 4 5 3 5 4 6 3 2 4;}
 @font-face
@@ -30,6 +32,8 @@
 @font-face
 	{font-family:Consolas;
 	panose-1:2 11 6 9 2 2 4 3 2 4;}
+@font-face
+	{font-family:"\@Yu Mincho";}
 @font-face
 	{font-family:"\@MS Mincho";
 	panose-1:2 2 6 9 4 2 5 8 3 4;}
@@ -1655,167 +1659,185 @@ Update Application compilation options section. </p>
 library variants section; Update Application compilation options section;
 Update Asynchronous events and data reception section.</span></p>
 
+<p class=MsoNormal><span style='color:windowtext'>Rev 1.19 (9 April 2026):
+Update the table of supported features per variant; Add a new section for the
+BLE stack link-time optimization; Update BLE Stack and Link Layer Footprint.</span></p>
+
+<p class=MsoNormal><span style='color:windowtext'>Rev 1.20 (27 April 2026): Update
+the Library variants, the Application compilation options, BLE stack porting
+and the Timer functions sections to be aligned with the reduction of the Ble
+stack libs.</span></p>
+
+<p class=MsoNormal><span style='color:windowtext'>Rev 1.21 (13 Mai 2026): Update
+the library variants table and notes.</span></p>
+
 <p class=MsoNormal>&nbsp;</p>
 
-<p class=MsoTocHeading>Contents</p>
+<p class=MsoTocHeading><span lang=FR>Contents</span></p>
 
-<p class=MsoToc1><a href="#_Toc191997871"><i>List of tables</i><span
+<p class=MsoToc1><a href="#_Toc226643899"><i>List of tables</i><span
 style='color:black;display:none'>. </span><span
 style='color:black;display:none'>1</span></a></p>
 
-<p class=MsoToc1><a href="#_Toc191997872"><i>List of figures</i><span
+<p class=MsoToc1><a href="#_Toc226643900"><i>List of figures</i><span
 style='color:black;display:none'>. </span><span
 style='color:black;display:none'>1</span></a></p>
 
-<p class=MsoToc1><a href="#_Toc191997873"><i>1</i><i><span style='font-family:
+<p class=MsoToc1><a href="#_Toc226643901"><i>1</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></i><i>About this document</i><span style='color:black;display:none'> </span><span style='color:black;display:none'>1</span></a></p>
 
-<p class=MsoToc2><a href="#_Toc191997874"><i>1.1</i><i><span style='font-family:
+<p class=MsoToc2><a href="#_Toc226643902"><i>1.1</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></i><i>Purpose</i><span style='color:black;display:none'>  </span><span style='color:black;display:none'>1</span></a></p>
 
-<p class=MsoToc2><a href="#_Toc191997875"><i>1.2</i><i><span style='font-family:
+<p class=MsoToc2><a href="#_Toc226643903"><i>1.2</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></i><i>Scope</i><span style='color:black;display:none'>  </span><span style='color:black;display:none'>1</span></a></p>
 
-<p class=MsoToc2><a href="#_Toc191997876"><i>1.3</i><i><span style='font-family:
+<p class=MsoToc2><a href="#_Toc226643904"><i>1.3</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></i><i>Acronym definitions</i><span style='color:black;display:none'>  </span><span style='color:black;display:none'>1</span></a></p>
 
-<p class=MsoToc2><a href="#_Toc191997877"><i>1.4</i><i><span style='font-family:
+<p class=MsoToc2><a href="#_Toc226643905"><i>1.4</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></i><i>References</i><span style='color:black;display:none'>  </span><span style='color:black;display:none'>1</span></a></p>
 
-<p class=MsoToc1><a href="#_Toc191997878"><i>2</i><i><span style='font-family:
+<p class=MsoToc1><a href="#_Toc226643906"><i>2</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></i><i>BLE stack overview</i><span style='color:black;display:none'>.. </span><span style='color:black;display:none'>1</span></a></p>
 
-<p class=MsoToc2><a href="#_Toc191997879"><i>2.1</i><i><span style='font-family:
+<p class=MsoToc2><a href="#_Toc226643907"><i>2.1</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></i><i>Release contents</i><span style='color:black;display:none'>  </span><span style='color:black;display:none'>1</span></a></p>
 
-<p class=MsoToc3><a href="#_Toc191997880"><i>2.1.1</i><i><span
+<p class=MsoToc3><a href="#_Toc226643908"><i>2.1.1</i><i><span
 style='font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></i><i>Folder structure</i><span style='color:black;display:none'>. </span><span style='color:black;display:none'>1</span></a></p>
 
-<p class=MsoToc3><a href="#_Toc191997881"><i>2.1.2</i><i><span
+<p class=MsoToc3><a href="#_Toc226643909"><i>2.1.2</i><i><span
 style='font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></i><i>Library variants</i><span style='color:black;display:none'>. </span><span style='color:black;display:none'>1</span></a></p>
 
-<p class=MsoToc2><a href="#_Toc191997882"><i>2.2</i><i><span style='font-family:
+<p class=MsoToc2><a href="#_Toc226643910"><i>2.2</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></i><i>Real-Time environment</i><span style='color:black;display:none'> </span><span style='color:black;display:none'>1</span></a></p>
 
-<p class=MsoToc2><a href="#_Toc191997883"><i>2.3</i><i><span style='font-family:
+<p class=MsoToc2><a href="#_Toc226643911"><i>2.3</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></i><i>Library dependencies</i><span style='color:black;display:none'>  </span><span style='color:black;display:none'>1</span></a></p>
 
-<p class=MsoToc2><a href="#_Toc191997884"><i>2.4</i><i><span style='font-family:
+<p class=MsoToc2><a href="#_Toc226643912"><i>2.4</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></i><i>Library compilation options</i><span style='color:black;
 display:none'>  </span><span
 style='color:black;display:none'>1</span></a></p>
 
-<p class=MsoToc2><a href="#_Toc191997885"><i>2.5</i><i><span style='font-family:
+<p class=MsoToc2><a href="#_Toc226643913"><i>2.5</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></i><i>Application compilation options</i><span style='color:black;
 display:none'>  </span><span
 style='color:black;display:none'>1</span></a></p>
 
-<p class=MsoToc1><a href="#_Toc191997886"><i>3</i><i><span style='font-family:
+<p class=MsoToc1><a href="#_Toc226643914"><i>3</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></i><i>BLE stack user interface</i><span style='color:black;display:
 none'>. </span><span
 style='color:black;display:none'>1</span></a></p>
 
-<p class=MsoToc2><a href="#_Toc191997887"><i>3.1</i><i><span style='font-family:
+<p class=MsoToc2><a href="#_Toc226643915"><i>3.1</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></i><i>BLE stack initialization</i><span style='color:black;display:
 none'>  </span><span
 style='color:black;display:none'>1</span></a></p>
 
-<p class=MsoToc2><a href="#_Toc191997888"><i>3.2</i><i><span style='font-family:
+<p class=MsoToc2><a href="#_Toc226643916"><i>3.2</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></i><i>BLE stack process</i><span style='color:black;display:none'>  </span><span style='color:black;display:none'>1</span></a></p>
 
-<p class=MsoToc2><a href="#_Toc191997889"><i>3.3</i><i><span style='font-family:
+<p class=MsoToc2><a href="#_Toc226643917"><i>3.3</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></i><i>BLE stack ACI/HCI interface</i><span style='color:black;
 display:none'>  </span><span
 style='color:black;display:none'>1</span></a></p>
 
-<p class=MsoToc3><a href="#_Toc191997890"><i>3.3.1</i><i><span
+<p class=MsoToc3><a href="#_Toc226643918"><i>3.3.1</i><i><span
 style='font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></i><i>Transparent Mode</i><span style='color:black;display:none'>. </span><span style='color:black;display:none'>1</span></a></p>
 
-<p class=MsoToc3><a href="#_Toc191997891"><i>3.3.2</i><i><span
+<p class=MsoToc3><a href="#_Toc226643919"><i>3.3.2</i><i><span
 style='font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></i><i>Direct Mode</i><span style='color:black;display:none'>. </span><span style='color:black;display:none'>1</span></a></p>
 
-<p class=MsoToc4><a href="#_Toc191997892"><i>3.3.2.1</i><i><span
+<p class=MsoToc4><a href="#_Toc226643920"><i>3.3.2.1</i><i><span
 style='font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></i><i>BLE stack wrapper</i><span style='color:black;display:none'> </span><span style='color:black;display:none'>1</span></a></p>
 
-<p class=MsoToc4><a href="#_Toc191997893"><i>3.3.2.2</i><i><span
+<p class=MsoToc4><a href="#_Toc226643921"><i>3.3.2.2</i><i><span
 style='font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></i><i>Commands and data sending</i><span style='color:black;display:
 none'>. </span><span
 style='color:black;display:none'>1</span></a></p>
 
-<p class=MsoToc4><a href="#_Toc191997894"><i>3.3.2.3</i><i><span
+<p class=MsoToc4><a href="#_Toc226643922"><i>3.3.2.3</i><i><span
 style='font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></i><i>Asynchronous events and data reception</i><span style='color:
 black;display:none'>. </span><span
 style='color:black;display:none'>1</span></a></p>
 
-<p class=MsoToc1><a href="#_Toc191997895"><i>4</i><i><span style='font-family:
+<p class=MsoToc1><a href="#_Toc226643923"><i>4</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></i><i>BLE stack porting</i><span style='color:black;display:none'>. </span><span style='color:black;display:none'>1</span></a></p>
 
-<p class=MsoToc2><a href="#_Toc191997896"><i>4.1</i><i><span style='font-family:
+<p class=MsoToc2><a href="#_Toc226643924"><i>4.1</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></i><i>BLE platform initialization</i><span style='color:black;
 display:none'>  </span><span
 style='color:black;display:none'>1</span></a></p>
 
-<p class=MsoToc2><a href="#_Toc191997897"><i>4.2</i><i><span style='font-family:
+<p class=MsoToc2><a href="#_Toc226643925"><i>4.2</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></i><i>BLE platform functions</i><span style='color:black;display:none'>  </span><span style='color:black;display:none'>1</span></a></p>
 
-<p class=MsoToc3><a href="#_Toc191997898"><i>4.2.1</i><i><span
+<p class=MsoToc3><a href="#_Toc226643926"><i>4.2.1</i><i><span
 style='font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></i><i>NVM functions</i><span style='color:black;display:none'>. </span><span style='color:black;display:none'>1</span></a></p>
+</span></i><i>NVM function</i><span style='color:black;display:none'>. </span><span style='color:black;display:none'>1</span></a></p>
 
-<p class=MsoToc3><a href="#_Toc191997899"><i>4.2.2</i><i><span
+<p class=MsoToc3><a href="#_Toc226643927"><i>4.2.2</i><i><span
 style='font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></i><i>Timer functions</i><span style='color:black;display:none'>. </span><span style='color:black;display:none'>1</span></a></p>
 
-<p class=MsoToc3><a href="#_Toc191997900"><i>4.2.3</i><i><span
+<p class=MsoToc3><a href="#_Toc226643928"><i>4.2.3</i><i><span
 style='font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></i><i>AES functions</i><span style='color:black;display:none'>. </span><span style='color:black;display:none'>1</span></a></p>
 
-<p class=MsoToc3><a href="#_Toc191997901"><i>4.2.4</i><i><span
+<p class=MsoToc3><a href="#_Toc226643929"><i>4.2.4</i><i><span
 style='font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></i><i>PKA functions</i><span style='color:black;display:none'>. </span><span style='color:black;display:none'>1</span></a></p>
 
-<p class=MsoToc3><a href="#_Toc191997902"><i>4.2.5</i><i><span
+<p class=MsoToc3><a href="#_Toc226643930"><i>4.2.5</i><i><span
 style='font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span></i><i>RNG functions</i><span style='color:black;display:none'>. </span><span style='color:black;display:none'>1</span></a></p>
+
+<p class=MsoToc2><a href="#_Toc226643931"><i>4.3</i><i><span style='font-family:
+"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></i><i>BLE stack link-time optimization</i><span style='color:black;
+display:none'>  </span><span
+style='color:black;display:none'>1</span></a></p>
 
 <p class=MsoNormal>&nbsp;</p>
 
 <p class=MsoNormal>&nbsp;</p>
 
 <h1><a name="_Toc163814793"></a><a name="_Toc147487398"></a><a
-name="_Toc191997871"></a><a name="_Toc125725154"></a><span style='color:black'>List
+name="_Toc226643899"></a><a name="_Toc125725154"></a><span style='color:black'>List
 of tables</span></h1>
 
 <p class=MsoTof><a href="#_Toc147487325"><i>Table 1: Acronym definitions</i><i><span
 style='color:black;display:none'>&nbsp; 1</span></i></a></p>
 
 <p class=MsoTof><a href="#_Toc147487326"><i>Table 2: Supported features of each
-BLE stack variant</i><i><span style='color:black;display:none'> 1</span></i></a></p>
+BLE </i>predefined configurations </a></p>
 
 <p class=MsoTof><a href="#_Toc147487327"><i>Table 3: BleStack_Init function</i><i><span
 style='color:black;display:none'>&nbsp; 1</span></i></a></p>
@@ -1823,38 +1845,40 @@ style='color:black;display:none'>&nbsp; 1</span></i></a></p>
 <p class=MsoTof><a href="#_Toc147487328"><i>Table 4: BleStack_Init function's
 parameters</i><i><span style='color:black;display:none'>&nbsp; 1</span></i></a></p>
 
-<p class=MsoTof><a href="#_Toc147487329"><i>Table 5: BleStack_Process function</i><i><span
+<p class=MsoTof><a href="#table5"><i>Table 5:  BLE Host Stack dynamic RAM
+configuration</i></a></p>
+
+<p class=MsoTof><a href="#_Toc147487329"><i>Table 6: BleStack_Process function&nbsp;</i></a></p>
+
+<p class=MsoTof><a href="#_Toc147487330"><i>Table 7: BleStack_Request function</i><i><span
 style='color:black;display:none'>&nbsp; 1</span></i></a></p>
 
-<p class=MsoTof><a href="#_Toc147487330"><i>Table 6: BleStack_Request function</i><i><span
+<p class=MsoTof><a href="#_Toc147487331"><i>Table 8: BLECB_Indication function</i><i><span
 style='color:black;display:none'>&nbsp; 1</span></i></a></p>
 
-<p class=MsoTof><a href="#_Toc147487331"><i>Table 7: BLECB_Indication function</i><i><span
+<p class=MsoTof><a href="#_Toc147487332"><i>Table 9: BLEPLAT_Init function</i><i><span
 style='color:black;display:none'>&nbsp; 1</span></i></a></p>
 
-<p class=MsoTof><a href="#_Toc147487332"><i>Table 8: BLEPLAT_Init function</i><i><span
+<p class=MsoTof><a href="#_Toc147487333"><i>Table 10: BLEPLAT functions'
+returns</i><i><span style='color:black;display:none'>&nbsp; 1</span></i></a></p>
+
+<p class=MsoTof><a href="#_Toc147487334"><i>Table 11: BLEPLAT NVM functions</i><i><span
 style='color:black;display:none'>&nbsp; 1</span></i></a></p>
 
-<p class=MsoTof><a href="#_Toc147487333"><i>Table 9: BLEPLAT functions' returns</i><i><span
+<p class=MsoTof><a href="#_Toc147487335"><i>Table 12: BLEPLAT Timer functions</i><i><span
 style='color:black;display:none'>&nbsp; 1</span></i></a></p>
 
-<p class=MsoTof><a href="#_Toc147487334"><i>Table 10: BLEPLAT NVM functions</i><i><span
+<p class=MsoTof><a href="#_Toc147487336"><i>Table 13: BLEPLAT AES functions</i><i><span
 style='color:black;display:none'>&nbsp; 1</span></i></a></p>
 
-<p class=MsoTof><a href="#_Toc147487335"><i>Table 11: BLEPLAT Timer functions</i><i><span
+<p class=MsoTof><a href="#_Toc147487337"><i>Table 14: BLEPLAT PKA functions</i><i><span
 style='color:black;display:none'>&nbsp; 1</span></i></a></p>
 
-<p class=MsoTof><a href="#_Toc147487336"><i>Table 12: BLEPLAT AES functions</i><i><span
-style='color:black;display:none'>&nbsp; 1</span></i></a></p>
-
-<p class=MsoTof><a href="#_Toc147487337"><i>Table 13: BLEPLAT PKA functions</i><i><span
-style='color:black;display:none'>&nbsp; 1</span></i></a></p>
-
-<p class=MsoTof><a href="#_Toc147487338"><i>Table 14: BLEPLAT RNG function</i><i><span
+<p class=MsoTof><a href="#_Toc147487338"><i>Table 15: BLEPLAT RNG function</i><i><span
 style='color:black;display:none'>&nbsp; 1</span></i></a></p>
 
 <h1><a name="_Toc163814794"></a><a name="_Toc147487399"></a><a
-name="_Toc191997872"></a><a name="_Toc125725155"></a><span style='color:black'>List
+name="_Toc226643900"></a><a name="_Toc125725155"></a><span style='color:black'>List
 of figures</span></h1>
 
 <p class=MsoTof><a href="#_Toc147487365"><i>Figure 1: BLE Stack folder
@@ -1870,11 +1894,11 @@ style='page-break-before:always'>
 </span>
 
 <h1 style='margin-left:0cm;text-indent:0cm'><a name="_Toc147487400"></a><a
-name="_Toc191997873"></a><a name="_Toc163814795"></a><a name="_Toc125725156"></a>1<span
+name="_Toc226643901"></a><a name="_Toc163814795"></a><a name="_Toc125725156"></a>1<span
 style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>About this document</h1>
 
-<h2><a name="_Toc147487401"></a><a name="_Toc191997874"></a><a
+<h2><a name="_Toc147487401"></a><a name="_Toc226643902"></a><a
 name="_Toc125725157"></a><a name="_Toc163814796"></a><a name="_Ref488410436"></a>1.1<span
 style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>Purpose</h2>
@@ -1883,7 +1907,7 @@ style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&n
 application developer how to integrate the STM32WBAxx Bluetooth<sup><span
 style='font-size:12.0pt'>®</span></sup> LE stack library.</p>
 
-<h2><a name="_Toc147487402"></a><a name="_Toc191997875"></a><a
+<h2><a name="_Toc147487402"></a><a name="_Toc226643903"></a><a
 name="_Toc163814797"></a><a name="_Toc125725158"></a>1.2<span style='font-size:
 7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>Scope</h2>
@@ -1892,7 +1916,7 @@ name="_Toc163814797"></a><a name="_Toc125725158"></a>1.2<span style='font-size:
 style='font-size:12.0pt'>®</span></sup> LE stack library integration, and it
 does not include the Link Layer integration aspects.</p>
 
-<h2><a name="_Toc147487403"></a><a name="_Toc191997876"></a><a
+<h2><a name="_Toc147487403"></a><a name="_Toc226643904"></a><a
 name="_Toc163814798"></a><a name="_Toc125725159"></a>1.3<span style='font-size:
 7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>Acronym definitions</h2>
@@ -1980,7 +2004,7 @@ name="_Toc163814798"></a><a name="_Toc125725159"></a>1.3<span style='font-size:
 name="_Toc147487325"></a><a name="_Toc125724449"></a>Table 1: Acronym
 definitions</p>
 
-<h2><a name="_Toc147487404"></a><a name="_Toc191997877"></a><a
+<h2><a name="_Toc147487404"></a><a name="_Toc226643905"></a><a
 name="_Toc163814799"></a><a name="_Toc125725160"></a>1.4<span style='font-size:
 7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>References</h2>
@@ -1999,17 +2023,17 @@ style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&n
 </span><b>PM0271</b> - Programming manual - Guidelines for Bluetooth® Low
 Energy stack programming on STM32WB/STM32WBA MCUs</p>
 
-<h1><a name="_Toc147487405"></a><a name="_Toc191997878"></a><a
-name="_Toc163814800"></a><a name="_Toc125725161"></a>2<span style='font-size:
-7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<h1><a name="_Toc147487405"></a><a name="_Toc226643906"></a><a
+name="_Toc163814800"></a><a name="_Toc125725161"></a><a name="_2__"></a>2<span
+style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>BLE stack overview</h1>
 
-<h2><a name="_Toc147487406"></a><a name="_Toc191997879"></a><a
+<h2><a name="_Toc147487406"></a><a name="_Toc226643907"></a><a
 name="_Toc163814801"></a><a name="_Toc125725162"></a>2.1<span style='font-size:
 7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>Release contents</h2>
 
-<h3><a name="_Toc147487407"></a><a name="_Toc191997880"></a><a
+<h3><a name="_Toc147487407"></a><a name="_Toc226643908"></a><a
 name="_Toc163814802"></a><a name="_Toc125725163"></a>2.1.1<span
 style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>Folder structure</h3>
@@ -2017,9 +2041,8 @@ style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&n
 <p class=MsoNormal>The BLE stack delivery contains 3 folders as follows:</p>
 
 <p class=MsoNormal align=center style='text-align:center;page-break-after:avoid'><img
-border=0 width=570 height=499 id="Picture 6"
-src="STM32WBA_BLE_Stack_User_Manual_files/image002.gif"
-alt="A screenshot of a computer&#10;&#10;AI-generated content may be incorrect."></p>
+border=0 width=570 height=486 id="Picture 6"
+src="STM32WBA_BLE_Stack_User_Manual_files/image002.gif"></p>
 
 <p class=MsoCaption align=center style='text-align:center'><a
 name="_Toc147487365">Figure </a>1: BLE Stack folder structure</p>
@@ -2043,46 +2066,31 @@ of some external modules’ functions used by the BLE stack (for more details see
 folder contains <span style='color:windowtext'>the BLE stack libraries
 described in the following section.</span></p>
 
-<h3><a name="_Toc147487408"></a><a name="_Toc191997881"></a><a
+<h3><a name="_Toc147487408"></a><a name="_Toc226643909"></a><a
 name="_Toc163814803"></a><a name="_Toc125725164"></a><a name="_Library_variants"></a>2.1.2<span
 style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>Library variants</h3>
 
-<p class=MsoNormal>The BLE stack library is delivered in <span
-style='color:windowtext'>5 </span>variants as follows:</p>
+<p class=MsoNormal>The BLE stack library is delivered <span style='color:windowtext'>in
+2 variants </span>as follows:</p>
 
 <p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'><span
-style='font-family:Symbol'>·</span><span style='font-size:7.0pt;font-family:
-"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>4
-variants containing the BLE host stack:</p>
+style='font-family:Symbol;color:windowtext'>·</span><span style='font-size:
+7.0pt;font-family:"Times New Roman",serif;color:windowtext'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span style='color:windowtext'>1 variant containing </span>the BLE Host:</p>
 
 <p class=MsoListParagraph style='margin-left:72.0pt;text-indent:-18.0pt'><span
 style='font-family:"Courier New"'>o</span><span style='font-size:7.0pt;
 font-family:"Times New Roman",serif'>&nbsp;&nbsp; </span>Full stack
 (stm32wba_ble_stack_full.a) </p>
 
-<p class=MsoListParagraph style='margin-left:36.0pt;text-indent:18.0pt'><span
-style='font-family:"Courier New"'>o</span><span style='font-size:7.0pt;
-font-family:"Times New Roman",serif'>&nbsp;&nbsp; </span>Basic Plus stack
-(stm32wba_ble_stack_basic_plus.a)</p>
-
-<p class=MsoListParagraph style='margin-left:72.0pt;text-indent:-18.0pt'><span
-style='font-family:"Courier New"'>o</span><span style='font-size:7.0pt;
-font-family:"Times New Roman",serif'>&nbsp;&nbsp; </span>Basic <span
-style='color:windowtext'>Features </span>stack (stm32wba_ble_stack_basic.a) </p>
-
-<p class=MsoListParagraph style='margin-left:72.0pt;text-indent:-18.0pt'><span
-style='font-family:"Courier New"'>o</span><span style='font-size:7.0pt;
-font-family:"Times New Roman",serif'>&nbsp;&nbsp; </span>Peripheral Only stack
-(stm32wba_ble_stack_po.a)</p>
-
 <p class=MsoNormal>&nbsp;</p>
 
 <p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'><span
 style='font-family:Symbol'>·</span><span style='font-size:7.0pt;font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
-style='color:windowtext'>1 variant </span>without the BLE host stack <span
-style='color:windowtext'>(it contains the</span> LE Controller only):</p>
+style='color:windowtext'>1 variant </span>without the BLE Host <span
+style='color:windowtext'>(it contains the</span> BLE Controller only):</p>
 
 <p class=MsoListParagraph style='margin-left:72.0pt;text-indent:-18.0pt'><span
 style='font-family:"Courier New"'>o</span><span style='font-size:7.0pt;
@@ -2090,14 +2098,14 @@ font-family:"Times New Roman",serif'>&nbsp;&nbsp; </span>Link Layer Only stack
 (stm32wba_ble_stack_llo.a)</p>
 
 <p class=MsoCaption align=center style='text-align:center'><img border=0
-width=472 height=296 id="Picture 5"
-src="STM32WBA_BLE_Stack_User_Manual_files/image003.gif"
-alt="A diagram of a computer&#10;&#10;AI-generated content may be incorrect."></p>
+width=513 height=304 id="Picture 5"
+src="STM32WBA_BLE_Stack_User_Manual_files/image003.jpg"></p>
 
 <p class=MsoCaption align=center style='text-align:center'><a
 name="_Toc147487366">Figure </a>2: BLE stack variants</p>
 
-<p class=MsoNormal>Here are the 5 BLE stack variants details:</p>
+<p class=MsoNormal>Here <span style='color:windowtext'>are the 2 BLE </span>stack
+variants details:</p>
 
 <p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'>-<span
 style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -2119,318 +2127,390 @@ mode is enabled or not.</p>
 
 <p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'>-<span
 style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span><b>Basic Plus stack</b> (stm32wba_ble_stack_basic_plus.a) includes the
-LE Controller and the Host Stack, both with the basic features along with
-additional features as Extended Advertising/Scanning, LE Power Control and
-Connection Subrating, Enhanced ATT, L2CAP connection oriented channels and GATT
-caching features.</p>
-
-<p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'>-<span
-style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span><b>Basic </b><b><span style='color:windowtext'>Features </span>stack</b>
-(stm32wba_ble_stack_basic.a) includes the LE Controller and the Host Stack,
-both with the basic features.<br>
-It contains only BLE legacy features without extended advertising, neither GATT
-caching, nor ACI HCI flow control, nor isochronous support, nor L2CAP
-connection oriented channels. The Host Stack is included, and it supports all
-the basic GATT, GAP and L2CAP features.</p>
-
-<p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'>-<span
-style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span><b>Peripheral Only stack</b> (stm32wba_ble_stack_po.a) includes the LE
-Controller and the Host Stack, both with the basic features but only for
-peripheral role.<br>
-The Host Stack is included, and it supports all the basic GATT, GAP and L2CAP
-features.</p>
-
-<p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'>-<span
-style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span><b>Link Layer Only stack</b> (stm32wba_ble_stack_llo.a) includes only
-the LE Controller with all the supported features and <span style='color:windowtext'>is
-compatible with any Link Layer variant.<br>
-This variant doesn’t contain the Host Stack.</span></p>
+the BLE Controller with all the supported features and <span style='color:windowtext'>is
+compatible with any Link Layer library variant.<br>
+This variant doesn’t contain the BLE Host.</span></p>
+
+<p class=MsoListParagraph style='margin-left:54.0pt;text-indent:-18.0pt'><span
+style='color:windowtext'>These 2 BLE stack variants can be used in several
+predefined configurations. Each configuration consists of a combination of one
+BLE stack library variant</span></p>
+
+<p class=MsoListParagraph style='margin-left:54.0pt;text-indent:-18.0pt'><span
+style='color:windowtext'>and one BLE link layer variant and is set up via a
+dedicated compilation option (see </span><a href="#_2.4__"><i>Application
+compilation options</i></a><span style='color:windowtext'>).</span></p>
 
 <p class=MsoNormal>For more information, please refer to
 “STM32WBA_BLE_Wireless_Interface.html” to know which ACI and HCI command/event
 is supported by each stack configuration.</p>
 
-<p class=MsoNormal>The table below details the supported features for each BLE
-stack variant:</p>
+<p class=MsoNormal>The table below details the supported <span
+style='color:windowtext'>features and memory footprint </span>of each predefined
+configuration:</p>
+
+<p class=MsoNormal>&nbsp;</p>
 
 <p class=MsoNormal><a name="_Toc147487326"></a><a name="_Toc125724450"></a><a
 name="_Hlk147481314"></a>&nbsp;</p>
 
 <div align=center>
 
-<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=1369
- style='width:1026.85pt;border-collapse:collapse'>
+<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=1388
+ style='width:1041.15pt;border-collapse:collapse'>
  <tr style='height:45.0pt'>
   <td width=305 style='width:229.1pt;border:solid windowtext 1.0pt;padding:
   0cm 5.4pt 0cm 5.4pt;height:45.0pt'>
-  <p class=MsoNormal align=center style='margin-top:12.0pt;text-align:center;
-  line-height:115%'><b>VARIANT</b></p>
+  <p class=MsoNormal style='margin-top:12.0pt;line-height:115%'><b><span
+  style='color:windowtext'>Predefined configuration</span></b></p>
   </td>
   <td width=204 style='width:153.25pt;border:solid windowtext 1.0pt;border-left:
   none;padding:0cm 5.4pt 0cm 5.4pt;height:45.0pt'>
   <p class=MsoNormal align=center style='margin-top:12.0pt;text-align:center'><b><span
   style='font-size:14.0pt;color:windowtext'>Full</span></b></p>
-  <p class=MsoNormal align=center style='margin-top:12.0pt;text-align:center'><b><span
-  style='color:windowtext'>&nbsp;Host Stack + LE Controller <br>
-  </span></b><span style='color:windowtext'>(stm32wba_ble_stack_full)</span></p>
+  <p class=MsoNormal style='margin-top:12.0pt'><b><span style='color:windowtext'>Host
+  Stack + LE Controller <br>
+  <br>
+  </span></b></p>
   </td>
-  <td width=226 style='width:169.15pt;border:solid windowtext 1.0pt;border-left:
+  <td width=210 style='width:157.4pt;border:solid windowtext 1.0pt;border-left:
   none;padding:0cm 0cm 0cm 0cm;height:45.0pt'>
   <p class=MsoNormal align=center style='margin-top:12.0pt;text-align:center'><b><span
   style='font-size:14.0pt;color:windowtext'>Basic Plus</span></b></p>
   <p class=MsoNormal align=center style='margin-top:12.0pt;text-align:center'><b><span
   style='color:windowtext'>Host Stack + LE Controller<br>
-  </span></b><span style='color:windowtext'>(stm32wba_ble_stack_basic_plus)</span></p>
+  <br>
+  </span></b></p>
   </td>
-  <td width=190 style='width:142.75pt;border:solid windowtext 1.0pt;border-left:
+  <td width=234 style='width:175.7pt;border:solid windowtext 1.0pt;border-left:
   none;padding:0cm 0cm 0cm 0cm;height:45.0pt'>
   <p class=MsoNormal align=center style='margin-top:12.0pt;text-align:center'><b><span
   style='font-size:14.0pt;color:windowtext'>Basic Features </span></b></p>
   <p class=MsoNormal align=center style='margin-top:12.0pt;text-align:center'><b><span
   style='color:windowtext'>Host Stack + LE Controller<br>
-  </span></b><span style='color:windowtext'>(stm32wba_ble_stack_basic)</span></p>
+  <br>
+  </span></b></p>
   </td>
-  <td width=237 style='width:177.6pt;border:solid windowtext 1.0pt;border-left:
+  <td width=245 style='width:183.85pt;border:solid windowtext 1.0pt;border-left:
   none;padding:0cm 0cm 0cm 0cm;height:45.0pt'>
   <p class=MsoNormal align=center style='margin-top:12.0pt;text-align:center'><b><span
   style='font-size:14.0pt;color:windowtext'>Peripheral Only</span></b></p>
   <p class=MsoNormal align=center style='margin-top:12.0pt;text-align:center'><b><span
   style='color:windowtext'>Host Stack + LE Controller<br>
-  </span></b><span style='color:windowtext'>(stm32wba_ble_stack_po)</span></p>
+  <br>
+  </span></b></p>
   </td>
-  <td width=207 style='width:155.0pt;border:solid windowtext 1.0pt;border-left:
+  <td width=189 style='width:141.85pt;border:solid windowtext 1.0pt;border-left:
   none;padding:0cm 0cm 0cm 0cm;height:45.0pt'>
   <p class=MsoNormal align=center style='margin-top:12.0pt;text-align:center'><b><span
   style='font-size:14.0pt;color:windowtext'>Link Layer Only</span></b></p>
   <p class=MsoNormal align=center style='margin-top:12.0pt;text-align:center'><b><span
   style='color:windowtext'>LE Controller Only<br>
-  </span></b><span style='color:windowtext'>(stm32wba_ble_stack_llo)</span></p>
+  <br>
+  </span></b></p>
+  </td>
+ </tr>
+ <tr style='height:45.0pt'>
+  <td width=305 style='width:229.1pt;border:solid windowtext 1.0pt;border-top:
+  none;padding:0cm 5.4pt 0cm 5.4pt;height:45.0pt'>
+  <p class=MsoNormal style='margin-top:12.0pt;line-height:115%'><b><span
+  style='color:windowtext'>BLE stack library variant</span></b></p>
+  </td>
+  <td width=204 style='width:153.25pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:45.0pt'>
+  <p class=MsoNormal align=center style='margin-top:12.0pt;text-align:center'><i><span
+  style='color:windowtext'>stm32wba_ble_stack_full</span></i></p>
+  </td>
+  <td width=210 style='width:157.4pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 0cm 0cm 0cm;height:45.0pt'>
+  <p class=MsoNormal align=center style='margin-top:12.0pt;text-align:center'><i><span
+  style='color:windowtext'>stm32wba_ble_stack_full</span></i></p>
+  </td>
+  <td width=234 style='width:175.7pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 0cm 0cm 0cm;height:45.0pt'>
+  <p class=MsoNormal align=center style='margin-top:12.0pt;text-align:center'><i><span
+  style='color:windowtext'>stm32wba_ble_stack_full</span></i></p>
+  </td>
+  <td width=245 style='width:183.85pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 0cm 0cm 0cm;height:45.0pt'>
+  <p class=MsoNormal align=center style='margin-top:12.0pt;text-align:center'><i><span
+  style='color:windowtext'>stm32wba_ble_stack_full</span></i></p>
+  </td>
+  <td width=189 style='width:141.85pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 0cm 0cm 0cm;height:45.0pt'>
+  <p class=MsoNormal align=center style='margin-top:12.0pt;text-align:center'><i><span
+  style='color:windowtext'>stm32wba_ble_stack_llo</span></i></p>
+  </td>
+ </tr>
+ <tr style='height:45.0pt'>
+  <td width=305 style='width:229.1pt;border:solid windowtext 1.0pt;border-top:
+  none;padding:0cm 5.4pt 0cm 5.4pt;height:45.0pt'>
+  <p class=MsoNormal style='margin-top:12.0pt;line-height:115%'><b><span
+  style='color:windowtext'>Application compilation option required</span></b></p>
+  </td>
+  <td width=204 style='width:153.25pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:45.0pt'>
+  <p class=MsoNormal align=center style='margin-top:12.0pt;text-align:center'><i><span
+  style='color:windowtext'>/</span></i></p>
+  </td>
+  <td width=210 style='width:157.4pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 0cm 0cm 0cm;height:45.0pt'>
+  <p class=MsoNormal align=center style='margin-top:12.0pt;text-align:center'><i><span
+  style='color:windowtext'>BLE_STACK_BASIC_PLUS</span></i></p>
+  </td>
+  <td width=234 style='width:175.7pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 0cm 0cm 0cm;height:45.0pt'>
+  <p class=MsoNormal align=center style='margin-top:12.0pt;text-align:center'><i><span
+  style='color:windowtext'>BLE_STACK_BASIC_FEATURES</span></i></p>
+  </td>
+  <td width=245 style='width:183.85pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 0cm 0cm 0cm;height:45.0pt'>
+  <p class=MsoNormal align=center style='margin-top:12.0pt;text-align:center'><i><span
+  style='color:windowtext'>BLE_STACK_PERIPHERAL_ONLY</span></i></p>
+  </td>
+  <td width=189 style='width:141.85pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 0cm 0cm 0cm;height:45.0pt'>
+  <p class=MsoNormal align=center style='margin-top:12.0pt;text-align:center'><i><span
+  style='color:windowtext'>BLE_STACK_LL_ONLY</span></i></p>
   </td>
  </tr>
  <tr style='height:15.0pt'>
   <td width=305 nowrap style='width:229.1pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal><b><i>Link Layer library dependency </i><sup>(4)</sup></b></p>
+  <p class=MsoNormal><b><span style='color:windowtext'>BLE link layer library variant
+  <sup>(4)</sup></span></b></p>
   </td>
   <td width=204 nowrap valign=top style='width:153.25pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'><i><span
-  style='color:black'>LinkLayer_BLE_Full_lib <br>
+  style='color:windowtext'>LinkLayer_BLE_Full <br>
   <br>
   </span></i></p>
   </td>
-  <td width=226 valign=top style='width:169.15pt;border-top:none;border-left:
+  <td width=210 valign=top style='width:157.4pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'><i><span
-  style='color:black'>LinkLayer_BLE_Basic_Plus_lib</span></i></p>
+  style='color:windowtext'>LinkLayer_BLE_Basic_Plus</span></i></p>
   <p class=MsoNormal align=center style='text-align:center'><i><span
-  style='color:black'>&nbsp;</span></i></p>
+  style='color:windowtext'>&nbsp;</span></i></p>
   </td>
-  <td width=190 valign=top style='width:142.75pt;border-top:none;border-left:
+  <td width=234 valign=top style='width:175.7pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'><i><span
-  style='color:black'>LinkLayer_BLE_Basic_lib</span></i></p>
+  style='color:windowtext'>LinkLayer_BLE_Basic</span></i></p>
   <p class=MsoNormal align=center style='text-align:center'><i><span
-  style='color:black'>&nbsp;</span></i></p>
+  style='color:windowtext'>&nbsp;</span></i></p>
   </td>
-  <td width=237 valign=top style='width:177.6pt;border-top:none;border-left:
+  <td width=245 valign=top style='width:183.85pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'><i><span
-  style='color:black'>LinkLayer_BLE_Peripheral_Only_lib</span></i></p>
+  style='color:windowtext'>LinkLayer_BLE_Peripheral_Only</span></i></p>
   <p class=MsoNormal align=center style='text-align:center'><i><span
-  style='color:black'>&nbsp;</span></i></p>
+  style='color:windowtext'>&nbsp;</span></i></p>
   </td>
-  <td width=207 valign=top style='width:155.0pt;border-top:none;border-left:
+  <td width=189 valign=top style='width:141.85pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'><i><span
-  style='color:black'>Compatible with all Link Layer libraries</span></i></p>
+  style='color:windowtext'>Compatible with all Link Layer libraries</span></i></p>
   </td>
  </tr>
  <tr style='height:15.0pt'>
   <td width=305 nowrap style='width:229.1pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal><b>Stack Library Flash Footprint <sup>(1)</sup></b></p>
+  <p class=MsoNormal><b><span style='color:windowtext'>Stack Library Flash
+  Footprint <sup>(1)</sup></span></b></p>
   </td>
   <td width=204 nowrap style='width:153.25pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>78 KB</span></p>
+  style='color:windowtext'>73 KB</span></p>
   </td>
-  <td width=226 style='width:169.15pt;border-top:none;border-left:none;
+  <td width=210 style='width:157.4pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>65 KB</span></p>
+  style='color:windowtext'>65 KB</span></p>
   </td>
-  <td width=190 style='width:142.75pt;border-top:none;border-left:none;
+  <td width=234 style='width:175.7pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>54 KB</span></p>
+  style='color:windowtext'>56 KB</span></p>
   </td>
-  <td width=237 style='width:177.6pt;border-top:none;border-left:none;
+  <td width=245 style='width:183.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>42 KB</span></p>
+  style='color:windowtext'>45 KB</span></p>
   </td>
-  <td width=207 style='width:155.0pt;border-top:none;border-left:none;
+  <td width=189 style='width:141.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Up to 20 KB</span></p>
+  style='color:windowtext'>Up to 20 KB</span></p>
   </td>
  </tr>
  <tr style='height:15.0pt'>
   <td width=305 nowrap style='width:229.1pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal><b>Link Layer Library Flash Footprint <sup>(1)</sup></b></p>
+  <p class=MsoNormal><b><span style='color:windowtext'>Link Layer Library Flash
+  Footprint <sup>(1)</sup></span></b></p>
   </td>
   <td width=204 nowrap valign=top style='width:153.25pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>236 KB </span><span style='font-size:9.0pt;color:black'>(for
-  WBA5x and WBA6x)</span><span style='color:black'><br>
-  187KB </span><span style='font-size:9.0pt;color:black'>(for WBA2x)</span><span
-  style='color:black'>  </span></p>
+  style='color:windowtext'>243 KB </span><span style='font-size:9.0pt;
+  color:windowtext'>(for WBA5x and WBA6x)</span><span style='color:windowtext'><br>
+  189KB </span><span style='font-size:9.0pt;color:windowtext'>(for WBA2x)</span><span
+  style='color:windowtext'>  </span></p>
   </td>
-  <td width=226 valign=top style='width:169.15pt;border-top:none;border-left:
+  <td width=210 valign=top style='width:157.4pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>130 KB</span></p>
+  style='color:windowtext'>132 KB</span></p>
   </td>
-  <td width=190 valign=top style='width:142.75pt;border-top:none;border-left:
+  <td width=234 valign=top style='width:175.7pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>93 KB</span></p>
+  style='color:windowtext'>95 KB</span></p>
   </td>
-  <td width=237 valign=top style='width:177.6pt;border-top:none;border-left:
+  <td width=245 valign=top style='width:183.85pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>73 KB</span></p>
+  style='color:windowtext'>75 KB</span></p>
   </td>
-  <td width=207 valign=top style='width:155.0pt;border-top:none;border-left:
+  <td width=189 valign=top style='width:141.85pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Refer to the FLASH footprint of the Link Layer variant
+  style='color:windowtext'>Refer to the FLASH footprint of the Link Layer
+  variant used</span></p>
+  </td>
+ </tr>
+ <tr style='height:15.0pt'>
+  <td width=305 nowrap style='width:229.1pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
+  <p class=MsoNormal><b><span style='color:windowtext'>Stack Library RAM
+  Footprint <sup>(1)(3)</sup></span></b></p>
+  </td>
+  <td width=204 nowrap style='width:153.25pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
+  <p class=MsoNormal align=center style='text-align:center'><span
+  style='color:windowtext'>1 KB + Dynamic RAM<b><sup>(11)</sup></b></span></p>
+  </td>
+  <td width=210 style='width:157.4pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 0cm 0cm 0cm;height:15.0pt'>
+  <p class=MsoNormal align=center style='text-align:center'><span
+  style='color:windowtext'>1 KB + Dynamic RAM<b><sup>(11)</sup></b></span></p>
+  </td>
+  <td width=234 style='width:175.7pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 0cm 0cm 0cm;height:15.0pt'>
+  <p class=MsoNormal align=center style='text-align:center'><span
+  style='color:windowtext'>1 KB + Dynamic RAM<b><sup>(11)</sup></b></span></p>
+  </td>
+  <td width=245 valign=top style='width:183.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 0cm 0cm 0cm;height:15.0pt'>
+  <p class=MsoNormal align=center style='text-align:center'><span
+  style='color:windowtext'>1 KB + Dynamic RAM<b><sup>(11)</sup></b></span></p>
+  </td>
+  <td width=189 valign=top style='width:141.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 0cm 0cm 0cm;height:15.0pt'>
+  <p class=MsoNormal align=center style='text-align:center'><span
+  style='color:windowtext'>0.2 KB + Dynamic RAM<b><sup>(11) </sup></b></span></p>
+  </td>
+ </tr>
+ <tr style='height:15.0pt'>
+  <td width=305 nowrap style='width:229.1pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
+  <p class=MsoNormal><b><span style='color:windowtext'>Link Layer Library RAM
+  Footprint <sup>(1)</sup></span></b></p>
+  </td>
+  <td width=204 nowrap style='width:153.25pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
+  <p class=MsoNormal align=center style='text-align:center'><span
+  style='color:windowtext'>26 KB</span></p>
+  </td>
+  <td width=210 style='width:157.4pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 0cm 0cm 0cm;height:15.0pt'>
+  <p class=MsoNormal align=center style='text-align:center'><span
+  style='color:windowtext'>18 KB (for 8 connections)<br>
+  27 KB (for 20 connections)</span></p>
+  </td>
+  <td width=234 style='width:175.7pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 0cm 0cm 0cm;height:15.0pt'>
+  <p class=MsoNormal align=center style='text-align:center'><span
+  style='color:windowtext'>15 KB (for 8 connections)<br>
+  23 KB (for 20 connections)</span></p>
+  </td>
+  <td width=245 style='width:183.85pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 0cm 0cm 0cm;height:15.0pt'>
+  <p class=MsoNormal align=center style='text-align:center'><span
+  style='color:windowtext'>14 KB</span></p>
+  </td>
+  <td width=189 style='width:141.85pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 0cm 0cm 0cm;height:15.0pt'>
+  <p class=MsoNormal align=center style='text-align:center'><span
+  style='color:windowtext'>Refer to the RAM footprint of the Link Layer variant
   used</span></p>
   </td>
  </tr>
  <tr style='height:15.0pt'>
   <td width=305 nowrap style='width:229.1pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal><b>Stack Library RAM Footprint <sup>(1)(3)</sup></b></p>
-  </td>
-  <td width=204 nowrap style='width:153.25pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>1 KB</span></p>
-  </td>
-  <td width=226 style='width:169.15pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>1 KB</span></p>
-  </td>
-  <td width=190 style='width:142.75pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>1 KB</span></p>
-  </td>
-  <td width=237 valign=top style='width:177.6pt;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>1 KB</span></p>
-  </td>
-  <td width=207 valign=top style='width:155.0pt;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>0.2 KB</span></p>
-  </td>
- </tr>
- <tr style='height:15.0pt'>
-  <td width=305 nowrap style='width:229.1pt;border:solid windowtext 1.0pt;
-  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal><b>Link Layer Library RAM Footprint <sup>(1)</sup></b></p>
-  </td>
-  <td width=204 nowrap style='width:153.25pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>26 KB</span></p>
-  </td>
-  <td width=226 style='width:169.15pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>18 KB (for 8 connections)<br>
-  27 KB (for 20 connections)</span></p>
-  </td>
-  <td width=190 style='width:142.75pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>15 KB (for 8 connections)<br>
-  23 KB (for 20 connections)</span></p>
-  </td>
-  <td width=237 style='width:177.6pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>14 KB</span></p>
-  </td>
-  <td width=207 style='width:155.0pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Refer to the RAM footprint of the Link Layer variant used</span></p>
-  </td>
- </tr>
- <tr style='height:15.0pt'>
-  <td width=305 nowrap style='width:229.1pt;border:solid windowtext 1.0pt;
-  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal><b>Direct Test Mode</b></p>
+  <p class=MsoNormal><b><span style='color:windowtext'>Direct Test Mode</span></b></p>
   </td>
   <td width=204 nowrap style='width:153.25pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=226 style='width:169.15pt;border-top:none;border-left:none;
+  <td width=210 style='width:157.4pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=190 style='width:142.75pt;border-top:none;border-left:none;
+  <td width=234 style='width:175.7pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=237 style='width:177.6pt;border-top:none;border-left:none;
+  <td width=245 style='width:183.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=207 style='width:155.0pt;border-top:none;border-left:none;
+  <td width=189 style='width:141.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
@@ -2439,29 +2519,29 @@ name="_Hlk147481314"></a>&nbsp;</p>
  <tr style='height:15.0pt'>
   <td width=305 nowrap style='width:229.1pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal><b>Advertising</b></p>
+  <p class=MsoNormal><b><span style='color:windowtext'>Advertising</span></b></p>
   </td>
   <td width=204 nowrap style='width:153.25pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=226 style='width:169.15pt;border-top:none;border-left:none;
+  <td width=210 style='width:157.4pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=190 style='width:142.75pt;border-top:none;border-left:none;
+  <td width=234 style='width:175.7pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=237 style='width:177.6pt;border-top:none;border-left:none;
+  <td width=245 style='width:183.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=207 style='width:155.0pt;border-top:none;border-left:none;
+  <td width=189 style='width:141.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
@@ -2477,22 +2557,22 @@ name="_Hlk147481314"></a>&nbsp;</p>
   background:#C6EFCE;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=226 style='width:169.15pt;border-top:none;border-left:none;
+  <td width=210 style='width:157.4pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=190 style='width:142.75pt;border-top:none;border-left:none;
+  <td width=234 style='width:175.7pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=237 style='width:177.6pt;border-top:none;border-left:none;
+  <td width=245 style='width:183.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=207 style='width:155.0pt;border-top:none;border-left:none;
+  <td width=189 style='width:141.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
@@ -2508,22 +2588,22 @@ name="_Hlk147481314"></a>&nbsp;</p>
   background:#C6EFCE;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=226 style='width:169.15pt;border-top:none;border-left:none;
+  <td width=210 style='width:157.4pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=190 style='width:142.75pt;border-top:none;border-left:none;
+  <td width=234 style='width:175.7pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=237 style='width:177.6pt;border-top:none;border-left:none;
+  <td width=245 style='width:183.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=207 style='width:155.0pt;border-top:none;border-left:none;
+  <td width=189 style='width:141.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
@@ -2539,22 +2619,22 @@ name="_Hlk147481314"></a>&nbsp;</p>
   background:#C6EFCE;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=226 style='width:169.15pt;border-top:none;border-left:none;
+  <td width=210 style='width:157.4pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=190 style='width:142.75pt;border-top:none;border-left:none;
+  <td width=234 style='width:175.7pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=237 style='width:177.6pt;border-top:none;border-left:none;
+  <td width=245 style='width:183.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=207 style='width:155.0pt;border-top:none;border-left:none;
+  <td width=189 style='width:141.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
@@ -2570,22 +2650,22 @@ name="_Hlk147481314"></a>&nbsp;</p>
   background:#C6EFCE;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=226 style='width:169.15pt;border-top:none;border-left:none;
+  <td width=210 style='width:157.4pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=190 style='width:142.75pt;border-top:none;border-left:none;
+  <td width=234 style='width:175.7pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=237 style='width:177.6pt;border-top:none;border-left:none;
+  <td width=245 style='width:183.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=207 style='width:155.0pt;border-top:none;border-left:none;
+  <td width=189 style='width:141.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
@@ -2602,22 +2682,22 @@ name="_Hlk147481314"></a>&nbsp;</p>
   background:#C6EFCE;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=226 style='width:169.15pt;border-top:none;border-left:none;
+  <td width=210 style='width:157.4pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=190 style='width:142.75pt;border-top:none;border-left:none;
+  <td width=234 style='width:175.7pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=237 style='width:177.6pt;border-top:none;border-left:none;
+  <td width=245 style='width:183.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=207 style='width:155.0pt;border-top:none;border-left:none;
+  <td width=189 style='width:141.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
@@ -2634,22 +2714,22 @@ name="_Hlk147481314"></a>&nbsp;</p>
   background:#C6EFCE;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=226 style='width:169.15pt;border-top:none;border-left:none;
+  <td width=210 style='width:157.4pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=190 style='width:142.75pt;border-top:none;border-left:none;
+  <td width=234 style='width:175.7pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=237 style='width:177.6pt;border-top:none;border-left:none;
+  <td width=245 style='width:183.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=207 style='width:155.0pt;border-top:none;border-left:none;
+  <td width=189 style='width:141.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
@@ -2665,621 +2745,592 @@ name="_Hlk147481314"></a>&nbsp;</p>
   background:#C6EFCE;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=226 style='width:169.15pt;border-top:none;border-left:none;
+  <td width=210 style='width:157.4pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=190 style='width:142.75pt;border-top:none;border-left:none;
+  <td width=234 style='width:175.7pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=237 style='width:177.6pt;border-top:none;border-left:none;
+  <td width=245 style='width:183.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=207 style='width:155.0pt;border-top:none;border-left:none;
+  <td width=189 style='width:141.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Certified</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
  </tr>
  <tr style='height:15.0pt'>
   <td width=305 nowrap style='width:229.1pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal><b>Sleep Clock Accuracy Update</b></p>
+  <p class=MsoNormal><b><span style='color:windowtext'>Sleep Clock Accuracy
+  Update</span></b></p>
   </td>
   <td width=204 nowrap style='width:153.25pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=226 style='width:169.15pt;border-top:none;border-left:none;
+  <td width=210 style='width:157.4pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=190 style='width:142.75pt;border-top:none;border-left:none;
+  <td width=234 style='width:175.7pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=237 style='width:177.6pt;border-top:none;border-left:none;
+  <td width=245 style='width:183.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=207 style='width:155.0pt;border-top:none;border-left:none;
+  <td width=189 style='width:141.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Certified</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
  </tr>
  <tr style='height:15.0pt'>
   <td width=305 nowrap style='width:229.1pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal><b>Angle of Arrival/Angle of Departure</b></p>
+  <p class=MsoNormal><b><span style='color:windowtext'>Angle of Arrival/Angle
+  of Departure</span></b></p>
   </td>
   <td width=204 nowrap style='width:153.25pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=226 style='width:169.15pt;border-top:none;border-left:none;
+  <td width=210 style='width:157.4pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=190 style='width:142.75pt;border-top:none;border-left:none;
+  <td width=234 style='width:175.7pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=237 style='width:177.6pt;border-top:none;border-left:none;
+  <td width=245 style='width:183.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=207 style='width:155.0pt;border-top:none;border-left:none;
+  <td width=189 style='width:141.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Certified</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
  </tr>
  <tr style='height:15.0pt'>
   <td width=305 nowrap style='width:229.1pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal><b>Periodic Advertising Sync Transfer</b></p>
+  <p class=MsoNormal><b><span style='color:windowtext'>Periodic Advertising
+  Sync Transfer</span></b></p>
   </td>
   <td width=204 nowrap style='width:153.25pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=226 style='width:169.15pt;border-top:none;border-left:none;
+  <td width=210 style='width:157.4pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=190 style='width:142.75pt;border-top:none;border-left:none;
+  <td width=234 style='width:175.7pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=237 style='width:177.6pt;border-top:none;border-left:none;
+  <td width=245 style='width:183.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=207 style='width:155.0pt;border-top:none;border-left:none;
+  <td width=189 style='width:141.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Certified</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
  </tr>
  <tr style='height:15.0pt'>
   <td width=305 nowrap style='width:229.1pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal><b><span style='color:black'>LE Isochronous Channels<sup>(8)</sup></span></b></p>
+  <p class=MsoNormal><b><span style='color:windowtext'>LE Isochronous Channels<sup>(8)</sup></span></b></p>
   </td>
   <td width=204 nowrap style='width:153.25pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Certified </span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Certified </p>
   </td>
-  <td width=226 style='width:169.15pt;border-top:none;border-left:none;
+  <td width=210 style='width:157.4pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Not Supported</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=190 style='width:142.75pt;border-top:none;border-left:none;
+  <td width=234 style='width:175.7pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Not Supported</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=237 style='width:177.6pt;border-top:none;border-left:none;
+  <td width=245 style='width:183.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Not Supported</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=207 style='width:155.0pt;border-top:none;border-left:none;
+  <td width=189 style='width:141.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Certified </span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Certified </p>
   </td>
  </tr>
  <tr style='height:15.0pt'>
   <td width=305 nowrap style='width:229.1pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal><b><span style='color:black'>LE Power Control</span></b></p>
+  <p class=MsoNormal><b><span style='color:windowtext'>LE Power Control</span></b></p>
   </td>
   <td width=204 nowrap style='width:153.25pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Certified</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=226 style='width:169.15pt;border-top:none;border-left:none;
+  <td width=210 style='width:157.4pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Certified</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=190 style='width:142.75pt;border-top:none;border-left:none;
+  <td width=234 style='width:175.7pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Not Supported</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=237 style='width:177.6pt;border-top:none;border-left:none;
+  <td width=245 style='width:183.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Not Supported</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=207 style='width:155.0pt;border-top:none;border-left:none;
+  <td width=189 style='width:141.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Certified</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
  </tr>
  <tr style='height:15.0pt'>
   <td width=305 nowrap style='width:229.1pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal><b><span style='color:black'>Connection Subrating</span></b></p>
+  <p class=MsoNormal><b><span style='color:windowtext'>Connection Subrating</span></b></p>
   </td>
   <td width=204 nowrap style='width:153.25pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Certified</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=226 style='width:169.15pt;border-top:none;border-left:none;
+  <td width=210 style='width:157.4pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Certified</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=190 style='width:142.75pt;border-top:none;border-left:none;
+  <td width=234 style='width:175.7pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Not Supported</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=237 style='width:177.6pt;border-top:none;border-left:none;
+  <td width=245 style='width:183.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Not Supported</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=207 style='width:155.0pt;border-top:none;border-left:none;
+  <td width=189 style='width:141.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Certified</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
  </tr>
  <tr style='height:15.0pt'>
   <td width=305 nowrap style='width:229.1pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal><b><span style='color:black'>Channel Classification
+  <p class=MsoNormal><b><span style='color:windowtext'>Channel Classification
   enhancement</span></b></p>
   </td>
   <td width=204 nowrap style='width:153.25pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Certified</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=226 style='width:169.15pt;border-top:none;border-left:none;
+  <td width=210 style='width:157.4pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Not Supported</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=190 style='width:142.75pt;border-top:none;border-left:none;
+  <td width=234 style='width:175.7pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Not Supported</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=237 style='width:177.6pt;border-top:none;border-left:none;
+  <td width=245 style='width:183.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Not Supported</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=207 style='width:155.0pt;border-top:none;border-left:none;
+  <td width=189 style='width:141.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Certified</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
  </tr>
  <tr style='height:15.0pt'>
   <td width=305 nowrap style='width:229.1pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal><b><span style='color:black'>Advertising Coding Selection</span></b></p>
+  <p class=MsoNormal><b><span style='color:windowtext'>Advertising Coding
+  Selection</span></b></p>
   </td>
   <td width=204 nowrap style='width:153.25pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Certified</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=226 valign=top style='width:169.15pt;border-top:none;border-left:
+  <td width=210 valign=top style='width:157.4pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Certified</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=190 style='width:142.75pt;border-top:none;border-left:none;
+  <td width=234 style='width:175.7pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Not Supported</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=237 style='width:177.6pt;border-top:none;border-left:none;
+  <td width=245 style='width:183.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Not Supported</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=207 style='width:155.0pt;border-top:none;border-left:none;
+  <td width=189 style='width:141.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Certified</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
  </tr>
  <tr style='height:15.0pt'>
   <td width=305 nowrap style='width:229.1pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal><b><span style='color:black'>Encrypted Advertising Data</span></b></p>
+  <p class=MsoNormal><b><span style='color:windowtext'>Encrypted Advertising
+  Data</span></b></p>
   </td>
   <td width=204 nowrap style='width:153.25pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><i><span
-  style='color:black'>Enabled</span></i></p>
+  <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=226 style='width:169.15pt;border-top:none;border-left:none;
+  <td width=210 style='width:157.4pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Not Supported</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=190 style='width:142.75pt;border-top:none;border-left:none;
+  <td width=234 style='width:175.7pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Not Supported</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=237 style='width:177.6pt;border-top:none;border-left:none;
+  <td width=245 style='width:183.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Not Supported</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=207 style='width:155.0pt;border-top:none;border-left:none;
+  <td width=189 style='width:141.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><i><span
-  style='color:black'>Enabled</span></i></p>
+  <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
  </tr>
  <tr style='height:15.0pt'>
   <td width=305 nowrap style='width:229.1pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal><b><span style='color:black'>Periodic Advertising with
-  Responses<sup>(9)</sup></span></b></p>
+  <p class=MsoNormal><b><span style='color:windowtext'>Periodic Advertising
+  with Responses<sup>(9)</sup></span></b></p>
   </td>
   <td width=204 nowrap valign=top style='width:153.25pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Enabled </span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=226 valign=top style='width:169.15pt;border-top:none;border-left:
+  <td width=210 valign=top style='width:157.4pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Not Supported</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=190 valign=top style='width:142.75pt;border-top:none;border-left:
+  <td width=234 valign=top style='width:175.7pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Not Supported</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=237 valign=top style='width:177.6pt;border-top:none;border-left:
+  <td width=245 valign=top style='width:183.85pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Not Supported</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=207 valign=top style='width:155.0pt;border-top:none;border-left:
+  <td width=189 valign=top style='width:141.85pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Enabled </span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
  </tr>
  <tr style='height:15.0pt'>
   <td width=305 nowrap style='width:229.1pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal><b><span style='color:black'>LE Frame Space Update<sup>(9)</sup></span></b></p>
+  <p class=MsoNormal><b><span style='color:windowtext'>LE Frame Space Update<sup>(9)</sup></span></b></p>
   </td>
   <td width=204 nowrap valign=top style='width:153.25pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Enabled </span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=226 valign=top style='width:169.15pt;border-top:none;border-left:
+  <td width=210 valign=top style='width:157.4pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Not Supported</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=190 valign=top style='width:142.75pt;border-top:none;border-left:
+  <td width=234 valign=top style='width:175.7pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Not Supported</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=237 valign=top style='width:177.6pt;border-top:none;border-left:
+  <td width=245 valign=top style='width:183.85pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Not Supported</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=207 valign=top style='width:155.0pt;border-top:none;border-left:
+  <td width=189 valign=top style='width:141.85pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Enabled </span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
  </tr>
  <tr style='height:15.0pt'>
   <td width=305 nowrap style='width:229.1pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal><b><span style='color:black'>LL Extended Feature Set<sup>(9)</sup></span></b></p>
+  <p class=MsoNormal><b><span style='color:windowtext'>LL Extended Feature Set<sup>(9)</sup></span></b></p>
   </td>
   <td width=204 nowrap valign=top style='width:153.25pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Enabled </span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=226 valign=top style='width:169.15pt;border-top:none;border-left:
+  <td width=210 valign=top style='width:157.4pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Not Supported</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=190 valign=top style='width:142.75pt;border-top:none;border-left:
+  <td width=234 valign=top style='width:175.7pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Not Supported</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=237 valign=top style='width:177.6pt;border-top:none;border-left:
+  <td width=245 valign=top style='width:183.85pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Not Supported</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=207 valign=top style='width:155.0pt;border-top:none;border-left:
+  <td width=189 valign=top style='width:141.85pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Enabled </span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
  </tr>
  <tr style='height:15.0pt'>
   <td width=305 nowrap style='width:229.1pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal><b><span style='color:black'>Monitoring Advertisers<sup>(9)</sup></span></b></p>
+  <p class=MsoNormal><b><span style='color:windowtext'>Monitoring Advertisers<sup>(9)</sup></span></b></p>
   </td>
   <td width=204 nowrap valign=top style='width:153.25pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Enabled </span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=226 valign=top style='width:169.15pt;border-top:none;border-left:
+  <td width=210 valign=top style='width:157.4pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Not Supported</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=190 valign=top style='width:142.75pt;border-top:none;border-left:
+  <td width=234 valign=top style='width:175.7pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Not Supported</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=237 valign=top style='width:177.6pt;border-top:none;border-left:
+  <td width=245 valign=top style='width:183.85pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Not Supported</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=207 valign=top style='width:155.0pt;border-top:none;border-left:
+  <td width=189 valign=top style='width:141.85pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Enabled </span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
  </tr>
  <tr style='height:15.0pt'>
   <td width=305 nowrap style='width:229.1pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal><b><span style='color:black'>Configuration HCI only</span></b></p>
+  <p class=MsoNormal><b><span style='color:windowtext'>Configuration HCI only</span></b></p>
   </td>
   <td width=204 nowrap style='width:153.25pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Certified</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=226 style='width:169.15pt;border-top:none;border-left:none;
+  <td width=210 style='width:157.4pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Not Supported</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=190 style='width:142.75pt;border-top:none;border-left:none;
+  <td width=234 style='width:175.7pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Not Supported</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=237 style='width:177.6pt;border-top:none;border-left:none;
+  <td width=245 style='width:183.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Not Supported</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=207 style='width:155.0pt;border-top:none;border-left:none;
+  <td width=189 style='width:141.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'><b><span
-  style='color:black'>N/A</span></b></p>
+  style='color:windowtext'>N/A</span></b></p>
   </td>
  </tr>
  <tr style='height:15.0pt'>
   <td width=305 nowrap style='width:229.1pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal><b><span style='color:black'>GATT Client</span></b></p>
+  <p class=MsoNormal><b><span style='color:windowtext'>PTA<sup>(10)</sup></span></b></p>
   </td>
   <td width=204 nowrap style='width:153.25pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Certified</span></p>
+  <p class=MsoNormal align=center style='text-align:center'><i>Enabled</i></p>
   </td>
-  <td width=226 style='width:169.15pt;border-top:none;border-left:none;
+  <td width=210 valign=top style='width:157.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  background:#C1F0C7;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
+  <p class=MsoNormal align=center style='text-align:center'><i>Enabled</i></p>
+  </td>
+  <td width=234 valign=top style='width:175.7pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  background:#C1F0C7;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
+  <p class=MsoNormal align=center style='text-align:center'><i>Enabled</i></p>
+  </td>
+  <td width=245 valign=top style='width:183.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  background:#C1F0C7;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
+  <p class=MsoNormal align=center style='text-align:center'><i>Enabled</i></p>
+  </td>
+  <td width=189 valign=top style='width:141.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  background:#C1F0C7;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
+  <p class=MsoNormal align=center style='text-align:center'><i>Enabled</i></p>
+  </td>
+ </tr>
+ <tr style='height:15.0pt'>
+  <td width=305 nowrap style='width:229.1pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
+  <p class=MsoNormal><b><span style='color:windowtext'>GATT Client</span></b></p>
+  </td>
+  <td width=204 nowrap style='width:153.25pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  background:#C6EFCE;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
+  <p class=MsoNormal align=center style='text-align:center'>Certified</p>
+  </td>
+  <td width=210 style='width:157.4pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Certified</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=190 style='width:142.75pt;border-top:none;border-left:none;
+  <td width=234 style='width:175.7pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Certified</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=237 style='width:177.6pt;border-top:none;border-left:none;
+  <td width=245 style='width:183.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Not Supported</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=207 style='width:155.0pt;border-top:none;border-left:none;
+  <td width=189 style='width:141.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'><b><span
-  style='color:black'>N/A</span></b></p>
+  style='color:windowtext'>N/A</span></b></p>
   </td>
  </tr>
  <tr style='height:15.75pt'>
   <td width=305 nowrap style='width:229.1pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:15.75pt'>
-  <p class=MsoNormal><b><span style='color:black'>LE L2CAP Connection Oriented
-  channel</span></b></p>
+  <p class=MsoNormal><b><span style='color:windowtext'>LE L2CAP Connection
+  Oriented channel</span></b></p>
   </td>
   <td width=204 nowrap style='width:153.25pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 5.4pt 0cm 5.4pt;height:15.75pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Certified</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=226 style='width:169.15pt;border-top:none;border-left:none;
+  <td width=210 style='width:157.4pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.75pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Certified</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=190 style='width:142.75pt;border-top:none;border-left:none;
+  <td width=234 style='width:175.7pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.75pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Not Supported</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=237 style='width:177.6pt;border-top:none;border-left:none;
+  <td width=245 style='width:183.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.75pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:black'>Not Supported</span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=207 style='width:155.0pt;border-top:none;border-left:none;
+  <td width=189 style='width:141.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.75pt'>
   <p class=MsoNormal align=center style='text-align:center'><b><span
-  style='color:black'>N/A</span></b></p>
+  style='color:windowtext'>N/A</span></b></p>
   </td>
  </tr>
  <tr style='height:15.75pt'>
   <td width=305 nowrap style='width:229.1pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:15.75pt'>
-  <p class=MsoNormal><b>Enhanced Attribute Protocol</b></p>
+  <p class=MsoNormal><b><span style='color:windowtext'>Enhanced Attribute
+  Protocol</span></b></p>
   </td>
   <td width=204 nowrap style='width:153.25pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 5.4pt 0cm 5.4pt;height:15.75pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=226 style='width:169.15pt;border-top:none;border-left:none;
+  <td width=210 style='width:157.4pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.75pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=190 style='width:142.75pt;border-top:none;border-left:none;
+  <td width=234 style='width:175.7pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.75pt'>
   <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=237 style='width:177.6pt;border-top:none;border-left:none;
+  <td width=245 style='width:183.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.75pt'>
   <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
   </td>
-  <td width=207 style='width:155.0pt;border-top:none;border-left:none;
+  <td width=189 style='width:141.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.75pt'>
   <p class=MsoNormal align=center style='text-align:center'><b><span
@@ -3289,29 +3340,29 @@ name="_Hlk147481314"></a>&nbsp;</p>
  <tr style='height:15.0pt'>
   <td width=305 nowrap style='width:229.1pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal><b>GATT caching</b></p>
+  <p class=MsoNormal><b><span style='color:windowtext'>GATT caching</span></b></p>
   </td>
   <td width=204 nowrap style='width:153.25pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=226 style='width:169.15pt;border-top:none;border-left:none;
+  <td width=210 style='width:157.4pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=190 style='width:142.75pt;border-top:none;border-left:none;
+  <td width=234 style='width:175.7pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  background:#FFC7CE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'>Not Supported</p>
+  background:#C1F0C7;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
+  <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=237 style='width:177.6pt;border-top:none;border-left:none;
+  <td width=245 style='width:183.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   background:#C6EFCE;padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Certified</p>
   </td>
-  <td width=207 style='width:155.0pt;border-top:none;border-left:none;
+  <td width=189 style='width:141.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'><b><span
@@ -3328,22 +3379,22 @@ name="_Hlk147481314"></a>&nbsp;</p>
   padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Up to 8</p>
   </td>
-  <td width=226 style='width:169.15pt;border-top:none;border-left:none;
+  <td width=210 style='width:157.4pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Up to 20 <sup>(2)</sup></p>
   </td>
-  <td width=190 style='width:142.75pt;border-top:none;border-left:none;
+  <td width=234 style='width:175.7pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Up to 20 <sup>(2)</sup></p>
   </td>
-  <td width=237 style='width:177.6pt;border-top:none;border-left:none;
+  <td width=245 style='width:183.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'>Up to 8</p>
   </td>
-  <td width=207 style='width:155.0pt;border-top:none;border-left:none;
+  <td width=189 style='width:141.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'><span
@@ -3354,12 +3405,12 @@ name="_Hlk147481314"></a>&nbsp;</p>
 
 </div>
 
-<p class=MsoCaption align=center style='text-align:center'>Table 2: Supported
-features of each BLE stack variant</p>
+<p class=MsoCaption align=center style='text-align:center'><a name=table2>Table
+2: Supported features of each BLE predefined configuration</a></p>
 
 <p class=MsoNormal><i>(1): These values were computed with STM32CubeWBA
-Firmware Package v1.</i><i><span style='color:windowtext'>9</span>.0 using
-Keil® environment.</i></p>
+Firmware </i><i><span style='color:windowtext'>Package v1.10.0 using </span>Keil®
+environment.</i></p>
 
 <p class=MsoNormal><i>(2): It might be limited to 8 or 20 links depending on
 the Link Layer library used (libraries with 20_links_lib suffix for 20 links)</i></p>
@@ -3368,8 +3419,9 @@ the Link Layer library used (libraries with 20_links_lib suffix for 20 links)</i
 Stack requires RAM memory from the application (see </i><a href="#_Toc125725170"><i>section
 3.1</i></a><i>)</i></p>
 
-<p class=MsoNormal><i>(4): Each STM32WBA series has its own Link Layer
-libraries (ex: WBA5_LinkLayer_BLE_Full_lib). </i></p>
+<p class=MsoNormal><i><span style='color:windowtext'>(4): Each STM32WBA series
+has its own Link Layer libraries (LinkLayer_XXX_<b>V3_0 </b>for WBA5 and WBA6
+devices and LinkLayer_XXX_<b>V3_0p</b> for WBA25 devices).</span></i></p>
 
 <p class=MsoNormal><i><span style='color:windowtext'>(5): Supports LE Data
 Packet Length Extension and LE Channel Selection Algorithm #2.</span></i></p>
@@ -3384,12 +3436,20 @@ Advertising ADI.</span></i></p>
 <p class=MsoNormal><i><span style='color:black'>(8): Not supported on
 STM32WBA2x series.</span></i></p>
 
-<p class=MsoNormal><i><span style='color:black'>(9): Supported only on
-STM32WBA2x series.</span></i></p>
+<p class=MsoNormal><i><span style='color:black'>(9): </span></i><i><span
+style='color:windowtext'>Supported only on STM32WBA2x series.</span></i></p>
+
+<p class=MsoNormal><i><span style='color:windowtext'>(10): Packet Traffic Arbitration:
+not a BLE standard feature.</span></i></p>
+
+<p class=MsoNormal><i><span style='color:windowtext'>(11): As detailed in table
+5 below.</span></i></p>
+
+<p class=MsoNormal><i><span style='color:black'>&nbsp;</span></i></p>
 
 <p class=MsoNormal><i><span style='color:red'>&nbsp;</span></i></p>
 
-<h2><a name="_Toc147487409"></a><a name="_Toc191997882"></a><a
+<h2><a name="_Toc147487409"></a><a name="_Toc226643910"></a><a
 name="_Toc125725165"></a><a name="_Toc163814804"></a><a name="_2.2__"></a>2.2<span
 style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>Real-Time environment</h2>
@@ -3406,15 +3466,15 @@ software environment as well as any real-time resource.</p>
 <p class=MsoNormal>- The BLE stack callback functions called by the link layer
 or the platform software (PKA, Timer...).</p>
 
-<p class=MsoNormal><a name="_Hlk182901602">Note that these BLE stack functions
-are not reentrant. It is therefore recommended to prevent any reentrancy by
-construction. The wrapper described in the “BLE stack wrapper”<b> </b>section
-can help with this for the BLE stack commands. A straightforward approach would
-be to call all these functions from the same context of execution, i.e., from
-the same task when using a real-time operating system or from the main loop in
-a bare metal environment.</a></p>
+<p class=MsoNormal><a name="_Hlk182901602"><span style='color:windowtext'>Note
+that these BLE stack functions are not reentrant. It is therefore recommended
+to prevent any reentrance by </span>construction. The wrapper described in the
+“BLE stack wrapper”<b> </b>section can help with this for the BLE stack
+commands. A straightforward approach would be to call all these functions from
+the same context of execution, i.e., from the same task when using a real-time
+operating system or from the main loop in a bare metal environment.</a></p>
 
-<h2><a name="_Toc147487410"></a><a name="_Toc191997883"></a><a
+<h2><a name="_Toc147487410"></a><a name="_Toc226643911"></a><a
 name="_Toc163814805"></a><a name="_Toc125725166"></a>2.3<span style='font-size:
 7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>Library dependencies</h2>
@@ -3424,8 +3484,9 @@ with the following libraries):</p>
 
 <p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'>-<span
 style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span>STM32WBAxx Link Layer libraries (refer to <i>Table 2 BLE stack variants</i>
-for Link Layer library configuration dependency).</p>
+</span>STM32WBAxx Link Layer libraries (refer to <a href="#table2"><i>Table 2 BLE
+predefined configurations</i></a> for Link Layer library configuration
+dependency).</p>
 
 <p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'>-<span
 style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -3436,9 +3497,9 @@ style='font-family:"Courier New"'>o</span><span style='font-size:7.0pt;
 font-family:"Times New Roman",serif'>&nbsp;&nbsp; </span>Only basic memory
 functions are used (memcpy, memset, memmove, memcmp)</p>
 
-<h2><a name="_Toc147487411"></a><a name="_Toc191997884"></a><a
-name="_Toc163814806"></a><a name="_Toc125725167"></a>2.4<span style='font-size:
-7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<h2><a name="_Toc147487411"></a><a name="_Toc226643912"></a><a
+name="_Toc163814806"></a><a name="_Toc125725167"></a><a name="_2.4__"></a>2.4<span
+style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>Library compilation options</h2>
 
 <p class=MsoNormal>The BLE stack library is compiled with the following options
@@ -3495,7 +3556,7 @@ provided by other vendors than Keil<sup><span style='font-size:12.0pt'>®</span><
 C/C++ compiler uses the smallest type required to hold enum constants
 (-fshort-enums), preferring signed rather than unsigned.</p>
 
-<h2><a name="_Toc147487412"></a><a name="_Toc191997885"></a><a
+<h2><a name="_Toc147487412"></a><a name="_Toc226643913"></a><a
 name="_Toc163814807"></a><a name="_Toc125725168"></a>2.5<span style='font-size:
 7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>Application compilation options</h2>
@@ -3533,19 +3594,20 @@ compiler, the following option shall be added: &nbsp;&nbsp;<i>-fshort-enums</i><
 margin-left:54.0pt;text-indent:-18.0pt;vertical-align:middle'>&nbsp;</p>
 
 <p class=MsoNormal>In CubeIDE environment with GCC compiler, there is no need
-to add specific compiler options or linker options.</p>
+to add specific compiler options or <span style='color:windowtext'>linker
+options.</span></p>
 
-<p class=MsoNormal><span style='color:black'>In addition to compiler options,
-the BLE stack requires preprocessor symbols to be defined depending on the
-variant used: BLE_STACK_PERIPHERAL_ONLY, BLE_STACK_BASIC_FEATURES,
-BLE_STACK_BASIC_PLUS, and BLE_STACK_LL_ONLY (</span><span lang=EN
-style='color:black'>this last option must be combined with one of the first
-three in case a reduced version of the LL library is used</span><span
-style='color:black'>). No preprocessor is required for the Full variant. These
-symbols are used by the &quot;ble_bufsize.h&quot; to calculate the size of the
-BLE stack RAM buffers and by “ble_wrap.c” to remove unused commands.</span></p>
+<p class=MsoNormal><span style='color:windowtext'>In addition to compiler
+options, the BLE stack requires preprocessor symbols to be defined depending on
+the wanted predefined configuration: BLE_STACK_PERIPHERAL_ONLY,
+BLE_STACK_BASIC_FEATURES, BLE_STACK_BASIC_PLUS, and BLE_STACK_LL_ONLY (</span><span
+lang=EN style='color:windowtext'>this last option must be combined with one of
+the first three in case a reduced version of the LL library is used</span><span
+style='color:windowtext'>). No preprocessor is required for the Full predefined
+configuration. These symbols are used by the “ble_wrap.c” to remove unused code
+from the BLE stack library.</span></p>
 
-<h1><a name="_Toc147487413"></a><a name="_Toc191997886"></a><a
+<h1><a name="_Toc147487413"></a><a name="_Toc226643914"></a><a
 name="_Toc163814808"></a><a name="_Toc125725169"></a>3<span style='font-size:
 7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>BLE stack user interface</h1>
@@ -3557,7 +3619,7 @@ application code needs to include “blestack.h”. </p>
 href="#_3.3.2__"><i>section 3.3.2</i></a>), the application needs to also
 include “blecore.h”.</p>
 
-<h2><a name="_Toc147487414"></a><a name="_Toc191997887"></a><a
+<h2><a name="_Toc147487414"></a><a name="_Toc226643915"></a><a
 name="_Toc125725170"></a><a name="_Toc163814809"></a><a name="_3.1__"></a>3.1<span
 style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>BLE stack initialization </h2>
@@ -4411,7 +4473,7 @@ function's parameters</p>
 
 <p class=MsoNormal>&nbsp;</p>
 
-<p class=MsoNormal><i>(1): This option is only available in the Full variant and
+<p class=MsoNormal><i>(1): This option is available in the Full variant and
 allows</i><i><span style='color:red'> </span>to switch to HCI only mode or ACI
 mode.</i></p>
 
@@ -4447,164 +4509,87 @@ maximum number of connections, services and attributes:</p>
 <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
  style='border-collapse:collapse;border:none'>
  <tr>
-  <td width=570 valign=top style='width:427.5pt;border:solid windowtext 1.0pt;
-  padding:0cm 5.4pt 0cm 5.4pt'>
+  <td valign=top style='border:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><b>&nbsp;</b></p>
   </td>
-  <td width=293 colspan=3 valign=top style='width:220.1pt;border:solid windowtext 1.0pt;
-  border-left:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
+  padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal align=center style='text-align:center'><b>RAM usages
   (Bytes)</b></p>
   </td>
  </tr>
  <tr>
-  <td width=570 style='width:427.5pt;border:solid windowtext 1.0pt;border-top:
-  none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal><b>Variant</b></p>
-  </td>
-  <td width=101 valign=top style='width:76.1pt;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal align=center style='text-align:center'><b>Full &amp;<br>
-   Basic Plus </b></p>
-  </td>
-  <td width=96 style='width:72.0pt;border-top:none;border-left:none;border-bottom:
-  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal align=center style='text-align:center'><b>Basic</b></p>
-  </td>
-  <td width=96 style='width:72.0pt;border-top:none;border-left:none;border-bottom:
-  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal align=center style='text-align:center'><b>Peripheral only</b></p>
-  </td>
- </tr>
- <tr>
-  <td width=570 style='width:427.5pt;border:solid windowtext 1.0pt;border-top:
-  none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <td style='border:solid windowtext 1.0pt;border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><b>BLE Host Stack and ACL buffer RAM (*)<br>
   </b>(example config: 8 connections, ATT MTU set to 300, prep. write list size
   set to 30)</p>
   </td>
-  <td width=101 style='width:76.1pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal align=center style='text-align:center'><b>9 996 </b></p>
-  </td>
-  <td width=96 style='width:72.0pt;border-top:none;border-left:none;border-bottom:
-  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal align=center style='text-align:center'><b>9 164</b></p>
-  </td>
-  <td width=96 style='width:72.0pt;border-top:none;border-left:none;border-bottom:
-  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal align=center style='text-align:center'><b>8 684</b></p>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'><b><span
+  style='color:windowtext'>9 784 </span></b></p>
   </td>
  </tr>
  <tr>
-  <td width=570 style='width:427.5pt;border:solid windowtext 1.0pt;border-top:
-  none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal align=right style='text-align:right'><i>RAM impact per
-  connection (with ATT MTU set to 300)</i></p>
+  <td style='border:solid windowtext 1.0pt;border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><i>RAM impact per connection (with ATT MTU set to 300)</i></p>
   </td>
-  <td width=101 style='width:76.1pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal align=center style='text-align:center'><i>708</i></p>
-  </td>
-  <td width=96 style='width:72.0pt;border-top:none;border-left:none;border-bottom:
-  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal align=center style='text-align:center'><i>656</i></p>
-  </td>
-  <td width=96 style='width:72.0pt;border-top:none;border-left:none;border-bottom:
-  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal align=center style='text-align:center'><i>628</i></p>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'><i><span
+  style='color:windowtext'>712</span></i></p>
   </td>
  </tr>
  <tr>
-  <td width=570 style='width:427.5pt;border:solid windowtext 1.0pt;border-top:
-  none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <td style='border:solid windowtext 1.0pt;border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><b>GATT database <br>
   </b>(example config: 8 services, 68 attributes, 1344 bytes allocated for
   attributes values)</p>
   </td>
-  <td width=101 style='width:76.1pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal align=center style='text-align:center'><b>4 448</b></p>
-  </td>
-  <td width=96 style='width:72.0pt;border-top:none;border-left:none;border-bottom:
-  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal align=center style='text-align:center'><b>4 448</b></p>
-  </td>
-  <td width=96 style='width:72.0pt;border-top:none;border-left:none;border-bottom:
-  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal align=center style='text-align:center'><b>4 448</b></p>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'><b><span
+  style='color:windowtext'>4 448</span></b></p>
   </td>
  </tr>
  <tr>
-  <td width=570 style='width:427.5pt;border:solid windowtext 1.0pt;border-top:
-  none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal align=right style='text-align:right'><i>RAM impact per
-  Service</i></p>
+  <td style='border:solid windowtext 1.0pt;border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><i>RAM impact per Service</i></p>
   </td>
-  <td width=101 style='width:76.1pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal align=center style='text-align:center'><i>48</i></p>
-  </td>
-  <td width=96 style='width:72.0pt;border-top:none;border-left:none;border-bottom:
-  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal align=center style='text-align:center'><i>48</i></p>
-  </td>
-  <td width=96 style='width:72.0pt;border-top:none;border-left:none;border-bottom:
-  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal align=center style='text-align:center'><i>48</i></p>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'><i><span
+  style='color:windowtext'>48</span></i></p>
   </td>
  </tr>
  <tr>
-  <td width=570 style='width:427.5pt;border:solid windowtext 1.0pt;border-top:
-  none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal align=right style='text-align:right'><i>RAM impact per
-  Attribute</i></p>
+  <td style='border:solid windowtext 1.0pt;border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><i>RAM impact per Attribute</i></p>
   </td>
-  <td width=101 style='width:76.1pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal align=center style='text-align:center'><i>40</i></p>
-  </td>
-  <td width=96 style='width:72.0pt;border-top:none;border-left:none;border-bottom:
-  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal align=center style='text-align:center'><i>40</i></p>
-  </td>
-  <td width=96 style='width:72.0pt;border-top:none;border-left:none;border-bottom:
-  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal align=center style='text-align:center'><i>40</i></p>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'><i><span
+  style='color:windowtext'>40</span></i></p>
   </td>
  </tr>
  <tr>
-  <td width=570 style='width:427.5pt;border:solid windowtext 1.0pt;border-top:
-  none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <td style='border:solid windowtext 1.0pt;border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><b>Total BLE Host Stack RAM</b></p>
   <p class=MsoNormal>(example config: 8 connections, ATT MTU set to 300, 8
   services, 68 attributes, 1344 bytes allocated for attributes values)</p>
   </td>
-  <td width=101 style='width:76.1pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal align=center style='text-align:center'><b>14 444</b></p>
-  </td>
-  <td width=96 style='width:72.0pt;border-top:none;border-left:none;border-bottom:
-  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal align=center style='text-align:center'><b>13 612</b></p>
-  </td>
-  <td width=96 style='width:72.0pt;border-top:none;border-left:none;border-bottom:
-  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal align=center style='text-align:center'><b>13 132</b></p>
+  <td style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'><b><span
+  style='color:windowtext'>14 232</span></b></p>
   </td>
  </tr>
 </table>
 
 </div>
 
-<p class=MsoNormal>&nbsp;</p>
+<p class=MsoCaption align=center style='text-align:center'><a name=table5>Table
+5</a>: BLE Host Stack dynamic RAM configuration</p>
 
 <p class=MsoNormal>(*: This memory includes the memory required for the 8
 connections)</p>
@@ -4748,33 +4733,36 @@ font-family:Consolas;color:red'> </span></p>
 style='font-size:10.5pt;font-family:Consolas;color:#9CDCFE'>pInitParams.options</span><span
 style='font-size:10.5pt;font-family:Consolas;color:white'> &nbsp; &nbsp; &nbsp;
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span style='font-size:10.5pt;
-font-family:Consolas;color:#D4D4D4'>= 0x0000;<a name="_Hlk202365993"></a></span></p>
+font-family:Consolas;color:#D4D4D4'>= 0x0000;</span><a name="_Hlk202365993"></a></p>
 
 <p class=MsoNormal style='margin-top:0cm;margin-right:255.75pt;margin-bottom:
 0cm;margin-left:0cm;line-height:14.25pt;background:#1E1E1E'><span
 style='font-size:10.5pt;font-family:Consolas;color:#9CDCFE'>pInitParams</span><span
 style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>.</span><span
-style='font-size:10.5pt;font-family:Consolas;color:#9CDCFE'>gatt_long_write_buffer 
-</span><span style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>= gatt_write_long_buffer;</span></p>
+style='font-size:10.5pt;font-family:Consolas;color:#9CDCFE'>gatt_long_write_buffer&nbsp;
+</span><span style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>=
+gatt_write_long_buffer;</span></p>
 
 <p class=MsoNormal style='margin-top:0cm;margin-right:255.75pt;margin-bottom:
 0cm;margin-left:0cm;line-height:14.25pt;background:#1E1E1E'><span
 style='font-size:10.5pt;font-family:Consolas;color:#9CDCFE'>pInitParams</span><span
 style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>.</span><span
-style='font-size:10.5pt;font-family:Consolas;color:#9CDCFE'>extra_data_buffer      
-</span><span style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>= extra_data_buffer;</span></p>
+style='font-size:10.5pt;font-family:Consolas;color:#9CDCFE'>extra_data_buffer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>=
+extra_data_buffer;</span></p>
 
 <p class=MsoNormal style='margin-top:0cm;margin-right:255.75pt;margin-bottom:
 0cm;margin-left:0cm;line-height:14.25pt;background:#1E1E1E'><span
-style='font-size:10.5pt;font-family:Consolas;color:#9CDCFE'>pInitParams.extra_data_buffer_size 
-</span><span style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>= EXTRA_DATA_BUF_SIZE;</span></p>
+style='font-size:10.5pt;font-family:Consolas;color:#9CDCFE'>pInitParams.extra_data_buffer_size&nbsp;
+</span><span style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>=
+EXTRA_DATA_BUF_SIZE;</span></p>
 
 <p class=MsoNormal style='margin-top:0cm;margin-right:255.75pt;margin-bottom:
 0cm;margin-left:0cm;line-height:14.25pt;background:#1E1E1E'><a
 name="_Hlk202264470"><span style='font-size:10.5pt;font-family:Consolas;
 color:#9CDCFE'>pInitParams</span></a><span style='font-size:10.5pt;font-family:
 Consolas;color:#D4D4D4'>.</span><span style='font-size:10.5pt;font-family:Consolas;
-color:#9CDCFE'>host_event_fifo_buffer  </span><span style='font-size:10.5pt;
+color:#9CDCFE'>host_event_fifo_buffer&nbsp; </span><span style='font-size:10.5pt;
 font-family:Consolas;color:#D4D4D4'>= host_evt_fifo_buffer;</span></p>
 
 <p class=MsoNormal style='margin-top:0cm;margin-right:255.75pt;margin-bottom:
@@ -4782,15 +4770,16 @@ font-family:Consolas;color:#D4D4D4'>= host_evt_fifo_buffer;</span></p>
 style='font-size:10.5pt;font-family:Consolas;color:#9CDCFE'>pInitParams</span><span
 style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>.</span><span
 style='font-size:10.5pt;font-family:Consolas;color:#9CDCFE'>host_event_fifo_buffer_size
-</span><span style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>= HOST_EVT_BUF_SIZE;</span></p>
+</span><span style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>=
+HOST_EVT_BUF_SIZE;</span></p>
 
 <p class=MsoNormal style='margin-top:0cm;margin-right:255.75pt;margin-bottom:
 0cm;margin-left:0cm;line-height:14.25pt;background:#1E1E1E'><span
 style='font-size:10.5pt;font-family:Consolas;color:#9CDCFE'>pInitParams</span><span
 style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>.</span><span
-style='font-size:10.5pt;font-family:Consolas;color:#9CDCFE'>nvm_cache_buffer      
- </span><span style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>= (</span><span
-style='font-size:10.5pt;font-family:Consolas;color:#569CD6'>uint64_t</span><span
+style='font-size:10.5pt;font-family:Consolas;color:#9CDCFE'>nvm_cache_buffer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;</span><span style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>=
+(</span><span style='font-size:10.5pt;font-family:Consolas;color:#569CD6'>uint64_t</span><span
 style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>*)buffer_nvm;</span></p>
 
 <p class=MsoNormal style='margin-top:0cm;margin-right:255.75pt;margin-bottom:
@@ -4799,21 +4788,23 @@ style='font-size:10.5pt;font-family:Consolas;color:#9CDCFE'>pInitParams</span><s
 style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>.</span><span
 style='font-size:10.5pt;font-family:Consolas;color:#9CDCFE'>nvm_cache_size</span><span
 style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'> &nbsp; &nbsp;
-&nbsp; &nbsp;  = CFG_BLE_NVM_SIZE;</span></p>
+&nbsp; &nbsp; &nbsp;= CFG_BLE_NVM_SIZE;</span></p>
 
 <p class=MsoNormal style='margin-top:0cm;margin-right:255.75pt;margin-bottom:
 0cm;margin-left:0cm;line-height:14.25pt;background:#1E1E1E'><span
 style='font-size:10.5pt;font-family:Consolas;color:#9CDCFE'>pInitParams</span><span
 style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>.</span><span
 style='font-size:10.5pt;font-family:Consolas;color:#9CDCFE'>nvm_cache_max_size </span><span
-style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>&nbsp; &nbsp;  = CFG_BLE_NVM_MAX_SIZE;</span></p>
+style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>&nbsp; &nbsp;
+&nbsp;= CFG_BLE_NVM_MAX_SIZE;</span></p>
 
 <p class=MsoNormal style='margin-top:0cm;margin-right:255.75pt;margin-bottom:
 0cm;margin-left:0cm;line-height:14.25pt;background:#1E1E1E'><span
 style='font-size:10.5pt;font-family:Consolas;color:#9CDCFE'>pInitParams</span><span
 style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>.</span><span
-style='font-size:10.5pt;font-family:Consolas;color:#9CDCFE'>max_add_eatt_bearers   
-</span><span style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>= CFG_BLE_MAX_EATT_BEARERS;</span></p>
+style='font-size:10.5pt;font-family:Consolas;color:#9CDCFE'>max_add_eatt_bearers&nbsp;&nbsp;&nbsp;
+</span><span style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>=
+CFG_BLE_MAX_EATT_BEARERS;</span></p>
 
 <p class=MsoNormal style='margin-top:0cm;margin-right:255.75pt;margin-bottom:
 0cm;margin-left:0cm;line-height:14.25pt;background:#1E1E1E'>&nbsp;</p>
@@ -4830,9 +4821,9 @@ style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>&nbsp;</span></p>
 
 <p class=MsoNormal>&nbsp;</p>
 
-<h2><a name="_Toc147487415"></a><a name="_Toc191997888"></a><a
-name="_Toc163814810"></a><a name="_Toc125725171"></a>3.2<span style='font-size:
-7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<h2><a name="_Toc226643916"></a><a name="_Toc147487415"></a><a
+name="_Toc191997888"></a><a name="_Toc163814810"></a><a name="_Toc125725171"></a>3.2<span
+style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>BLE stack process</h2>
 
 <p class=MsoNormal>The BleStack_Process function runs all Host stack layers’
@@ -4886,7 +4877,7 @@ dedicated processes.</p>
 </div>
 
 <p class=MsoCaption align=center style='text-align:center'><a
-name="_Toc147487329"></a><a name="_Toc125724453"></a>Table 5: BleStack_Process
+name="_Toc147487329"></a><a name="_Toc125724453"></a>Table 6: BleStack_Process
 function</p>
 
 <p class=MsoNormal>The <b>BleStack_Process</b> function shall be called in the
@@ -4910,7 +4901,7 @@ command).</p>
 <p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'>-&nbsp;&nbsp;
 &nbsp;By the platform software at the timer expiry or the end of PKA activity.</p>
 
-<p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'>-&nbsp;&nbsp; 
+<p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'>-&nbsp;&nbsp;&nbsp;
 When the <b>BleStack_Process</b> function returns <b>BLE_SLEEPMODE_RUNNING</b>,
 it shall be re-called. If it returns <b>BLE_SLEEPMODE_CPU_HALT</b>, there is no
 need to call this function again and the MCU could go to sleep mode.</p>
@@ -4953,16 +4944,16 @@ style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>&nbsp;</span></p>
 
 <p class=MsoNormal>&nbsp;</p>
 
-<h2><a name="_Toc191997889"></a><a name="_Toc147487416"></a><a
-name="_Toc163814811"></a><a name="_Toc125725172"></a>3.3<span style='font-size:
-7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<h2><a name="_Toc226643917"></a><a name="_Toc191997889"></a><a
+name="_Toc147487416"></a><a name="_Toc163814811"></a><a name="_Toc125725172"></a>3.3<span
+style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>BLE stack ACI/HCI interface</h2>
 
 <p class=MsoNormal>We have two ways to send commands and receive events in ST’s
 BLE Stack: Transparent Mode or Direct Mode.</p>
 
-<h3><a name="_Toc147487417"></a><a name="_Toc191997890"></a><a
-name="_Toc163814812"></a><a name="_Toc125725173"></a>3.3.1<span
+<h3><a name="_Toc226643918"></a><a name="_Toc147487417"></a><a
+name="_Toc191997890"></a><a name="_Toc163814812"></a><a name="_Toc125725173"></a>3.3.1<span
 style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>Transparent Mode </h3>
 
@@ -5022,7 +5013,7 @@ bytes) of the response event is given by the function’s return value.</p>
 </div>
 
 <p class=MsoCaption align=center style='text-align:center'><a
-name="_Toc147487330"></a><a name="_Toc125724454"></a>Table 6: BleStack_Request
+name="_Toc147487330"></a><a name="_Toc125724454"></a>Table 7: BleStack_Request
 function</p>
 
 <p class=MsoNormal>Example:</p>
@@ -5144,9 +5135,9 @@ parameters:</p>
   <p class=MsoNormal style='margin-bottom:10.0pt;line-height:115%;page-break-after:
   avoid'>- 0 for success</p>
   <p class=MsoNormal style='margin-bottom:10.0pt;line-height:115%;page-break-after:
-  avoid'>- Other values mean that the event hasn’t been handled by the application
-  and<span style='color:red'> </span><span style='color:windowtext'>can be
-  stored in the Host or LL events FIFO.</span></p>
+  avoid'>- Other values mean that the event hasn’t been handled by the
+  application and<span style='color:red'> </span><span style='color:windowtext'>can
+  be stored in the Host or LL events FIFO.</span></p>
   </td>
  </tr>
 </table>
@@ -5154,7 +5145,7 @@ parameters:</p>
 </div>
 
 <p class=MsoCaption align=center style='text-align:center'><a
-name="_Toc147487331"></a><a name="_Toc125724455"></a>Table 7: BLECB_Indication
+name="_Toc147487331"></a><a name="_Toc125724455"></a>Table 8: BLECB_Indication
 function</p>
 
 <p class=MsoNormal>Example:</p>
@@ -5442,16 +5433,16 @@ style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>}</span></p>
 
 <p class=MsoNormal><a name="_Toc125725176">&nbsp;</a></p>
 
-<h3><a name="_3.3.2___1"></a>&nbsp;<a name="_Toc191997891">3.3.2</a><span
-style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<h3><a name="_3.3.2___1"></a>&nbsp;<a name="_Toc226643919"></a><a
+name="_Toc191997891">3.3.2</a><span style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>Direct Mode</h3>
 
 <p class=MsoNormal><br>
 The Direct Mode provides a dedicated API for each ACI/HCI command and event.</p>
 
 <p class=MsoNormal>Instead of using <b><i>BleStack_Request / BLECB_Indication </i></b>like
-in transparent mode, the ACI/HCI commands/events can be used through dedicated functions.
-Those functions are listed and detailed in the document
+in transparent mode, the ACI/HCI commands/events can be used through dedicated
+functions. Those functions are listed and detailed in the document
 STM32WBA_BLE_Wireless_Interface.html.</p>
 
 <p class=MsoNormal>To use the direct mode, the BLE wrapper shall be compiled,
@@ -5460,8 +5451,9 @@ that means “ble_wrap.c” needs to be included (see <a href="#_3.3.2.1__"><i>secti
 
 <p class=MsoNormal>&nbsp;</p>
 
-<h4><a name="_3.3.2.1__"></a>&nbsp;<a name="_Toc191997892"></a><a
-name="_Toc163814815">3.</a>3.2.1<span style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<h4><a name="_3.3.2.1__"></a>&nbsp;<a name="_Toc226643920"></a><a
+name="_Toc163814815"></a><a name="_Toc191997892"></a>3.3.2.1<span
+style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>BLE stack wrapper</h4>
 
 <p class=MsoNormal>The BLE stack includes a wrapper to execute user-defined pre
@@ -5478,8 +5470,8 @@ and “<span style='font-size:10.5pt;font-family:Consolas;color:#569CD6'>BLE_WRAP_
 <p class=MsoNormal>The “<span style='font-size:10.5pt;font-family:Consolas;
 color:#569CD6'>BLE_WRAP_PREPROC</span>” and “<span style='font-size:10.5pt;
 font-family:Consolas;color:#569CD6'>BLE_WRAP_POSTPROC</span>” are empty macros;
-it is up to the user to redefine those macros to execute pre and post processing
-respectively for every command.</p>
+it is up to the user to redefine those macros to execute pre and post
+processing respectively for every command.</p>
 
 <p class=MsoNormal>Wrapper implementation:</p>
 
@@ -5683,8 +5675,8 @@ user_postproc()</span></p>
 <p class=MsoNormal style='margin-bottom:0cm;line-height:14.25pt;background:
 #1F1F1F'><span style='font-size:10.5pt;font-family:Consolas;color:#C586C0'>&nbsp;</span></p>
 
-<h4><a name="_Toc147487418"></a><a name="_Toc191997893">3.3.2.2</a><span
-style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<h4><a name="_Toc226643921"></a><a name="_Toc191997893"></a><a
+name="_Toc147487418"></a>3.3.2.2<span style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>Commands and data sending</h4>
 
 <p class=MsoNormal>Each ACI/HCI command has its own interface, e.g. the HCI
@@ -5753,37 +5745,34 @@ font-family:Consolas;color:#D4D4D4'>(Serv_Handle, Include_Handle);</span></p>
 
 <p class=MsoNormal>&nbsp;</p>
 
-<h4><a name="_Toc147487419"></a><a name="_Toc191997894"></a><a
-name="_Toc163814814"></a><a name="_Toc125725175"></a>3.3.2.3<span
+<h4><a name="_Toc226643922"></a><a name="_Toc147487419"></a><a
+name="_Toc191997894"></a><a name="_Toc163814814"></a><a name="_Toc125725175"></a>3.3.2.3<span
 style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span><a name="_Hlk165993411">Asynchronous events and data reception</a></h4>
 
-<p class=MsoNormal><span style='color:black'>The user can handle the ACI/HCI
-events through the BLE Wrapper callback functions (listed in
-include/auto/ble_events.h file).<br>
+<p class=MsoNormal>The user can handle the ACI/HCI events through the BLE
+Wrapper callback functions (listed in include/auto/ble_events.h file).<br>
 In the “BLECB_Indication” function, it is required to push the event data into
 a FIFO. Then, it is possible to call the “BLE_EventProcess” function each time
 an event is popped from the FIFO.<br>
 The “BLE_EventProcess” function calls the dedicated event callback. To handle
 the event, its dedicated callback needs to be redefined (e.g.
-“hci_disconnection_complete_event” callback)</span></p>
+“hci_disconnection_complete_event” callback)</p>
 
-<p class=MsoNormal><span style='color:black'>Based on its own application
-scenario, the user should identify the required BLE events to be detected and
-handled and define the application ‘s specific actions as a response to such
-events. </span></p>
+<p class=MsoNormal>Based on its own application scenario, the user should
+identify the required BLE events to be detected and handled and define the
+application ‘s specific actions as a response to such events. </p>
 
-<p class=MsoNormal style='margin-bottom:12.0pt'><span style='color:black'>When
-implementing a BLE application, the most common and widely used BLE events are
-the ones related to the discovery, connection, terminate procedures, services
-and characteristics discovery procedures, attribute modified events on a GATT
-server and attribute notification/ indication events on a GATT client.<b><span
-style='display:none'>3.3.3.</span></b></span><b><span style='font-size:7.0pt;
-font-family:"Times New Roman",serif;color:black;display:none'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></b><b><span style='color:black;display:none'>&nbsp;</span></b></p>
+<p class=MsoNormal style='margin-bottom:12.0pt'>When implementing a BLE
+application, the most common and widely used BLE events are the ones related to
+the discovery, connection, terminate procedures, services and characteristics
+discovery procedures, attribute modified events on a GATT server and attribute
+notification/ indication events on a GATT client.<b><span style='display:none'>3.3.3.</span></b><b><span
+style='font-size:7.0pt;font-family:"Times New Roman",serif;display:none'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span style='display:none'>&nbsp;</span></b></p>
 
-<p class=MsoNormal><span style='color:black'>There is one callback per event.
-All callback functions can be found in include/auto/ble_events.h.</span></p>
+<p class=MsoNormal>There is one callback per event. All callback functions can
+be found in include/auto/ble_events.h.</p>
 
 <p class=MsoNormal>Example:</p>
 
@@ -5844,8 +5833,7 @@ END */</span></p>
 0cm;margin-left:0cm;line-height:14.25pt;background:#1E1E1E'><span
 style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>}</span></p>
 
-<p class=MsoNoSpacing><a name="_Toc147487420"></a><a name="_Toc163814816"></a><a
-name="_3.4__"></a>&nbsp;</p>
+<p class=MsoNoSpacing><a name="_3.4__"></a>&nbsp;</p>
 
 <p class=MsoNormal><b><u>Known limitation:</u></b> &nbsp;In “LL only” mode or
 when using Direct Mode for the event callback, the RAM containing the reported
@@ -5854,7 +5842,8 @@ data doesn’t support unaligned access. In these cases, it is advised to use the
 &quot;mem_intf.h&quot; from link layer libraries) instead of <i>memcpy/memset/memcmp</i>
 functions when accessing those data.</p>
 
-<h1><a name="_Toc191997895">4</a><span style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<h1><a name="_Toc147487420"></a><a name="_Toc226643923"></a><a
+name="_Toc163814816">4</a><span style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>BLE stack porting</h1>
 
 <p class=MsoNormal>The BLE stack uses some generic HW features but lets the
@@ -5870,12 +5859,12 @@ on the application side:</p>
 <p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'>-<span
 style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>NVM: Non-Volatile Memory used by the security database of the BLE stack.<i>
-(required only for variants including the Host Stack)</i></p>
+(required only for Full variant)</i></p>
 
 <p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'>-<span
 style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>Timer: used by several components of the BLE stack. <i>(required only
-for variants including the Host Stack)</i></p>
+for Full variant)</i></p>
 
 <p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'>-<span
 style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -5890,7 +5879,7 @@ style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&n
 style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>RNG: Random Number Generation used by the controller in the BLE stack.</p>
 
-<h2><a name="_Toc147487421"></a><a name="_Toc191997896"></a><a
+<h2><a name="_Toc147487421"></a><a name="_Toc226643924"></a><a
 name="_Toc163814817"></a><a name="_Toc125725177"></a><a
 name="_BLE_platform_initialization"></a>4.1<span style='font-size:7.0pt;
 font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -5942,7 +5931,7 @@ font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&
 </div>
 
 <p class=MsoCaption align=center style='text-align:center'><a
-name="_Toc147487332"></a><a name="_Toc125724456"></a>Table 8: BLEPLAT_Init
+name="_Toc147487332"></a><a name="_Toc125724456"></a>Table 9: BLEPLAT_Init
 function</p>
 
 <p class=MsoNormal style='margin-bottom:10.0pt;line-height:115%'>This function
@@ -5955,7 +5944,7 @@ stack.</p>
 implement the functions mentioned below that are called by the BLE stack at
 runtime.</p>
 
-<h2><a name="_Toc147487422"></a><a name="_Toc191997897"></a><a
+<h2><a name="_Toc147487422"></a><a name="_Toc226643925"></a><a
 name="_Toc163814818"></a><a name="_Toc125725178"></a><a
 name="_BLE_platform_functions"></a><a name="_4.2__"></a>4.2<span
 style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -6077,14 +6066,14 @@ values:</p>
 </div>
 
 <p class=MsoCaption align=center style='text-align:center'><a
-name="_Toc147487333"></a><a name="_Toc125724457"></a>Table 9: BLEPLAT
-functions' returns</p>
+name="_Toc147487333"></a><a name="_Toc125724457"></a>Table 10: BLEPLAT functions'
+returns</p>
 
 <p class=MsoCaption><span style='font-weight:normal'>Note: BLE platform
 functions do not have severe timing constraints. In fact, the BLE host stack
 only deals with timeouts of several seconds.</span></p>
 
-<h3><a name="_Toc147487423"></a><a name="_Toc191997898"></a><a
+<h3><a name="_Toc147487423"></a><a name="_Toc226643926"></a><a
 name="_Toc163814819"></a><a name="_Toc125725179"></a>4.2.1<span
 style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>NVM function</h3>
@@ -6148,10 +6137,10 @@ that needs to be written in NVM.</p>
 </div>
 
 <p class=MsoCaption align=center style='text-align:center'><a
-name="_Toc147487334"></a><a name="_Toc125724458"></a>Table 10: BLEPLAT NVM
+name="_Toc147487334"></a><a name="_Toc125724458"></a>Table 11: BLEPLAT NVM
 functions</p>
 
-<h3><a name="_Toc147487424"></a><a name="_Toc191997899"></a><a
+<h3><a name="_Toc147487424"></a><a name="_Toc226643927"></a><a
 name="_Toc163814820"></a><a name="_Toc125725180"></a>4.2.2<span
 style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>Timer functions</h3>
@@ -6250,19 +6239,20 @@ recommended to be able to count up to 24 hours.</p>
 </div>
 
 <p class=MsoCaption align=center style='text-align:center'><a
-name="_Toc147487335"></a><a name="_Toc125724459"></a>Table 11: BLEPLAT Timer
+name="_Toc147487335"></a><a name="_Toc125724459"></a>Table 12: BLEPLAT Timer
 functions</p>
 
 <p class=MsoNormal>The number of timers required by the BLE stack depends on
 the variants used. </p>
 
 <p class=MsoNormal>Here is the formula to compute the maximum number of timers
-needed per variants:</p>
+needed per <i>predefined configuration</i>:</p>
 
-<p class=MsoNormal>- For the Full and Basic Plus, Basic variants:                                    <i>Maximum
-Number of timers = (6 x numOfLinks) + 5</i></p>
+<p class=MsoNormal>- For the Full and Basic Plus, Basic predefined
+configurations:                                <i>Maximum Number of timers = (6
+x numOfLinks) + 5</i></p>
 
-<p class=MsoNormal>- For the Peripheral Only variant:                                                       <i>Maximum
+<p class=MsoNormal>- For the Peripheral Only predefined configuration:                                                   <i>Maximum
 Number of timers = (4 x numOfLinks) + 4</i></p>
 
 <p class=MsoNormal><a name="_Hlk207812983">Implementation of the BLEPLAT_Timer
@@ -6274,7 +6264,7 @@ not been called.</span></p>
 
 <p class=MsoNormal>&nbsp;</p>
 
-<h3><a name="_Toc147487425"></a><a name="_Toc191997900"></a><a
+<h3><a name="_Toc147487425"></a><a name="_Toc226643928"></a><a
 name="_Toc163814821"></a><a name="_Toc125725181"></a>4.2.3<span
 style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>AES functions</h3>
@@ -6425,10 +6415,10 @@ compute CMAC which is needed by BLE security manager.</p>
 </div>
 
 <p class=MsoCaption align=center style='text-align:center'><a
-name="_Toc147487336"></a><a name="_Toc125724460"></a>Table 12: BLEPLAT AES
+name="_Toc147487336"></a><a name="_Toc125724460"></a>Table 13: BLEPLAT AES
 functions</p>
 
-<h3><a name="_Toc147487426"></a><a name="_Toc191997901"></a><a
+<h3><a name="_Toc147487426"></a><a name="_Toc226643929"></a><a
 name="_Toc163814822"></a><a name="_Toc125725182"></a>4.2.4<span
 style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>PKA functions</h3>
@@ -6573,10 +6563,10 @@ key used for BLE secure connections. </p>
 </div>
 
 <p class=MsoCaption align=center style='text-align:center'><a
-name="_Toc147487337"></a><a name="_Toc125724461"></a>Table 13: BLEPLAT PKA
+name="_Toc147487337"></a><a name="_Toc125724461"></a>Table 14: BLEPLAT PKA
 functions</p>
 
-<h3><a name="_Toc147487427"></a><a name="_Toc191997902"></a><a
+<h3><a name="_Toc147487427"></a><a name="_Toc226643930"></a><a
 name="_Toc163814823"></a><a name="_Toc125725183"></a>4.2.5<span
 style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>RNG functions</h3>
@@ -6630,26 +6620,68 @@ style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&n
 </div>
 
 <p class=MsoCaption align=center style='text-align:center'><a
-name="_Toc147487338"></a><a name="_Toc125724462"></a>Table 14: BLEPLAT RNG
+name="_Toc147487338"></a><a name="_Toc125724462"></a>Table 15: BLEPLAT RNG
 function</p>
 
 <span style='font-size:11.0pt;line-height:115%;font-family:"Arial",sans-serif;
 color:black'><br clear=all style='page-break-before:always'>
 </span>
 
-<p class=MsoNormal style='margin-bottom:10.0pt;line-height:115%'><a
-name="_Ref488250631"><b><span style='font-size:14.0pt;line-height:115%;
-color:windowtext'>&nbsp;</span></b></a></p>
+<p class=MsoNormal style='margin-bottom:10.0pt;line-height:115%'><span
+class=Dxentry>&nbsp;</span></p>
 
-<span style='font-size:11.0pt;font-family:"Arial",sans-serif;color:black'><br
-clear=all style='page-break-before:always'>
-</span>
+<p class=MsoNormal><span class=Dxentry><span style='font-size:9.0pt'>&nbsp;</span></span></p>
 
-<p class=MsoNormal><span class=Dxentry><span style='font-size:9.0pt'>ARM CC
-compiler and Keil µvision are registered trademarks owned by ARM</span></span></p>
+<h2><a name="_Toc226643931">4.3</a><span style='font-size:7.0pt;font-family:
+"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>BLE stack link-time optimization</h2>
 
-<p class=MsoNormal><span class=Dxentry><span style='font-size:9.0pt'>IAR C/C++
-compiler is a registered trademark owned by IAR Systems</span></span></p>
+<p class=MsoNormal><span style='color:windowtext'>If certain features of the
+BLE stack are not used, the code memory footprint can be optimized using the
+“ble_wrap.c” file.</span></p>
+
+<p class=MsoNormal><span style='color:windowtext'>The features concerned are:</span></p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal style='color:windowtext'>BONDING: Bonding feature</li>
+ <li class=MsoNormal style='color:windowtext'>COC_EATT: Connection-Oriented
+     Channels and Enhanced ATT features</li>
+ <li class=MsoNormal style='color:windowtext'>GATT_CLIENT: GATT client-related
+     functions</li>
+ <li class=MsoNormal style='color:windowtext'>CENTRAL: Central related
+     functions (connection creation, scanning, security initiation…).</li>
+ <li class=MsoNormal style='color:windowtext'>PRIVACY: Privacy feature</li>
+ <li class=MsoNormal style='color:windowtext'>EXTENDED_ADV: Extended
+     Advertising feature</li>
+</ul>
+
+<p class=MsoNormal><span style='color:windowtext'>To reduce the code size,
+simply define a macro BLE_FEATURE_xxx_UNUSED, with xxx being the feature name,
+in the file that includes the “ble_wrap.c” file.</span></p>
+
+<p class=MsoNormal><span style='color:windowtext'>Example:</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:255.75pt;margin-bottom:
+0cm;margin-left:0cm;line-height:14.25pt;background:#1E1E1E'><span
+style='font-size:10.5pt;font-family:Consolas;color:#6A9955'>/* Remove bonding
+and COC/EATT features */</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:255.75pt;margin-bottom:
+0cm;margin-left:0cm;line-height:14.25pt;background:#1E1E1E'><span
+style='font-size:10.5pt;font-family:Consolas;color:#569CD6'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+#define BLE_FEATURE_BONDING_UNUSED 1</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:255.75pt;margin-bottom:
+0cm;margin-left:0cm;line-height:14.25pt;background:#1E1E1E'><span
+style='font-size:10.5pt;font-family:Consolas;color:#569CD6'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+#define BLE_FEATURE_ COC_EATT_UNUSED 1</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:255.75pt;margin-bottom:
+0cm;margin-left:0cm;line-height:14.25pt;background:#1E1E1E'><span
+style='font-size:10.5pt;font-family:Consolas;color:#569CD6'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+#include “ble_wrap.c”</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
 
 <p class=MsoNormal>&nbsp;</p>
 
@@ -6665,6 +6697,10 @@ compiler is a registered trademark owned by IAR Systems</span></span></p>
  </tr>
  <tr style='page-break-inside:avoid'>
   <td width=0 valign=top style='width:0cm;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span class=Dxentry><span style='font-size:9.0pt'>ARM CC
+  compiler and Keil µvision are registered trademarks owned by ARM </span></span></p>
+  <p class=MsoNormal><span class=Dxentry><span style='font-size:9.0pt'>IAR
+  C/C++ compiler is a registered trademark owned by IAR Systems</span></span></p>
   <p class=MsoNormal align=center style='text-align:center'><span
   style='font-size:10.0pt'>&nbsp;</span></p>
   <p class=MsoNormal align=center style='text-align:center'><b><span
@@ -6771,7 +6807,7 @@ compiler is a registered trademark owned by IAR Systems</span></span></p>
  <tr style='page-break-inside:avoid'>
   <td width=0 valign=top style='width:0cm;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal align=center style='text-align:center'><span
-  class=Dxentry><span style='font-size:9.0pt'>© 2025 STMicroelectronics - All
+  class=Dxentry><span style='font-size:9.0pt'>© 2026 STMicroelectronics - All
   rights reserved </span></span></p>
   </td>
  </tr>

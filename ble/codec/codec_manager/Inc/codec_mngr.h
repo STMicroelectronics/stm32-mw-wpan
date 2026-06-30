@@ -117,7 +117,7 @@ typedef struct
 
 
 /************************************ Codec Manager mode *************************************/
-typedef uint8_t CODEC_Mode_t;
+typedef uint8_t CODEC_Mode_t;   /* bit field for codec mode */
 #define CODEC_MODE_DEFAULT                  (CODEC_MODE_FLOW_CTRL)
 
 #define CODEC_MODE_FLOW_CTRL                (0x01)  /* Enable flow control between controller and codec manager */
@@ -128,6 +128,13 @@ typedef uint8_t CODEC_Mode_t;
 #define CODEC_MODE_FORCE_TRANSPARENT_CDC_ID (0x04)  /* Force codec ID to AUDIO_CODING_FORMAT_TRANSPARENT when receiving HCI commands
                                                        mainly used when LC3 processing is done outside the codec manager, but
                                                        the generic audio framework still deals with LC3 coding format */
+
+/************************************ Clock Corrector mode ***********************************/
+typedef uint8_t CORRECTOR_Mode_t;
+#define CORRECTOR_MODE_DEFAULT              (CORRECTOR_MODE_BASIC)
+
+#define CORRECTOR_MODE_BASIC                (0x00)
+
 
 /* Status of the codec operation */
 typedef enum
@@ -160,18 +167,15 @@ typedef struct
 } CODEC_LC3Config_t;
 
 /* bandwidth used by the codec */
-typedef enum
-{
-  CODEC_NB =    1, /* narrow band,          sampling at 8kHz */
-  CODEC_WB =    2, /* wide band,            sampling at 16kHz */
-  CODEC_SSWB =  3, /* semi super wide band, sampling at 24kHz */
-  CODEC_SWB =   4, /* super wide band,      sampling at 32kHz */
-  CODEC_FBCD =  5, /* full band CD,         sampling at 44.1kHz */
-  CODEC_FB =    6, /* full band,            sampling at 48kHz */
-  CODEC_FBHR =  7, /* full band high res    sampling at 48kHz */
-  CODEC_UBHR =  8, /* ultra band high res   sampling at 96kHz */
-} codec_band_t;
-
+#define  CODEC_NB    1  /* narrow band,          sampling at 8kHz */
+#define  CODEC_WB    2  /* wide band,            sampling at 16kHz */
+#define  CODEC_SSWB  3  /* semi super wide band, sampling at 24kHz */
+#define  CODEC_SWB   4  /* super wide band,      sampling at 32kHz */
+#define  CODEC_FBCD  5  /* full band CD,         sampling at 44.1kHz */
+#define  CODEC_FB    6  /* full band,            sampling at 48kHz */
+#define  CODEC_FBHR  7  /* full band high res    sampling at 48kHz */
+#define  CODEC_UBHR  8  /* ultra band high res   sampling at 96kHz */
+typedef uint8_t codec_band_t;
 
 /************************************ others structures .*************************************/
 
@@ -182,6 +186,16 @@ typedef struct
   float    VCOInputFreq;        /* frequency at the VCO input */
   uint32_t PLLOutputDiv;        /* divider applied to the VCO output */
 } AUDIO_PLLConfig_t;
+
+/* Structure containing clock corrector configuration */
+typedef struct
+{
+  uint32_t initialMinSampling;  /* sampling period in ms for initiating the first correction,
+                                   during this period clock are still drifting up to 2*500ppm + 50ppm */
+  uint32_t minSampling;         /* sampling period in ms used for continuous drift adjustment, must be greater than
+                                   initialMinSampling to allow a more precise measurement */
+  CORRECTOR_Mode_t  mode;       /* clock corrector mode */
+} AUDIO_CorrectorConfig_t;
 
 /* Structure for HCI Setup ISO Data Path command */
 typedef __PACKED_STRUCT
@@ -259,7 +273,9 @@ void CODEC_ManagerProcess( void );
   * @note The callback function can return any value different from 0 to ask a new trigger
   * @retval status
   */
-codec_status_t CODEC_RegisterTriggerClbk(uint8_t path_id, uint8_t direction, int32_t clbk_function(void));
+codec_status_t CODEC_RegisterTriggerClbk(uint8_t path_id,
+                                        uint8_t direction,
+                                        int32_t clbk_function(void));
 
 /**
   * @brief Notify the codec manager that new data is available on a given data path
@@ -268,7 +284,9 @@ codec_status_t CODEC_RegisterTriggerClbk(uint8_t path_id, uint8_t direction, int
   * @param pdata : pointer to the data, format should be coherent with the configured data path
   * @retval none
   */
-void CODEC_SendData(uint16_t iso_con_hdl, uint8_t path_id, void* pdata);
+void CODEC_SendData(uint16_t iso_con_hdl,
+                    uint8_t path_id,
+                    void* pdata);
 
 /**
   * @brief Notify the codec manager that new data is needed on a given data path
@@ -277,7 +295,9 @@ void CODEC_SendData(uint16_t iso_con_hdl, uint8_t path_id, void* pdata);
   * @param pdata : pointer to the buffer to be filled, format should be coherent with the configured data path
   * @retval none
   */
-void CODEC_ReceiveData(uint16_t iso_con_hdl, uint8_t path_id, void* pdata);
+void CODEC_ReceiveData(uint16_t iso_con_hdl,
+                       uint8_t path_id,
+                       void* pdata);
 
 /**
   * @brief Weak function called by the codec manager after finishing to process data on sink path
@@ -288,7 +308,10 @@ void CODEC_ReceiveData(uint16_t iso_con_hdl, uint8_t path_id, void* pdata);
   * @param channel_nb : total channel nb on the connection handle
   * @retval none
   */
-void CODEC_NotifyDataReady(uint16_t iso_con_hdl, void* pdecoded_data, uint8_t channel_idx, uint8_t channel_nb);
+void CODEC_NotifyDataReady(uint16_t iso_con_hdl,
+                           void* pdecoded_data,
+                           uint8_t channel_idx,
+                           uint8_t channel_nb);
 
 /*--------------------------------- integration with clock ----------------------------------*/
 /**
@@ -300,14 +323,14 @@ void CODEC_CLK_trigger_event_notify(uint8_t id);
 
 /**
   * @brief Function for initializing the clock corrector by adjusting PLL N fractional value
-  * @note A first drift correction is performed after initialMinSampling milliseconds where clocks may drift up to 550ppm
-  * @note Then continuous correction is performed every minSampling milliseconds
+  * @note A first drift correction is performed after initialMinSampling milliseconds
+  *       Then continuous correction is performed every minSampling milliseconds
   * @param PLLConfig : PLL configuration
-  * @param initialMinSampling : first sampling period in ms for generating the first correction
-  * @param minSampling : sampling period in ms used for continuous drift adjustment
-  * @retval None
+  * @param CorrectorConfig : Clock corrector configuration
+  * @retval status
   */
-void AUDIO_InitializeClockCorrector(AUDIO_PLLConfig_t *PLLConfig, uint32_t initialMinSampling, uint32_t minSampling);
+codec_status_t AUDIO_InitializeClockCorrector(AUDIO_PLLConfig_t *PLLConfig,
+                                              AUDIO_CorrectorConfig_t *CorrectorConfig);
 
 /**
   * @brief Function for resetting corrector state
@@ -328,7 +351,10 @@ void AUDIO_DeinitializeClockCorrector( void );
   * @param **vdr_codec : pointer for returning an array containing vendor codec information
   * @retval HCI status
   */
-uint8_t CODEC_ReadLocalSupportedCodecsV2(uint8_t *num_stdr, uint8_t **stdr_codec, uint8_t *num_vdr, uint8_t **vdr_codec);
+uint8_t CODEC_ReadLocalSupportedCodecsV2(uint8_t *num_stdr,
+                                        uint8_t **stdr_codec,
+                                        uint8_t *num_vdr,
+                                        uint8_t **vdr_codec);
 
 /**
   * @brief Function used for reading codec capabilities, following the HCI standard
@@ -339,8 +365,11 @@ uint8_t CODEC_ReadLocalSupportedCodecsV2(uint8_t *num_stdr, uint8_t **stdr_codec
   * @param **codec_capability : pointer for returning an array of structure containing the capabilities
   * @retval HCI status
   */
-uint8_t CODEC_ReadLocalSupportedCodecCapabilies(uint8_t* codecID, uint8_t transport, uint8_t dir,
-                                                uint8_t* num_codec_capabilities, uint8_t **codec_capability);
+uint8_t CODEC_ReadLocalSupportedCodecCapabilies(uint8_t* codecID,
+                                                uint8_t transport,
+                                                uint8_t dir,
+                                                uint8_t* num_codec_capabilities,
+                                                uint8_t **codec_capability);
 
 /**
   * @brief  Function used for reading controller delay range
@@ -357,9 +386,13 @@ uint8_t CODEC_ReadLocalSupportedCodecCapabilies(uint8_t* codecID, uint8_t transp
   * @param *max_controller_delay : pointer to the maximum returned controller delay value
   * @retval HCI status
   */
-uint8_t CODEC_ReadLocalSupportedControllerDelay(uint8_t* codecID, uint8_t transport, uint8_t dir,
-                                                uint8_t codec_conf_len, uint8_t * codec_conf,
-                                                uint32_t* min_controller_delay, uint32_t* max_controller_delay);
+uint8_t CODEC_ReadLocalSupportedControllerDelay(uint8_t* codecID,
+                                                uint8_t transport,
+                                                uint8_t dir,
+                                                uint8_t codec_conf_len,
+                                                uint8_t * codec_conf,
+                                                uint32_t* min_controller_delay,
+                                                uint32_t* max_controller_delay);
 
 /**
   * @brief  HCI configure data path command, this function also reset the interface state
@@ -369,7 +402,10 @@ uint8_t CODEC_ReadLocalSupportedControllerDelay(uint8_t* codecID, uint8_t transp
   * @param *vs_config : vendor specific configuration, depending on path ID
   * @retval HCI status
   */
-uint8_t CODEC_ConfigureDataPath(uint8_t direction, uint8_t path_id, uint8_t vs_config_len, uint8_t *vs_config);
+uint8_t CODEC_ConfigureDataPath(uint8_t direction,
+                                uint8_t path_id,
+                                uint8_t vs_config_len,
+                                uint8_t *vs_config);
 
 /**
   * @brief HCI setup ISO data path command used for path and codec initialization
@@ -385,7 +421,8 @@ uint8_t CODEC_SetupIsoDataPath(uint8_t *hciparam);
   * @param direction_mask : direction of the stream (bit field)
   * @retval HCI status
   */
-uint8_t CODEC_RemoveIsoDataPath(uint16_t iso_con_hdl, uint8_t direction_mask);
+uint8_t CODEC_RemoveIsoDataPath(uint16_t iso_con_hdl,
+                                uint8_t direction_mask);
 
 /*--------------------------------- Callbacks and events ------------------------------------*/
 /**
@@ -396,7 +433,9 @@ uint8_t CODEC_RemoveIsoDataPath(uint16_t iso_con_hdl, uint8_t direction_mask);
   * @param next_sdu_delivery_timeout : timestamp of the limit time for providing an sdu to the link layer
   * @retval None
   */
-void AUDIO_SyncEventClbk(uint8_t group_id, uint32_t next_anchor_point, uint32_t timestamp,
+void AUDIO_SyncEventClbk(uint8_t group_id,
+                         uint32_t next_anchor_point,
+                         uint32_t timestamp,
                          uint32_t next_sdu_delivery_timeout);
 
 /**
@@ -420,8 +459,14 @@ void AUDIO_CalibrationClbk(uint32_t timestamp);
   * @param s2m_transport_latency : slave to master transport latency
   * @retval 0 if group is registered, 1 is group already exists, -1 for invalid parameter
   */
-int8_t AUDIO_RegisterStream(grp_type_t type, uint8_t id, uint8_t num_str, uint16_t* iso_con_hdl, uint16_t interval,
-                            uint8_t is_peripheral, uint32_t m2s_transport_latency, uint32_t s2m_transport_latency);
+int8_t AUDIO_RegisterStream(grp_type_t type,
+                            uint8_t id,
+                            uint8_t num_str,
+                            uint16_t* iso_con_hdl,
+                            uint16_t interval,
+                            uint8_t is_peripheral,
+                            uint32_t m2s_transport_latency,
+                            uint32_t s2m_transport_latency);
 
 /**
   * @brief Notify the codec manager a stream or group has been killed
@@ -430,7 +475,9 @@ int8_t AUDIO_RegisterStream(grp_type_t type, uint8_t id, uint8_t num_str, uint16
   * @param cis_handle : CIS handle if type is CIG, not used otherwise
   * @retval 0 if group is unregistered, 1 is group still is use, -1 for invalid parameters
   */
-int8_t AUDIO_UnregisterStream(grp_type_t type, uint8_t big_id, uint16_t cis_handle);
+int8_t AUDIO_UnregisterStream(grp_type_t type,
+                              uint8_t big_id,
+                              uint16_t cis_handle);
 
 /*-------------------------------------- Audio Data -----------------------------------------*/
 /**
@@ -438,8 +485,14 @@ int8_t AUDIO_UnregisterStream(grp_type_t type, uint8_t big_id, uint16_t cis_hand
   * @param list of HCI ISO data params
   * @retval status of type codec_rcv_status_t
   */
-codec_rcv_status_t CODEC_ReceiveMediaPacket(uint16_t iso_con_hdl, uint8_t pb_flag, uint8_t ts_flag, uint32_t timestamp,
-                                            uint16_t PSN, uint8_t pkt_status_flag, uint16_t len, uint8_t* pdata);
+codec_rcv_status_t CODEC_ReceiveMediaPacket(uint16_t iso_con_hdl,
+                                            uint8_t pb_flag,
+                                            uint8_t ts_flag,
+                                            uint32_t timestamp,
+                                            uint16_t PSN,
+                                            uint8_t pkt_status_flag,
+                                            uint16_t len,
+                                            uint8_t* pdata);
 
 /**
   * @brief Function called by the Codec Manager for releasing flow control, to be implemented at the interface
@@ -453,6 +506,12 @@ void CODEC_CB_ReceiveMediaPacketReady(uint16_t iso_con_hdl);
   * @param list of HCI ISO data params
   * @retval status of type codec_rcv_status_t
   */
-uint8_t CODEC_CB_SendMediaPacket(uint16_t iso_con_hdl, uint8_t pb_flag, uint8_t ts_flag, uint32_t timestamp,
-                                  uint16_t PSN, uint16_t iso_data_load_length, uint16_t total_sdu_len, uint8_t* pdata);
+uint8_t CODEC_CB_SendMediaPacket(uint16_t iso_con_hdl,
+                                 uint8_t pb_flag,
+                                 uint8_t ts_flag,
+                                 uint32_t timestamp,
+                                 uint16_t PSN,
+                                 uint16_t iso_data_load_length,
+                                 uint16_t total_sdu_len,
+                                 uint8_t* pdata);
 #endif /* __CODEC_MNGR_H__ */

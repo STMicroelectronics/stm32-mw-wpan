@@ -12,6 +12,7 @@
 #include <stdbool.h>
 #include "openthread/instance.h"
 #include "os_wrapper.h"
+#include "stdarg.h"
 
 extern os_mutex_id g_ll_lock;
 #define LL_LOCK() os_rcrsv_mutex_wait(g_ll_lock,0xffffffff)
@@ -114,6 +115,15 @@ void otAppNcpInit(otInstance *aInstance);
  *
  */
 void otSysInit(int argc, char *argv[]);
+
+/**
+ * Performs all platform-specific deinitialization for OpenThread's drivers.
+ *
+ * @note This function is not called by the OpenThread library. Instead, the system/RTOS should call this function
+ *       when deinitialization of OpenThread's drivers is most appropriate.
+ *
+ */
+void otSysDeinit(void);
 
 void otSysRequestPseudoReset(void);
 

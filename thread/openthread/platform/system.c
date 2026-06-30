@@ -102,12 +102,28 @@ void otSysInit(int argc, char *argv[])
                   otPlatRadioSetPromiscuous(NULL, (bool) 0);
                   IsSystemInitCalled++;
 		}
-	}
+
 	arcAlarmInit();
 	g_PseudoReset = FALSE;
+	}
+        else {
+#if (SUPPORT_CONFIG_LIB==1)
+              (void) radio_set_config_lib_params(NULL, &ll_config_thread);
+#endif
+              radio_init();
+              set_max_csma_be(CSMA_MAX_BE);
+              set_min_csma_be(CSMA_MIN_BE);
+              set_max_csma_backoff(CSMA_MAX_BACKOFF);
+              otPlatRadioSetPromiscuous(NULL, (bool) 0);
+	g_PseudoReset = FALSE;
+        }
 	LL_UNLOCK();
 }
-
+void otSysDeinit(void)
+{
+  radio_reset();
+  g_PseudoReset = TRUE;
+}
 void otDispatch_tbl_init(otInstance *sInstance)
 {
 	radio_call_back_funcs_init(&ot_cbk_dispatch_tbl);

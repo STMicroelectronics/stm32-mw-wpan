@@ -31,8 +31,8 @@
  *   This file contains definitions for the diagnostics module.
  */
 
-#ifndef FACTORY_DIAGS_HPP_
-#define FACTORY_DIAGS_HPP_
+#ifndef OT_CORE_DIAGS_FACTORY_DIAGS_HPP_
+#define OT_CORE_DIAGS_FACTORY_DIAGS_HPP_
 
 #include "openthread-core-config.h"
 
@@ -225,6 +225,7 @@ private:
     Error ProcessStats(uint8_t aArgsLength, char *aArgs[]);
     Error ProcessStop(uint8_t aArgsLength, char *aArgs[]);
     Error ProcessStream(uint8_t aArgsLength, char *aArgs[]);
+    Error ProcessSweep(uint8_t aArgsLength, char *aArgs[]);
 #if OPENTHREAD_RADIO && !OPENTHREAD_RADIO_CLI
     Error ProcessEcho(uint8_t aArgsLength, char *aArgs[]);
 #endif
@@ -243,6 +244,7 @@ private:
     void UpdateTxStats(Error aError);
 
     static bool IsChannelValid(uint8_t aChannel);
+    static bool IsFrameLengthValid(uint16_t aLength);
 
     static const struct Command sCommands[];
 
@@ -252,6 +254,7 @@ private:
         kTxCmdNone,
         kTxCmdRepeat,
         kTxCmdSend,
+        kTxCmdSweep,
     };
 
     Stats mStats;
@@ -261,7 +264,7 @@ private:
     uint32_t      mTxPackets;
     uint8_t       mChannel;
     int8_t        mTxPower;
-    uint8_t       mTxLen;
+    uint16_t      mTxLen;
     TxCmd         mCurTxCmd;
     bool          mIsHeaderUpdated : 1;
     bool          mIsSecurityProcessed : 1;
@@ -269,6 +272,7 @@ private:
     bool          mIsAsyncSend : 1;
     bool          mDiagSendOn : 1;
     bool          mIsSleepOn : 1;
+    bool          mIsAsyncSweep : 1;
 #endif
 
     ReceiveConfig        mReceiveConfig;
@@ -281,4 +285,4 @@ private:
 
 #endif // #if OPENTHREAD_CONFIG_DIAG_ENABLE
 
-#endif // FACTORY_DIAGS_HPP_
+#endif // OT_CORE_DIAGS_FACTORY_DIAGS_HPP_

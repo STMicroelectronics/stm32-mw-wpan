@@ -147,14 +147,14 @@ uint16_t CODEC_CLK_GetPLLNfrac( void );
   */
 void CODEC_CLK_SetPLLNfrac( uint16_t n_frac );
 
-#if USE_SW_SYNC_METHOD == 0
 /**
-  * @brief Function called to provide the captured timestamp
+  * @brief Function to provide the captured iso anchor point timestamp to the clock corrector
+  * @note  This function is not needed by the corrector initialized with CORRECTOR_MODE_BASIC 
   * @param iso_evnt_hw_ts : value of the captured timestamp
   * @retval none
   */
 void CODEC_CLK_Provide_ISO_Captured_Timestamp( uint32_t iso_evnt_hw_ts );
-#endif /* USE_SW_SYNC_METHOD == 0 */
+
 
 /******************************************************************************/
 /***************************** tracings events ********************************/

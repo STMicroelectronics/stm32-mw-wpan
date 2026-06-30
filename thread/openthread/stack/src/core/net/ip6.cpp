@@ -187,9 +187,8 @@ exit:
 
 Error Ip6::PrepareMulticastToLargerThanRealmLocal(Message &aMessage, const Header &aHeader)
 {
-    Error          error = kErrorNone;
-    Header         tunnelHeader;
-    const Address *source;
+    Error  error = kErrorNone;
+    Header tunnelHeader;
 
 #if OPENTHREAD_FTD
     if (aHeader.GetDestination().IsMulticastLargerThanRealmLocal() &&
@@ -212,13 +211,9 @@ Error Ip6::PrepareMulticastToLargerThanRealmLocal(Message &aMessage, const Heade
     tunnelHeader.InitVersionTrafficClassFlow();
     tunnelHeader.SetHopLimit(kDefaultHopLimit);
     tunnelHeader.SetPayloadLength(aHeader.GetPayloadLength() + sizeof(tunnelHeader));
-    tunnelHeader.GetDestination().SetToRealmLocalAllMplForwarders();
+    tunnelHeader.SetSource(Get<Mle::Mle>().GetMeshLocalRloc());
+    tunnelHeader.SetDestination(Address::GetRealmLocalAllMplForwarders());
     tunnelHeader.SetNextHeader(kProtoIp6);
-
-    source = SelectSourceAddress(tunnelHeader.GetDestination());
-    VerifyOrExit(source != nullptr, error = kErrorInvalidSourceAddress);
-
-    tunnelHeader.SetSource(*source);
 
     SuccessOrExit(error = AddMplOption(aMessage, tunnelHeader));
     SuccessOrExit(error = aMessage.Prepend(tunnelHeader));
@@ -508,14 +503,21 @@ exit:
 
 Error Ip6::HandleOptions(Message &aMessage, const Header &aHeader, bool &aReceive)
 {
-    Error          error = kErrorNone;
+    Error          error        = kErrorNone;
+    bool           hasMplOption = false;
     HopByHopHeader hbhHeader;
     Option         option;
     OffsetRange    offsetRange;
+    MplOption      mplOption;
 
     offsetRange.InitFromMessageOffsetToEnd(aMessage);
 
     SuccessOrExit(error = ReadHopByHopHeader(aMessage, offsetRange, hbhHeader));
+
+    // `ReadHopByHopHeader()` updates `offsetRange` to refer to the
+    // location of the options within the HBH header. We first
+    // validate all options, ensuring there is at most one MPL
+    // option, before processing it.
 
     for (; !offsetRange.IsEmpty(); offsetRange.AdvanceOffset(option.GetSize()))
     {
@@ -528,11 +530,20 @@ Error Ip6::HandleOptions(Message &aMessage, const Header &aHeader, bool &aReceiv
 
         if (option.GetType() == MplOption::kType)
         {
-            SuccessOrExit(error = mMpl.ProcessOption(aMessage, offsetRange, aHeader.GetSource(), aReceive));
+            VerifyOrExit(!hasMplOption, error = kErrorDrop);
+            hasMplOption = true;
+
+            SuccessOrExit(error = mMpl.ReadAndValidateOption(aMessage, offsetRange, aHeader.GetSource(), mplOption));
+
             continue;
         }
 
         VerifyOrExit(option.GetAction() == Option::kActionSkip, error = kErrorDrop);
+    }
+
+    if (hasMplOption)
+    {
+        SuccessOrExit(error = mMpl.ProcessOption(aMessage, mplOption, aReceive));
     }
 
     aMessage.SetOffset(offsetRange.GetEndOffset());
@@ -554,7 +565,7 @@ Error Ip6::FragmentDatagram(Message &aMessage, uint8_t aIpProto)
 
     uint16_t maxPayloadFragment =
         FragmentHeader::MakeDivisibleByEight(kMinimalMtu - aMessage.GetOffset() - sizeof(fragmentHeader));
-    uint16_t payloadLeft = aMessage.GetLength() - aMessage.GetOffset();
+    uint16_t payloadLeft = aMessage.DetermineLengthAfterOffset();
 
     SuccessOrExit(error = aMessage.Read(0, header));
     header.SetNextHeader(kProtoFragment);
@@ -789,14 +800,12 @@ Error Ip6::FragmentDatagram(Message &aMessage, uint8_t aIpProto)
 
 Error Ip6::HandleFragment(Message &aMessage)
 {
-    Error          error = kErrorNone;
+    Error          error;
     FragmentHeader fragmentHeader;
 
-    SuccessOrExit(error = aMessage.Read(aMessage.GetOffset(), fragmentHeader));
+    SuccessOrExit(error = aMessage.ReadAtAndAdvanceOffset(fragmentHeader));
 
     VerifyOrExit(fragmentHeader.GetOffset() == 0 && !fragmentHeader.IsMoreFlagSet(), error = kErrorDrop);
-
-    aMessage.MoveOffset(sizeof(fragmentHeader));
 
 exit:
     return error;
@@ -823,7 +832,7 @@ Error Ip6::HandleExtensionHeaders(OwnedPtr<Message> &aMessagePtr,
             break;
 
         case kProtoFragment:
-            IgnoreError(PassToHost(aMessagePtr, aHeader, aNextHeader, aReceive, Message::kCopyToUse));
+            IgnoreError(PassToHost(aMessagePtr, aHeader, aNextHeader, aReceive, kCopyMessageToUse));
             SuccessOrExit(error = HandleFragment(*aMessagePtr));
             break;
 
@@ -847,15 +856,15 @@ exit:
 
 Error Ip6::TakeOrCopyMessagePtr(OwnedPtr<Message> &aTargetPtr,
                                 OwnedPtr<Message> &aMessagePtr,
-                                Message::Ownership aMessageOwnership)
+                                MessageOwnership   aMessageOwnership)
 {
     switch (aMessageOwnership)
     {
-    case Message::kTakeCustody:
+    case kTakeMessageCustody:
         aTargetPtr = aMessagePtr.PassOwnership();
         break;
 
-    case Message::kCopyToUse:
+    case kCopyMessageToUse:
         aTargetPtr.Reset(aMessagePtr->Clone());
         break;
     }
@@ -866,7 +875,7 @@ Error Ip6::TakeOrCopyMessagePtr(OwnedPtr<Message> &aTargetPtr,
 Error Ip6::Receive(Header            &aIp6Header,
                    OwnedPtr<Message> &aMessagePtr,
                    uint8_t            aIpProto,
-                   Message::Ownership aMessageOwnership)
+                   MessageOwnership   aMessageOwnership)
 {
     Error             error = kErrorNone;
     OwnedPtr<Message> messagePtr;
@@ -921,7 +930,7 @@ Error Ip6::PassToHost(OwnedPtr<Message> &aMessagePtr,
                       const Header      &aHeader,
                       uint8_t            aIpProto,
                       bool               aReceive,
-                      Message::Ownership aMessageOwnership)
+                      MessageOwnership   aMessageOwnership)
 {
     // This method passes the message to host by invoking the
     // registered IPv6 receive callback. When NAT64 is enabled, it
@@ -952,7 +961,7 @@ Error Ip6::PassToHost(OwnedPtr<Message> &aMessagePtr,
         VerifyOrExit(aReceive, error = kErrorDrop);
     }
 
-    if (mReceiveFilterEnabled && aReceive)
+    if (mReceiveFilterEnabled && aReceive && !aHeader.GetDestination().IsMulticastLargerThanRealmLocal())
     {
         switch (aIpProto)
         {
@@ -994,15 +1003,15 @@ Error Ip6::PassToHost(OwnedPtr<Message> &aMessagePtr,
     IgnoreError(RemoveMplOption(*messagePtr));
 
 #if OPENTHREAD_CONFIG_NAT64_TRANSLATOR_ENABLE
-    switch (Get<Nat64::Translator>().TranslateFromIp6(*messagePtr))
+    error = Get<Nat64::Translator>().TranslateIp6ToIp4(*messagePtr);
+
+    if (error == kErrorAbort) // `kErrorAbort` indicates no translation was needed or performed.
     {
-    case Nat64::Translator::kNotTranslated:
-        break;
-
-    case Nat64::Translator::kDrop:
-        ExitNow(error = kErrorDrop);
-
-    case Nat64::Translator::kForward:
+        error = kErrorNone;
+    }
+    else
+    {
+        SuccessOrExit(error);
         VerifyOrExit(mIp4ReceiveCallback.IsSet(), error = kErrorNoRoute);
         // Pass message to callback transferring its ownership.
         mIp4ReceiveCallback.Invoke(messagePtr.Release());
@@ -1106,13 +1115,43 @@ void Ip6::DetermineAction(const Message &aMessage,
         // Always forward multicast packets to host network stack
         aForwardHost = true;
 
-        // If subscribed to the multicast address, receive if it is from the
-        // Thread netif or if multicast loop is allowed.
+        // Determine `aReceive` for a multicast message destined for
+        // an address to which this device is subscribed.
+        //
+        // 1) Accept if `MulticastLoop` is enabled.
+        // 2) Otherwise, if it originates from the Thread Netif:
+        //   - Always accept if the device is non-sleepy.
+        //   - If sleepy, only if the source is NOT the SED itself.
+        //
+        // For non-sleepy devices, duplicate multicast detection is
+        // handled in `Mpl::ProcessOption()`, which will update
+        // `aReceive` if the message was seen before (based on the
+        // MPL Seed).
+        //
+        // To optimize SED behavior, MPL processing is fully skipped
+        // on SEDs. Therefore, the check above is added to handle the
+        // specific case where an SED sends a multicast message to a
+        // group it is subscribed to. The parent can send it back to
+        // the SED (since the child is subscribed), we check and skip
+        // processing it.
 
-        if ((aMessage.IsOriginThreadNetif() || aMessage.GetMulticastLoop()) &&
-            Get<ThreadNetif>().IsMulticastSubscribed(aHeader.GetDestination()))
+        if (Get<ThreadNetif>().IsMulticastSubscribed(aHeader.GetDestination()))
         {
-            aReceive = true;
+            if (aMessage.GetMulticastLoop())
+            {
+                aReceive = true;
+            }
+            else if (aMessage.IsOriginThreadNetif())
+            {
+                if (Get<Mle::Mle>().IsRxOnWhenIdle())
+                {
+                    aReceive = true;
+                }
+                else
+                {
+                    aReceive = !Get<ThreadNetif>().HasUnicastAddress(aHeader.GetSource());
+                }
+            }
         }
 
         ExitNow();
@@ -1208,7 +1247,7 @@ Error Ip6::HandleDatagram(OwnedPtr<Message> aMessagePtr, bool aIsReassembled)
         bool              multicastLoop = aMessagePtr->GetMulticastLoop();
 
         SuccessOrExit(error = TakeOrCopyMessagePtr(messagePtr, aMessagePtr,
-                                                   forwardThread ? Message::kCopyToUse : Message::kTakeCustody));
+                                                   forwardThread ? kCopyMessageToUse : kTakeMessageCustody));
         messagePtr->SetMulticastLoop(multicastLoop);
         messagePtr->RemoveHeader(messagePtr->GetOffset());
 
@@ -1223,12 +1262,12 @@ Error Ip6::HandleDatagram(OwnedPtr<Message> aMessagePtr, bool aIsReassembled)
     if ((forwardHost || receive) && !aIsReassembled)
     {
         error = PassToHost(aMessagePtr, header, nextHeader, receive,
-                           (receive || forwardThread) ? Message::kCopyToUse : Message::kTakeCustody);
+                           (receive || forwardThread) ? kCopyMessageToUse : kTakeMessageCustody);
     }
 
     if (receive)
     {
-        error = Receive(header, aMessagePtr, nextHeader, forwardThread ? Message::kCopyToUse : Message::kTakeCustody);
+        error = Receive(header, aMessagePtr, nextHeader, forwardThread ? kCopyMessageToUse : kTakeMessageCustody);
     }
 
     if (forwardThread)
@@ -1503,23 +1542,15 @@ const char *Ip6::IpProtoToString(uint8_t aIpProto)
 
 const char *Ip6::EcnToString(Ecn aEcn)
 {
-    static const char *const kEcnStrings[] = {
-        "no", // (0) kEcnNotCapable
-        "e1", // (1) kEcnCapable1  (ECT1)
-        "e0", // (2) kEcnCapable0  (ECT0)
-        "ce", // (3) kEcnMarked    (Congestion Encountered)
-    };
+#define EcnMapList(_)                \
+    _(kEcnNotCapable, "no")          \
+    _(kEcnCapable1, "e1") /* ECT1*/  \
+    _(kEcnCapable0, "e0") /* ECT0 */ \
+    _(kEcnMarked, "ce")   /* Congestion Encountered */
 
-    struct EnumCheck
-    {
-        InitEnumValidatorCounter();
-        ValidateNextEnum(kEcnNotCapable);
-        ValidateNextEnum(kEcnCapable1);
-        ValidateNextEnum(kEcnCapable0);
-        ValidateNextEnum(kEcnMarked);
-    };
+    DefineEnumStringArray(EcnMapList);
 
-    return kEcnStrings[aEcn];
+    return kStrings[aEcn];
 }
 
 // LCOV_EXCL_STOP

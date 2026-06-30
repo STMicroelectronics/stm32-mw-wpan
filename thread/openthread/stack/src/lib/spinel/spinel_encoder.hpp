@@ -30,14 +30,15 @@
  *   This file contains the definitions of a spinel encoder.
  */
 
-#ifndef SPINEL_ENCODER_HPP_
-#define SPINEL_ENCODER_HPP_
+#ifndef OT_LIB_SPINEL_SPINEL_ENCODER_HPP_
+#define OT_LIB_SPINEL_SPINEL_ENCODER_HPP_
 
 #include "openthread-spinel-config.h"
 
 #include <openthread/ip6.h>
 #include <openthread/message.h>
 #include <openthread/ncp.h>
+#include <openthread/platform/radio.h>
 
 #include "spinel.h"
 #include "spinel_buffer.hpp"
@@ -648,11 +649,8 @@ public:
     void ClearNcpBuffer(void);
 
 private:
-    enum
-    {
-        kPackFormatBufferSize = 96, ///< Size of buffer used when encoding using `WritePacked()` or `WriteVPacked()`.
-        kMaxNestedStructs     = 4,  ///< Maximum number of nested structs.
-    };
+    static constexpr uint16_t kPackFormatBufferSize = 96; // Used when encoding using `WritePacked()`.
+    static constexpr uint8_t  kMaxNestedStructs     = 4;  // Maximum number of nested structs.
 
     Spinel::Buffer               &mNcpBuffer;
     Spinel::Buffer::WritePosition mStructPosition[kMaxNestedStructs];
@@ -665,4 +663,4 @@ private:
 } // namespace Spinel
 } // namespace ot
 
-#endif // SPINEL_ENCODER_HPP_
+#endif // OT_LIB_SPINEL_SPINEL_ENCODER_HPP_

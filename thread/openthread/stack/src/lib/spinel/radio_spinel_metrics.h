@@ -32,8 +32,10 @@
  *   This file includes the definitions of the radio spinel metrics.
  */
 
-#ifndef RADIO_SPINEL_METRICS_H_
-#define RADIO_SPINEL_METRICS_H_
+#ifndef OT_LIB_SPINEL_RADIO_SPINEL_METRICS_H_
+#define OT_LIB_SPINEL_RADIO_SPINEL_METRICS_H_
+
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -69,4 +71,4 @@ typedef struct otRcpInterfaceMetrics
 } // end of extern "C"
 #endif
 
-#endif // RADIO_SPINEL_METRICS_H_
+#endif // OT_LIB_SPINEL_RADIO_SPINEL_METRICS_H_

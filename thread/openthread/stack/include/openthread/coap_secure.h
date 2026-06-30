@@ -44,9 +44,15 @@
 #ifndef OPENTHREAD_COAP_SECURE_H_
 #define OPENTHREAD_COAP_SECURE_H_
 
+#include <stdbool.h>
+#include <stddef.h>
 #include <stdint.h>
 
 #include <openthread/coap.h>
+#include <openthread/error.h>
+#include <openthread/instance.h>
+#include <openthread/ip6.h>
+#include <openthread/message.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -410,4 +416,4 @@ otError otCoapSecureSendResponse(otInstance *aInstance, otMessage *aMessage, con
 } // extern "C"
 #endif
 
-#endif /* OPENTHREAD_COAP_SECURE_H_ */
+#endif // OPENTHREAD_COAP_SECURE_H_

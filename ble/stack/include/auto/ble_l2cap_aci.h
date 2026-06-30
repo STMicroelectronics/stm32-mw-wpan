@@ -27,6 +27,9 @@
  * the Central.
  * An ACI_L2CAP_CONNECTION_UPDATE_RESP_EVENT event is raised when the Central
  * responds to the request (accepts or rejects).
+ * To use this command, it is necessary that
+ * HCI_LE_REMOTE_CONNECTION_PARAMETER_REQUEST_EVENT be masked (which is the
+ * default Controller configuration).
  *
  * @param Connection_Handle Connection handle for which the command applies.
  *        Values:
@@ -57,7 +60,7 @@ tBleStatus aci_l2cap_connection_parameter_update_req( uint16_t Connection_Handle
  * @brief ACI_L2CAP_CONNECTION_PARAMETER_UPDATE_RESP
  * Accepts or rejects a connection update. This command should be sent in
  * response to an ACI_L2CAP_CONNECTION_UPDATE_REQ_EVENT event from the
- * controller. The accept parameter has to be set if the connection parameters
+ * Controller. The accept parameter has to be set if the connection parameters
  * given in the event are acceptable.
  *
  * @param Connection_Handle Connection handle for which the command applies.

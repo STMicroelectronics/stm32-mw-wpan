@@ -28,9 +28,14 @@
 #define OOB_AUTH_DATA_ABSENT                       0x00U
 #define OOB_AUTH_DATA_PRESENT                      0x01U
 
+#define BLE_STATUS_CSRK_NOT_FOUND                  0x5AU
 #define BLE_STATUS_SEC_DB_FULL                     0x5DU
 #define BLE_STATUS_INSUFFICIENT_ENC_KEYSIZE        0x5FU
 #define BLE_STATUS_CHARAC_ALREADY_EXISTS           0x63U
+
+#define ATTR_ACCESS_SIGNED_WRITE_ALLOWED           0x08U
+
+#define CHAR_PROP_SIGNED_WRITE                     0x40U
 
 #define GAP_NAME_DISCOVERY_PROC                    0x04U
 
@@ -54,6 +59,18 @@
         aci_hal_set_peripheral_latency
 #define aci_gap_slave_security_initiated_event \
         aci_gap_peripheral_security_initiated_event
+#define aci_gatt_read_long_char_desc\
+        aci_gatt_read_long_char_value
+#define aci_gatt_read_char_desc \
+        aci_gatt_read_char_value
+#define aci_gatt_write_long_char_desc \
+        aci_gatt_write_long_char_value
+#define aci_gatt_write_char_desc \
+        aci_gatt_write_char_value
+#define aci_gatt_write_resp \
+        aci_gatt_permit_write
+#define aci_gap_ext_start_scan \
+        aci_gap_start_scan
 
 typedef __PACKED_STRUCT
 {
@@ -154,21 +171,6 @@ typedef __PACKED_STRUCT
 
 /* Deprecated commands
  */
-
-#define aci_gatt_read_long_char_desc\
-        aci_gatt_read_long_char_value
-
-#define aci_gatt_read_char_desc \
-        aci_gatt_read_char_value
-
-#define aci_gatt_write_long_char_desc \
-        aci_gatt_write_long_char_value
-
-#define aci_gatt_write_char_desc \
-        aci_gatt_write_char_value
-
-#define aci_gatt_write_resp \
-        aci_gatt_permit_write
 
 /**
  * @brief ACI_GAP_RESOLVE_PRIVATE_ADDR
@@ -341,6 +343,439 @@ tBleStatus aci_gatt_deny_read( uint16_t Connection_Handle,
                                uint8_t Error_Code )
 {
   return aci_gatt_permit_read( Connection_Handle, 1, Error_Code, 0 );
+}
+
+/**
+ * @brief ACI_GAP_CONFIGURE_FILTER_ACCEPT_LIST
+ * This command adds addresses of bonded devices into the Controller's Filter
+ * Accept List, which is cleared first. It returns an error if it was unable to
+ * add all bonded devices into the Filter Accept List.
+ * This command shall not be used when the device is advertising, scanning or
+ * initiating with a filter policy using the Filter Accept List.
+ *
+ * @return Value indicating success or error code.
+ */
+__STATIC_INLINE
+tBleStatus aci_gap_configure_filter_accept_list( void )
+{
+  return aci_gap_add_devices_to_list( 0, NULL,
+                                      GAP_ADD_DEV_MODE_CLEAR |
+                                      GAP_ADD_DEV_MODE_FILTER_ACC_LIST_ONLY |
+                                      GAP_ADD_DEV_MODE_CONFIGURE_FROM_SDB );
+}
+
+/**
+ * @brief ACI_GAP_START_LIMITED_DISCOVERY_PROC
+ * Starts the limited discovery procedure. The Controller is commanded to start
+ * active scanning.
+ * When this procedure is started, only the devices in limited discoverable
+ * mode are returned to the upper layers.
+ * The procedure is terminated when either the upper layers issue a command to
+ * terminate the procedure by issuing the command ACI_GAP_TERMINATE_GAP_PROC
+ * with the procedure code set to 0x01 or a timeout happens (the timeout value
+ * is fixed at 10.24 s.). When the procedure is terminated due to any of the
+ * above reasons, ACI_GAP_PROC_COMPLETE_EVENT event is returned with the
+ * procedure code set to 0x01.
+ * The device found when the procedure is ongoing is returned to the upper
+ * layers through the event HCI_LE_ADVERTISING_REPORT_EVENT (or via
+ * HCI_LE_EXTENDED_ADVERTISING_REPORT_EVENT when the extended advertising
+ * feature is supported).
+ *
+ * @param LE_Scan_Interval This is defined as the time interval from when the
+ *        Controller started its last LE scan until it begins the subsequent LE
+ *        scan.
+ *        Time = N * 0.625 ms.
+ *        Values:
+ *        - 0x0004 (2.500 ms)  ... 0x4000 (10240.000 ms)
+ * @param LE_Scan_Window Amount of time for the duration of the LE scan.
+ *        LE_Scan_Window shall be less than or equal to LE_Scan_Interval.
+ *        Time = N * 0.625 ms.
+ *        Values:
+ *        - 0x0004 (2.500 ms)  ... 0x4000 (10240.000 ms)
+ * @param Own_Address_Type Own address type: if Privacy is disabled, the
+ *        address can be public or static random; otherwise, it can be a
+ *        resolvable private address or a non-resolvable private address.
+ *        Values:
+ *        - 0x00: Public address
+ *        - 0x01: Static random address
+ *        - 0x02: Resolvable private address
+ *        - 0x03: Non-resolvable private address
+ * @param Filter_Duplicates Enable/disable duplicate filtering.
+ *        Values:
+ *        - 0x00: Duplicate filtering disabled
+ *        - 0x01: Duplicate filtering enabled
+ * @return Value indicating success or error code.
+ */
+__STATIC_INLINE
+tBleStatus aci_gap_start_limited_discovery_proc( uint16_t LE_Scan_Interval,
+                                                 uint16_t LE_Scan_Window,
+                                                 uint8_t Own_Address_Type,
+                                                 uint8_t Filter_Duplicates )
+{
+  Scan_Param_Phy_t scan_param[2];
+
+  scan_param[0].Scan_Type     = HCI_SCAN_TYPE_ACTIVE;
+  scan_param[0].Scan_Interval = LE_Scan_Interval;
+  scan_param[0].Scan_Window   = LE_Scan_Window;
+
+  return aci_gap_start_scan( 0, GAP_LIMITED_DISCOVERY_PROC,
+                             Own_Address_Type,
+                             Filter_Duplicates, 0, 0,
+                             HCI_SCAN_FILTER_NO,
+                             HCI_SCANNING_PHYS_LE_1M, scan_param );
+}
+
+/**
+ * @brief ACI_GAP_START_GENERAL_DISCOVERY_PROC
+ * Starts the general discovery procedure. The Controller is commanded to start
+ * active scanning. The procedure is terminated when either the upper layers
+ * issue a command to terminate the procedure by issuing the command
+ * ACI_GAP_TERMINATE_GAP_PROC with the procedure code set to 0x02 or a timeout
+ * happens (the timeout value is fixed at 10.24 s.). When the procedure is
+ * terminated due to any of the above reasons, ACI_GAP_PROC_COMPLETE_EVENT
+ * event is returned with the procedure code set to 0x02.
+ * The devices found when the procedure is ongoing are returned via
+ * HCI_LE_ADVERTISING_REPORT_EVENT (or via
+ * HCI_LE_EXTENDED_ADVERTISING_REPORT_EVENT when the extended advertising
+ * feature is supported).
+ *
+ * @param LE_Scan_Interval This is defined as the time interval from when the
+ *        Controller started its last LE scan until it begins the subsequent LE
+ *        scan.
+ *        Time = N * 0.625 ms.
+ *        Values:
+ *        - 0x0004 (2.500 ms)  ... 0x4000 (10240.000 ms)
+ * @param LE_Scan_Window Amount of time for the duration of the LE scan.
+ *        LE_Scan_Window shall be less than or equal to LE_Scan_Interval.
+ *        Time = N * 0.625 ms.
+ *        Values:
+ *        - 0x0004 (2.500 ms)  ... 0x4000 (10240.000 ms)
+ * @param Own_Address_Type Own address type: if Privacy is disabled, the
+ *        address can be public or static random; otherwise, it can be a
+ *        resolvable private address or a non-resolvable private address.
+ *        Values:
+ *        - 0x00: Public address
+ *        - 0x01: Static random address
+ *        - 0x02: Resolvable private address
+ *        - 0x03: Non-resolvable private address
+ * @param Filter_Duplicates Enable/disable duplicate filtering.
+ *        Values:
+ *        - 0x00: Duplicate filtering disabled
+ *        - 0x01: Duplicate filtering enabled
+ * @return Value indicating success or error code.
+ */
+__STATIC_INLINE
+tBleStatus aci_gap_start_general_discovery_proc( uint16_t LE_Scan_Interval,
+                                                 uint16_t LE_Scan_Window,
+                                                 uint8_t Own_Address_Type,
+                                                 uint8_t Filter_Duplicates )
+{
+ Scan_Param_Phy_t scan_param[2];
+
+  scan_param[0].Scan_Type     = HCI_SCAN_TYPE_ACTIVE;
+  scan_param[0].Scan_Interval = LE_Scan_Interval;
+  scan_param[0].Scan_Window   = LE_Scan_Window;
+
+  return aci_gap_start_scan( 0, GAP_GENERAL_DISCOVERY_PROC,
+                             Own_Address_Type,
+                             Filter_Duplicates, 0, 0,
+                             HCI_SCAN_FILTER_NO,
+                             HCI_SCANNING_PHYS_LE_1M, scan_param );
+}
+
+/**
+ * @brief ACI_GAP_START_GENERAL_CONNECTION_ESTABLISH_PROC
+ * Starts a general connection establishment procedure. The Host enables
+ * scanning in the Controller with the scanner filter policy set to "accept all
+ * advertising packets" and from the scanning results, all the devices are sent
+ * to the upper layer by the event HCI_LE_ADVERTISING_REPORT_EVENT (or by the
+ * event HCI_LE_EXTENDED_ADVERTISING_REPORT_EVENT when the extended advertising
+ * feature is supported). The upper layer then has to select one of the devices
+ * to which it wants to connect by issuing the command
+ * ACI_GAP_CREATE_CONNECTION. If privacy is enabled, then either a private
+ * resolvable address or a non-resolvable address, based on the address type
+ * specified in the command is set as the scanner address but the gap create
+ * connection always uses a private resolvable address if the general
+ * connection establishment procedure is active.
+ * Before the call to ACI_GAP_CREATE_CONNECTION, the procedure can be
+ * terminated by issuing the command ACI_GAP_TERMINATE_GAP_PROC with the
+ * procedure code set to 0x10.
+ * After the call to ACI_GAP_CREATE_CONNECTION, the procedure is terminated
+ * when a connection is established, or the upper layer terminates the
+ * procedure by issuing the command ACI_GAP_TERMINATE_GAP_PROC with the
+ * procedure code set to 0x40. On completion of the procedure a
+ * ACI_GAP_PROC_COMPLETE_EVENT event is generated with the procedure code set
+ * to 0x40.
+ * If privacy is enabled and the peer device (advertiser) is in the resolving
+ * list then the link layer generates a RPA.
+ *
+ * @param LE_Scan_Type Passive or active scanning. With passive scanning, no
+ *        scan request PDUs are sent.
+ *        Values:
+ *        - 0x00: Passive scanning
+ *        - 0x01: Active scanning
+ * @param LE_Scan_Interval This is defined as the time interval from when the
+ *        Controller started its last LE scan until it begins the subsequent LE
+ *        scan.
+ *        Time = N * 0.625 ms.
+ *        Values:
+ *        - 0x0004 (2.500 ms)  ... 0x4000 (10240.000 ms) : legacy advertising
+ *        - 0x0004 (2.500 ms)  ... 0xFFFF (40959.375 ms) : extended advertising
+ * @param LE_Scan_Window Amount of time for the duration of the LE scan.
+ *        LE_Scan_Window shall be less than or equal to LE_Scan_Interval.
+ *        Time = N * 0.625 ms.
+ *        Values:
+ *        - 0x0004 (2.500 ms)  ... 0x4000 (10240.000 ms) : legacy advertising
+ *        - 0x0004 (2.500 ms)  ... 0xFFFF (40959.375 ms) : extended advertising
+ * @param Own_Address_Type Own address type: if Privacy is disabled, the
+ *        address can be public or static random; otherwise, it can be a
+ *        resolvable private address or a non-resolvable private address.
+ *        Values:
+ *        - 0x00: Public address
+ *        - 0x01: Static random address
+ *        - 0x02: Resolvable private address
+ *        - 0x03: Non-resolvable private address
+ * @param Scanning_Filter_Policy The scanning filter policy determines how the
+ *        scanner's Link Layer processes advertising and scan response PDUs.
+ *        There is a choice of two primary filter policies: unfiltered and
+ *        filtered.
+ *        Unfiltered: the Link Layer processes all advertising and scan
+ *        response PDUs (i.e., the Filter Accept List is not used).
+ *        Filtered: the Link Layer processes advertising and scan response PDUs
+ *        only from devices in the Filter Accept List.
+ *        With extended scanning filter policies, a directed advertising PDU
+ *        accepted by the primary filter policy shall nevertheless be ignored
+ *        unless either the TargetA field is identical to the scanner's device
+ *        address, or TargetA field is a resolvable private address.
+ *        Values:
+ *        - 0x00: Basic unfiltered scanning filter policy
+ *        - 0x01: Basic filtered scanning filter policy
+ *        - 0x02: Extended unfiltered scanning filter policy
+ *        - 0x03: Extended filtered scanning filter policy
+ * @param Filter_Duplicates Enable/disable duplicate filtering.
+ *        Values:
+ *        - 0x00: Duplicate filtering disabled
+ *        - 0x01: Duplicate filtering enabled
+ * @return Value indicating success or error code.
+ */
+__STATIC_INLINE
+tBleStatus aci_gap_start_general_connection_establish_proc(
+                                               uint8_t LE_Scan_Type,
+                                               uint16_t LE_Scan_Interval,
+                                               uint16_t LE_Scan_Window,
+                                               uint8_t Own_Address_Type,
+                                               uint8_t Scanning_Filter_Policy,
+                                               uint8_t Filter_Duplicates )
+{
+ Scan_Param_Phy_t scan_param[2];
+
+  scan_param[0].Scan_Type     = LE_Scan_Type;
+  scan_param[0].Scan_Interval = LE_Scan_Interval;
+  scan_param[0].Scan_Window   = LE_Scan_Window;
+
+  return aci_gap_start_scan( 0, GAP_GENERAL_CONNECTION_ESTABLISHMENT_PROC,
+                             Own_Address_Type,
+                             Filter_Duplicates, 0, 0,
+                             Scanning_Filter_Policy,
+                             HCI_SCANNING_PHYS_LE_1M, scan_param );
+}
+
+/**
+ * @brief ACI_GAP_START_SELECTIVE_CONNECTION_ESTABLISH_PROC
+ * Starts a selective connection establishment procedure. The GAP adds the
+ * specified device addresses into Filter Accept List and enables scanning in
+ * the Controller with a scanning filter policy that should be set to
+ * "filtered". All the devices found are sent to the upper layer by the event
+ * HCI_LE_ADVERTISING_REPORT_EVENT (or by the event
+ * HCI_LE_EXTENDED_ADVERTISING_REPORT_EVENT when the extended advertising
+ * feature is supported). The upper layer then has to select one of the devices
+ * to which it wants to connect by issuing the command
+ * ACI_GAP_CREATE_CONNECTION.
+ * Before the call to ACI_GAP_CREATE_CONNECTION, the procedure can be
+ * terminated by issuing the command ACI_GAP_TERMINATE_GAP_PROC with the
+ * procedure code set to 0x20.
+ * After the call to ACI_GAP_CREATE_CONNECTION, the procedure is terminated
+ * when a connection is established, or the upper layer terminates the
+ * procedure by issuing the command ACI_GAP_TERMINATE_GAP_PROC with the
+ * procedure code set to 0x40. On completion of the procedure a
+ * ACI_GAP_PROC_COMPLETE_EVENT event is generated with the procedure code set
+ * to 0x40.
+ * If privacy is enabled and the peer device (advertiser) is in the resolving
+ * list then the link layer generates a RPA.
+ *
+ * @param LE_Scan_Type Passive or active scanning. With passive scanning, no
+ *        scan request PDUs are sent.
+ *        Values:
+ *        - 0x00: Passive scanning
+ *        - 0x01: Active scanning
+ * @param LE_Scan_Interval This is defined as the time interval from when the
+ *        Controller started its last LE scan until it begins the subsequent LE
+ *        scan.
+ *        Time = N * 0.625 ms.
+ *        Values:
+ *        - 0x0004 (2.500 ms)  ... 0x4000 (10240.000 ms) : legacy advertising
+ *        - 0x0004 (2.500 ms)  ... 0xFFFF (40959.375 ms) : extended advertising
+ * @param LE_Scan_Window Amount of time for the duration of the LE scan.
+ *        LE_Scan_Window shall be less than or equal to LE_Scan_Interval.
+ *        Time = N * 0.625 ms.
+ *        Values:
+ *        - 0x0004 (2.500 ms)  ... 0x4000 (10240.000 ms) : legacy advertising
+ *        - 0x0004 (2.500 ms)  ... 0xFFFF (40959.375 ms) : extended advertising
+ * @param Own_Address_Type Own address type: if Privacy is disabled, the
+ *        address can be public or static random; otherwise, it can be a
+ *        resolvable private address or a non-resolvable private address.
+ *        Values:
+ *        - 0x00: Public address
+ *        - 0x01: Static random address
+ *        - 0x02: Resolvable private address
+ *        - 0x03: Non-resolvable private address
+ * @param Scanning_Filter_Policy The scanning filter policy determines how the
+ *        scanner's Link Layer processes advertising and scan response PDUs.
+ *        There is a choice of two primary filter policies: unfiltered and
+ *        filtered.
+ *        Unfiltered: the Link Layer processes all advertising and scan
+ *        response PDUs (i.e., the Filter Accept List is not used).
+ *        Filtered: the Link Layer processes advertising and scan response PDUs
+ *        only from devices in the Filter Accept List.
+ *        With extended scanning filter policies, a directed advertising PDU
+ *        accepted by the primary filter policy shall nevertheless be ignored
+ *        unless either the TargetA field is identical to the scanner's device
+ *        address, or TargetA field is a resolvable private address.
+ *        Values:
+ *        - 0x00: Basic unfiltered scanning filter policy
+ *        - 0x01: Basic filtered scanning filter policy
+ *        - 0x02: Extended unfiltered scanning filter policy
+ *        - 0x03: Extended filtered scanning filter policy
+ * @param Filter_Duplicates Enable/disable duplicate filtering.
+ *        Values:
+ *        - 0x00: Duplicate filtering disabled
+ *        - 0x01: Duplicate filtering enabled
+ * @param Num_of_Peer_Entries Number of devices that have to be added to the
+ *        Filter Accept List. Each device is defined by Peer_Address_Type and
+ *        Peer_Address.
+ * @param Peer_Entry See @ref Peer_Entry_t
+ * @return Value indicating success or error code.
+ */
+__STATIC_INLINE
+tBleStatus aci_gap_start_selective_connection_establish_proc(
+                                               uint8_t LE_Scan_Type,
+                                               uint16_t LE_Scan_Interval,
+                                               uint16_t LE_Scan_Window,
+                                               uint8_t Own_Address_Type,
+                                               uint8_t Scanning_Filter_Policy,
+                                               uint8_t Filter_Duplicates,
+                                               uint8_t Num_of_Peer_Entries,
+                                               const Peer_Entry_t* Peer_Entry )
+{
+  Scan_Param_Phy_t scan_param[2];
+  tBleStatus status;
+
+  if ( Num_of_Peer_Entries == 0 )
+  {
+    return BLE_STATUS_INVALID_PARAMS;
+  }
+
+  /* Add the devices to Filter Accept List */
+  status =
+    aci_gap_add_devices_to_list( Num_of_Peer_Entries,
+                                 (List_Entry_t*)Peer_Entry,
+                                 GAP_ADD_DEV_MODE_CLEAR |
+                                 GAP_ADD_DEV_MODE_FILTER_ACC_LIST_ONLY );
+
+  if ( status != BLE_STATUS_SUCCESS )
+  {
+    return status;
+  }
+
+  /* Start scan */
+  scan_param[0].Scan_Type     = LE_Scan_Type;
+  scan_param[0].Scan_Interval = LE_Scan_Interval;
+  scan_param[0].Scan_Window   = LE_Scan_Window;
+
+  return aci_gap_start_scan( 0, GAP_SELECTIVE_CONNECTION_ESTABLISHMENT_PROC,
+                             Own_Address_Type,
+                             Filter_Duplicates, 0, 0,
+                             Scanning_Filter_Policy,
+                             HCI_SCANNING_PHYS_LE_1M, scan_param );
+}
+
+/**
+ * @brief ACI_GAP_START_OBSERVATION_PROC
+ * Starts an Observation procedure when the device is in Observer Role. The
+ * Host enables scanning in the Controller. The advertising reports are sent to
+ * the upper layer using standard LE Advertising Report Event.
+ * If privacy is enabled and the peer device (advertiser) is in the resolving
+ * list then the link layer will generate a RPA, if it is not then the RPA/NRPA
+ * generated by the Host will be used.
+ *
+ * @param LE_Scan_Interval This is defined as the time interval from when the
+ *        Controller started its last LE scan until it begins the subsequent LE
+ *        scan.
+ *        Time = N * 0.625 ms.
+ *        Values:
+ *        - 0x0004 (2.500 ms)  ... 0x4000 (10240.000 ms) : legacy advertising
+ *        - 0x0004 (2.500 ms)  ... 0xFFFF (40959.375 ms) : extended advertising
+ * @param LE_Scan_Window Amount of time for the duration of the LE scan.
+ *        LE_Scan_Window shall be less than or equal to LE_Scan_Interval.
+ *        Time = N * 0.625 ms.
+ *        Values:
+ *        - 0x0004 (2.500 ms)  ... 0x4000 (10240.000 ms) : legacy advertising
+ *        - 0x0004 (2.500 ms)  ... 0xFFFF (40959.375 ms) : extended advertising
+ * @param LE_Scan_Type Passive or active scanning. With passive scanning, no
+ *        scan request PDUs are sent.
+ *        Values:
+ *        - 0x00: Passive scanning
+ *        - 0x01: Active scanning
+ * @param Own_Address_Type Own address type: if Privacy is disabled, the
+ *        address can be public or static random; otherwise, it can be a
+ *        resolvable private address or a non-resolvable private address.
+ *        Values:
+ *        - 0x00: Public address
+ *        - 0x01: Static random address
+ *        - 0x02: Resolvable private address
+ *        - 0x03: Non-resolvable private address
+ * @param Filter_Duplicates Enable/disable duplicate filtering.
+ *        Values:
+ *        - 0x00: Duplicate filtering disabled
+ *        - 0x01: Duplicate filtering enabled
+ * @param Scanning_Filter_Policy The scanning filter policy determines how the
+ *        scanner's Link Layer processes advertising and scan response PDUs.
+ *        There is a choice of two primary filter policies: unfiltered and
+ *        filtered.
+ *        Unfiltered: the Link Layer processes all advertising and scan
+ *        response PDUs (i.e., the Filter Accept List is not used).
+ *        Filtered: the Link Layer processes advertising and scan response PDUs
+ *        only from devices in the Filter Accept List.
+ *        With extended scanning filter policies, a directed advertising PDU
+ *        accepted by the primary filter policy shall nevertheless be ignored
+ *        unless either the TargetA field is identical to the scanner's device
+ *        address, or TargetA field is a resolvable private address.
+ *        Values:
+ *        - 0x00: Basic unfiltered scanning filter policy
+ *        - 0x01: Basic filtered scanning filter policy
+ *        - 0x02: Extended unfiltered scanning filter policy
+ *        - 0x03: Extended filtered scanning filter policy
+ * @return Value indicating success or error code.
+ */
+__STATIC_INLINE
+tBleStatus aci_gap_start_observation_proc( uint16_t LE_Scan_Interval,
+                                           uint16_t LE_Scan_Window,
+                                           uint8_t LE_Scan_Type,
+                                           uint8_t Own_Address_Type,
+                                           uint8_t Filter_Duplicates,
+                                           uint8_t Scanning_Filter_Policy )
+{
+  Scan_Param_Phy_t scan_param[2];
+
+  scan_param[0].Scan_Type     = LE_Scan_Type;
+  scan_param[0].Scan_Interval = LE_Scan_Interval;
+  scan_param[0].Scan_Window   = LE_Scan_Window;
+
+  return aci_gap_start_scan( 0, GAP_OBSERVATION_PROC,
+                             Own_Address_Type,
+                             Filter_Duplicates, 0, 0,
+                             Scanning_Filter_Policy,
+                             HCI_SCANNING_PHYS_LE_1M, scan_param );
 }
 
 

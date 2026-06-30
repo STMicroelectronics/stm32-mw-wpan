@@ -25,6 +25,7 @@
 #include "platform_wba.h"
 #include "uart.h"
 #include "log_module.h"
+#include "logging.h"
 
 /* Extern variables  ---------------------------------------------------------*/
 #ifndef OT_RCP_UART_HANDLER

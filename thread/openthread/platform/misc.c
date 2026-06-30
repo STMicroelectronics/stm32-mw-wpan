@@ -46,16 +46,17 @@
 
 static void ot_assert_failed(char const* file, uint32_t line);
 
-
+extern void InitThreadStack(void);
+extern void DeinitThreadStack(void);
 void otPlatReset(otInstance *aInstance)
 {
-  (void)aInstance;
+  //(void)aInstance;
 //  /*----------------------------*/
 //  /* Reset the stack            */
 //  /*----------------------------*/
-//  DeinitThreadStack();
-//  InitThreadStack();
-  otSysRequestPseudoReset();
+   DeinitThreadStack();
+   InitThreadStack();
+   //otSysRequestPseudoReset();
 }
 
 otPlatResetReason otPlatGetResetReason(otInstance *aInstance)

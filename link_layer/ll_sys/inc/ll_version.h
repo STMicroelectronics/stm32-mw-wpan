@@ -23,7 +23,7 @@
  * @brief Brief version of the current Link Layer.
  */
 #define LL_SYS_BRIEF_VERSION_MAJOR 1
-#define LL_SYS_BRIEF_VERSION_MINOR 0
+#define LL_SYS_BRIEF_VERSION_MINOR 1
 #define LL_SYS_BRIEF_VERSION_PATCH 0
 
 /* LL System version major mask */

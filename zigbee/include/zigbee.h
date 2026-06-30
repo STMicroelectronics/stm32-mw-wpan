@@ -3,7 +3,7 @@
  * @heading Initialization
  * @brief Zigbee header file.
  * @author Exegin Technologies
- * @copyright Copyright [2009 - 2025] Exegin Technologies Limited. All rights reserved.
+ * @copyright Copyright [2009 - 2026] Exegin Technologies Limited. All rights reserved.
  *
  * This file groups global/external definitions from all the layer specific header files
  * e.g, aps, nwk, zdo etc... into a single place, so that one can just include zigbee.h for
@@ -80,7 +80,7 @@ struct WpanPublicT;
  * NOTE: The max allocation is not the total size of the heap, only the
  * largest chunk of data we can allocate from it at a time.
  * If we define both implementation limits to be 2000, we should be safe. */
-#define ZB_HEAP_MAX_ALLOC                   2000U
+#define ZB_HEAP_MAX_ALLOC               2000U
 
 /* ZigBee Status Codes */
 enum ZbStatusCodeT {
@@ -370,8 +370,18 @@ void ZbTimerWork(struct ZigBeeT *zb);
 unsigned int ZbCheckTime(struct ZigBeeT *zb);
 
 /**
+ * Calculates the uptime for the next timeout, given the current uptime and a
+ * timeout value in milliseconds. Handles the case where the timeout may cause a
+ * wrap in the computed expiry time.
+ * @param now Current uptime
+ * @param timeout Timeout offset in milliseconds
+ * @return Timeout expire time, or zero if the timeout exceeds the maximum allowed.
+ */
+ZbUptimeT ZbTimeoutCalc(ZbUptimeT now, unsigned int timeout);
+
+/**
  * Zigbee timeout remaining function.
- * @param now Current time
+ * @param now Current uptime
  * @param expire_time time of timeout expiry
  * @return Returns 0 if now >= expire_time,
  * difference in milliseconds between now and timeout if now < expire_time.

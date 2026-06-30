@@ -63,7 +63,6 @@ typedef enum {
 #define LC3_SESSION_STRUCT_SIZE_24kHz     (124u)   /* up to 24kHz only */
 #define LC3_SESSION_STRUCT_SIZE_48kHz     (172u)   /* full features */
 
-
 /* Exported functions ------------------------------------------------------- */
 /**
   * @brief  Initialize an LC3 session
@@ -112,7 +111,7 @@ void* lc3_get_session_from_channel(void* hChannel);
 uint16_t lc3_get_bytes_from_channel(void* hChannel);
 
 /**
-  * @brief Get the direction of a channel 
+  * @brief Get the direction of a channel
   * @param hChannel : pointer to the channel handler
   * @retval 0 for encoder, 1 for decoder
   */
@@ -125,5 +124,23 @@ uint8_t lc3_get_direction_from_channel(void *hChannel);
   * @param hSession : pointer to the session handler
   */
 void lc3_update_session_pointer(void *hChannel, void *hSession);
+
+/**
+  * @brief Initializes the constants for the 7.5 ms, 8 kHz to 24 kHz configurations.
+  * @note This function is weak and may be redefined as empty to avoid linking the constants.
+  */
+void lc3_link_7ms5_nb_wb_sswb_const(void);
+
+/**
+  * @brief Initializes the constants for the 7.5 ms, 32 kHz and 48 kHz configurations.
+  * @note This function is weak and may be redefined as empty to avoid linking the constants.
+  */
+void lc3_link_7ms5_swb_fb_const(void);
+
+/**
+  * @brief Initializes the constants for the 10 ms, 32 kHz and 48 kHz configurations.
+  * @note This function is weak and may be redefined as empty to avoid linking the constants.
+  */
+void lc3_link_10ms_swb_fb_const(void);
 
 #endif /* __LC3_H__ */

@@ -31,8 +31,8 @@
  *   This file includes definitions for TCP/IPv6 sockets.
  */
 
-#ifndef TCP6_HPP_
-#define TCP6_HPP_
+#ifndef OT_CORE_NET_TCP6_HPP_
+#define OT_CORE_NET_TCP6_HPP_
 
 #include "openthread-core-config.h"
 
@@ -644,11 +644,8 @@ public:
     bool IsInitialized(const Listener &aListener) const { return mListeners.Contains(aListener); }
 
 private:
-    enum
-    {
-        kDynamicPortMin = 49152, ///< Service Name and Transport Protocol Port Number Registry
-        kDynamicPortMax = 65535, ///< Service Name and Transport Protocol Port Number Registry
-    };
+    static constexpr uint16_t kDynamicPortMin = 49152;
+    static constexpr uint16_t kDynamicPortMax = 65535;
 
     static constexpr uint8_t kEstablishedCallbackFlag      = (1 << 0);
     static constexpr uint8_t kSendDoneCallbackFlag         = (1 << 1);
@@ -686,4 +683,4 @@ DefineCoreType(otTcpListener, Ip6::Tcp::Listener);
 
 } // namespace ot
 
-#endif // TCP6_HPP_
+#endif // OT_CORE_NET_TCP6_HPP_

@@ -31,8 +31,8 @@
  *   This file includes definitions for the spinel based radio transceiver.
  */
 
-#ifndef RADIO_SPINEL_HPP_
-#define RADIO_SPINEL_HPP_
+#ifndef OT_LIB_SPINEL_RADIO_SPINEL_HPP_
+#define OT_LIB_SPINEL_RADIO_SPINEL_HPP_
 
 #include <openthread/platform/diag.h>
 #include <openthread/platform/radio.h>
@@ -106,34 +106,6 @@ struct RadioSpinelCallbacks
      * @param[in]  aSuccess   A value indicating if the switchover was successful or not.
      */
     void (*mSwitchoverDone)(otInstance *aInstance, bool aSuccess);
-
-#if OPENTHREAD_CONFIG_DIAG_ENABLE
-    /**
-     * This callback notifies diagnostics module using `RadioSpinel` of a received frame.
-     *
-     * This callback is used when diagnostics is enabled.
-     *
-     * @param[in]  aInstance  The OpenThread instance structure.
-     * @param[in]  aFrame     A pointer to the received frame or NULL if the receive operation failed.
-     * @param[in]  aError     OT_ERROR_NONE when successfully received a frame,
-     *                        OT_ERROR_ABORT when reception was aborted and a frame was not received,
-     *                        OT_ERROR_NO_BUFS when a frame could not be received due to lack of rx buffer space.
-     */
-    void (*mDiagReceiveDone)(otInstance *aInstance, otRadioFrame *aFrame, Error aError);
-
-    /**
-     * This callback notifies diagnostics module using `RadioSpinel` that the transmission has completed.
-     *
-     * This callback is used when diagnostics is enabled.
-     *
-     * @param[in]  aInstance  The OpenThread instance structure.
-     * @param[in]  aFrame     A pointer to the frame that was transmitted.
-     * @param[in]  aError     OT_ERROR_NONE when the frame was transmitted,
-     *                        OT_ERROR_CHANNEL_ACCESS_FAILURE tx could not take place due to activity on the
-     * channel, OT_ERROR_ABORT when transmission was aborted for other reasons.
-     */
-    void (*mDiagTransmitDone)(otInstance *aInstance, otRadioFrame *aFrame, Error aError);
-#endif // OPENTHREAD_CONFIG_DIAG_ENABLE
 
     /**
      * This method saves the radio spinel metrics to the temporary storage.
@@ -852,7 +824,7 @@ public:
      *
      * @returns The current estimated RCP time in microseconds.
      */
-    uint64_t GetNow(void);
+    uint64_t GetNow(void) const;
 
     /**
      * Returns the bus speed between the host and the radio.
@@ -1398,4 +1370,4 @@ private:
 } // namespace Spinel
 } // namespace ot
 
-#endif // RADIO_SPINEL_HPP_
+#endif // OT_LIB_SPINEL_RADIO_SPINEL_HPP_

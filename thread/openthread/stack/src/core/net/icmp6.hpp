@@ -31,8 +31,8 @@
  *   This file includes definitions for ICMPv6.
  */
 
-#ifndef ICMP6_HPP_
-#define ICMP6_HPP_
+#ifndef OT_CORE_NET_ICMP6_HPP_
+#define OT_CORE_NET_ICMP6_HPP_
 
 #include "openthread-core-config.h"
 
@@ -237,6 +237,16 @@ public:
     Error RegisterHandler(Handler &aHandler);
 
     /**
+     * Unregisters an ICMPv6 handler.
+     *
+     * @param[in] aHandler  The ICMPv6 handler.
+     *
+     * @retval kErrorNone      The handler was successfully removed from the list.
+     * @retval kErrorNotFound  Could not find the handler in the list.
+     */
+    Error UnregisterHandler(Handler &aHandler);
+
+    /**
      * Sends an ICMPv6 Echo Request message.
      *
      * @param[in]  aMessage      A reference to the Echo Request payload.
@@ -339,4 +349,4 @@ DefineCoreType(otIcmp6Handler, Ip6::Icmp::Handler);
 
 } // namespace ot
 
-#endif // ICMP6_HPP_
+#endif // OT_CORE_NET_ICMP6_HPP_

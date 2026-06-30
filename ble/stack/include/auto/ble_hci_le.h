@@ -577,9 +577,10 @@ tBleStatus hci_read_rssi( uint16_t Connection_Handle,
  * regardless of how the LE_Event_Mask is set.
  * See Core Specification [Vol 4, Part E, 7.8.1].
  *
- * @param LE_Event_Mask LE event mask. Default: 0x000000C7FFF7F85F. Note that
- *        the BLE stack ignores the bits which represent events it does not
- *        support (according to its variant).
+ * @param LE_Event_Mask LE event mask. Note that the BLE stack ignores the bits
+ *        which represent events it does not support (according to its
+ *        variant).
+ *        Default: 0x000000C7FFF7F85F.
  *        Flags:
  *        - 0x0000000000000000: No LE events specified
  *        - 0x0000000000000001: LE Connection Complete event
@@ -825,7 +826,7 @@ tBleStatus hci_le_read_advertising_physical_channel_tx_power( uint8_t* Transmit_
  * The LE_Set_Advertising_Data command is used to set the data used in
  * advertising packets that have a data field.
  * Only the significant part of the Advertising_Data is transmitted in the
- * advertising packets, as defined in [Vol 3] Part C, Section 11.,
+ * advertising packets, as defined in [Vol 3, Part C, 11].
  * See Core Specification [Vol 4, Part E, 7.8.7].
  *
  * @param Advertising_Data_Length The number of significant octets in the
@@ -842,7 +843,7 @@ tBleStatus hci_le_set_advertising_data( uint8_t Advertising_Data_Length,
  * This command is used to provide data used in Scanning Packets that have a
  * data field.
  * Only the significant part of the Scan_Response_Data is transmitted in the
- * Scanning Packets, as defined in [Vol 3] Part C, Section 11.
+ * Scanning Packets, as defined in [Vol 3, Part C, 11].
  * See Core Specification [Vol 4, Part E, 7.8.8].
  *
  * @param Scan_Response_Data_Length The number of significant octets in the
@@ -877,18 +878,8 @@ tBleStatus hci_le_set_advertising_enable( uint8_t Advertising_Enable );
 
 /**
  * @brief HCI_LE_SET_SCAN_PARAMETERS
- * The LE_Set_Scan_Parameters command is used to set the scan parameters.
- * The LE_Scan_Type parameter controls the type of scan to perform.
- * The LE_Scan_Interval and LE_Scan_Window parameters are recommendations from
- * the Host on how long (LE_Scan_Window) and how frequently (LE_Scan_Interval)
- * the Controller should scan (See [Vol 6] Part B, Section 4.4.3). The
- * LE_Scan_Window parameter shall always be set to a value smaller or equal to
- * the value set for the LE_Scan_Interval parameter. If they are set to the
- * same value scanning should be run continuously.
- * The Own_Address_Type parameter determines the address used (Public or Random
- * Device Address) when performing active scan.
- * The Host shall not issue this command when scanning is enabled in the
- * Controller; if it is the Command Disallowed error code shall be used.
+ * This command is used to set the scan parameters that apply when scanning for
+ * legacy PDUs is enabled via HCI_LE_SET_SCAN_ENABLE.
  * See Core Specification [Vol 4, Part E, 7.8.10].
  *
  * @param LE_Scan_Type Passive or active scanning. With passive scanning, no
@@ -942,11 +933,9 @@ tBleStatus hci_le_set_scan_parameters( uint8_t LE_Scan_Type,
 
 /**
  * @brief HCI_LE_SET_SCAN_ENABLE
- * The LE_Set_Scan_Enable command is used to start scanning. Scanning is used
- * to discover advertising devices nearby.
- * The Filter_Duplicates parameter controls whether the Link Layer shall filter
- * duplicate advertising reports to the Host, or if the Link Layer should
- * generate advertising reports for each packet received.
+ * This command is used to start and stop scanning for legacy PDUs (but not
+ * extended PDUs, even if the device supports extended advertising). Scanning
+ * is used to discover advertising devices nearby.
  * See Core Specification [Vol 4, Part E, 7.8.11].
  *
  * @param LE_Scan_Enable Enable/disable scan.
@@ -964,35 +953,8 @@ tBleStatus hci_le_set_scan_enable( uint8_t LE_Scan_Enable,
 
 /**
  * @brief HCI_LE_CREATE_CONNECTION
- * The LE_Create_Connection command is used to create a Link Layer connection
- * to a connectable advertiser.
- * The LE_Scan_Interval and LE_Scan_Window parameters are recommendations from
- * the Host on how long (LE_Scan_Window) and how frequently (LE_Scan_Interval)
- * the Controller should scan. The LE_Scan_Window parameter shall be set to a
- * value smaller or equal to the value set for the LE_Scan_Interval parameter.
- * If both are set to the same value, scanning should run continuously.
- * The Initiator_Filter_Policy is used to determine whether the Filter Accept
- * List is used. If the Filter Accept List is not used, the Peer_Address_Type
- * and the Peer_Address parameters specify the address type and address of the
- * advertising device to connect to.
- * The Link Layer shall set the address in the CONNECT_REQ packets to either
- * the Public Device Address or the Random Device Addressed based on the
- * Own_Address_Type parameter.
- * The Conn_Interval_Min and Conn_Interval_Max parameters define the minimum
- * and maximum allowed connection interval. The Conn_Interval_Min parameter
- * shall not be greater than the Conn_Interval_Max parameter.
- * The Conn_Latency parameter defines the maximum allowed connection latency.
- * The Supervision_Timeout parameter defines the link supervision timeout for
- * the connection. The Supervision_Timeout in milliseconds shall be larger than
- * (1 + Conn_Latency) * Conn_Interval_Max * 2, where Conn_Interval_Max is given
- * in milliseconds.
- * The Minimum_CE_Length and Maximum_CE_Length parameters are informative
- * parameters providing the Controller with the expected minimum and maximum
- * length of the connection events. The Minimum_CE_Length parameter shall be
- * less than or equal to the Maximum_CE_Length parameter.
- * The Host shall not issue this command when another LE_Create_Connection is
- * pending in the Controller; if this does occur the Controller shall return
- * the Command Disallowed error code shall be used.
+ * This command is used to create a single ACL connection, with the local
+ * device in the Central role, to a connectable advertiser.
  * See Core Specification [Vol 4, Part E, 7.8.12].
  *
  * @param LE_Scan_Interval This is defined as the time interval from when the
@@ -1075,11 +1037,8 @@ tBleStatus hci_le_create_connection( uint16_t LE_Scan_Interval,
 
 /**
  * @brief HCI_LE_CREATE_CONNECTION_CANCEL
- * The LE_Create_Connection_Cancel command is used to cancel the
- * LE_Create_Connection command. This command shall only be issued after the
- * LE_Create_Connection command has been issued, a Command Status event has
- * been received for the LE Create Connection command and before the LE
- * Connection Complete event.
+ * This command is used to cancel the HCI_LE_CREATE_CONNECTION or
+ * HCI_LE_EXTENDED_CREATE_CONNECTION commands.
  * See Core Specification [Vol 4, Part E, 7.8.13].
  *
  * @return Value indicating success or error code.
@@ -1431,8 +1390,7 @@ tBleStatus hci_le_receiver_test( uint8_t RX_Frequency );
  *        - 0x00 ... 0x27
  * @param Length_Of_Test_Data Length in bytes of payload data in each packet.
  *        Values:
- *        - 0x00 ... 0x25: for BO variant
- *        - 0x00 ... 0xFF: otherwise
+ *        - 0x00 ... 0xFF: default range
  * @param Packet_Payload Type of packet payload.
  *        Values:
  *        - 0x00: Pseudo-Random bit sequence 9
@@ -1663,7 +1621,7 @@ tBleStatus hci_le_add_device_to_resolving_list( uint8_t Peer_Identity_Address_Ty
 /**
  * @brief HCI_LE_REMOVE_DEVICE_FROM_RESOLVING_LIST
  * This command is used to remove one device from the list of address
- * translations used to resolve Resolvable Private Addresses in the controller.
+ * translations used to resolve Resolvable Private Addresses in the Controller.
  * This command cannot be used when address translation is enabled in the
  * Controller and:
  * - Advertising is enabled
@@ -1779,12 +1737,10 @@ tBleStatus hci_le_read_local_resolvable_address( uint8_t Peer_Identity_Address_T
  * See Core Specification [Vol 4, Part E, 7.8.44].
  *
  * @param Address_Resolution_Enable Enable/disable address resolution in the
- *        controller.
- *        0x00: Address Resolution in controller disabled (default),
- *        0x01: Address Resolution in controller enabled
+ *        Controller.
  *        Values:
- *        - 0x00: Address Resolution in controller disabled (default)
- *        - 0x01: Address Resolution in controller enabled
+ *        - 0x00: Address resolution in the Controller disabled (default)
+ *        - 0x01: Address resolution in the Controller enabled
  * @return Value indicating success or error code.
  */
 tBleStatus hci_le_set_address_resolution_enable( uint8_t Address_Resolution_Enable );
@@ -1811,7 +1767,7 @@ tBleStatus hci_le_set_resolvable_private_address_timeout( uint16_t RPA_Timeout )
  * This command allows the Host to read the Controller's maximum supported
  * payload octets and packet duration times for transmission and reception
  * (supportedMaxTxOctets and supportedMaxTxTime, supportedMaxRxOctets, and
- * supportedMaxRxTime.
+ * supportedMaxRxTime).
  * See Core Specification [Vol 4, Part E, 7.8.46].
  *
  * @param[out] supportedMaxTxOctets Maximum number of payload octets that the
@@ -2026,8 +1982,7 @@ tBleStatus hci_le_receiver_test_v2( uint8_t RX_Frequency,
  *        - 0x00 ... 0x27
  * @param Length_Of_Test_Data Length in bytes of payload data in each packet.
  *        Values:
- *        - 0x00 ... 0x25: for BO variant
- *        - 0x00 ... 0xFF: otherwise
+ *        - 0x00 ... 0xFF: default range
  * @param Packet_Payload Type of packet payload.
  *        Values:
  *        - 0x00: Pseudo-Random bit sequence 9
@@ -2463,9 +2418,10 @@ tBleStatus hci_le_set_extended_scan_enable( uint8_t Enable,
  * @param Initiator_Filter_Policy Initiator filter policy.
  *        Values:
  *        - 0x00: Filter Accept List is not used to determine which advertiser
- *          to connect to
+ *          to connect to and decision PDUs are ignored
  *        - 0x01: Filter Accept List is used to determine which advertiser to
- *          connect to (Peer_Address_Type and Peer_Address are ignored)
+ *          connect to and decision PDUs are ignored (Peer_Address_Type and
+ *          Peer_Address are ignored)
  * @param Own_Address_Type Own address type.
  *        Values:
  *        - 0x00: Public Device Address
@@ -2484,9 +2440,10 @@ tBleStatus hci_le_set_extended_scan_enable( uint8_t Enable,
  * @param Initiating_PHYs Initiating PHYs.
  *        Flags:
  *        - 0x01: Scan connectable advertisements on the LE 1M PHY- Connection
- *          parameters for the LE 1M PHY
+ *          parameters for the LE 1M PHY are provided
  *        - 0x02: Connection parameters for the LE 2M PHY
- *        - 0x04: Scan connectable advertisements on the LE Coded PHY
+ *        - 0x04: Scan connectable advertisements on the LE Coded PHY -
+ *          Connection parameters for the LE Coded PHY are provided
  * @param Init_Param_Phy See @ref Init_Param_Phy_t
  * @return Value indicating success or error code.
  */
@@ -2782,7 +2739,7 @@ tBleStatus hci_le_receiver_test_v3( uint8_t RX_Frequency,
 
 /**
  * @brief HCI_LE_TRANSMITTER_TEST_V3
- * This command is used for testing purpose.
+ * This command is used for testing purposes.
  * See Core Specification [Vol 4, Part E, 7.8.29].
  *
  * @param TX_Frequency N = (F - 2402) / 2
@@ -2791,8 +2748,7 @@ tBleStatus hci_le_receiver_test_v3( uint8_t RX_Frequency,
  *        - 0x00 ... 0x27
  * @param Length_Of_Test_Data Length in bytes of payload data in each packet.
  *        Values:
- *        - 0x00 ... 0x25: for BO variant
- *        - 0x00 ... 0xFF: otherwise
+ *        - 0x00 ... 0xFF: default range
  * @param Packet_Payload Type of packet payload.
  *        Values:
  *        - 0x00: Pseudo-Random bit sequence 9
@@ -3060,7 +3016,7 @@ tBleStatus hci_le_set_periodic_advertising_receive_enable( uint16_t Sync_Handle,
  * @brief HCI_LE_PERIODIC_ADVERTISING_SYNC_TRANSFER
  * This command is used to instruct the Controller to send synchronization
  * information about the periodic advertising train identified by the
- * Sync_Handle parameter to a connected device..
+ * Sync_Handle parameter to a connected device.
  * See Core Specification [Vol 4, Part E, 7.8.89].
  *
  * @param Connection_Handle Connection handle for which the command applies.
@@ -3775,7 +3731,7 @@ tBleStatus hci_le_remove_iso_data_path( uint16_t Connection_Handle,
  * @param Connection_Handle Connection handle for which the command applies.
  *        Values:
  *        - 0x0000 ... 0x0EFF
- * @param Payload_Type SDU configtration.
+ * @param Payload_Type SDU configuration.
  *        Values:
  *        - 0x00: Zero length payload
  *        - 0x01: Variable length payload
@@ -3795,7 +3751,7 @@ tBleStatus hci_le_iso_transmit_test( uint16_t Connection_Handle,
  * @param Connection_Handle Connection handle for which the command applies.
  *        Values:
  *        - 0x0000 ... 0x0EFF
- * @param Payload_Type SDU configtration.
+ * @param Payload_Type SDU configuration.
  *        Values:
  *        - 0x00: Zero length payload
  *        - 0x01: Variable length payload
@@ -3901,7 +3857,7 @@ tBleStatus hci_le_read_iso_link_quality( uint16_t Connection_Handle,
  * @brief HCI_LE_ENHANCED_READ_TRANSMIT_POWER_LEVEL
  * This command is used to read the current and maximum transmit power levels
  * of the local Controller on the ACL connection identified by the
- * Connection_Handle parameter and the PHY indicated by the PHY parameter..
+ * Connection_Handle parameter and the PHY indicated by the PHY parameter.
  * See Core Specification [Vol 4, Part E, 7.8.117].
  *
  * @param Connection_Handle Connection handle for which the command applies.
@@ -4027,7 +3983,7 @@ tBleStatus hci_le_set_transmit_power_reporting_enable( uint16_t Connection_Handl
 
 /**
  * @brief HCI_LE_TRANSMITTER_TEST_V4
- * This command is used for testing purpose.
+ * This command is used for testing purposes.
  * See Core Specification [Vol 4, Part E, 7.8.29].
  *
  * @param TX_Frequency N = (F - 2402) / 2
@@ -4036,8 +3992,7 @@ tBleStatus hci_le_set_transmit_power_reporting_enable( uint16_t Connection_Handl
  *        - 0x00 ... 0x27
  * @param Length_Of_Test_Data Length in bytes of payload data in each packet.
  *        Values:
- *        - 0x00 ... 0x25: for BO variant
- *        - 0x00 ... 0xFF: otherwise
+ *        - 0x00 ... 0xFF: default range
  * @param Packet_Payload Type of packet payload.
  *        Values:
  *        - 0x00: Pseudo-Random bit sequence 9
@@ -4416,9 +4371,10 @@ tBleStatus hci_le_set_periodic_sync_subevent( uint16_t Sync_Handle,
  * @param Initiator_Filter_Policy Initiator filter policy.
  *        Values:
  *        - 0x00: Filter Accept List is not used to determine which advertiser
- *          to connect to
+ *          to connect to and decision PDUs are ignored
  *        - 0x01: Filter Accept List is used to determine which advertiser to
- *          connect to (Peer_Address_Type and Peer_Address are ignored)
+ *          connect to and decision PDUs are ignored (Peer_Address_Type and
+ *          Peer_Address are ignored)
  * @param Own_Address_Type Own address type.
  *        Values:
  *        - 0x00: Public Device Address
@@ -4437,9 +4393,10 @@ tBleStatus hci_le_set_periodic_sync_subevent( uint16_t Sync_Handle,
  * @param Initiating_PHYs Initiating PHYs.
  *        Flags:
  *        - 0x01: Scan connectable advertisements on the LE 1M PHY- Connection
- *          parameters for the LE 1M PHY
+ *          parameters for the LE 1M PHY are provided
  *        - 0x02: Connection parameters for the LE 2M PHY
- *        - 0x04: Scan connectable advertisements on the LE Coded PHY
+ *        - 0x04: Scan connectable advertisements on the LE Coded PHY -
+ *          Connection parameters for the LE Coded PHY are provided
  * @param Init_Param_Phy See @ref Init_Param_Phy_t
  * @return Value indicating success or error code.
  */
@@ -5521,7 +5478,7 @@ tBleStatus hci_le_add_device_to_monitored_advertisers_list( uint8_t Address_Type
 /**
  * @brief HCI_LE_REMOVE_DEVICE_FROM_MONITORED_ADVERTISERS_LIST
  * This command is used to remove a single device from the Monitored
- * Advertisers List..
+ * Advertisers List.
  * See Core Specification [Vol 4, Part E, 7.8.147].
  *
  * @param Address_Type Address type.
@@ -5562,7 +5519,7 @@ tBleStatus hci_le_read_monitored_advertisers_list_size( uint8_t* Number );
  * @brief HCI_LE_ENABLE_MONITORING_ADVERTISERS
  * This command is used by a Host to request the Controller to enable or
  * disable the monitoring of advertisers in the Monitored Advertisers List and
- * generate the HCI_LE_MONITORED_ADVERTISERS_REPORT_EVENT when necessary..
+ * generate the HCI_LE_MONITORED_ADVERTISERS_REPORT_EVENT when necessary.
  * See Core Specification [Vol 4, Part E, 7.8.149].
  *
  * @param Enable Enables or disables the monitoring of advertisers.
@@ -5576,7 +5533,7 @@ tBleStatus hci_le_enable_monitoring_advertisers( uint8_t Enable );
 /**
  * @brief HCI_LE_FRAME_SPACE_UPDATE
  * This command allows the Host to request a change to one or more frame space
- * values. This command may be issued on both the Central and the Peripheral..
+ * values. This command may be issued on both the Central and the Peripheral.
  * See Core Specification [Vol 4, Part E, 7.8.151].
  *
  * @param Connection_Handle Connection handle for which the command applies.

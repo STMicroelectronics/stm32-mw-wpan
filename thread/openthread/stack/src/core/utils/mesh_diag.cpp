@@ -52,8 +52,14 @@ MeshDiag::MeshDiag(Instance &aInstance)
     , mState(kStateIdle)
     , mExpectedQueryId(0)
     , mExpectedAnswerIndex(0)
+    , mResponseTimeout(kResponseTimeout)
     , mTimer(aInstance)
 {
+}
+
+void MeshDiag::SetResponseTimeout(uint32_t aTimeout)
+{
+    mResponseTimeout = Clamp(aTimeout, kMinResponseTimeout, kMaxResponseTimeout);
 }
 
 Error MeshDiag::DiscoverTopology(const DiscoverConfig &aConfig, DiscoverCallback aCallback, void *aContext)
@@ -101,42 +107,31 @@ Error MeshDiag::DiscoverTopology(const DiscoverConfig &aConfig, DiscoverCallback
 
     mDiscover.mCallback.Set(aCallback, aContext);
     mState = kStateDiscoverTopology;
-    mTimer.Start(kResponseTimeout);
+    mTimer.Start(mResponseTimeout);
 
 exit:
     return error;
 }
 
-void MeshDiag::HandleDiagGetResponse(void                *aContext,
-                                     otMessage           *aMessage,
-                                     const otMessageInfo *aMessageInfo,
-                                     otError              aResult)
+void MeshDiag::HandleDiagGetResponse(Coap::Msg *aMsg, Error aResult)
 {
-    static_cast<MeshDiag *>(aContext)->HandleDiagGetResponse(AsCoapMessagePtr(aMessage), AsCoreTypePtr(aMessageInfo),
-                                                             aResult);
-}
-
-void MeshDiag::HandleDiagGetResponse(Coap::Message *aMessage, const Ip6::MessageInfo *aMessageInfo, Error aResult)
-{
-    OT_UNUSED_VARIABLE(aMessageInfo);
-
     Error           error;
     RouterInfo      routerInfo;
     Ip6AddrIterator ip6AddrIterator;
     ChildIterator   childIterator;
 
     SuccessOrExit(aResult);
-    VerifyOrExit(aMessage != nullptr);
+    VerifyOrExit(aMsg != nullptr);
     VerifyOrExit(mState == kStateDiscoverTopology);
 
-    SuccessOrExit(routerInfo.ParseFrom(*aMessage));
+    SuccessOrExit(routerInfo.ParseFrom(aMsg->mMessage));
 
-    if (ip6AddrIterator.InitFrom(*aMessage) == kErrorNone)
+    if (ip6AddrIterator.InitFrom(aMsg->mMessage) == kErrorNone)
     {
         routerInfo.mIp6AddrIterator = &ip6AddrIterator;
     }
 
-    if (childIterator.InitFrom(*aMessage, routerInfo.mRloc16) == kErrorNone)
+    if (childIterator.InitFrom(aMsg->mMessage, routerInfo.mRloc16) == kErrorNone)
     {
         routerInfo.mChildIterator = &childIterator;
     }
@@ -178,7 +173,7 @@ Error MeshDiag::SendQuery(uint16_t aRloc16, const uint8_t *aTlvs, uint8_t aTlvsL
     mExpectedQueryId     = Get<Client>().GetLastQueryId();
     mExpectedAnswerIndex = 0;
 
-    mTimer.Start(kResponseTimeout);
+    mTimer.Start(mResponseTimeout);
 
 exit:
     return error;

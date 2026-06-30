@@ -32,11 +32,13 @@
  *   This file includes the platform abstraction for mDNS socket.
  */
 
-#ifndef OPENTHREAD_PLATFORM_MULTICAST_DNS_SOCKET_H_
-#define OPENTHREAD_PLATFORM_MULTICAST_DNS_SOCKET_H_
+#ifndef OPENTHREAD_PLATFORM_MDNS_SOCKET_H_
+#define OPENTHREAD_PLATFORM_MDNS_SOCKET_H_
 
+#include <stdbool.h>
 #include <stdint.h>
 
+#include <openthread/error.h>
 #include <openthread/instance.h>
 #include <openthread/ip6.h>
 #include <openthread/message.h>
@@ -224,4 +226,4 @@ extern void otPlatMdnsHandleHostAddressRemoveAll(otInstance *aInstance, uint32_t
 } // extern "C"
 #endif
 
-#endif // OPENTHREAD_PLATFORM_MULTICAST_DNS_SOCKET_H_
+#endif // OPENTHREAD_PLATFORM_MDNS_SOCKET_H_

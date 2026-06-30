@@ -31,8 +31,8 @@
  *   This file includes definitions for UDP/IPv6 sockets.
  */
 
-#ifndef UDP6_HPP_
-#define UDP6_HPP_
+#ifndef OT_CORE_NET_UDP6_HPP_
+#define OT_CORE_NET_UDP6_HPP_
 
 #include "openthread-core-config.h"
 
@@ -162,6 +162,7 @@ public:
 #endif
 
     private:
+        bool Matches(uint16_t aSockPort) const { return GetSockName().GetPort() == aSockPort; }
         bool Matches(const MessageInfo &aMessageInfo) const;
 
         void HandleUdpReceive(Message &aMessage, const MessageInfo &aMessageInfo)
@@ -697,4 +698,4 @@ DefineMapEnum(otNetifIdentifier, Ip6::NetifIdentifier);
 
 } // namespace ot
 
-#endif // UDP6_HPP_
+#endif // OT_CORE_NET_UDP6_HPP_

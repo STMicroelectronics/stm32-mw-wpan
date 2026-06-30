@@ -35,6 +35,7 @@
 
 #include <stdio.h>
 
+#include "common/bit_utils.hpp"
 #include "common/code_utils.hpp"
 #include "common/random.hpp"
 #include "common/string.hpp"
@@ -73,8 +74,6 @@ void ExtAddress::SetFromIid(const Ip6::InterfaceIdentifier &aIid)
 }
 
 #endif
-
-bool ExtAddress::operator==(const ExtAddress &aOther) const { return (memcmp(m8, aOther.m8, sizeof(m8)) == 0); }
 
 ExtAddress::InfoString ExtAddress::ToString(void) const
 {
@@ -404,5 +403,45 @@ bool KeyMaterial::operator==(const KeyMaterial &aOther) const
 #endif
 }
 
+#if OPENTHREAD_CONFIG_WAKEUP_COORDINATOR_ENABLE || OPENTHREAD_CONFIG_WAKEUP_END_DEVICE_ENABLE
+uint8_t GetWakeupIdLength(WakeupId aWakeupId)
+{
+    uint8_t zeroBytesCount = 0;
+
+    for (int i = static_cast<int>(sizeof(WakeupId)) - 1; i >= 1; --i)
+    {
+        if (((aWakeupId >> (i * kBitsPerByte)) & 0xFF) == 0)
+        {
+            zeroBytesCount++;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    return sizeof(WakeupId) - zeroBytesCount;
+}
+#endif
+
+#if OPENTHREAD_CONFIG_WAKEUP_COORDINATOR_ENABLE
+void WakeupRequest::SetExtAddress(const ExtAddress &aExtAddress)
+{
+    SetType(kTypeExtAddress);
+    aExtAddress.CopyTo(mShared.mExtAddress.m8);
+}
+
+const ExtAddress &WakeupRequest::GetExtAddress(void) const { return AsCoreType(&mShared.mExtAddress); }
+
+ExtAddress &WakeupRequest::GetExtAddress(void) { return AsCoreType(&mShared.mExtAddress); }
+
+void WakeupRequest::SetType(Type aType) { mType = MapEnum(aType); }
+
+bool WakeupRequest::IsWakeupByExtAddress(void) const { return MapEnum(mType) == kTypeExtAddress; }
+
+bool WakeupRequest::IsWakeupById(void) const { return MapEnum(mType) == kTypeWakeupId; }
+
+bool WakeupRequest::IsWakeupByGroupId(void) const { return MapEnum(mType) == kTypeGroupWakeupId; }
+#endif
 } // namespace Mac
 } // namespace ot

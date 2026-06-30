@@ -74,8 +74,8 @@ tBleStatus aci_get_information( uint32_t* Version,
 
 /**
  * @brief ACI_WRITE_CONFIG_DATA
- * This command writes a value to a configure data structure. It is useful to
- * setup directly some parameters for the BLE stack.
+ * This command writes a value to the configuration data structure. It is
+ * useful to setup directly some parameters for the BLE stack.
  * Refer to Annex for details on the different parameters that can be
  * configured.
  *
@@ -100,6 +100,8 @@ tBleStatus aci_get_information( uint32_t* Version,
  *          LL RSSI golden range; 2 bytes
  *        - 0xC4: CONFIG_DATA_LL_RX_ACL_CTRL_OFFSET;
  *          LL RX ACL control; 2 bytes
+ *        - 0xC5: CONFIG_DATA_LL_ISO_SCHED_MODE_OFFSET;
+ *          LL isochronous scheduling mode; 1 byte
  * @param Length Length of data to be written
  * @param Value Data to be written
  * @return Value indicating success or error code.
@@ -110,8 +112,8 @@ tBleStatus aci_write_config_data( uint8_t Offset,
 
 /**
  * @brief ACI_READ_CONFIG_DATA
- * This command requests the value in the configure data structure. The number
- * of read bytes changes for different Offset.
+ * This command requests the value in the configuration data structure. The
+ * number of read bytes changes for different Offset.
  *
  * @param Offset Offset of the element in the configuration data structure
  *        which has to be read.
@@ -119,7 +121,7 @@ tBleStatus aci_write_config_data( uint8_t Offset,
  *        - 0x00: CONFIG_DATA_PUBLIC_ADDRESS_OFFSET;
  *          Bluetooth public address; 6 bytes
  *        - 0x08: CONFIG_DATA_ER_OFFSET;
- *          Encryption root key used to derive LTK (legacy) and CSRK; 16 bytes
+ *          Encryption root key used to derive LTK (legacy); 16 bytes
  *        - 0x18: CONFIG_DATA_IR_OFFSET
  *          Identity root key used to derive DHK (legacy) and IRK; 16 bytes
  *        - 0x2E: CONFIG_DATA_RANDOM_ADDRESS_OFFSET;

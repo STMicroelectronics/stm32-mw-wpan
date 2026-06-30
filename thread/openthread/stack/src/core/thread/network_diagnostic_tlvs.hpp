@@ -31,14 +31,15 @@
  *   This file includes definitions for generating and processing Network Diagnostics TLVs.
  */
 
-#ifndef NETWORK_DIAGNOSTIC_TLVS_HPP_
-#define NETWORK_DIAGNOSTIC_TLVS_HPP_
+#ifndef OT_CORE_THREAD_NETWORK_DIAGNOSTIC_TLVS_HPP_
+#define OT_CORE_THREAD_NETWORK_DIAGNOSTIC_TLVS_HPP_
 
 #include "openthread-core-config.h"
 
 #include <openthread/netdiag.h>
 #include <openthread/thread.h>
 
+#include "common/as_core_type.hpp"
 #include "common/clearable.hpp"
 #include "common/encoding.hpp"
 #include "common/message.hpp"
@@ -66,37 +67,43 @@ public:
      */
     enum Type : uint8_t
     {
-        kExtMacAddress        = OT_NETWORK_DIAGNOSTIC_TLV_EXT_ADDRESS,
-        kAddress16            = OT_NETWORK_DIAGNOSTIC_TLV_SHORT_ADDRESS,
-        kMode                 = OT_NETWORK_DIAGNOSTIC_TLV_MODE,
-        kTimeout              = OT_NETWORK_DIAGNOSTIC_TLV_TIMEOUT,
-        kConnectivity         = OT_NETWORK_DIAGNOSTIC_TLV_CONNECTIVITY,
-        kRoute                = OT_NETWORK_DIAGNOSTIC_TLV_ROUTE,
-        kLeaderData           = OT_NETWORK_DIAGNOSTIC_TLV_LEADER_DATA,
-        kNetworkData          = OT_NETWORK_DIAGNOSTIC_TLV_NETWORK_DATA,
-        kIp6AddressList       = OT_NETWORK_DIAGNOSTIC_TLV_IP6_ADDR_LIST,
-        kMacCounters          = OT_NETWORK_DIAGNOSTIC_TLV_MAC_COUNTERS,
-        kBatteryLevel         = OT_NETWORK_DIAGNOSTIC_TLV_BATTERY_LEVEL,
-        kSupplyVoltage        = OT_NETWORK_DIAGNOSTIC_TLV_SUPPLY_VOLTAGE,
-        kChildTable           = OT_NETWORK_DIAGNOSTIC_TLV_CHILD_TABLE,
-        kChannelPages         = OT_NETWORK_DIAGNOSTIC_TLV_CHANNEL_PAGES,
-        kTypeList             = OT_NETWORK_DIAGNOSTIC_TLV_TYPE_LIST,
-        kMaxChildTimeout      = OT_NETWORK_DIAGNOSTIC_TLV_MAX_CHILD_TIMEOUT,
-        kEui64                = OT_NETWORK_DIAGNOSTIC_TLV_EUI64,
-        kVersion              = OT_NETWORK_DIAGNOSTIC_TLV_VERSION,
-        kVendorName           = OT_NETWORK_DIAGNOSTIC_TLV_VENDOR_NAME,
-        kVendorModel          = OT_NETWORK_DIAGNOSTIC_TLV_VENDOR_MODEL,
-        kVendorSwVersion      = OT_NETWORK_DIAGNOSTIC_TLV_VENDOR_SW_VERSION,
-        kThreadStackVersion   = OT_NETWORK_DIAGNOSTIC_TLV_THREAD_STACK_VERSION,
-        kChild                = OT_NETWORK_DIAGNOSTIC_TLV_CHILD,
-        kChildIp6AddressList  = OT_NETWORK_DIAGNOSTIC_TLV_CHILD_IP6_ADDR_LIST,
-        kRouterNeighbor       = OT_NETWORK_DIAGNOSTIC_TLV_ROUTER_NEIGHBOR,
-        kAnswer               = OT_NETWORK_DIAGNOSTIC_TLV_ANSWER,
-        kQueryId              = OT_NETWORK_DIAGNOSTIC_TLV_QUERY_ID,
-        kMleCounters          = OT_NETWORK_DIAGNOSTIC_TLV_MLE_COUNTERS,
-        kVendorAppUrl         = OT_NETWORK_DIAGNOSTIC_TLV_VENDOR_APP_URL,
-        kNonPreferredChannels = OT_NETWORK_DIAGNOSTIC_TLV_NON_PREFERRED_CHANNELS,
-        kEnhancedRoute        = OT_NETWORK_DIAGNOSTIC_TLV_ENHANCED_ROUTE,
+        kExtMacAddress         = OT_NETWORK_DIAGNOSTIC_TLV_EXT_ADDRESS,
+        kAddress16             = OT_NETWORK_DIAGNOSTIC_TLV_SHORT_ADDRESS,
+        kMode                  = OT_NETWORK_DIAGNOSTIC_TLV_MODE,
+        kTimeout               = OT_NETWORK_DIAGNOSTIC_TLV_TIMEOUT,
+        kConnectivity          = OT_NETWORK_DIAGNOSTIC_TLV_CONNECTIVITY,
+        kRoute                 = OT_NETWORK_DIAGNOSTIC_TLV_ROUTE,
+        kLeaderData            = OT_NETWORK_DIAGNOSTIC_TLV_LEADER_DATA,
+        kNetworkData           = OT_NETWORK_DIAGNOSTIC_TLV_NETWORK_DATA,
+        kIp6AddressList        = OT_NETWORK_DIAGNOSTIC_TLV_IP6_ADDR_LIST,
+        kMacCounters           = OT_NETWORK_DIAGNOSTIC_TLV_MAC_COUNTERS,
+        kBatteryLevel          = OT_NETWORK_DIAGNOSTIC_TLV_BATTERY_LEVEL,
+        kSupplyVoltage         = OT_NETWORK_DIAGNOSTIC_TLV_SUPPLY_VOLTAGE,
+        kChildTable            = OT_NETWORK_DIAGNOSTIC_TLV_CHILD_TABLE,
+        kChannelPages          = OT_NETWORK_DIAGNOSTIC_TLV_CHANNEL_PAGES,
+        kTypeList              = OT_NETWORK_DIAGNOSTIC_TLV_TYPE_LIST,
+        kMaxChildTimeout       = OT_NETWORK_DIAGNOSTIC_TLV_MAX_CHILD_TIMEOUT,
+        kEui64                 = OT_NETWORK_DIAGNOSTIC_TLV_EUI64,
+        kVersion               = OT_NETWORK_DIAGNOSTIC_TLV_VERSION,
+        kVendorName            = OT_NETWORK_DIAGNOSTIC_TLV_VENDOR_NAME,
+        kVendorModel           = OT_NETWORK_DIAGNOSTIC_TLV_VENDOR_MODEL,
+        kVendorSwVersion       = OT_NETWORK_DIAGNOSTIC_TLV_VENDOR_SW_VERSION,
+        kThreadStackVersion    = OT_NETWORK_DIAGNOSTIC_TLV_THREAD_STACK_VERSION,
+        kChild                 = OT_NETWORK_DIAGNOSTIC_TLV_CHILD,
+        kChildIp6AddressList   = OT_NETWORK_DIAGNOSTIC_TLV_CHILD_IP6_ADDR_LIST,
+        kRouterNeighbor        = OT_NETWORK_DIAGNOSTIC_TLV_ROUTER_NEIGHBOR,
+        kAnswer                = OT_NETWORK_DIAGNOSTIC_TLV_ANSWER,
+        kQueryId               = OT_NETWORK_DIAGNOSTIC_TLV_QUERY_ID,
+        kMleCounters           = OT_NETWORK_DIAGNOSTIC_TLV_MLE_COUNTERS,
+        kVendorAppUrl          = OT_NETWORK_DIAGNOSTIC_TLV_VENDOR_APP_URL,
+        kNonPreferredChannels  = OT_NETWORK_DIAGNOSTIC_TLV_NON_PREFERRED_CHANNELS,
+        kEnhancedRoute         = OT_NETWORK_DIAGNOSTIC_TLV_ENHANCED_ROUTE,
+        kBrState               = OT_NETWORK_DIAGNOSTIC_TLV_BR_STATE,
+        kBrIfAddrs             = OT_NETWORK_DIAGNOSTIC_TLV_BR_IF_ADDRS,
+        kBrLocalOmrPrefix      = OT_NETWORK_DIAGNOSTIC_TLV_BR_LOCAL_OMR_PREFIX,
+        kBrDhcp6PdOmrPrefix    = OT_NETWORK_DIAGNOSTIC_TLV_BR_DHCP6_PD_OMR_PREFIX,
+        kBrLocalOnlinkPrefix   = OT_NETWORK_DIAGNOSTIC_TLV_BR_LOCAL_OL_PREFIX,
+        kBrFavoredOnLinkPrefix = OT_NETWORK_DIAGNOSTIC_TLV_BR_FAVORED_OL_PREFIX,
     };
 
     /**
@@ -235,45 +242,55 @@ typedef TlvInfo<Tlv::kChildIp6AddressList> ChildIp6AddressListTlv;
  */
 typedef UintTlvInfo<Tlv::kQueryId, uint16_t> QueryIdTlv;
 
-typedef otNetworkDiagConnectivity Connectivity; ///< Network Diagnostic Connectivity value.
+/**
+ * Defines BR State TLV constants and types.
+ */
+typedef UintTlvInfo<Tlv::kBrState, uint8_t> BrStateTlv;
 
 /**
- * Implements Connectivity TLV generation and parsing.
+ * Represents a BR State TLV value.
  */
-OT_TOOL_PACKED_BEGIN
-class ConnectivityTlv : public Mle::ConnectivityTlv
-{
-public:
-    static constexpr uint8_t kType = ot::NetworkDiagnostic::Tlv::kConnectivity; ///< The TLV Type value.
+typedef otNetworkDiagBrState BrState;
 
-    /**
-     * Initializes the TLV.
-     */
-    void Init(void)
-    {
-        Mle::ConnectivityTlv::Init();
-        ot::Tlv::SetType(kType);
-    }
+/**
+ * Defines BR Infra-if Address List TLV constants and types.
+ */
+typedef TlvInfo<Tlv::kBrIfAddrs> BrIfAddrsTlv;
 
-    /**
-     * Retrieves the `Connectivity` value.
-     *
-     * @param[out] aConnectivity   A reference to `Connectivity` to populate.
-     */
-    void GetConnectivity(Connectivity &aConnectivity) const
-    {
-        aConnectivity.mParentPriority   = GetParentPriority();
-        aConnectivity.mLinkQuality3     = GetLinkQuality3();
-        aConnectivity.mLinkQuality2     = GetLinkQuality2();
-        aConnectivity.mLinkQuality1     = GetLinkQuality1();
-        aConnectivity.mLeaderCost       = GetLeaderCost();
-        aConnectivity.mIdSequence       = GetIdSequence();
-        aConnectivity.mActiveRouters    = GetActiveRouters();
-        aConnectivity.mSedBufferSize    = GetSedBufferSize();
-        aConnectivity.mSedDatagramCount = GetSedDatagramCount();
-    }
+/**
+ * Defines BR Local OMR Prefix TLV constants and types.
+ */
+typedef SimpleTlvInfo<Tlv::kBrLocalOmrPrefix, Ip6::NetworkPrefix> BrLocalOmrPrefixTlv;
 
-} OT_TOOL_PACKED_END;
+/**
+ * Defines BR DHCPv6-PD Prefix TLV constants and types.
+ */
+typedef SimpleTlvInfo<Tlv::kBrDhcp6PdOmrPrefix, Ip6::NetworkPrefix> BrDhcp6PdOmrPrefixTlv;
+
+/**
+ * Defines BR Local On-link Prefix TLV constants and types.
+ */
+typedef SimpleTlvInfo<Tlv::kBrLocalOnlinkPrefix, Ip6::NetworkPrefix> BrLocalOnlinkPrefixTlv;
+
+/**
+ * Defines BR Favored On-link Prefix TLV constants and types.
+ */
+typedef SimpleTlvInfo<Tlv::kBrFavoredOnLinkPrefix, Ip6::NetworkPrefix> BrFavoredOnLinkPrefixTlv;
+
+/**
+ * Represents information parsed from Connectivity TLV.
+ */
+typedef Mle::Connectivity Connectivity;
+
+/**
+ * Represents a Connectivity TLV value.
+ */
+typedef Mle::ConnectivityTlvValue ConnectivityTlvValue;
+
+/**
+ * Defines Connectivity TLV constants.
+ */
+typedef TlvInfo<Tlv::kConnectivity> ConnectivityTlv;
 
 /**
  * Implements Route TLV generation and parsing.
@@ -295,23 +312,14 @@ public:
 } OT_TOOL_PACKED_END;
 
 /**
- * Implements Leader Data TLV generation and parsing.
+ * Represents a Leader Data TLV value.
  */
-OT_TOOL_PACKED_BEGIN
-class LeaderDataTlv : public Mle::LeaderDataTlv
-{
-public:
-    static constexpr uint8_t kType = ot::NetworkDiagnostic::Tlv::kLeaderData; ///< The TLV Type value.
+typedef Mle::LeaderDataTlvValue LeaderDataTlvValue;
 
-    /**
-     * Initializes the TLV.
-     */
-    void Init(void)
-    {
-        Mle::LeaderDataTlv::Init();
-        ot::Tlv::SetType(kType);
-    }
-} OT_TOOL_PACKED_END;
+/**
+ * Defines Leader Data TLV constants and types.
+ */
+typedef SimpleTlvInfo<Tlv::kLeaderData, LeaderDataTlvValue> LeaderDataTlv;
 
 /**
  * Implements Mac Counters TLV generation and parsing.
@@ -495,7 +503,10 @@ public:
      *
      * @returns The Timeout value.
      */
-    uint8_t GetTimeout(void) const { return ReadBits<uint16_t, kTimeoutMask>(GetTimeoutChildId()); }
+    uint8_t GetTimeout(void) const
+    {
+        return static_cast<uint8_t>(ReadBits<uint16_t, kTimeoutMask>(GetTimeoutChildId()));
+    }
 
     /**
      * Sets the Timeout value.
@@ -656,15 +667,6 @@ public:
      * @param[in] aChild   The child to initialize the TLV from.
      */
     void InitFrom(const Child &aChild);
-
-    /**
-     * Initializes the TLV as empty (zero length).
-     */
-    void InitAsEmpty(void)
-    {
-        SetType(kChild);
-        SetLength(0);
-    }
 
     /**
      * Returns the Flags field (`kFlags*` constants define bits in flags).
@@ -857,15 +859,6 @@ public:
     void InitFrom(const Router &aRouter);
 
     /**
-     * Initializes the TLV as empty (zero length).
-     */
-    void InitAsEmpty(void)
-    {
-        SetType(kRouterNeighbor);
-        SetLength(0);
-    }
-
-    /**
      * Returns the Flags field (`kFlags*` constants define bits in flags).
      *
      * @returns The Flags field.
@@ -1016,18 +1009,24 @@ OT_TOOL_PACKED_BEGIN
 class AnswerTlv : public Tlv, public TlvInfo<Tlv::kAnswer>
 {
 public:
+    enum IsLastFlag : uint8_t
+    {
+        kMoreToFollow, ///< More answer messages to follow.
+        kIsLast,       ///< This is the last answer for this query.
+    };
+
     /**
      * Initializes the TLV.
      *
-     * @param[in] aIndex   The index value.
-     * @param[in] aIsLast  The "IsLast" flag value.
+     * @param[in] aIndex       The index value.
+     * @param[in] aIsLastFlag  Indicates the `IsLastFlag` value.
      */
-    void Init(uint16_t aIndex, bool aIsLast);
+    void Init(uint16_t aIndex, IsLastFlag aIsLastFlag);
 
     /**
      * Indicates whether or not the "IsLast" flag is set
      *
-     * @retval TRUE   "IsLast" flag si set (this is the last answer for this query).
+     * @retval TRUE   "IsLast" flag is set (this is the last answer for this query).
      * @retval FALSE  "IsLast" flag is not set (more answer messages are expected for this query).
      */
     bool IsLast(void) const { return GetFlagsIndex() & kIsLastFlag; }
@@ -1041,7 +1040,7 @@ public:
 
 private:
     static constexpr uint16_t kIsLastFlag = 1 << 15;
-    static constexpr uint16_t kIndexMask  = 0x7f;
+    static constexpr uint16_t kIndexMask  = 0x7fff;
 
     uint16_t GetFlagsIndex(void) const { return BigEndian::HostSwap16(mFlagsIndex); }
     void     SetFlagsIndex(uint16_t aFlagsIndex) { mFlagsIndex = BigEndian::HostSwap16(aFlagsIndex); }
@@ -1103,6 +1102,9 @@ private:
 } OT_TOOL_PACKED_END;
 
 } // namespace NetworkDiagnostic
+
+DefineCoreType(otNetworkDiagConnectivity, NetworkDiagnostic::Connectivity);
+
 } // namespace ot
 
-#endif // NETWORK_DIAGNOSTIC_TLVS_HPP_
+#endif // OT_CORE_THREAD_NETWORK_DIAGNOSTIC_TLVS_HPP_

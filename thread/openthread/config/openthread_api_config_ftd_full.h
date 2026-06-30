@@ -32,6 +32,9 @@
 
 #define OPENTHREAD_CONFIG_HEAP_INTERNAL_SIZE (30 * 1024)
 
+/* Use mbedtls as crypto library. */
+#define OPENTHREAD_CONFIG_CRYPTO_LIB OPENTHREAD_CONFIG_CRYPTO_LIB_MBEDTLS  //OPENTHREAD_CONFIG_CRYPTO_LIB_PSA
+
 /* Define to 1 if you want to enable default log output. */
 #define OPENTHREAD_CONFIG_LOG_OUTPUT  OPENTHREAD_CONFIG_LOG_OUTPUT_APP
 
@@ -102,7 +105,10 @@
 #define OPENTHREAD_CONFIG_DUA_ENABLE 1
 
 /* Define to 1 to enable Thread Test Harness reference device support. */
-#define OPENTHREAD_CONFIG_REFERENCE_DEVICE_ENABLE 1
+#define OPENTHREAD_CONFIG_REFERENCE_DEVICE_ENABLE 0
+
+/* Define as 1 to add APIs to allow Vendor Name, Model, SW Version to change at run-time. */
+#define OPENTHREAD_CONFIG_NET_DIAG_VENDOR_INFO_SET_API_ENABLE 1
 
 /* Define to 1 to enable Config MLR */
 #define OPENTHREAD_CONFIG_MLR_ENABLE 1

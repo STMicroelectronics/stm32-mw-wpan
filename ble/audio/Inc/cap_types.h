@@ -437,6 +437,13 @@ typedef enum
                                                  * The pInfo field contain a pointer to a status which the application
                                                  * should set to BLE_STATUS_SUCCESS if it succeeded to start the scanning
                                                  * or to any other status value otherwise */
+                                                 
+  CAP_BROADCAST_SDE_BIS_PREFERENCE_REQ_EVT,     /* Event notified by Scan Delegator when a Broadcast Assistant requires
+                                                 * to synchronize a BIG without providing preference on the subgroup or 
+                                                 * the BIS(s) to synchronize. 
+                                                 * The pInfo field contains a pointer to an array of BIS Sync across all 
+                                                 * subgroups (type uint32_t *) that the application can update based on 
+                                                 * BASE information and local preferences */
 
 /* #############################################################################
    #                          BROADCAST ASSISTANT Events                       #

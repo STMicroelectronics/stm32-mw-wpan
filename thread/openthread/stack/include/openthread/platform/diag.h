@@ -35,11 +35,14 @@
 #ifndef OPENTHREAD_PLATFORM_DIAG_H_
 #define OPENTHREAD_PLATFORM_DIAG_H_
 
-#include <stddef.h>
+#include <stdarg.h>
+#include <stdbool.h>
 #include <stdint.h>
 
 #include <openthread/error.h>
+#include <openthread/instance.h>
 #include <openthread/platform/radio.h>
+#include <openthread/platform/toolchain.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -70,7 +73,8 @@ typedef enum
  * @param[in]  aArguments  The format string arguments.
  * @param[out] aContext    A pointer to the user context.
  */
-typedef void (*otPlatDiagOutputCallback)(const char *aFormat, va_list aArguments, void *aContext);
+typedef void (*otPlatDiagOutputCallback)(const char *aFormat, va_list aArguments, void *aContext)
+    OT_TOOL_PRINTF_STYLE_FORMAT_ARG_CHECK(1, 0);
 
 /**
  * Sets the platform diag output callback.

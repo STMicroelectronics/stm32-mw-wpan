@@ -31,8 +31,8 @@
  *   This file includes definitions for IPv6 datagram filtering.
  */
 
-#ifndef IP6_FILTER_HPP_
-#define IP6_FILTER_HPP_
+#ifndef OT_CORE_NET_IP6_FILTER_HPP_
+#define OT_CORE_NET_IP6_FILTER_HPP_
 
 #include "openthread-core-config.h"
 
@@ -70,14 +70,14 @@ public:
     }
 
     /**
-     * Indicates whether or not the IPv6 datagram passes the filter.
+     * Applies the filter to an IPv6 datagram to determine if it should be dropped.
      *
      * @param[in]  aMessage  The IPv6 datagram to process.
      *
-     * @retval TRUE   Accept the IPv6 datagram.
-     * @retval FALSE  Reject the IPv6 datagram.
+     * @retval kErrorNone  The message is not filtered and should be accepted.
+     * @retval kErrorDrop  The message matches the filter criteria and should be dropped.
      */
-    bool Accept(Message &aMessage) const;
+    Error Apply(const Message &aMessage) const;
 
     /**
      * Adds a port to the allowed unsecured port list.
@@ -148,4 +148,4 @@ private:
 } // namespace Ip6
 } // namespace ot
 
-#endif // IP6_FILTER_HPP_
+#endif // OT_CORE_NET_IP6_FILTER_HPP_

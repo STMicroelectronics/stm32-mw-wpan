@@ -301,7 +301,7 @@ Error SecureSession::Setup(void)
         mbedtls_ssl_set_timer_cb(&mSsl, this, HandleMbedtlsSetTimer, HandleMbedtlsGetTimer);
     }
 
-#if (MBEDTLS_VERSION_NUMBER >= 0x03000000)
+#if OPENTHREAD_CONFIG_MBEDTLS_PROVIDES_SSL_KEY_EXPORT
     mbedtls_ssl_set_export_keys_cb(&mSsl, SecureTransport::HandleMbedtlsExportKeys, &mTransport);
 #endif
 
@@ -611,25 +611,16 @@ void SecureSession::Process(void)
 
 const char *SecureSession::StateToString(State aState)
 {
-    static const char *const kStateStrings[] = {
-        "Disconnected",  // (0) kStateDisconnected
-        "Initializing",  // (1) kStateInitializing
-        "Connecting",    // (2) kStateConnecting
-        "Connected",     // (3) kStateConnected
-        "Disconnecting", // (4) kStateDisconnecting
-    };
+#define StateMapList(_)                   \
+    _(kStateDisconnected, "Disconnected") \
+    _(kStateInitializing, "Initializing") \
+    _(kStateConnecting, "Connecting")     \
+    _(kStateConnected, "Connected")       \
+    _(kStateDisconnecting, "Disconnecting")
 
-    struct EnumCheck
-    {
-        InitEnumValidatorCounter();
-        ValidateNextEnum(kStateDisconnected);
-        ValidateNextEnum(kStateInitializing);
-        ValidateNextEnum(kStateConnecting);
-        ValidateNextEnum(kStateConnected);
-        ValidateNextEnum(kStateDisconnecting);
-    };
+    DefineEnumStringArray(StateMapList);
 
-    return kStateStrings[aState];
+    return kStrings[aState];
 }
 
 #endif
@@ -900,8 +891,7 @@ exit:
     return rval;
 }
 
-#if (MBEDTLS_VERSION_NUMBER >= 0x03000000)
-
+#if OPENTHREAD_CONFIG_MBEDTLS_PROVIDES_SSL_KEY_EXPORT
 void SecureTransport::HandleMbedtlsExportKeys(void                       *aContext,
                                               mbedtls_ssl_key_export_type aType,
                                               const unsigned char        *aMasterSecret,
@@ -948,12 +938,12 @@ exit:
 
 #else
 
-int SecureTransport::HandleMbedtlsExportKeys(void *aContext,
+int SecureTransport::HandleMbedtlsExportKeys(void                *aContext,
                                              const unsigned char *aMasterSecret,
                                              const unsigned char *aKeyBlock,
-                                             size_t aMacLength,
-                                             size_t aKeyLength,
-                                             size_t aIvLength)
+                                             size_t               aMacLength,
+                                             size_t               aKeyLength,
+                                             size_t               aIvLength)
 {
     return static_cast<SecureTransport *>(aContext)->HandleMbedtlsExportKeys(aMasterSecret, aKeyBlock, aMacLength,
                                                                              aKeyLength, aIvLength);
@@ -961,14 +951,14 @@ int SecureTransport::HandleMbedtlsExportKeys(void *aContext,
 
 int SecureTransport::HandleMbedtlsExportKeys(const unsigned char *aMasterSecret,
                                              const unsigned char *aKeyBlock,
-                                             size_t aMacLength,
-                                             size_t aKeyLength,
-                                             size_t aIvLength)
+                                             size_t               aMacLength,
+                                             size_t               aKeyLength,
+                                             size_t               aIvLength)
 {
     OT_UNUSED_VARIABLE(aMasterSecret);
 
     Crypto::Sha256::Hash kek;
-    Crypto::Sha256 sha256;
+    Crypto::Sha256       sha256;
 
     VerifyOrExit(mCipherSuite == kEcjpakeWithAes128Ccm8);
 
@@ -982,7 +972,7 @@ exit:
     return 0;
 }
 
-#endif // (MBEDTLS_VERSION_NUMBER >= 0x03000000)
+#endif // OPENTHREAD_CONFIG_MBEDTLS_PROVIDES_SSL_KEY_EXPORT
 
 void SecureTransport::HandleUpdateTask(Tasklet &aTasklet)
 {

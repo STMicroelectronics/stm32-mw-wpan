@@ -26,8 +26,8 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef SRP_CLIENT_HPP_
-#define SRP_CLIENT_HPP_
+#ifndef OT_CORE_NET_SRP_CLIENT_HPP_
+#define OT_CORE_NET_SRP_CLIENT_HPP_
 
 #include "openthread-core-config.h"
 
@@ -734,15 +734,6 @@ public:
      */
     bool GetUseShortLeaseOption(void) const { return mUseShortLeaseOption; }
 
-    /**
-     * Set the next DNS message ID for client to use.
-     *
-     * This is intended for testing only.
-     *
-     * @pram[in] aMessageId  A message ID.
-     */
-    void SetNextMessageId(uint16_t aMessageId) { mNextMessageId = aMessageId; }
-
 #endif // OPENTHREAD_CONFIG_REFERENCE_DEVICE_ENABLE
 
 private:
@@ -854,6 +845,7 @@ private:
 
     static constexpr uint16_t kTxFailureRetryJitter = 10;                                                      // in ms
     static constexpr uint16_t kRetryIntervalJitter  = OPENTHREAD_CONFIG_SRP_CLIENT_RETRY_WAIT_INTERVAL_JITTER; // in ms
+    static constexpr uint32_t kRetryJitterDivisor   = 5; // divisor for proportional jitter (1/N of retry interval)
 
     static_assert(kDefaultLease <= static_cast<uint32_t>(kMaxLease), "kDefaultLease is larger than max");
     static_assert(kDefaultKeyLease <= static_cast<uint32_t>(kMaxLease), "kDefaultKeyLease is larger than max");
@@ -903,6 +895,13 @@ private:
         kForServicesAppendedInMessage,
     };
 
+    // Used in `AppendSignature()`
+    enum SignatureAppendMode : uint8_t
+    {
+        kAppendEmptySignature,
+        kOverwriteWithNewSignature,
+    };
+
 #if OPENTHREAD_CONFIG_PLATFORM_KEY_REFERENCES_ENABLE
     typedef Crypto::Ecdsa::P256::KeyPairAsRef KeyInfo;
 #else
@@ -943,7 +942,8 @@ private:
     class AutoStart : public Clearable<AutoStart>
     {
     public:
-        enum State : uint8_t{
+        enum State : uint8_t
+        {
             kDisabled,                 // Disabled.
             kFirstTimeSelecting,       // Trying to select a server for the first time since AutoStart was enabled.
             kReselecting,              // Trying to select a server again (previously selected server was removed).
@@ -992,9 +992,11 @@ private:
         static constexpr uint16_t kUnknownOffset = 0;
 
         OwnedPtr<Message> mMessage;
+        bool              mSingleServiceMode;
         uint16_t          mDomainNameOffset;
         uint16_t          mHostNameOffset;
         uint16_t          mRecordCount;
+        uint16_t          mSigRecordOffset;
         KeyInfo           mKeyInfo;
     };
 
@@ -1017,6 +1019,7 @@ private:
     void         HandleHostInfoOrServiceChange(void);
     void         SendUpdate(void);
     Error        PrepareUpdateMessage(MsgInfo &aInfo);
+    Error        UpdateIdAndSignatureInUpdateMessage(MsgInfo &aInfo);
     Error        ReadOrGenerateKey(KeyInfo &aKeyInfo);
     Error        AppendServiceInstructions(MsgInfo &aInfo);
     bool         CanAppendService(const Service &aService);
@@ -1027,10 +1030,10 @@ private:
     Error        AppendHostName(MsgInfo &aInfo, bool aDoNotCompress = false) const;
     Error        AppendAaaaRecord(const Ip6::Address &aAddress, MsgInfo &aInfo) const;
     Error        AppendUpdateLeaseOptRecord(MsgInfo &aInfo);
-    Error        AppendSignature(MsgInfo &aInfo);
+    Error        AppendSignature(MsgInfo &aInfo, SignatureAppendMode aMode);
     void         HandleUdpReceive(Message &aMessage, const Ip6::MessageInfo &aMessageInfo);
     void         ProcessResponse(Message &aMessage);
-    bool         IsResponseMessageIdValid(uint16_t aId) const;
+    void         SelectNewMessageId(void);
     void         HandleUpdateDone(void);
     void         GetRemovedServices(LinkedList<Service> &aRemovedServices);
     static Error ReadResourceRecord(const Message &aMessage, uint16_t &aOffset, Dns::ResourceRecord &aRecord);
@@ -1057,7 +1060,7 @@ private:
     static const char *StateToString(State aState);
     void               LogRetryWaitInterval(void) const;
 #else
-    void                                 LogRetryWaitInterval(void) const {}
+    void LogRetryWaitInterval(void) const {}
 #endif
 
     static const char kDefaultDomainName[];
@@ -1074,14 +1077,12 @@ private:
     State   mState;
     uint8_t mTxFailureRetryCount : 4;
     bool    mShouldRemoveKeyLease : 1;
-    bool    mSingleServiceMode : 1;
 #if OPENTHREAD_CONFIG_REFERENCE_DEVICE_ENABLE
     bool mServiceKeyRecordEnabled : 1;
     bool mUseShortLeaseOption : 1;
 #endif
 
-    uint16_t mNextMessageId;
-    uint16_t mResponseMessageId;
+    uint16_t mCurMessageId;
     uint16_t mAutoHostAddressCount;
     uint32_t mRetryWaitInterval;
 
@@ -1116,4 +1117,4 @@ DefineMapEnum(otSrpClientItemState, Srp::Client::ItemState);
 
 #endif // OPENTHREAD_CONFIG_SRP_CLIENT_ENABLE
 
-#endif // SRP_CLIENT_HPP_
+#endif // OT_CORE_NET_SRP_CLIENT_HPP_

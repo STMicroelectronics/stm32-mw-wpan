@@ -16,7 +16,7 @@
         <TargetCommonOption>
           <Device>STM32WBA55CGUx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32WBAxx_DFP.2.0.0</PackID>
+          <PackID>Keil.STM32WBAxx_DFP.2.2.0-RC1</PackID>
           <PackURL>https://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000-0x2001FFFF) IROM(0x8000000-0x80FFFFF) CLOCK(8000000) FPU3(SFPU) CPUTYPE("Cortex-M33") ELITTLE TZ</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -980,9 +980,14 @@
           <GroupName>src_core_crypto</GroupName>
           <Files>
             <File>
-              <FileName>crypto_platform.cpp</FileName>
+              <FileName>crypto_platform_mbedtls.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\..\stack\src\core\crypto\crypto_platform.cpp</FilePath>
+              <FilePath>..\..\..\stack\src\core\crypto\crypto_platform_mbedtls.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_platform_psa.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\..\stack\src\core\crypto\crypto_platform_psa.cpp</FilePath>
             </File>
           </Files>
         </Group>

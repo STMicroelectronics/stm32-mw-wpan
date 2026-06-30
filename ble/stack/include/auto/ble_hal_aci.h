@@ -23,8 +23,8 @@
 
 /**
  * @brief ACI_HAL_WRITE_CONFIG_DATA
- * This command writes a value to a configure data structure. It is useful to
- * setup directly some parameters for the BLE stack.
+ * This command writes a value to the configuration data structure. It is
+ * useful to setup directly some parameters for the BLE stack.
  * Refer to Annex for details on the different parameters that can be
  * configured.
  * Note: this command is an alias of ACI_WRITE_CONFIG_DATA.
@@ -50,6 +50,8 @@
  *          LL RSSI golden range; 2 bytes
  *        - 0xC4: CONFIG_DATA_LL_RX_ACL_CTRL_OFFSET;
  *          LL RX ACL control; 2 bytes
+ *        - 0xC5: CONFIG_DATA_LL_ISO_SCHED_MODE_OFFSET;
+ *          LL isochronous scheduling mode; 1 byte
  * @param Length Length of data to be written
  * @param Value Data to be written
  * @return Value indicating success or error code.
@@ -60,8 +62,8 @@ tBleStatus aci_hal_write_config_data( uint8_t Offset,
 
 /**
  * @brief ACI_HAL_READ_CONFIG_DATA
- * This command requests the value in the configure data structure. The number
- * of read bytes changes for different Offset.
+ * This command requests the value in the configuration data structure. The
+ * number of read bytes changes for different Offset.
  * Note: this command is an alias of ACI_READ_CONFIG_DATA.
  *
  * @param Offset Offset of the element in the configuration data structure
@@ -70,7 +72,7 @@ tBleStatus aci_hal_write_config_data( uint8_t Offset,
  *        - 0x00: CONFIG_DATA_PUBLIC_ADDRESS_OFFSET;
  *          Bluetooth public address; 6 bytes
  *        - 0x08: CONFIG_DATA_ER_OFFSET;
- *          Encryption root key used to derive LTK (legacy) and CSRK; 16 bytes
+ *          Encryption root key used to derive LTK (legacy); 16 bytes
  *        - 0x18: CONFIG_DATA_IR_OFFSET
  *          Identity root key used to derive DHK (legacy) and IRK; 16 bytes
  *        - 0x2E: CONFIG_DATA_RANDOM_ADDRESS_OFFSET;
@@ -89,13 +91,13 @@ tBleStatus aci_hal_read_config_data( uint8_t Offset,
 /**
  * @brief ACI_HAL_SET_TX_POWER_LEVEL
  * This command sets the TX power level of the device. By controlling the PA
- * level, that determines the output power level (dBm) at the IC pin.
+ * level, it determines the output power level (dBm) at the IC pin.
  * When the system starts up or reboots, the default TX power level is used,
- * which is the maximum value. Once this command is given, the output power
- * changes instantly, regardless if there is BLE communication going on or not.
- * For example, for debugging purpose, the device can be set to advertise all
- * the time. By using this command, one can then observe the evolution of the
- * TX signal strength.
+ * which is the maximum supported value. Once this command is given, the output
+ * power changes instantly, regardless if there is BLE communication going on
+ * or not. For example, for debugging purpose, the device can be set to
+ * advertise all the time. By using this command, one can then observe the
+ * evolution of the TX signal strength.
  * The system keeps the last received TX power level from the command, i.e. the
  * 2nd command overwrites the previous TX power level. The new TX power level
  * remains until another ACI_HAL_SET_TX_POWER_LEVEL command, or the system
@@ -168,9 +170,9 @@ tBleStatus aci_hal_tone_stop( void );
 
 /**
  * @brief ACI_HAL_SET_RADIO_ACTIVITY_MASK
- * This command set the bitmask associated to
+ * This command sets the bitmask associated to
  * ACI_HAL_END_OF_RADIO_ACTIVITY_EVENT.
- * Only the radio activities enabled in the mask will be reported to
+ * Only the radio activities enabled in the mask will be reported to the
  * application by ACI_HAL_END_OF_RADIO_ACTIVITY_EVENT
  *
  * @param Radio_Activity_Mask Bitmask of radio events
@@ -347,6 +349,77 @@ tBleStatus aci_hal_ead_encrypt_decrypt( uint8_t Mode,
                                         const uint8_t* In_Data,
                                         uint16_t* Out_Data_Length,
                                         uint8_t* Out_Data );
+
+/**
+ * @brief ACI_HAL_PTA_ENABLE
+ * This command enables or disables the PTA in the hardware.
+ *
+ * @param Enable Enables/disables PTA.
+ *        Values:
+ *        - 0x00: Disable
+ *        - 0x01: Enable
+ * @return Value indicating success or error code.
+ */
+tBleStatus aci_hal_pta_enable( uint8_t Enable );
+
+/**
+ * @brief ACI_HAL_PTA_SET_PRIORITY
+ * This command configures the PTA priority for a specific event.
+ *
+ * @param Mode Determines the type of events.
+ *        Values:
+ *        - 0x00: Generic priority configuration
+ *        - 0x02: Priority configuration for ACL events
+ *        - 0x03: Priority configuration for Periodic Scan events
+ *        - 0x04: Priority configuration for CIG events
+ *        - 0x05: Priority configuration for BIG events
+ *        - 0x06: Priority Configuration for CS events in normal mode
+ *        - 0x07: Priority Configuration for CS events in test mode
+ * @param Handle Link handle.
+ *        For Mode 2, 6 or 7, this parameter gives the connection handle.
+ *        For Mode 3, this parameter gives the sync handle.
+ *        For Mode 4, this parameter gives the CIG identifier.
+ *        For Mode 5, this parameter gives the BIG identifier.
+ *        For other Mode values, this parameter is not used.
+ * @param Priority Determines the state of each priority.
+ * @param Priority_Mask Determines which priorities are in effect in the
+ *        priority variable (the possible values depend on Mode).
+ *        Flags:
+ *        - 0x00000001: Mode 0 to 7: PTA_FORCED_PRIORITY_HIGH_VALUE
+ *        - 0x00000002: Mode 0 to 7: PTA_FORCED_PRIORITY_LOW_VALUE
+ *        - 0x00000004: Mode 0: PTA_GENERIC_PRIORITY_CONN_ADV;
+ *                      Mode 2 or 3: PTA_LINK_PRIORITY_CONFIG_LINK_LOSS_LIMIT;
+ *                      Mode 4 or 5: PTA_ISO_PRIORITY_CONFIG_PROTECT_ALL;
+ *                      Mode 6 or 7: PTA_LINK_PRIORITY_CS_CONFIG_MULTI_STEPS
+ *        - 0x00000008: Mode 0: PTA_GENERIC_PRIORITY_NON_CONN_ADV;
+ *                      Mode 2 or 3: PTA_LINK_PRIORITY_CONFIG_MULTI_SLOT;
+ *                      Mode 4 or 5: PTA_ISO_PRIORITY_CONFIG_PROTECT_RTN_ONLY
+ *        - 0x00000010: Mode 0: PTA_GENERIC_PRIORITY_SCAN;
+ *                      Mode 4 or 5: PTA_ISO_PRIORITY_CONFIG_LINK_LOSS_LIMIT
+ *        - 0x00000020: Mode 0: PTA_GENERIC_PRIORITY_PER_ADV_HEAD
+ *        - 0x00000040: Mode 0: PTA_GENERIC_PRIORITY_PER_ADV_TRAIN
+ *        - 0x00000080: Mode 0: PTA_GENERIC_PRIORITY_BIS_BROADCAST
+ *        - 0x00000100: Mode 0: PTA_GENERIC_PRIORITY_SYNCING
+ *        - 0x00000200: Mode 0: PTA_GENERIC_PRIORITY_SYNCED
+ *        - 0x00000400: Mode 0: PTA_GENERIC_PRIORITY_BIS_SYNC
+ *        - 0x00000800: Mode 0: PTA_GENERIC_PRIORITY_ACL_SETUP
+ *        - 0x00001000: Mode 0: PTA_GENERIC_PRIORITY_CIS_SETUP
+ *        - 0x00002000: Mode 0: PTA_GENERIC_PRIORITY_INITIATING
+ *        - 0x00004000: Mode 0: PTA_GENERIC_PRIORITY_DEFAULT_PRIORITY
+ * @param Slots_Number Number of protected slots (used only for Mode 2, 3, 6,
+ *        or 7).
+ * @param Limit_Timeout Timeout percentage for link loss mode (used only for
+ *        Mode 2, 3, 4, or 5).
+ *        Values:
+ *        - 1 ... 100
+ * @return Value indicating success or error code.
+ */
+tBleStatus aci_hal_pta_set_priority( uint8_t Mode,
+                                     uint16_t Handle,
+                                     uint32_t Priority,
+                                     uint32_t Priority_Mask,
+                                     uint8_t Slots_Number,
+                                     uint8_t Limit_Timeout );
 
 
 #endif /* BLE_HAL_ACI_H__ */

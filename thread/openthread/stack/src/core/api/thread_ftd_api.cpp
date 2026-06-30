@@ -176,12 +176,12 @@ exit:
 
 otError otThreadBecomeRouter(otInstance *aInstance)
 {
-    return AsCoreType(aInstance).Get<Mle::Mle>().BecomeRouter(ThreadStatusTlv::kHaveChildIdRequest);
+    return AsCoreType(aInstance).Get<Mle::Mle>().BecomeRouter(Mle::kReasonHaveChildIdRequest);
 }
 
 otError otThreadBecomeLeader(otInstance *aInstance)
 {
-    return AsCoreType(aInstance).Get<Mle::Mle>().BecomeLeader(/* aCheckWeight */ true);
+    return AsCoreType(aInstance).Get<Mle::Mle>().BecomeLeader(Mle::Mle::kCheckLeaderWeight);
 }
 
 uint8_t otThreadGetRouterDowngradeThreshold(otInstance *aInstance)
@@ -320,12 +320,14 @@ void otThreadRegisterNeighborTableCallback(otInstance *aInstance, otNeighborTabl
     AsCoreType(aInstance).Get<NeighborTable>().RegisterCallback(aCallback);
 }
 
+#if OPENTHREAD_CONFIG_MLE_DISCOVERY_SCAN_REQUEST_CALLBACK_ENABLE
 void otThreadSetDiscoveryRequestCallback(otInstance                      *aInstance,
                                          otThreadDiscoveryRequestCallback aCallback,
                                          void                            *aContext)
 {
     AsCoreType(aInstance).Get<Mle::Mle>().SetDiscoveryRequestCallback(aCallback, aContext);
 }
+#endif
 
 #if OPENTHREAD_CONFIG_REFERENCE_DEVICE_ENABLE
 

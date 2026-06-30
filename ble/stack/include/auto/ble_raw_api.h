@@ -916,6 +916,15 @@ tBleStatus ACI_HAL_EAD_ENCRYPT_DECRYPT( uint8_t Mode,
                                         uint16_t* Out_Data_Length,
                                         uint8_t* Out_Data );
 
+tBleStatus ACI_HAL_PTA_ENABLE( uint8_t Enable );
+
+tBleStatus ACI_HAL_PTA_SET_PRIORITY( uint8_t Mode,
+                                     uint16_t Handle,
+                                     uint32_t Priority,
+                                     uint32_t Priority_Mask,
+                                     uint8_t Slots_Number,
+                                     uint8_t Limit_Timeout );
+
 tBleStatus ACI_GAP_SET_NON_DISCOVERABLE( void );
 
 tBleStatus ACI_GAP_SET_LIMITED_DISCOVERABLE( uint8_t Advertising_Type,
@@ -998,24 +1007,12 @@ tBleStatus ACI_GAP_GET_SECURITY_LEVEL( uint16_t Connection_Handle,
 
 tBleStatus ACI_GAP_SET_EVENT_MASK( uint16_t GAP_Evt_Mask );
 
-tBleStatus ACI_GAP_CONFIGURE_FILTER_ACCEPT_LIST( void );
-
 tBleStatus ACI_GAP_TERMINATE( uint16_t Connection_Handle,
                               uint8_t Reason );
 
 tBleStatus ACI_GAP_CLEAR_SECURITY_DB( void );
 
 tBleStatus ACI_GAP_ALLOW_REBOND( uint16_t Connection_Handle );
-
-tBleStatus ACI_GAP_START_LIMITED_DISCOVERY_PROC( uint16_t LE_Scan_Interval,
-                                                 uint16_t LE_Scan_Window,
-                                                 uint8_t Own_Address_Type,
-                                                 uint8_t Filter_Duplicates );
-
-tBleStatus ACI_GAP_START_GENERAL_DISCOVERY_PROC( uint16_t LE_Scan_Interval,
-                                                 uint16_t LE_Scan_Window,
-                                                 uint8_t Own_Address_Type,
-                                                 uint8_t Filter_Duplicates );
 
 tBleStatus ACI_GAP_START_AUTO_CONNECTION_ESTABLISH_PROC( uint16_t LE_Scan_Interval,
                                                          uint16_t LE_Scan_Window,
@@ -1028,22 +1025,6 @@ tBleStatus ACI_GAP_START_AUTO_CONNECTION_ESTABLISH_PROC( uint16_t LE_Scan_Interv
                                                          uint16_t Maximum_CE_Length,
                                                          uint8_t Num_of_Peer_Entries,
                                                          const Peer_Entry_t* Peer_Entry );
-
-tBleStatus ACI_GAP_START_GENERAL_CONNECTION_ESTABLISH_PROC( uint8_t LE_Scan_Type,
-                                                            uint16_t LE_Scan_Interval,
-                                                            uint16_t LE_Scan_Window,
-                                                            uint8_t Own_Address_Type,
-                                                            uint8_t Scanning_Filter_Policy,
-                                                            uint8_t Filter_Duplicates );
-
-tBleStatus ACI_GAP_START_SELECTIVE_CONNECTION_ESTABLISH_PROC( uint8_t LE_Scan_Type,
-                                                              uint16_t LE_Scan_Interval,
-                                                              uint16_t LE_Scan_Window,
-                                                              uint8_t Own_Address_Type,
-                                                              uint8_t Scanning_Filter_Policy,
-                                                              uint8_t Filter_Duplicates,
-                                                              uint8_t Num_of_Peer_Entries,
-                                                              const Peer_Entry_t* Peer_Entry );
 
 tBleStatus ACI_GAP_CREATE_CONNECTION( uint16_t LE_Scan_Interval,
                                       uint16_t LE_Scan_Window,
@@ -1078,13 +1059,6 @@ tBleStatus ACI_GAP_SET_BROADCAST_MODE( uint16_t Advertising_Interval_Min,
                                        const uint8_t* Adv_Data,
                                        uint8_t Num_of_Peer_Entries,
                                        const Peer_Entry_t* Peer_Entry );
-
-tBleStatus ACI_GAP_START_OBSERVATION_PROC( uint16_t LE_Scan_Interval,
-                                           uint16_t LE_Scan_Window,
-                                           uint8_t LE_Scan_Type,
-                                           uint8_t Own_Address_Type,
-                                           uint8_t Filter_Duplicates,
-                                           uint8_t Scanning_Filter_Policy );
 
 tBleStatus ACI_GAP_GET_BONDED_DEVICES( uint8_t* Num_of_Addresses,
                                        Bonded_Device_Entry_t* Bonded_Device_Entry );
@@ -1199,15 +1173,15 @@ tBleStatus ACI_GAP_ADV_SET_CONFIGURATION_V2( uint8_t Adv_Mode,
                                              uint8_t Primary_Adv_PHY_Options,
                                              uint8_t Secondary_Adv_PHY_Options );
 
-tBleStatus ACI_GAP_EXT_START_SCAN( uint8_t Scan_Mode,
-                                   uint8_t Procedure,
-                                   uint8_t Own_Address_Type,
-                                   uint8_t Filter_Duplicates,
-                                   uint16_t Duration,
-                                   uint16_t Period,
-                                   uint8_t Scanning_Filter_Policy,
-                                   uint8_t Scanning_PHYs,
-                                   const Scan_Param_Phy_t* Scan_Param_Phy );
+tBleStatus ACI_GAP_START_SCAN( uint8_t Scan_Mode,
+                               uint8_t Procedure,
+                               uint8_t Own_Address_Type,
+                               uint8_t Filter_Duplicates,
+                               uint16_t Duration,
+                               uint16_t Period,
+                               uint8_t Scanning_Filter_Policy,
+                               uint8_t Scanning_PHYs,
+                               const Scan_Param_Phy_t* Scan_Param_Phy );
 
 tBleStatus ACI_GAP_EXT_CREATE_CONNECTION( uint8_t Initiating_Mode,
                                           uint8_t Procedure,
@@ -1372,11 +1346,6 @@ tBleStatus ACI_GATT_WRITE_WITHOUT_RESP( uint16_t Connection_Handle,
                                         uint16_t Attr_Handle,
                                         uint8_t Attribute_Val_Length,
                                         const uint8_t* Attribute_Val );
-
-tBleStatus ACI_GATT_SIGNED_WRITE_WITHOUT_RESP( uint16_t Connection_Handle,
-                                               uint16_t Attr_Handle,
-                                               uint8_t Attribute_Val_Length,
-                                               const uint8_t* Attribute_Val );
 
 tBleStatus ACI_GATT_CONFIRM_INDICATION( uint16_t Connection_Handle );
 

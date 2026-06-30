@@ -35,8 +35,8 @@ tBleStatus aci_gatt_init( void );
 
 /**
  * @brief ACI_GATT_ADD_SERVICE
- * Add a service to GATT Server. When a service is created in the server, the
- * host needs to reserve the handle ranges for this service using
+ * Adds a service to the GATT server. When a service is created in the server,
+ * the Host needs to reserve the handle ranges for this service using
  * Max_Attribute_Records parameter. This parameter specifies the maximum number
  * of attribute records that can be added to this service (including the
  * service attribute, include attribute, characteristic attribute,
@@ -70,9 +70,9 @@ tBleStatus aci_gatt_add_service( uint8_t Service_UUID_Type,
 
 /**
  * @brief ACI_GATT_INCLUDE_SERVICE
- * Include a service given by Include_Start_Handle and Include_End_Handle to
- * another service given by Service_Handle. Attribute server creates an INCLUDE
- * definition attribute and return the handle of this attribute in
+ * Includes a service given by Include_Start_Handle and Include_End_Handle to
+ * another service given by Service_Handle. This command creates an INCLUDE
+ * definition attribute and returns the handle of this attribute in
  * Included_handle.
  *
  * @param Service_Handle Handle of the Service to which another service has to
@@ -103,8 +103,8 @@ tBleStatus aci_gatt_include_service( uint16_t Service_Handle,
  * order, by:
  * - the Server Characteristic Configuration descriptor if CHAR_PROP_BROADCAST
  * is selected;
- * - the Client Characteristic Configuration descriptor if CHAR_PROP_NOTIFY or
- * CHAR_PROP_INDICATE properties is selected;
+ * - the Client Characteristic Configuration descriptor if CHAR_PROP_NOTIFY
+ * and/or CHAR_PROP_INDICATE properties are selected;
  * - the Characteristic Extended Properties descriptor if CHAR_PROP_EXT is
  * selected.
  * For instance, if CHAR_PROP_NOTIFY is selected but not CHAR_PROP_BROADCAST
@@ -129,7 +129,6 @@ tBleStatus aci_gatt_include_service( uint16_t Service_Handle,
  *        - 0x08: CHAR_PROP_WRITE (Write)
  *        - 0x10: CHAR_PROP_NOTIFY (Notify)
  *        - 0x20: CHAR_PROP_INDICATE (Indicate)
- *        - 0x40: CHAR_PROP_SIGNED_WRITE (Authenticated Signed Writes)
  *        - 0x80: CHAR_PROP_EXT (Extended Properties)
  * @param Security_Permissions Security permission flags.
  *        Flags:
@@ -208,7 +207,6 @@ tBleStatus aci_gatt_add_char( uint16_t Service_Handle,
  *        - 0x01: READ
  *        - 0x02: WRITE
  *        - 0x04: WRITE_WO_RESP
- *        - 0x08: SIGNED_WRITE
  * @param GATT_Evt_Mask GATT event mask.
  *        Flags:
  *        - 0x00: GATT_DONT_NOTIFY_EVENTS
@@ -257,9 +255,9 @@ tBleStatus aci_gatt_add_char_desc( uint16_t Service_Handle,
  * - The command does not execute and returns BLE_STATUS_INSUFFICIENT_RESOURCES
  * if there is no more room in the TX pool to allocate notification (or
  * indication) packets. This happens if notifications (or indications) are
- * enabled and the application calls this command at an higher rate than what
- * is allowed by the link. Throughput on BLE link depends on connection
- * interval and connection length parameters (decided by the Central, see
+ * enabled and the application calls this command at a higher rate than what is
+ * allowed by the link. Throughput on BLE link depends on connection interval
+ * and connection length parameters (decided by the Central, see
  * ACI_L2CAP_CONNECTION_PARAMETER_UPDATE_REQ for more information on how to
  * suggest new connection parameters from a Peripheral). The application can
  * wait for the event ACI_GATT_TX_POOL_AVAILABLE_EVENT before retrying a call
@@ -374,8 +372,9 @@ tBleStatus aci_gatt_exchange_config( uint16_t Connection_Handle );
  * Sends a Find Information Request.
  * This command is used to obtain the mapping of attribute handles with their
  * associated types. The responses of the procedure are given through the
- * ACI_ATT_FIND_INFO_RESP_EVENT event. The end of the procedure is indicated by
- * a ACI_GATT_PROC_COMPLETE_EVENT event.
+ * ACI_ATT_FIND_INFO_RESP_EVENT event.
+ * The end of the procedure is indicated by a ACI_GATT_PROC_COMPLETE_EVENT
+ * event.
  *
  * @param Connection_Handle Connection handle for which the command applies.
  *        Values:
@@ -390,7 +389,7 @@ tBleStatus aci_att_find_info_req( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_ATT_FIND_BY_TYPE_VALUE_REQ
- * Sends a Find By Type Value Request
+ * Sends a Find By Type Value Request.
  * The Find By Type Value Request is used to obtain the handles of attributes
  * that have a given 16-bit UUID attribute type and a given attribute value.
  * The responses of the procedure are given through the
@@ -805,7 +804,7 @@ tBleStatus aci_gatt_write_long_char_value( uint16_t Connection_Handle,
 /**
  * @brief ACI_GATT_WRITE_CHAR_RELIABLE
  * Starts the procedure to write a characteristic reliably.
- * When the procedure is completed, a  ACI_GATT_PROC_COMPLETE_EVENT event is
+ * When the procedure is completed, a ACI_GATT_PROC_COMPLETE_EVENT event is
  * generated. During the procedure, ACI_ATT_PREPARE_WRITE_RESP_EVENT and
  * ACI_ATT_EXEC_WRITE_RESP_EVENT events are raised.
  *
@@ -853,30 +852,9 @@ tBleStatus aci_gatt_write_without_resp( uint16_t Connection_Handle,
                                         const uint8_t* Attribute_Val );
 
 /**
- * @brief ACI_GATT_SIGNED_WRITE_WITHOUT_RESP
- * Starts a signed write without response from the server.
- * The procedure is used to write a characteristic value with an authentication
- * signature without waiting for any response from the server. It cannot be
- * used when the link is encrypted.
- * The length of the value to be written must not exceed (ATT_MTU - 15).
- *
- * @param Connection_Handle Connection handle for which the command applies.
- *        Values:
- *        - 0x0000 ... 0x0EFF
- * @param Attr_Handle Handle of the characteristic value to be written
- * @param Attribute_Val_Length Length of the value to be written
- * @param Attribute_Val Value to be written
- * @return Value indicating success or error code.
- */
-tBleStatus aci_gatt_signed_write_without_resp( uint16_t Connection_Handle,
-                                               uint16_t Attr_Handle,
-                                               uint8_t Attribute_Val_Length,
-                                               const uint8_t* Attribute_Val );
-
-/**
  * @brief ACI_GATT_CONFIRM_INDICATION
- * Allow application to confirm indication. This command has to be sent when
- * the application receives the event ACI_GATT_INDICATION_EVENT.
+ * Allows the application to confirm indication. This command has to be sent
+ * when the application receives the event ACI_GATT_INDICATION_EVENT.
  *
  * @param Connection_Handle Specifies the ATT bearer for which the command
  *        applies.
@@ -891,7 +869,7 @@ tBleStatus aci_gatt_confirm_indication( uint16_t Connection_Handle );
 
 /**
  * @brief ACI_GATT_PERMIT_WRITE
- * Allow or reject a write request from a client.
+ * Allows or rejects a write request from a client.
  * This command has to be sent by the application when it receives the
  * ACI_GATT_WRITE_PERMIT_REQ_EVENT. If the write can be allowed, then the
  * status and error code have to be set to 0. If the write cannot be allowed,
@@ -934,7 +912,7 @@ tBleStatus aci_gatt_permit_write( uint16_t Connection_Handle,
 /**
  * @brief ACI_GATT_PERMIT_READ
  * This command is used to allow or deny the GATT server to send a response to
- * a read request from a client. The application must end this command when it
+ * a read request from a client. The application must send this command when it
  * receives the permission request event, either ACI_GATT_READ_PERMIT_REQ_EVENT
  * or ACI_GATT_READ_MULTI_PERMIT_REQ_EVENT. The application should issue this
  * command within 30 seconds from the reception of the permission request
@@ -1124,7 +1102,6 @@ tBleStatus aci_gatt_update_char_value_ext( uint16_t Conn_Handle_To_Notify,
  *        - 0x01: READ
  *        - 0x02: WRITE
  *        - 0x04: WRITE_WO_RESP
- *        - 0x08: SIGNED_WRITE
  * @return Value indicating success or error code.
  */
 tBleStatus aci_gatt_set_access_permission( uint16_t Serv_Handle,
@@ -1194,23 +1171,18 @@ tBleStatus aci_gatt_read_multiple_var_char_value( uint16_t Connection_Handle,
 /**
  * @brief ACI_GATT_WRITE_WITHOUT_RESP_EXT
  * This command is used on the client side to write an attribute value to the
- * server. It can replace ACI_GATT_WRITE_WITHOUT_RESP or
- * ACI_GATT_SIGNED_WRITE_WITHOUT_RESP when the length of the data to be written
- * exceeds the capacity supported by these commands. In this case, the data to
- * be written is not part of the command, but is stored in the "extra data"
- * buffer, which must be pre-filled by the application before calling this
- * command. The used portion of the "extra data" buffer can only be reused
- * after receiving HCI_COMMAND_COMPLETE_EVENT.
+ * server. It can replace ACI_GATT_WRITE_WITHOUT_RESP when the length of the
+ * data to be written exceeds the capacity supported by these commands. In this
+ * case, the data to be written is not part of the command, but is stored in
+ * the "extra data" buffer, which must be pre-filled by the application before
+ * calling this command. The used portion of the "extra data" buffer can only
+ * be reused after receiving HCI_COMMAND_COMPLETE_EVENT.
  *
  * @param Connection_Handle Connection handle for which the command applies.
  *        Values:
  *        - 0x0000 ... 0x0EFF
  * @param Attr_Handle Handle of the characteristic value to be written
- * @param Signed_Mode Specifies the type of GATT write without response: signed
- *        or not.
- *        Values:
- *        - 0x00: Write Without Response
- *        - 0x01: Signed Write Without Response
+ * @param Signed_Mode Not used
  * @param Data_Length Length of the data to be written.
  * @param Data_Pointer Pointer to the data to be written (it is the offset in
  *        bytes from the start of the "extra data" buffer).

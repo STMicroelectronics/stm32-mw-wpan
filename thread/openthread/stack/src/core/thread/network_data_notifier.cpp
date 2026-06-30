@@ -154,7 +154,7 @@ Error Notifier::UpdateInconsistentData(void)
     // Don't send this Server Data Notification if the device is going
     // to upgrade to Router.
 
-    if (Get<Mle::Mle>().IsExpectedToBecomeRouterSoon())
+    if (Get<Mle::Mle>().WillBecomeRouterSoon())
     {
         ExitNow(error = kErrorInvalidState);
     }
@@ -192,12 +192,8 @@ Error Notifier::SendServerDataNotification(uint16_t aOldRloc16, const NetworkDat
 
     if (aNetworkData != nullptr)
     {
-        ThreadTlv tlv;
-
-        tlv.SetType(ThreadTlv::kThreadNetworkData);
-        tlv.SetLength(aNetworkData->GetLength());
-        SuccessOrExit(error = message->Append(tlv));
-        SuccessOrExit(error = message->AppendBytes(aNetworkData->GetBytes(), aNetworkData->GetLength()));
+        SuccessOrExit(error = Tlv::AppendTlv(*message, ThreadTlv::kThreadNetworkData, aNetworkData->GetBytes(),
+                                             aNetworkData->GetLength()));
 
 #if OPENTHREAD_FTD && OPENTHREAD_CONFIG_BORDER_ROUTER_SIGNAL_NETWORK_DATA_FULL
         Get<Leader>().CheckForNetDataGettingFull(*aNetworkData, aOldRloc16);
@@ -246,19 +242,10 @@ void Notifier::HandleNotifierEvents(Events aEvents)
 
 void Notifier::HandleTimer(void) { SynchronizeServerData(); }
 
-void Notifier::HandleCoapResponse(void                *aContext,
-                                  otMessage           *aMessage,
-                                  const otMessageInfo *aMessageInfo,
-                                  otError              aResult)
+void Notifier::HandleCoapResponse(Coap::Msg *aMsg, Error aResult)
 {
-    OT_UNUSED_VARIABLE(aMessage);
-    OT_UNUSED_VARIABLE(aMessageInfo);
+    OT_UNUSED_VARIABLE(aMsg);
 
-    static_cast<Notifier *>(aContext)->HandleCoapResponse(aResult);
-}
-
-void Notifier::HandleCoapResponse(Error aResult)
-{
     mWaitingForResponse = false;
 
     switch (aResult)
@@ -361,7 +348,7 @@ void Notifier::HandleTimeTick(void)
         {
             LogInfo("Requesting router role as BR");
             mDidRequestRouterRoleUpgrade = true;
-            IgnoreError(Get<Mle::Mle>().BecomeRouter(ThreadStatusTlv::kBorderRouterRequest));
+            IgnoreError(Get<Mle::Mle>().BecomeRouter(Mle::kReasonBorderRouterRequest));
         }
     }
 exit:

@@ -171,6 +171,18 @@ bool otIp6IsAddressEqual(const otIp6Address *aFirst, const otIp6Address *aSecond
     return AsCoreType(aFirst) == AsCoreType(aSecond);
 }
 
+bool otIp6IsLinkLocalUnicast(const otIp6Address *aAddress) { return AsCoreType(aAddress).IsLinkLocalUnicast(); }
+
+void otIp6FormLinkLocalAddressFromExtAddress(const otExtAddress *aExtAddress, otIp6Address *aAddress)
+{
+    AsCoreType(aAddress).SetToLinkLocalAddress(AsCoreType(aExtAddress));
+}
+
+void otIp6ExtractExtAddressFromIp6AddressIid(const otIp6Address *aAddress, otExtAddress *aExtAddress)
+{
+    AsCoreType(aExtAddress).SetFromIid(AsCoreType(aAddress).GetIid());
+}
+
 bool otIp6ArePrefixesEqual(const otIp6Prefix *aFirst, const otIp6Prefix *aSecond)
 {
     return AsCoreType(aFirst) == AsCoreType(aSecond);
@@ -239,7 +251,7 @@ otError otIp6RegisterMulticastListeners(otInstance                             *
 
 #if OPENTHREAD_CONFIG_IP6_SLAAC_ENABLE
 
-bool otIp6IsSlaacEnabled(otInstance *aInstance) { return AsCoreType(aInstance).Get<Utils::Slaac>().IsEnabled(); }
+bool otIp6IsSlaacEnabled(otInstance *aInstance) { return AsCoreType(aInstance).Get<Ip6::Slaac>().IsEnabled(); }
 
 void otIp6SetSlaacEnabled(otInstance *aInstance, bool aEnabled)
 {
@@ -247,17 +259,17 @@ void otIp6SetSlaacEnabled(otInstance *aInstance, bool aEnabled)
 
     if (aEnabled)
     {
-        instance.Get<Utils::Slaac>().Enable();
+        instance.Get<Ip6::Slaac>().Enable();
     }
     else
     {
-        instance.Get<Utils::Slaac>().Disable();
+        instance.Get<Ip6::Slaac>().Disable();
     }
 }
 
 void otIp6SetSlaacPrefixFilter(otInstance *aInstance, otIp6SlaacPrefixFilter aFilter)
 {
-    AsCoreType(aInstance).Get<Utils::Slaac>().SetFilter(aFilter);
+    AsCoreType(aInstance).Get<Ip6::Slaac>().SetFilter(aFilter);
 }
 
 #endif // OPENTHREAD_CONFIG_IP6_SLAAC_ENABLE

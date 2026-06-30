@@ -28,16 +28,18 @@
 #endif /* OPENTHREAD_CONFIG_FILE */
 #endif /* MAC */
 
-/**
-  * @brief  Missed HCI event flag
-  */
-uint8_t missed_hci_event_flag = 0;
-
+static void ll_init(void);
 static void ll_sys_dependencies_init(void);
 #if SUPPORT_BLE
 static void ll_sys_event_missed_cb( ble_buff_hdr_t* ptr_evnt_hdr )
 {
-  missed_hci_event_flag = 1;
+  if (( ptr_evnt_hdr != NULL ) && (ptr_evnt_hdr->data_size >= 2) 
+      && (ptr_evnt_hdr->ble_hdr_flags == BLE_BUFF_HDR_EVNT_CMD_PCKT))
+  {
+    uint8_t *event_data = ptr_evnt_hdr->buff_start + ptr_evnt_hdr->data_offset;
+    ll_sys_handle_missed_event_cb(event_data[1],
+                                  event_data);
+  }
 }
 
 /**
@@ -47,17 +49,11 @@ static void ll_sys_event_missed_cb( ble_buff_hdr_t* ptr_evnt_hdr )
   */
 void ll_sys_ble_cntrl_init(hst_cbk hostCallback)
 { 
-  const struct hci_dispatch_tbl* p_hci_dis_tbl = NULL;
-  
-  hci_get_dis_tbl( &p_hci_dis_tbl );
-  
-  ll_intf_init(p_hci_dis_tbl);
+  ll_init();
 
   ll_intf_rgstr_hst_cbk(hostCallback);
 
   ll_intf_rgstr_hst_cbk_ll_queue_full( ll_sys_event_missed_cb );
-
-  ll_sys_dependencies_init();
 }
 #endif /* SUPPORT_BLE */
 
@@ -71,7 +67,7 @@ void ll_sys_ble_cntrl_init(hst_cbk hostCallback)
 void ll_sys_mac_cntrl_init(void)
 {
   ST_MAC_preInit();
-  ll_sys_dependencies_init(); 
+  ll_init();
 }
 #endif /* OPENTHREAD_CONFIG_FILE */
 #endif /* MAC */
@@ -83,7 +79,7 @@ void ll_sys_mac_cntrl_init(void)
   */
 void ll_sys_thread_init(void)
 {
-  ll_sys_dependencies_init();
+  ll_init();
 }
 
 /**
@@ -95,14 +91,8 @@ void ll_sys_thread_init(void)
   */
 static void ll_sys_dependencies_init(void)
 {
-  static uint8_t is_ll_initialized = 0;
+
   ll_sys_status_t dp_slp_status;
-  
-  /* Ensure Link Layer resources are created only once */
-  if (is_ll_initialized == 1) {
-    return;
-  }
-  is_ll_initialized = 1;
   
   /* Deep sleep feature initialization */
   dp_slp_status = ll_sys_dp_slp_init();
@@ -113,4 +103,38 @@ static void ll_sys_dependencies_init(void)
   
   /* Link Layer user parameters application */
   ll_sys_config_params();
+}
+
+/**
+  * @brief  Initialize the Link Layer IP BLE/802.15.4 MAC controller
+  * @param  None
+  * @retval None
+  */
+static void ll_init(void)
+{
+  static uint8_t is_ll_initialized = 0;
+#if SUPPORT_BLE
+  const struct hci_dispatch_tbl* p_hci_dis_tbl = NULL;
+#endif /* SUPPORT_BLE */
+
+  /* Ensure Link Layer resources are created only once */
+  if (is_ll_initialized == 1) {
+    return;
+  }
+  is_ll_initialized = 1;
+
+#if SUPPORT_BLE
+  hci_get_dis_tbl( &p_hci_dis_tbl );
+
+  ll_intf_init(p_hci_dis_tbl);
+#endif /* SUPPORT_BLE */
+
+
+  ll_sys_dependencies_init();
+}
+
+__WEAK void ll_sys_handle_missed_event_cb(uint16_t length,
+                                          uint8_t* data)
+{
+
 }

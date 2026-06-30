@@ -1950,6 +1950,26 @@
 #define BLE_WRAP_ACI_HAL_EAD_ENCRYPT_DECRYPT_POSTPROC BLE_WRAP_POSTPROC
 #endif
 
+/* ACI_HAL_PTA_ENABLE pre-processing macro */
+#ifndef BLE_WRAP_ACI_HAL_PTA_ENABLE_PREPROC
+#define BLE_WRAP_ACI_HAL_PTA_ENABLE_PREPROC BLE_WRAP_PREPROC
+#endif
+
+/* ACI_HAL_PTA_ENABLE post-processing macro */
+#ifndef BLE_WRAP_ACI_HAL_PTA_ENABLE_POSTPROC
+#define BLE_WRAP_ACI_HAL_PTA_ENABLE_POSTPROC BLE_WRAP_POSTPROC
+#endif
+
+/* ACI_HAL_PTA_SET_PRIORITY pre-processing macro */
+#ifndef BLE_WRAP_ACI_HAL_PTA_SET_PRIORITY_PREPROC
+#define BLE_WRAP_ACI_HAL_PTA_SET_PRIORITY_PREPROC BLE_WRAP_PREPROC
+#endif
+
+/* ACI_HAL_PTA_SET_PRIORITY post-processing macro */
+#ifndef BLE_WRAP_ACI_HAL_PTA_SET_PRIORITY_POSTPROC
+#define BLE_WRAP_ACI_HAL_PTA_SET_PRIORITY_POSTPROC BLE_WRAP_POSTPROC
+#endif
+
 /* ACI_GAP_SET_NON_DISCOVERABLE pre-processing macro */
 #ifndef BLE_WRAP_ACI_GAP_SET_NON_DISCOVERABLE_PREPROC
 #define BLE_WRAP_ACI_GAP_SET_NON_DISCOVERABLE_PREPROC BLE_WRAP_PREPROC
@@ -2120,16 +2140,6 @@
 #define BLE_WRAP_ACI_GAP_SET_EVENT_MASK_POSTPROC BLE_WRAP_POSTPROC
 #endif
 
-/* ACI_GAP_CONFIGURE_FILTER_ACCEPT_LIST pre-processing macro */
-#ifndef BLE_WRAP_ACI_GAP_CONFIGURE_FILTER_ACCEPT_LIST_PREPROC
-#define BLE_WRAP_ACI_GAP_CONFIGURE_FILTER_ACCEPT_LIST_PREPROC BLE_WRAP_PREPROC
-#endif
-
-/* ACI_GAP_CONFIGURE_FILTER_ACCEPT_LIST post-processing macro */
-#ifndef BLE_WRAP_ACI_GAP_CONFIGURE_FILTER_ACCEPT_LIST_POSTPROC
-#define BLE_WRAP_ACI_GAP_CONFIGURE_FILTER_ACCEPT_LIST_POSTPROC BLE_WRAP_POSTPROC
-#endif
-
 /* ACI_GAP_TERMINATE pre-processing macro */
 #ifndef BLE_WRAP_ACI_GAP_TERMINATE_PREPROC
 #define BLE_WRAP_ACI_GAP_TERMINATE_PREPROC BLE_WRAP_PREPROC
@@ -2160,26 +2170,6 @@
 #define BLE_WRAP_ACI_GAP_ALLOW_REBOND_POSTPROC BLE_WRAP_POSTPROC
 #endif
 
-/* ACI_GAP_START_LIMITED_DISCOVERY_PROC pre-processing macro */
-#ifndef BLE_WRAP_ACI_GAP_START_LIMITED_DISCOVERY_PROC_PREPROC
-#define BLE_WRAP_ACI_GAP_START_LIMITED_DISCOVERY_PROC_PREPROC BLE_WRAP_PREPROC
-#endif
-
-/* ACI_GAP_START_LIMITED_DISCOVERY_PROC post-processing macro */
-#ifndef BLE_WRAP_ACI_GAP_START_LIMITED_DISCOVERY_PROC_POSTPROC
-#define BLE_WRAP_ACI_GAP_START_LIMITED_DISCOVERY_PROC_POSTPROC BLE_WRAP_POSTPROC
-#endif
-
-/* ACI_GAP_START_GENERAL_DISCOVERY_PROC pre-processing macro */
-#ifndef BLE_WRAP_ACI_GAP_START_GENERAL_DISCOVERY_PROC_PREPROC
-#define BLE_WRAP_ACI_GAP_START_GENERAL_DISCOVERY_PROC_PREPROC BLE_WRAP_PREPROC
-#endif
-
-/* ACI_GAP_START_GENERAL_DISCOVERY_PROC post-processing macro */
-#ifndef BLE_WRAP_ACI_GAP_START_GENERAL_DISCOVERY_PROC_POSTPROC
-#define BLE_WRAP_ACI_GAP_START_GENERAL_DISCOVERY_PROC_POSTPROC BLE_WRAP_POSTPROC
-#endif
-
 /* ACI_GAP_START_AUTO_CONNECTION_ESTABLISH_PROC pre-processing macro */
 #ifndef BLE_WRAP_ACI_GAP_START_AUTO_CONNECTION_ESTABLISH_PROC_PREPROC
 #define BLE_WRAP_ACI_GAP_START_AUTO_CONNECTION_ESTABLISH_PROC_PREPROC BLE_WRAP_PREPROC
@@ -2188,26 +2178,6 @@
 /* ACI_GAP_START_AUTO_CONNECTION_ESTABLISH_PROC post-processing macro */
 #ifndef BLE_WRAP_ACI_GAP_START_AUTO_CONNECTION_ESTABLISH_PROC_POSTPROC
 #define BLE_WRAP_ACI_GAP_START_AUTO_CONNECTION_ESTABLISH_PROC_POSTPROC BLE_WRAP_POSTPROC
-#endif
-
-/* ACI_GAP_START_GENERAL_CONNECTION_ESTABLISH_PROC pre-processing macro */
-#ifndef BLE_WRAP_ACI_GAP_START_GENERAL_CONNECTION_ESTABLISH_PROC_PREPROC
-#define BLE_WRAP_ACI_GAP_START_GENERAL_CONNECTION_ESTABLISH_PROC_PREPROC BLE_WRAP_PREPROC
-#endif
-
-/* ACI_GAP_START_GENERAL_CONNECTION_ESTABLISH_PROC post-processing macro */
-#ifndef BLE_WRAP_ACI_GAP_START_GENERAL_CONNECTION_ESTABLISH_PROC_POSTPROC
-#define BLE_WRAP_ACI_GAP_START_GENERAL_CONNECTION_ESTABLISH_PROC_POSTPROC BLE_WRAP_POSTPROC
-#endif
-
-/* ACI_GAP_START_SELECTIVE_CONNECTION_ESTABLISH_PROC pre-processing macro */
-#ifndef BLE_WRAP_ACI_GAP_START_SELECTIVE_CONNECTION_ESTABLISH_PROC_PREPROC
-#define BLE_WRAP_ACI_GAP_START_SELECTIVE_CONNECTION_ESTABLISH_PROC_PREPROC BLE_WRAP_PREPROC
-#endif
-
-/* ACI_GAP_START_SELECTIVE_CONNECTION_ESTABLISH_PROC post-processing macro */
-#ifndef BLE_WRAP_ACI_GAP_START_SELECTIVE_CONNECTION_ESTABLISH_PROC_POSTPROC
-#define BLE_WRAP_ACI_GAP_START_SELECTIVE_CONNECTION_ESTABLISH_PROC_POSTPROC BLE_WRAP_POSTPROC
 #endif
 
 /* ACI_GAP_CREATE_CONNECTION pre-processing macro */
@@ -2258,16 +2228,6 @@
 /* ACI_GAP_SET_BROADCAST_MODE post-processing macro */
 #ifndef BLE_WRAP_ACI_GAP_SET_BROADCAST_MODE_POSTPROC
 #define BLE_WRAP_ACI_GAP_SET_BROADCAST_MODE_POSTPROC BLE_WRAP_POSTPROC
-#endif
-
-/* ACI_GAP_START_OBSERVATION_PROC pre-processing macro */
-#ifndef BLE_WRAP_ACI_GAP_START_OBSERVATION_PROC_PREPROC
-#define BLE_WRAP_ACI_GAP_START_OBSERVATION_PROC_PREPROC BLE_WRAP_PREPROC
-#endif
-
-/* ACI_GAP_START_OBSERVATION_PROC post-processing macro */
-#ifndef BLE_WRAP_ACI_GAP_START_OBSERVATION_PROC_POSTPROC
-#define BLE_WRAP_ACI_GAP_START_OBSERVATION_PROC_POSTPROC BLE_WRAP_POSTPROC
 #endif
 
 /* ACI_GAP_GET_BONDED_DEVICES pre-processing macro */
@@ -2470,14 +2430,14 @@
 #define BLE_WRAP_ACI_GAP_ADV_SET_CONFIGURATION_V2_POSTPROC BLE_WRAP_POSTPROC
 #endif
 
-/* ACI_GAP_EXT_START_SCAN pre-processing macro */
-#ifndef BLE_WRAP_ACI_GAP_EXT_START_SCAN_PREPROC
-#define BLE_WRAP_ACI_GAP_EXT_START_SCAN_PREPROC BLE_WRAP_PREPROC
+/* ACI_GAP_START_SCAN pre-processing macro */
+#ifndef BLE_WRAP_ACI_GAP_START_SCAN_PREPROC
+#define BLE_WRAP_ACI_GAP_START_SCAN_PREPROC BLE_WRAP_PREPROC
 #endif
 
-/* ACI_GAP_EXT_START_SCAN post-processing macro */
-#ifndef BLE_WRAP_ACI_GAP_EXT_START_SCAN_POSTPROC
-#define BLE_WRAP_ACI_GAP_EXT_START_SCAN_POSTPROC BLE_WRAP_POSTPROC
+/* ACI_GAP_START_SCAN post-processing macro */
+#ifndef BLE_WRAP_ACI_GAP_START_SCAN_POSTPROC
+#define BLE_WRAP_ACI_GAP_START_SCAN_POSTPROC BLE_WRAP_POSTPROC
 #endif
 
 /* ACI_GAP_EXT_CREATE_CONNECTION pre-processing macro */
@@ -2798,16 +2758,6 @@
 /* ACI_GATT_WRITE_WITHOUT_RESP post-processing macro */
 #ifndef BLE_WRAP_ACI_GATT_WRITE_WITHOUT_RESP_POSTPROC
 #define BLE_WRAP_ACI_GATT_WRITE_WITHOUT_RESP_POSTPROC BLE_WRAP_POSTPROC
-#endif
-
-/* ACI_GATT_SIGNED_WRITE_WITHOUT_RESP pre-processing macro */
-#ifndef BLE_WRAP_ACI_GATT_SIGNED_WRITE_WITHOUT_RESP_PREPROC
-#define BLE_WRAP_ACI_GATT_SIGNED_WRITE_WITHOUT_RESP_PREPROC BLE_WRAP_PREPROC
-#endif
-
-/* ACI_GATT_SIGNED_WRITE_WITHOUT_RESP post-processing macro */
-#ifndef BLE_WRAP_ACI_GATT_SIGNED_WRITE_WITHOUT_RESP_POSTPROC
-#define BLE_WRAP_ACI_GATT_SIGNED_WRITE_WITHOUT_RESP_POSTPROC BLE_WRAP_POSTPROC
 #endif
 
 /* ACI_GATT_CONFIRM_INDICATION pre-processing macro */
@@ -5821,6 +5771,34 @@ tBleStatus aci_hal_ead_encrypt_decrypt( uint8_t Mode,
   return status;
 }
 
+/* ACI_HAL_PTA_ENABLE wrapper function */
+tBleStatus aci_hal_pta_enable( uint8_t Enable )
+{
+  BLE_WRAP_ACI_HAL_PTA_ENABLE_PREPROC( );
+  tBleStatus status = ACI_HAL_PTA_ENABLE( Enable );
+  BLE_WRAP_ACI_HAL_PTA_ENABLE_POSTPROC( );
+  return status;
+}
+
+/* ACI_HAL_PTA_SET_PRIORITY wrapper function */
+tBleStatus aci_hal_pta_set_priority( uint8_t Mode,
+                                     uint16_t Handle,
+                                     uint32_t Priority,
+                                     uint32_t Priority_Mask,
+                                     uint8_t Slots_Number,
+                                     uint8_t Limit_Timeout )
+{
+  BLE_WRAP_ACI_HAL_PTA_SET_PRIORITY_PREPROC( );
+  tBleStatus status = ACI_HAL_PTA_SET_PRIORITY( Mode,
+                                                Handle,
+                                                Priority,
+                                                Priority_Mask,
+                                                Slots_Number,
+                                                Limit_Timeout );
+  BLE_WRAP_ACI_HAL_PTA_SET_PRIORITY_POSTPROC( );
+  return status;
+}
+
 /* ACI_GAP_SET_NON_DISCOVERABLE wrapper function */
 tBleStatus aci_gap_set_non_discoverable( void )
 {
@@ -6070,15 +6048,6 @@ tBleStatus aci_gap_set_event_mask( uint16_t GAP_Evt_Mask )
   return status;
 }
 
-/* ACI_GAP_CONFIGURE_FILTER_ACCEPT_LIST wrapper function */
-tBleStatus aci_gap_configure_filter_accept_list( void )
-{
-  BLE_WRAP_ACI_GAP_CONFIGURE_FILTER_ACCEPT_LIST_PREPROC( );
-  tBleStatus status = ACI_GAP_CONFIGURE_FILTER_ACCEPT_LIST(  );
-  BLE_WRAP_ACI_GAP_CONFIGURE_FILTER_ACCEPT_LIST_POSTPROC( );
-  return status;
-}
-
 /* ACI_GAP_TERMINATE wrapper function */
 tBleStatus aci_gap_terminate( uint16_t Connection_Handle,
                               uint8_t Reason )
@@ -6108,36 +6077,6 @@ tBleStatus aci_gap_allow_rebond( uint16_t Connection_Handle )
   return status;
 }
 
-/* ACI_GAP_START_LIMITED_DISCOVERY_PROC wrapper function */
-tBleStatus aci_gap_start_limited_discovery_proc( uint16_t LE_Scan_Interval,
-                                                 uint16_t LE_Scan_Window,
-                                                 uint8_t Own_Address_Type,
-                                                 uint8_t Filter_Duplicates )
-{
-  BLE_WRAP_ACI_GAP_START_LIMITED_DISCOVERY_PROC_PREPROC( );
-  tBleStatus status = ACI_GAP_START_LIMITED_DISCOVERY_PROC( LE_Scan_Interval,
-                                                            LE_Scan_Window,
-                                                            Own_Address_Type,
-                                                            Filter_Duplicates );
-  BLE_WRAP_ACI_GAP_START_LIMITED_DISCOVERY_PROC_POSTPROC( );
-  return status;
-}
-
-/* ACI_GAP_START_GENERAL_DISCOVERY_PROC wrapper function */
-tBleStatus aci_gap_start_general_discovery_proc( uint16_t LE_Scan_Interval,
-                                                 uint16_t LE_Scan_Window,
-                                                 uint8_t Own_Address_Type,
-                                                 uint8_t Filter_Duplicates )
-{
-  BLE_WRAP_ACI_GAP_START_GENERAL_DISCOVERY_PROC_PREPROC( );
-  tBleStatus status = ACI_GAP_START_GENERAL_DISCOVERY_PROC( LE_Scan_Interval,
-                                                            LE_Scan_Window,
-                                                            Own_Address_Type,
-                                                            Filter_Duplicates );
-  BLE_WRAP_ACI_GAP_START_GENERAL_DISCOVERY_PROC_POSTPROC( );
-  return status;
-}
-
 /* ACI_GAP_START_AUTO_CONNECTION_ESTABLISH_PROC wrapper function */
 tBleStatus aci_gap_start_auto_connection_establish_proc( uint16_t LE_Scan_Interval,
                                                          uint16_t LE_Scan_Window,
@@ -6164,48 +6103,6 @@ tBleStatus aci_gap_start_auto_connection_establish_proc( uint16_t LE_Scan_Interv
                                                                     Num_of_Peer_Entries,
                                                                     Peer_Entry );
   BLE_WRAP_ACI_GAP_START_AUTO_CONNECTION_ESTABLISH_PROC_POSTPROC( );
-  return status;
-}
-
-/* ACI_GAP_START_GENERAL_CONNECTION_ESTABLISH_PROC wrapper function */
-tBleStatus aci_gap_start_general_connection_establish_proc( uint8_t LE_Scan_Type,
-                                                            uint16_t LE_Scan_Interval,
-                                                            uint16_t LE_Scan_Window,
-                                                            uint8_t Own_Address_Type,
-                                                            uint8_t Scanning_Filter_Policy,
-                                                            uint8_t Filter_Duplicates )
-{
-  BLE_WRAP_ACI_GAP_START_GENERAL_CONNECTION_ESTABLISH_PROC_PREPROC( );
-  tBleStatus status = ACI_GAP_START_GENERAL_CONNECTION_ESTABLISH_PROC( LE_Scan_Type,
-                                                                       LE_Scan_Interval,
-                                                                       LE_Scan_Window,
-                                                                       Own_Address_Type,
-                                                                       Scanning_Filter_Policy,
-                                                                       Filter_Duplicates );
-  BLE_WRAP_ACI_GAP_START_GENERAL_CONNECTION_ESTABLISH_PROC_POSTPROC( );
-  return status;
-}
-
-/* ACI_GAP_START_SELECTIVE_CONNECTION_ESTABLISH_PROC wrapper function */
-tBleStatus aci_gap_start_selective_connection_establish_proc( uint8_t LE_Scan_Type,
-                                                              uint16_t LE_Scan_Interval,
-                                                              uint16_t LE_Scan_Window,
-                                                              uint8_t Own_Address_Type,
-                                                              uint8_t Scanning_Filter_Policy,
-                                                              uint8_t Filter_Duplicates,
-                                                              uint8_t Num_of_Peer_Entries,
-                                                              const Peer_Entry_t* Peer_Entry )
-{
-  BLE_WRAP_ACI_GAP_START_SELECTIVE_CONNECTION_ESTABLISH_PROC_PREPROC( );
-  tBleStatus status = ACI_GAP_START_SELECTIVE_CONNECTION_ESTABLISH_PROC( LE_Scan_Type,
-                                                                         LE_Scan_Interval,
-                                                                         LE_Scan_Window,
-                                                                         Own_Address_Type,
-                                                                         Scanning_Filter_Policy,
-                                                                         Filter_Duplicates,
-                                                                         Num_of_Peer_Entries,
-                                                                         Peer_Entry );
-  BLE_WRAP_ACI_GAP_START_SELECTIVE_CONNECTION_ESTABLISH_PROC_POSTPROC( );
   return status;
 }
 
@@ -6299,25 +6196,6 @@ tBleStatus aci_gap_set_broadcast_mode( uint16_t Advertising_Interval_Min,
                                                   Num_of_Peer_Entries,
                                                   Peer_Entry );
   BLE_WRAP_ACI_GAP_SET_BROADCAST_MODE_POSTPROC( );
-  return status;
-}
-
-/* ACI_GAP_START_OBSERVATION_PROC wrapper function */
-tBleStatus aci_gap_start_observation_proc( uint16_t LE_Scan_Interval,
-                                           uint16_t LE_Scan_Window,
-                                           uint8_t LE_Scan_Type,
-                                           uint8_t Own_Address_Type,
-                                           uint8_t Filter_Duplicates,
-                                           uint8_t Scanning_Filter_Policy )
-{
-  BLE_WRAP_ACI_GAP_START_OBSERVATION_PROC_PREPROC( );
-  tBleStatus status = ACI_GAP_START_OBSERVATION_PROC( LE_Scan_Interval,
-                                                      LE_Scan_Window,
-                                                      LE_Scan_Type,
-                                                      Own_Address_Type,
-                                                      Filter_Duplicates,
-                                                      Scanning_Filter_Policy );
-  BLE_WRAP_ACI_GAP_START_OBSERVATION_PROC_POSTPROC( );
   return status;
 }
 
@@ -6647,28 +6525,28 @@ tBleStatus aci_gap_adv_set_configuration_v2( uint8_t Adv_Mode,
   return status;
 }
 
-/* ACI_GAP_EXT_START_SCAN wrapper function */
-tBleStatus aci_gap_ext_start_scan( uint8_t Scan_Mode,
-                                   uint8_t Procedure,
-                                   uint8_t Own_Address_Type,
-                                   uint8_t Filter_Duplicates,
-                                   uint16_t Duration,
-                                   uint16_t Period,
-                                   uint8_t Scanning_Filter_Policy,
-                                   uint8_t Scanning_PHYs,
-                                   const Scan_Param_Phy_t* Scan_Param_Phy )
+/* ACI_GAP_START_SCAN wrapper function */
+tBleStatus aci_gap_start_scan( uint8_t Scan_Mode,
+                               uint8_t Procedure,
+                               uint8_t Own_Address_Type,
+                               uint8_t Filter_Duplicates,
+                               uint16_t Duration,
+                               uint16_t Period,
+                               uint8_t Scanning_Filter_Policy,
+                               uint8_t Scanning_PHYs,
+                               const Scan_Param_Phy_t* Scan_Param_Phy )
 {
-  BLE_WRAP_ACI_GAP_EXT_START_SCAN_PREPROC( );
-  tBleStatus status = ACI_GAP_EXT_START_SCAN( Scan_Mode,
-                                              Procedure,
-                                              Own_Address_Type,
-                                              Filter_Duplicates,
-                                              Duration,
-                                              Period,
-                                              Scanning_Filter_Policy,
-                                              Scanning_PHYs,
-                                              Scan_Param_Phy );
-  BLE_WRAP_ACI_GAP_EXT_START_SCAN_POSTPROC( );
+  BLE_WRAP_ACI_GAP_START_SCAN_PREPROC( );
+  tBleStatus status = ACI_GAP_START_SCAN( Scan_Mode,
+                                          Procedure,
+                                          Own_Address_Type,
+                                          Filter_Duplicates,
+                                          Duration,
+                                          Period,
+                                          Scanning_Filter_Policy,
+                                          Scanning_PHYs,
+                                          Scan_Param_Phy );
+  BLE_WRAP_ACI_GAP_START_SCAN_POSTPROC( );
   return status;
 }
 
@@ -7160,21 +7038,6 @@ tBleStatus aci_gatt_write_without_resp( uint16_t Connection_Handle,
   return status;
 }
 
-/* ACI_GATT_SIGNED_WRITE_WITHOUT_RESP wrapper function */
-tBleStatus aci_gatt_signed_write_without_resp( uint16_t Connection_Handle,
-                                               uint16_t Attr_Handle,
-                                               uint8_t Attribute_Val_Length,
-                                               const uint8_t* Attribute_Val )
-{
-  BLE_WRAP_ACI_GATT_SIGNED_WRITE_WITHOUT_RESP_PREPROC( );
-  tBleStatus status = ACI_GATT_SIGNED_WRITE_WITHOUT_RESP( Connection_Handle,
-                                                          Attr_Handle,
-                                                          Attribute_Val_Length,
-                                                          Attribute_Val );
-  BLE_WRAP_ACI_GATT_SIGNED_WRITE_WITHOUT_RESP_POSTPROC( );
-  return status;
-}
-
 /* ACI_GATT_CONFIRM_INDICATION wrapper function */
 tBleStatus aci_gatt_confirm_indication( uint16_t Connection_Handle )
 {
@@ -7593,2732 +7456,6 @@ tBleStatus aci_read_config_data( uint8_t Offset,
 }
 
 /* ----------------------------------------------------------------------------
- * EVENT WRAPPER
- * ----------------------------------------------------------------------------
- */
-
-/* Event tables */
-
-#define HCI_EVENT_TABLE_SIZE 8
-#define HCI_LE_EVENT_TABLE_SIZE 53
-#define HCI_VS_EVENT_TABLE_SIZE 54
-
-typedef struct
-{
-  uint16_t evt_code;
-  tBleStatus (*process)( const uint8_t* in );
-} hci_event_table_t;
-
-/* Event process functions declaration */
-static tBleStatus hci_disconnection_complete_event_process( const uint8_t* in );
-static tBleStatus hci_encryption_change_event_process( const uint8_t* in );
-static tBleStatus hci_read_remote_version_information_complete_event_process( const uint8_t* in );
-static tBleStatus hci_hardware_error_event_process( const uint8_t* in );
-static tBleStatus hci_number_of_completed_packets_event_process( const uint8_t* in );
-static tBleStatus hci_data_buffer_overflow_event_process( const uint8_t* in );
-static tBleStatus hci_encryption_key_refresh_complete_event_process( const uint8_t* in );
-static tBleStatus hci_authenticated_payload_timeout_expired_event_process( const uint8_t* in );
-static tBleStatus hci_le_connection_complete_event_process( const uint8_t* in );
-static tBleStatus hci_le_advertising_report_event_process( const uint8_t* in );
-static tBleStatus hci_le_connection_update_complete_event_process( const uint8_t* in );
-static tBleStatus hci_le_read_remote_features_page_0_complete_event_process( const uint8_t* in );
-static tBleStatus hci_le_long_term_key_request_event_process( const uint8_t* in );
-static tBleStatus hci_le_remote_connection_parameter_request_event_process( const uint8_t* in );
-static tBleStatus hci_le_data_length_change_event_process( const uint8_t* in );
-static tBleStatus hci_le_read_local_p256_public_key_complete_event_process( const uint8_t* in );
-static tBleStatus hci_le_generate_dhkey_complete_event_process( const uint8_t* in );
-static tBleStatus hci_le_enhanced_connection_complete_event_process( const uint8_t* in );
-static tBleStatus hci_le_directed_advertising_report_event_process( const uint8_t* in );
-static tBleStatus hci_le_phy_update_complete_event_process( const uint8_t* in );
-static tBleStatus hci_le_extended_advertising_report_event_process( const uint8_t* in );
-static tBleStatus hci_le_periodic_advertising_sync_established_event_process( const uint8_t* in );
-static tBleStatus hci_le_periodic_advertising_report_event_process( const uint8_t* in );
-static tBleStatus hci_le_periodic_advertising_sync_lost_event_process( const uint8_t* in );
-static tBleStatus hci_le_scan_timeout_event_process( const uint8_t* in );
-static tBleStatus hci_le_advertising_set_terminated_event_process( const uint8_t* in );
-static tBleStatus hci_le_scan_request_received_event_process( const uint8_t* in );
-static tBleStatus hci_le_channel_selection_algorithm_event_process( const uint8_t* in );
-static tBleStatus hci_le_connectionless_iq_report_event_process( const uint8_t* in );
-static tBleStatus hci_le_connection_iq_report_event_process( const uint8_t* in );
-static tBleStatus hci_le_cte_request_failed_event_process( const uint8_t* in );
-static tBleStatus hci_le_periodic_advertising_sync_transfer_received_event_process( const uint8_t* in );
-static tBleStatus hci_le_cis_established_event_process( const uint8_t* in );
-static tBleStatus hci_le_cis_request_event_process( const uint8_t* in );
-static tBleStatus hci_le_create_big_complete_event_process( const uint8_t* in );
-static tBleStatus hci_le_terminate_big_complete_event_process( const uint8_t* in );
-static tBleStatus hci_le_big_sync_established_event_process( const uint8_t* in );
-static tBleStatus hci_le_big_sync_lost_event_process( const uint8_t* in );
-static tBleStatus hci_le_request_peer_sca_complete_event_process( const uint8_t* in );
-static tBleStatus hci_le_path_loss_threshold_event_process( const uint8_t* in );
-static tBleStatus hci_le_transmit_power_reporting_event_process( const uint8_t* in );
-static tBleStatus hci_le_biginfo_advertising_report_event_process( const uint8_t* in );
-static tBleStatus hci_le_subrate_change_event_process( const uint8_t* in );
-static tBleStatus hci_le_periodic_advertising_sync_established_v2_event_process( const uint8_t* in );
-static tBleStatus hci_le_periodic_advertising_report_v2_event_process( const uint8_t* in );
-static tBleStatus hci_le_periodic_advertising_sync_transfer_received_v2_event_process( const uint8_t* in );
-static tBleStatus hci_le_periodic_advertising_subevent_data_request_event_process( const uint8_t* in );
-static tBleStatus hci_le_periodic_advertising_response_report_event_process( const uint8_t* in );
-static tBleStatus hci_le_enhanced_connection_complete_v2_event_process( const uint8_t* in );
-static tBleStatus hci_le_cis_established_v2_event_process( const uint8_t* in );
-static tBleStatus hci_le_read_all_remote_features_complete_event_process( const uint8_t* in );
-static tBleStatus hci_le_cs_read_remote_supported_capabilities_complete_event_process( const uint8_t* in );
-static tBleStatus hci_le_cs_read_remote_fae_table_complete_event_process( const uint8_t* in );
-static tBleStatus hci_le_cs_security_enable_complete_event_process( const uint8_t* in );
-static tBleStatus hci_le_cs_config_complete_event_process( const uint8_t* in );
-static tBleStatus hci_le_cs_procedure_enable_complete_event_process( const uint8_t* in );
-static tBleStatus hci_le_cs_subevent_result_event_process( const uint8_t* in );
-static tBleStatus hci_le_cs_subevent_result_continue_event_process( const uint8_t* in );
-static tBleStatus hci_le_cs_test_end_complete_event_process( const uint8_t* in );
-static tBleStatus hci_le_monitored_advertisers_report_event_process( const uint8_t* in );
-static tBleStatus hci_le_frame_space_update_complete_event_process( const uint8_t* in );
-static tBleStatus aci_warning_event_process( const uint8_t* in );
-static tBleStatus aci_gap_limited_discoverable_event_process( const uint8_t* in );
-static tBleStatus aci_gap_pairing_complete_event_process( const uint8_t* in );
-static tBleStatus aci_gap_pass_key_req_event_process( const uint8_t* in );
-static tBleStatus aci_gap_authorization_req_event_process( const uint8_t* in );
-static tBleStatus aci_gap_bond_lost_event_process( const uint8_t* in );
-static tBleStatus aci_gap_proc_complete_event_process( const uint8_t* in );
-static tBleStatus aci_gap_addr_not_resolved_event_process( const uint8_t* in );
-static tBleStatus aci_gap_numeric_comparison_value_event_process( const uint8_t* in );
-static tBleStatus aci_gap_keypress_notification_event_process( const uint8_t* in );
-static tBleStatus aci_gap_pairing_request_event_process( const uint8_t* in );
-static tBleStatus aci_l2cap_connection_update_resp_event_process( const uint8_t* in );
-static tBleStatus aci_l2cap_proc_timeout_event_process( const uint8_t* in );
-static tBleStatus aci_l2cap_connection_update_req_event_process( const uint8_t* in );
-static tBleStatus aci_l2cap_command_reject_event_process( const uint8_t* in );
-static tBleStatus aci_l2cap_coc_connect_event_process( const uint8_t* in );
-static tBleStatus aci_l2cap_coc_connect_confirm_event_process( const uint8_t* in );
-static tBleStatus aci_l2cap_coc_reconf_event_process( const uint8_t* in );
-static tBleStatus aci_l2cap_coc_reconf_confirm_event_process( const uint8_t* in );
-static tBleStatus aci_l2cap_coc_disconnect_event_process( const uint8_t* in );
-static tBleStatus aci_l2cap_coc_flow_control_event_process( const uint8_t* in );
-static tBleStatus aci_l2cap_coc_rx_data_event_process( const uint8_t* in );
-static tBleStatus aci_l2cap_coc_tx_pool_available_event_process( const uint8_t* in );
-static tBleStatus aci_gatt_attribute_modified_event_process( const uint8_t* in );
-static tBleStatus aci_gatt_proc_timeout_event_process( const uint8_t* in );
-static tBleStatus aci_att_exchange_mtu_resp_event_process( const uint8_t* in );
-static tBleStatus aci_att_find_info_resp_event_process( const uint8_t* in );
-static tBleStatus aci_att_find_by_type_value_resp_event_process( const uint8_t* in );
-static tBleStatus aci_att_read_by_type_resp_event_process( const uint8_t* in );
-static tBleStatus aci_att_read_resp_event_process( const uint8_t* in );
-static tBleStatus aci_att_read_blob_resp_event_process( const uint8_t* in );
-static tBleStatus aci_att_read_multiple_resp_event_process( const uint8_t* in );
-static tBleStatus aci_att_read_by_group_type_resp_event_process( const uint8_t* in );
-static tBleStatus aci_att_prepare_write_resp_event_process( const uint8_t* in );
-static tBleStatus aci_att_exec_write_resp_event_process( const uint8_t* in );
-static tBleStatus aci_gatt_indication_event_process( const uint8_t* in );
-static tBleStatus aci_gatt_notification_event_process( const uint8_t* in );
-static tBleStatus aci_gatt_proc_complete_event_process( const uint8_t* in );
-static tBleStatus aci_gatt_error_resp_event_process( const uint8_t* in );
-static tBleStatus aci_gatt_disc_read_char_by_uuid_resp_event_process( const uint8_t* in );
-static tBleStatus aci_gatt_write_permit_req_event_process( const uint8_t* in );
-static tBleStatus aci_gatt_read_permit_req_event_process( const uint8_t* in );
-static tBleStatus aci_gatt_read_multi_permit_req_event_process( const uint8_t* in );
-static tBleStatus aci_gatt_tx_pool_available_event_process( const uint8_t* in );
-static tBleStatus aci_gatt_server_confirmation_event_process( const uint8_t* in );
-static tBleStatus aci_gatt_prepare_write_permit_req_event_process( const uint8_t* in );
-static tBleStatus aci_gatt_eatt_bearer_event_process( const uint8_t* in );
-static tBleStatus aci_gatt_mult_notification_event_process( const uint8_t* in );
-static tBleStatus aci_gatt_notification_complete_event_process( const uint8_t* in );
-static tBleStatus aci_gatt_read_ext_event_process( const uint8_t* in );
-static tBleStatus aci_gatt_indication_ext_event_process( const uint8_t* in );
-static tBleStatus aci_gatt_notification_ext_event_process( const uint8_t* in );
-static tBleStatus aci_hal_end_of_radio_activity_event_process( const uint8_t* in );
-static tBleStatus aci_hal_sync_event_process( const uint8_t* in );
-
-/* HCI event process functions table */
-static const hci_event_table_t hci_event_table[HCI_EVENT_TABLE_SIZE] =
-{
-  { 0x0005U, hci_disconnection_complete_event_process },
-  { 0x0008U, hci_encryption_change_event_process },
-  { 0x000CU, hci_read_remote_version_information_complete_event_process },
-  { 0x0010U, hci_hardware_error_event_process },
-  { 0x0013U, hci_number_of_completed_packets_event_process },
-  { 0x001AU, hci_data_buffer_overflow_event_process },
-  { 0x0030U, hci_encryption_key_refresh_complete_event_process },
-  { 0x0057U, hci_authenticated_payload_timeout_expired_event_process },
-};
-
-/* HCI LE event process functions table */
-static const hci_event_table_t hci_le_event_table[HCI_LE_EVENT_TABLE_SIZE] =
-{
-  { 0x0001U, hci_le_connection_complete_event_process },
-  { 0x0002U, hci_le_advertising_report_event_process },
-  { 0x0003U, hci_le_connection_update_complete_event_process },
-  { 0x0004U, hci_le_read_remote_features_page_0_complete_event_process },
-  { 0x0005U, hci_le_long_term_key_request_event_process },
-  { 0x0006U, hci_le_remote_connection_parameter_request_event_process },
-  { 0x0007U, hci_le_data_length_change_event_process },
-  { 0x0008U, hci_le_read_local_p256_public_key_complete_event_process },
-  { 0x0009U, hci_le_generate_dhkey_complete_event_process },
-  { 0x000AU, hci_le_enhanced_connection_complete_event_process },
-  { 0x000BU, hci_le_directed_advertising_report_event_process },
-  { 0x000CU, hci_le_phy_update_complete_event_process },
-  { 0x000DU, hci_le_extended_advertising_report_event_process },
-  { 0x000EU, hci_le_periodic_advertising_sync_established_event_process },
-  { 0x000FU, hci_le_periodic_advertising_report_event_process },
-  { 0x0010U, hci_le_periodic_advertising_sync_lost_event_process },
-  { 0x0011U, hci_le_scan_timeout_event_process },
-  { 0x0012U, hci_le_advertising_set_terminated_event_process },
-  { 0x0013U, hci_le_scan_request_received_event_process },
-  { 0x0014U, hci_le_channel_selection_algorithm_event_process },
-  { 0x0015U, hci_le_connectionless_iq_report_event_process },
-  { 0x0016U, hci_le_connection_iq_report_event_process },
-  { 0x0017U, hci_le_cte_request_failed_event_process },
-  { 0x0018U, hci_le_periodic_advertising_sync_transfer_received_event_process },
-  { 0x0019U, hci_le_cis_established_event_process },
-  { 0x001AU, hci_le_cis_request_event_process },
-  { 0x001BU, hci_le_create_big_complete_event_process },
-  { 0x001CU, hci_le_terminate_big_complete_event_process },
-  { 0x001DU, hci_le_big_sync_established_event_process },
-  { 0x001EU, hci_le_big_sync_lost_event_process },
-  { 0x001FU, hci_le_request_peer_sca_complete_event_process },
-  { 0x0020U, hci_le_path_loss_threshold_event_process },
-  { 0x0021U, hci_le_transmit_power_reporting_event_process },
-  { 0x0022U, hci_le_biginfo_advertising_report_event_process },
-  { 0x0023U, hci_le_subrate_change_event_process },
-  { 0x0024U, hci_le_periodic_advertising_sync_established_v2_event_process },
-  { 0x0025U, hci_le_periodic_advertising_report_v2_event_process },
-  { 0x0026U, hci_le_periodic_advertising_sync_transfer_received_v2_event_process },
-  { 0x0027U, hci_le_periodic_advertising_subevent_data_request_event_process },
-  { 0x0028U, hci_le_periodic_advertising_response_report_event_process },
-  { 0x0029U, hci_le_enhanced_connection_complete_v2_event_process },
-  { 0x002AU, hci_le_cis_established_v2_event_process },
-  { 0x002BU, hci_le_read_all_remote_features_complete_event_process },
-  { 0x002CU, hci_le_cs_read_remote_supported_capabilities_complete_event_process },
-  { 0x002DU, hci_le_cs_read_remote_fae_table_complete_event_process },
-  { 0x002EU, hci_le_cs_security_enable_complete_event_process },
-  { 0x002FU, hci_le_cs_config_complete_event_process },
-  { 0x0030U, hci_le_cs_procedure_enable_complete_event_process },
-  { 0x0031U, hci_le_cs_subevent_result_event_process },
-  { 0x0032U, hci_le_cs_subevent_result_continue_event_process },
-  { 0x0033U, hci_le_cs_test_end_complete_event_process },
-  { 0x0034U, hci_le_monitored_advertisers_report_event_process },
-  { 0x0035U, hci_le_frame_space_update_complete_event_process },
-};
-
-/* HCI VS event process functions table */
-static const hci_event_table_t hci_vs_event_table[HCI_VS_EVENT_TABLE_SIZE] =
-{
-  { 0x0006U, aci_warning_event_process },
-  { 0x0400U, aci_gap_limited_discoverable_event_process },
-  { 0x0401U, aci_gap_pairing_complete_event_process },
-  { 0x0402U, aci_gap_pass_key_req_event_process },
-  { 0x0403U, aci_gap_authorization_req_event_process },
-  { 0x0405U, aci_gap_bond_lost_event_process },
-  { 0x0407U, aci_gap_proc_complete_event_process },
-  { 0x0408U, aci_gap_addr_not_resolved_event_process },
-  { 0x0409U, aci_gap_numeric_comparison_value_event_process },
-  { 0x040AU, aci_gap_keypress_notification_event_process },
-  { 0x040BU, aci_gap_pairing_request_event_process },
-  { 0x0800U, aci_l2cap_connection_update_resp_event_process },
-  { 0x0801U, aci_l2cap_proc_timeout_event_process },
-  { 0x0802U, aci_l2cap_connection_update_req_event_process },
-  { 0x080AU, aci_l2cap_command_reject_event_process },
-  { 0x0810U, aci_l2cap_coc_connect_event_process },
-  { 0x0811U, aci_l2cap_coc_connect_confirm_event_process },
-  { 0x0812U, aci_l2cap_coc_reconf_event_process },
-  { 0x0813U, aci_l2cap_coc_reconf_confirm_event_process },
-  { 0x0814U, aci_l2cap_coc_disconnect_event_process },
-  { 0x0815U, aci_l2cap_coc_flow_control_event_process },
-  { 0x0816U, aci_l2cap_coc_rx_data_event_process },
-  { 0x0817U, aci_l2cap_coc_tx_pool_available_event_process },
-  { 0x0C01U, aci_gatt_attribute_modified_event_process },
-  { 0x0C02U, aci_gatt_proc_timeout_event_process },
-  { 0x0C03U, aci_att_exchange_mtu_resp_event_process },
-  { 0x0C04U, aci_att_find_info_resp_event_process },
-  { 0x0C05U, aci_att_find_by_type_value_resp_event_process },
-  { 0x0C06U, aci_att_read_by_type_resp_event_process },
-  { 0x0C07U, aci_att_read_resp_event_process },
-  { 0x0C08U, aci_att_read_blob_resp_event_process },
-  { 0x0C09U, aci_att_read_multiple_resp_event_process },
-  { 0x0C0AU, aci_att_read_by_group_type_resp_event_process },
-  { 0x0C0CU, aci_att_prepare_write_resp_event_process },
-  { 0x0C0DU, aci_att_exec_write_resp_event_process },
-  { 0x0C0EU, aci_gatt_indication_event_process },
-  { 0x0C0FU, aci_gatt_notification_event_process },
-  { 0x0C10U, aci_gatt_proc_complete_event_process },
-  { 0x0C11U, aci_gatt_error_resp_event_process },
-  { 0x0C12U, aci_gatt_disc_read_char_by_uuid_resp_event_process },
-  { 0x0C13U, aci_gatt_write_permit_req_event_process },
-  { 0x0C14U, aci_gatt_read_permit_req_event_process },
-  { 0x0C15U, aci_gatt_read_multi_permit_req_event_process },
-  { 0x0C16U, aci_gatt_tx_pool_available_event_process },
-  { 0x0C17U, aci_gatt_server_confirmation_event_process },
-  { 0x0C18U, aci_gatt_prepare_write_permit_req_event_process },
-  { 0x0C19U, aci_gatt_eatt_bearer_event_process },
-  { 0x0C1AU, aci_gatt_mult_notification_event_process },
-  { 0x0C1BU, aci_gatt_notification_complete_event_process },
-  { 0x0C1DU, aci_gatt_read_ext_event_process },
-  { 0x0C1EU, aci_gatt_indication_ext_event_process },
-  { 0x0C1FU, aci_gatt_notification_ext_event_process },
-  { 0x1804U, aci_hal_end_of_radio_activity_event_process },
-  { 0x1808U, aci_hal_sync_event_process },
-};
-
-/* HCI_DISCONNECTION_COMPLETE_EVENT callback function */
-__WEAK tBleStatus hci_disconnection_complete_event( uint8_t Status,
-                                                    uint16_t Connection_Handle,
-                                                    uint8_t Reason )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_DISCONNECTION_COMPLETE_EVENT process function */
-static tBleStatus hci_disconnection_complete_event_process( const uint8_t* in )
-{
-  hci_disconnection_complete_event_rp0 *rp0 = (void*)in;
-  return hci_disconnection_complete_event( rp0->Status,
-                                           rp0->Connection_Handle,
-                                           rp0->Reason );
-}
-
-/* HCI_ENCRYPTION_CHANGE_EVENT callback function */
-__WEAK tBleStatus hci_encryption_change_event( uint8_t Status,
-                                               uint16_t Connection_Handle,
-                                               uint8_t Encryption_Enabled )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_ENCRYPTION_CHANGE_EVENT process function */
-static tBleStatus hci_encryption_change_event_process( const uint8_t* in )
-{
-  hci_encryption_change_event_rp0 *rp0 = (void*)in;
-  return hci_encryption_change_event( rp0->Status,
-                                      rp0->Connection_Handle,
-                                      rp0->Encryption_Enabled );
-}
-
-/* HCI_READ_REMOTE_VERSION_INFORMATION_COMPLETE_EVENT callback function */
-__WEAK tBleStatus hci_read_remote_version_information_complete_event( uint8_t Status,
-                                                                      uint16_t Connection_Handle,
-                                                                      uint8_t Version,
-                                                                      uint16_t Manufacturer_Name,
-                                                                      uint16_t Subversion )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_READ_REMOTE_VERSION_INFORMATION_COMPLETE_EVENT process function */
-static tBleStatus hci_read_remote_version_information_complete_event_process( const uint8_t* in )
-{
-  hci_read_remote_version_information_complete_event_rp0 *rp0 = (void*)in;
-  return hci_read_remote_version_information_complete_event( rp0->Status,
-                                                             rp0->Connection_Handle,
-                                                             rp0->Version,
-                                                             rp0->Manufacturer_Name,
-                                                             rp0->Subversion );
-}
-
-/* HCI_HARDWARE_ERROR_EVENT callback function */
-__WEAK tBleStatus hci_hardware_error_event( uint8_t Hardware_Code )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_HARDWARE_ERROR_EVENT process function */
-static tBleStatus hci_hardware_error_event_process( const uint8_t* in )
-{
-  hci_hardware_error_event_rp0 *rp0 = (void*)in;
-  return hci_hardware_error_event( rp0->Hardware_Code );
-}
-
-/* HCI_NUMBER_OF_COMPLETED_PACKETS_EVENT callback function */
-__WEAK tBleStatus hci_number_of_completed_packets_event( uint8_t Number_of_Handles,
-                                                         const Handle_Packets_Pair_Entry_t* Handle_Packets_Pair_Entry )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_NUMBER_OF_COMPLETED_PACKETS_EVENT process function */
-static tBleStatus hci_number_of_completed_packets_event_process( const uint8_t* in )
-{
-  hci_number_of_completed_packets_event_rp0 *rp0 = (void*)in;
-  return hci_number_of_completed_packets_event( rp0->Number_of_Handles,
-                                                rp0->Handle_Packets_Pair_Entry );
-}
-
-/* HCI_DATA_BUFFER_OVERFLOW_EVENT callback function */
-__WEAK tBleStatus hci_data_buffer_overflow_event( uint8_t Link_Type )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_DATA_BUFFER_OVERFLOW_EVENT process function */
-static tBleStatus hci_data_buffer_overflow_event_process( const uint8_t* in )
-{
-  hci_data_buffer_overflow_event_rp0 *rp0 = (void*)in;
-  return hci_data_buffer_overflow_event( rp0->Link_Type );
-}
-
-/* HCI_ENCRYPTION_KEY_REFRESH_COMPLETE_EVENT callback function */
-__WEAK tBleStatus hci_encryption_key_refresh_complete_event( uint8_t Status,
-                                                             uint16_t Connection_Handle )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_ENCRYPTION_KEY_REFRESH_COMPLETE_EVENT process function */
-static tBleStatus hci_encryption_key_refresh_complete_event_process( const uint8_t* in )
-{
-  hci_encryption_key_refresh_complete_event_rp0 *rp0 = (void*)in;
-  return hci_encryption_key_refresh_complete_event( rp0->Status,
-                                                    rp0->Connection_Handle );
-}
-
-/* HCI_AUTHENTICATED_PAYLOAD_TIMEOUT_EXPIRED_EVENT callback function */
-__WEAK tBleStatus hci_authenticated_payload_timeout_expired_event( uint16_t Connection_Handle )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_AUTHENTICATED_PAYLOAD_TIMEOUT_EXPIRED_EVENT process function */
-static tBleStatus hci_authenticated_payload_timeout_expired_event_process( const uint8_t* in )
-{
-  hci_authenticated_payload_timeout_expired_event_rp0 *rp0 = (void*)in;
-  return hci_authenticated_payload_timeout_expired_event( rp0->Connection_Handle );
-}
-
-/* HCI_LE_CONNECTION_COMPLETE_EVENT callback function */
-__WEAK tBleStatus hci_le_connection_complete_event( uint8_t Status,
-                                                    uint16_t Connection_Handle,
-                                                    uint8_t Role,
-                                                    uint8_t Peer_Address_Type,
-                                                    const uint8_t* Peer_Address,
-                                                    uint16_t Conn_Interval,
-                                                    uint16_t Conn_Latency,
-                                                    uint16_t Supervision_Timeout,
-                                                    uint8_t Central_Clock_Accuracy )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_CONNECTION_COMPLETE_EVENT process function */
-static tBleStatus hci_le_connection_complete_event_process( const uint8_t* in )
-{
-  hci_le_connection_complete_event_rp0 *rp0 = (void*)in;
-  return hci_le_connection_complete_event( rp0->Status,
-                                           rp0->Connection_Handle,
-                                           rp0->Role,
-                                           rp0->Peer_Address_Type,
-                                           rp0->Peer_Address,
-                                           rp0->Conn_Interval,
-                                           rp0->Conn_Latency,
-                                           rp0->Supervision_Timeout,
-                                           rp0->Central_Clock_Accuracy );
-}
-
-/* HCI_LE_ADVERTISING_REPORT_EVENT callback function */
-__WEAK tBleStatus hci_le_advertising_report_event( uint8_t Num_Reports,
-                                                   const Advertising_Report_t* Advertising_Report )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_ADVERTISING_REPORT_EVENT process function */
-static tBleStatus hci_le_advertising_report_event_process( const uint8_t* in )
-{
-  hci_le_advertising_report_event_rp0 *rp0 = (void*)in;
-  Advertising_Report_t Advertising_Report[1];
-  int i;
-  for ( i = 0; i < rp0->Num_Reports; i++ )
-  {
-    in += 1;
-    memcpy( (void*)&Advertising_Report[0], (const void*)in, 9 );
-    Advertising_Report[0].Data = &in[9];
-    in += 9 + in[8];
-    Advertising_Report[0].RSSI = in[0];
-    (void)hci_le_advertising_report_event( 1, Advertising_Report );
-  }
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_CONNECTION_UPDATE_COMPLETE_EVENT callback function */
-__WEAK tBleStatus hci_le_connection_update_complete_event( uint8_t Status,
-                                                           uint16_t Connection_Handle,
-                                                           uint16_t Conn_Interval,
-                                                           uint16_t Conn_Latency,
-                                                           uint16_t Supervision_Timeout )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_CONNECTION_UPDATE_COMPLETE_EVENT process function */
-static tBleStatus hci_le_connection_update_complete_event_process( const uint8_t* in )
-{
-  hci_le_connection_update_complete_event_rp0 *rp0 = (void*)in;
-  return hci_le_connection_update_complete_event( rp0->Status,
-                                                  rp0->Connection_Handle,
-                                                  rp0->Conn_Interval,
-                                                  rp0->Conn_Latency,
-                                                  rp0->Supervision_Timeout );
-}
-
-/* HCI_LE_READ_REMOTE_FEATURES_PAGE_0_COMPLETE_EVENT callback function */
-__WEAK tBleStatus hci_le_read_remote_features_page_0_complete_event( uint8_t Status,
-                                                                     uint16_t Connection_Handle,
-                                                                     const uint8_t* LE_Features )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_READ_REMOTE_FEATURES_PAGE_0_COMPLETE_EVENT process function */
-static tBleStatus hci_le_read_remote_features_page_0_complete_event_process( const uint8_t* in )
-{
-  hci_le_read_remote_features_page_0_complete_event_rp0 *rp0 = (void*)in;
-  return hci_le_read_remote_features_page_0_complete_event( rp0->Status,
-                                                            rp0->Connection_Handle,
-                                                            rp0->LE_Features );
-}
-
-/* HCI_LE_LONG_TERM_KEY_REQUEST_EVENT callback function */
-__WEAK tBleStatus hci_le_long_term_key_request_event( uint16_t Connection_Handle,
-                                                      const uint8_t* Random_Number,
-                                                      uint16_t Encrypted_Diversifier )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_LONG_TERM_KEY_REQUEST_EVENT process function */
-static tBleStatus hci_le_long_term_key_request_event_process( const uint8_t* in )
-{
-  hci_le_long_term_key_request_event_rp0 *rp0 = (void*)in;
-  return hci_le_long_term_key_request_event( rp0->Connection_Handle,
-                                             rp0->Random_Number,
-                                             rp0->Encrypted_Diversifier );
-}
-
-/* HCI_LE_REMOTE_CONNECTION_PARAMETER_REQUEST_EVENT callback function */
-__WEAK tBleStatus hci_le_remote_connection_parameter_request_event( uint16_t Connection_Handle,
-                                                                    uint16_t Interval_Min,
-                                                                    uint16_t Interval_Max,
-                                                                    uint16_t Max_Latency,
-                                                                    uint16_t Timeout )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_REMOTE_CONNECTION_PARAMETER_REQUEST_EVENT process function */
-static tBleStatus hci_le_remote_connection_parameter_request_event_process( const uint8_t* in )
-{
-  hci_le_remote_connection_parameter_request_event_rp0 *rp0 = (void*)in;
-  return hci_le_remote_connection_parameter_request_event( rp0->Connection_Handle,
-                                                           rp0->Interval_Min,
-                                                           rp0->Interval_Max,
-                                                           rp0->Max_Latency,
-                                                           rp0->Timeout );
-}
-
-/* HCI_LE_DATA_LENGTH_CHANGE_EVENT callback function */
-__WEAK tBleStatus hci_le_data_length_change_event( uint16_t Connection_Handle,
-                                                   uint16_t MaxTxOctets,
-                                                   uint16_t MaxTxTime,
-                                                   uint16_t MaxRxOctets,
-                                                   uint16_t MaxRxTime )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_DATA_LENGTH_CHANGE_EVENT process function */
-static tBleStatus hci_le_data_length_change_event_process( const uint8_t* in )
-{
-  hci_le_data_length_change_event_rp0 *rp0 = (void*)in;
-  return hci_le_data_length_change_event( rp0->Connection_Handle,
-                                          rp0->MaxTxOctets,
-                                          rp0->MaxTxTime,
-                                          rp0->MaxRxOctets,
-                                          rp0->MaxRxTime );
-}
-
-/* HCI_LE_READ_LOCAL_P256_PUBLIC_KEY_COMPLETE_EVENT callback function */
-__WEAK tBleStatus hci_le_read_local_p256_public_key_complete_event( uint8_t Status,
-                                                                    const uint8_t* Local_P256_Public_Key )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_READ_LOCAL_P256_PUBLIC_KEY_COMPLETE_EVENT process function */
-static tBleStatus hci_le_read_local_p256_public_key_complete_event_process( const uint8_t* in )
-{
-  hci_le_read_local_p256_public_key_complete_event_rp0 *rp0 = (void*)in;
-  return hci_le_read_local_p256_public_key_complete_event( rp0->Status,
-                                                           rp0->Local_P256_Public_Key );
-}
-
-/* HCI_LE_GENERATE_DHKEY_COMPLETE_EVENT callback function */
-__WEAK tBleStatus hci_le_generate_dhkey_complete_event( uint8_t Status,
-                                                        const uint8_t* DHKey )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_GENERATE_DHKEY_COMPLETE_EVENT process function */
-static tBleStatus hci_le_generate_dhkey_complete_event_process( const uint8_t* in )
-{
-  hci_le_generate_dhkey_complete_event_rp0 *rp0 = (void*)in;
-  return hci_le_generate_dhkey_complete_event( rp0->Status,
-                                               rp0->DHKey );
-}
-
-/* HCI_LE_ENHANCED_CONNECTION_COMPLETE_EVENT callback function */
-__WEAK tBleStatus hci_le_enhanced_connection_complete_event( uint8_t Status,
-                                                             uint16_t Connection_Handle,
-                                                             uint8_t Role,
-                                                             uint8_t Peer_Address_Type,
-                                                             const uint8_t* Peer_Address,
-                                                             const uint8_t* Local_Resolvable_Private_Address,
-                                                             const uint8_t* Peer_Resolvable_Private_Address,
-                                                             uint16_t Conn_Interval,
-                                                             uint16_t Conn_Latency,
-                                                             uint16_t Supervision_Timeout,
-                                                             uint8_t Central_Clock_Accuracy )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_ENHANCED_CONNECTION_COMPLETE_EVENT process function */
-static tBleStatus hci_le_enhanced_connection_complete_event_process( const uint8_t* in )
-{
-  hci_le_enhanced_connection_complete_event_rp0 *rp0 = (void*)in;
-  return hci_le_enhanced_connection_complete_event( rp0->Status,
-                                                    rp0->Connection_Handle,
-                                                    rp0->Role,
-                                                    rp0->Peer_Address_Type,
-                                                    rp0->Peer_Address,
-                                                    rp0->Local_Resolvable_Private_Address,
-                                                    rp0->Peer_Resolvable_Private_Address,
-                                                    rp0->Conn_Interval,
-                                                    rp0->Conn_Latency,
-                                                    rp0->Supervision_Timeout,
-                                                    rp0->Central_Clock_Accuracy );
-}
-
-/* HCI_LE_DIRECTED_ADVERTISING_REPORT_EVENT callback function */
-__WEAK tBleStatus hci_le_directed_advertising_report_event( uint8_t Num_Reports,
-                                                            const Direct_Advertising_Report_t* Direct_Advertising_Report )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_DIRECTED_ADVERTISING_REPORT_EVENT process function */
-static tBleStatus hci_le_directed_advertising_report_event_process( const uint8_t* in )
-{
-  hci_le_directed_advertising_report_event_rp0 *rp0 = (void*)in;
-  return hci_le_directed_advertising_report_event( rp0->Num_Reports,
-                                                   rp0->Direct_Advertising_Report );
-}
-
-/* HCI_LE_PHY_UPDATE_COMPLETE_EVENT callback function */
-__WEAK tBleStatus hci_le_phy_update_complete_event( uint8_t Status,
-                                                    uint16_t Connection_Handle,
-                                                    uint8_t TX_PHY,
-                                                    uint8_t RX_PHY )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_PHY_UPDATE_COMPLETE_EVENT process function */
-static tBleStatus hci_le_phy_update_complete_event_process( const uint8_t* in )
-{
-  hci_le_phy_update_complete_event_rp0 *rp0 = (void*)in;
-  return hci_le_phy_update_complete_event( rp0->Status,
-                                           rp0->Connection_Handle,
-                                           rp0->TX_PHY,
-                                           rp0->RX_PHY );
-}
-
-/* HCI_LE_EXTENDED_ADVERTISING_REPORT_EVENT callback function */
-__WEAK tBleStatus hci_le_extended_advertising_report_event( uint8_t Num_Reports,
-                                                            uint16_t Event_Type,
-                                                            uint8_t Address_Type,
-                                                            const uint8_t* Address,
-                                                            uint8_t Primary_PHY,
-                                                            uint8_t Secondary_PHY,
-                                                            uint8_t Advertising_SID,
-                                                            uint8_t TX_Power,
-                                                            uint8_t RSSI,
-                                                            uint16_t Periodic_Adv_Interval,
-                                                            uint8_t Direct_Address_Type,
-                                                            const uint8_t* Direct_Address,
-                                                            uint8_t Data_Length,
-                                                            const uint8_t* Data )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_EXTENDED_ADVERTISING_REPORT_EVENT process function */
-static tBleStatus hci_le_extended_advertising_report_event_process( const uint8_t* in )
-{
-  hci_le_extended_advertising_report_event_rp0 *rp0 = (void*)in;
-  return hci_le_extended_advertising_report_event( rp0->Num_Reports,
-                                                   rp0->Event_Type,
-                                                   rp0->Address_Type,
-                                                   rp0->Address,
-                                                   rp0->Primary_PHY,
-                                                   rp0->Secondary_PHY,
-                                                   rp0->Advertising_SID,
-                                                   rp0->TX_Power,
-                                                   rp0->RSSI,
-                                                   rp0->Periodic_Adv_Interval,
-                                                   rp0->Direct_Address_Type,
-                                                   rp0->Direct_Address,
-                                                   rp0->Data_Length,
-                                                   rp0->Data );
-}
-
-/* HCI_LE_PERIODIC_ADVERTISING_SYNC_ESTABLISHED_EVENT callback function */
-__WEAK tBleStatus hci_le_periodic_advertising_sync_established_event( uint8_t Status,
-                                                                      uint16_t Sync_Handle,
-                                                                      uint8_t Advertising_SID,
-                                                                      uint8_t Advertiser_Address_Type,
-                                                                      const uint8_t* Advertiser_Address,
-                                                                      uint8_t Advertiser_PHY,
-                                                                      uint16_t Periodic_Advertising_Interval,
-                                                                      uint8_t Advertiser_Clock_Accuracy )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_PERIODIC_ADVERTISING_SYNC_ESTABLISHED_EVENT process function */
-static tBleStatus hci_le_periodic_advertising_sync_established_event_process( const uint8_t* in )
-{
-  hci_le_periodic_advertising_sync_established_event_rp0 *rp0 = (void*)in;
-  return hci_le_periodic_advertising_sync_established_event( rp0->Status,
-                                                             rp0->Sync_Handle,
-                                                             rp0->Advertising_SID,
-                                                             rp0->Advertiser_Address_Type,
-                                                             rp0->Advertiser_Address,
-                                                             rp0->Advertiser_PHY,
-                                                             rp0->Periodic_Advertising_Interval,
-                                                             rp0->Advertiser_Clock_Accuracy );
-}
-
-/* HCI_LE_PERIODIC_ADVERTISING_REPORT_EVENT callback function */
-__WEAK tBleStatus hci_le_periodic_advertising_report_event( uint16_t Sync_Handle,
-                                                            uint8_t TX_Power,
-                                                            uint8_t RSSI,
-                                                            uint8_t CTE_Type,
-                                                            uint8_t Data_Status,
-                                                            uint8_t Data_Length,
-                                                            const uint8_t* Data )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_PERIODIC_ADVERTISING_REPORT_EVENT process function */
-static tBleStatus hci_le_periodic_advertising_report_event_process( const uint8_t* in )
-{
-  hci_le_periodic_advertising_report_event_rp0 *rp0 = (void*)in;
-  return hci_le_periodic_advertising_report_event( rp0->Sync_Handle,
-                                                   rp0->TX_Power,
-                                                   rp0->RSSI,
-                                                   rp0->CTE_Type,
-                                                   rp0->Data_Status,
-                                                   rp0->Data_Length,
-                                                   rp0->Data );
-}
-
-/* HCI_LE_PERIODIC_ADVERTISING_SYNC_LOST_EVENT callback function */
-__WEAK tBleStatus hci_le_periodic_advertising_sync_lost_event( uint16_t Sync_Handle )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_PERIODIC_ADVERTISING_SYNC_LOST_EVENT process function */
-static tBleStatus hci_le_periodic_advertising_sync_lost_event_process( const uint8_t* in )
-{
-  hci_le_periodic_advertising_sync_lost_event_rp0 *rp0 = (void*)in;
-  return hci_le_periodic_advertising_sync_lost_event( rp0->Sync_Handle );
-}
-
-/* HCI_LE_SCAN_TIMEOUT_EVENT callback function */
-__WEAK tBleStatus hci_le_scan_timeout_event( void )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_SCAN_TIMEOUT_EVENT process function */
-static tBleStatus hci_le_scan_timeout_event_process( const uint8_t* in )
-{
-  return hci_le_scan_timeout_event( );
-}
-
-/* HCI_LE_ADVERTISING_SET_TERMINATED_EVENT callback function */
-__WEAK tBleStatus hci_le_advertising_set_terminated_event( uint8_t Status,
-                                                           uint8_t Advertising_Handle,
-                                                           uint16_t Connection_Handle,
-                                                           uint8_t Num_Completed_Ext_Adv_Events )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_ADVERTISING_SET_TERMINATED_EVENT process function */
-static tBleStatus hci_le_advertising_set_terminated_event_process( const uint8_t* in )
-{
-  hci_le_advertising_set_terminated_event_rp0 *rp0 = (void*)in;
-  return hci_le_advertising_set_terminated_event( rp0->Status,
-                                                  rp0->Advertising_Handle,
-                                                  rp0->Connection_Handle,
-                                                  rp0->Num_Completed_Ext_Adv_Events );
-}
-
-/* HCI_LE_SCAN_REQUEST_RECEIVED_EVENT callback function */
-__WEAK tBleStatus hci_le_scan_request_received_event( uint8_t Advertising_Handle,
-                                                      uint8_t Scanner_Address_Type,
-                                                      const uint8_t* Scanner_Address )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_SCAN_REQUEST_RECEIVED_EVENT process function */
-static tBleStatus hci_le_scan_request_received_event_process( const uint8_t* in )
-{
-  hci_le_scan_request_received_event_rp0 *rp0 = (void*)in;
-  return hci_le_scan_request_received_event( rp0->Advertising_Handle,
-                                             rp0->Scanner_Address_Type,
-                                             rp0->Scanner_Address );
-}
-
-/* HCI_LE_CHANNEL_SELECTION_ALGORITHM_EVENT callback function */
-__WEAK tBleStatus hci_le_channel_selection_algorithm_event( uint16_t Connection_Handle,
-                                                            uint8_t Channel_Selection_Algorithm )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_CHANNEL_SELECTION_ALGORITHM_EVENT process function */
-static tBleStatus hci_le_channel_selection_algorithm_event_process( const uint8_t* in )
-{
-  hci_le_channel_selection_algorithm_event_rp0 *rp0 = (void*)in;
-  return hci_le_channel_selection_algorithm_event( rp0->Connection_Handle,
-                                                   rp0->Channel_Selection_Algorithm );
-}
-
-/* HCI_LE_CONNECTIONLESS_IQ_REPORT_EVENT callback function */
-__WEAK tBleStatus hci_le_connectionless_iq_report_event( uint16_t Sync_Handle,
-                                                         uint8_t Channel_Index,
-                                                         uint16_t RSSI,
-                                                         uint8_t RSSI_Antenna_ID,
-                                                         uint8_t CTE_Type,
-                                                         uint8_t Slot_Durations,
-                                                         uint8_t Packet_Status,
-                                                         uint16_t Periodic_Event_Counter,
-                                                         uint8_t Sample_Count,
-                                                         const IQ_Sample_t* IQ_Sample )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_CONNECTIONLESS_IQ_REPORT_EVENT process function */
-static tBleStatus hci_le_connectionless_iq_report_event_process( const uint8_t* in )
-{
-  hci_le_connectionless_iq_report_event_rp0 *rp0 = (void*)in;
-  return hci_le_connectionless_iq_report_event( rp0->Sync_Handle,
-                                                rp0->Channel_Index,
-                                                rp0->RSSI,
-                                                rp0->RSSI_Antenna_ID,
-                                                rp0->CTE_Type,
-                                                rp0->Slot_Durations,
-                                                rp0->Packet_Status,
-                                                rp0->Periodic_Event_Counter,
-                                                rp0->Sample_Count,
-                                                rp0->IQ_Sample );
-}
-
-/* HCI_LE_CONNECTION_IQ_REPORT_EVENT callback function */
-__WEAK tBleStatus hci_le_connection_iq_report_event( uint16_t Connection_Handle,
-                                                     uint8_t RX_PHY,
-                                                     uint8_t Data_Channel_Index,
-                                                     uint16_t RSSI,
-                                                     uint8_t RSSI_Antenna_ID,
-                                                     uint8_t CTE_Type,
-                                                     uint8_t Slot_Durations,
-                                                     uint8_t Packet_Status,
-                                                     uint16_t Connection_Event_Counter,
-                                                     uint8_t Sample_Count,
-                                                     const IQ_Sample_t* IQ_Sample )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_CONNECTION_IQ_REPORT_EVENT process function */
-static tBleStatus hci_le_connection_iq_report_event_process( const uint8_t* in )
-{
-  hci_le_connection_iq_report_event_rp0 *rp0 = (void*)in;
-  return hci_le_connection_iq_report_event( rp0->Connection_Handle,
-                                            rp0->RX_PHY,
-                                            rp0->Data_Channel_Index,
-                                            rp0->RSSI,
-                                            rp0->RSSI_Antenna_ID,
-                                            rp0->CTE_Type,
-                                            rp0->Slot_Durations,
-                                            rp0->Packet_Status,
-                                            rp0->Connection_Event_Counter,
-                                            rp0->Sample_Count,
-                                            rp0->IQ_Sample );
-}
-
-/* HCI_LE_CTE_REQUEST_FAILED_EVENT callback function */
-__WEAK tBleStatus hci_le_cte_request_failed_event( uint8_t Status,
-                                                   uint16_t Connection_Handle )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_CTE_REQUEST_FAILED_EVENT process function */
-static tBleStatus hci_le_cte_request_failed_event_process( const uint8_t* in )
-{
-  hci_le_cte_request_failed_event_rp0 *rp0 = (void*)in;
-  return hci_le_cte_request_failed_event( rp0->Status,
-                                          rp0->Connection_Handle );
-}
-
-/* HCI_LE_PERIODIC_ADVERTISING_SYNC_TRANSFER_RECEIVED_EVENT callback function */
-__WEAK tBleStatus hci_le_periodic_advertising_sync_transfer_received_event( uint8_t Status,
-                                                                            uint16_t Connection_Handle,
-                                                                            uint16_t Service_Data,
-                                                                            uint16_t Sync_Handle,
-                                                                            uint8_t Advertising_SID,
-                                                                            uint8_t Advertiser_Address_Type,
-                                                                            const uint8_t* Advertiser_Address,
-                                                                            uint8_t Advertiser_PHY,
-                                                                            uint16_t Periodic_Advertising_Interval,
-                                                                            uint8_t Advertiser_Clock_Accuracy )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_PERIODIC_ADVERTISING_SYNC_TRANSFER_RECEIVED_EVENT process function */
-static tBleStatus hci_le_periodic_advertising_sync_transfer_received_event_process( const uint8_t* in )
-{
-  hci_le_periodic_advertising_sync_transfer_received_event_rp0 *rp0 = (void*)in;
-  return hci_le_periodic_advertising_sync_transfer_received_event( rp0->Status,
-                                                                   rp0->Connection_Handle,
-                                                                   rp0->Service_Data,
-                                                                   rp0->Sync_Handle,
-                                                                   rp0->Advertising_SID,
-                                                                   rp0->Advertiser_Address_Type,
-                                                                   rp0->Advertiser_Address,
-                                                                   rp0->Advertiser_PHY,
-                                                                   rp0->Periodic_Advertising_Interval,
-                                                                   rp0->Advertiser_Clock_Accuracy );
-}
-
-/* HCI_LE_CIS_ESTABLISHED_EVENT callback function */
-__WEAK tBleStatus hci_le_cis_established_event( uint8_t Status,
-                                                uint16_t Connection_Handle,
-                                                const uint8_t* CIG_Sync_Delay,
-                                                const uint8_t* CIS_Sync_Delay,
-                                                const uint8_t* Transport_Latency_C_To_P,
-                                                const uint8_t* Transport_Latency_P_To_C,
-                                                uint8_t PHY_C_To_P,
-                                                uint8_t PHY_P_To_C,
-                                                uint8_t NSE,
-                                                uint8_t BN_C_To_P,
-                                                uint8_t BN_P_To_C,
-                                                uint8_t FT_C_To_P,
-                                                uint8_t FT_P_To_C,
-                                                uint16_t Max_PDU_C_To_P,
-                                                uint16_t Max_PDU_P_To_C,
-                                                uint16_t ISO_Interval )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_CIS_ESTABLISHED_EVENT process function */
-static tBleStatus hci_le_cis_established_event_process( const uint8_t* in )
-{
-  hci_le_cis_established_event_rp0 *rp0 = (void*)in;
-  return hci_le_cis_established_event( rp0->Status,
-                                       rp0->Connection_Handle,
-                                       rp0->CIG_Sync_Delay,
-                                       rp0->CIS_Sync_Delay,
-                                       rp0->Transport_Latency_C_To_P,
-                                       rp0->Transport_Latency_P_To_C,
-                                       rp0->PHY_C_To_P,
-                                       rp0->PHY_P_To_C,
-                                       rp0->NSE,
-                                       rp0->BN_C_To_P,
-                                       rp0->BN_P_To_C,
-                                       rp0->FT_C_To_P,
-                                       rp0->FT_P_To_C,
-                                       rp0->Max_PDU_C_To_P,
-                                       rp0->Max_PDU_P_To_C,
-                                       rp0->ISO_Interval );
-}
-
-/* HCI_LE_CIS_REQUEST_EVENT callback function */
-__WEAK tBleStatus hci_le_cis_request_event( uint16_t ACL_Connection_Handle,
-                                            uint16_t CIS_Connection_Handle,
-                                            uint8_t CIG_ID,
-                                            uint8_t CIS_ID )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_CIS_REQUEST_EVENT process function */
-static tBleStatus hci_le_cis_request_event_process( const uint8_t* in )
-{
-  hci_le_cis_request_event_rp0 *rp0 = (void*)in;
-  return hci_le_cis_request_event( rp0->ACL_Connection_Handle,
-                                   rp0->CIS_Connection_Handle,
-                                   rp0->CIG_ID,
-                                   rp0->CIS_ID );
-}
-
-/* HCI_LE_CREATE_BIG_COMPLETE_EVENT callback function */
-__WEAK tBleStatus hci_le_create_big_complete_event( uint8_t Status,
-                                                    uint8_t BIG_Handle,
-                                                    const uint8_t* BIG_Sync_Delay,
-                                                    const uint8_t* Transport_Latency_BIG,
-                                                    uint8_t PHY,
-                                                    uint8_t NSE,
-                                                    uint8_t BN,
-                                                    uint8_t PTO,
-                                                    uint8_t IRC,
-                                                    uint16_t Max_PDU,
-                                                    uint16_t ISO_Interval,
-                                                    uint8_t Num_BIS,
-                                                    const Connection_Handle_t* Connection_Handle )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_CREATE_BIG_COMPLETE_EVENT process function */
-static tBleStatus hci_le_create_big_complete_event_process( const uint8_t* in )
-{
-  hci_le_create_big_complete_event_rp0 *rp0 = (void*)in;
-  return hci_le_create_big_complete_event( rp0->Status,
-                                           rp0->BIG_Handle,
-                                           rp0->BIG_Sync_Delay,
-                                           rp0->Transport_Latency_BIG,
-                                           rp0->PHY,
-                                           rp0->NSE,
-                                           rp0->BN,
-                                           rp0->PTO,
-                                           rp0->IRC,
-                                           rp0->Max_PDU,
-                                           rp0->ISO_Interval,
-                                           rp0->Num_BIS,
-                                           rp0->Connection_Handle );
-}
-
-/* HCI_LE_TERMINATE_BIG_COMPLETE_EVENT callback function */
-__WEAK tBleStatus hci_le_terminate_big_complete_event( uint8_t BIG_Handle,
-                                                       uint8_t Reason )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_TERMINATE_BIG_COMPLETE_EVENT process function */
-static tBleStatus hci_le_terminate_big_complete_event_process( const uint8_t* in )
-{
-  hci_le_terminate_big_complete_event_rp0 *rp0 = (void*)in;
-  return hci_le_terminate_big_complete_event( rp0->BIG_Handle,
-                                              rp0->Reason );
-}
-
-/* HCI_LE_BIG_SYNC_ESTABLISHED_EVENT callback function */
-__WEAK tBleStatus hci_le_big_sync_established_event( uint8_t Status,
-                                                     uint8_t BIG_Handle,
-                                                     const uint8_t* Transport_Latency_BIG,
-                                                     uint8_t NSE,
-                                                     uint8_t BN,
-                                                     uint8_t PTO,
-                                                     uint8_t IRC,
-                                                     uint16_t Max_PDU,
-                                                     uint16_t ISO_Interval,
-                                                     uint8_t Num_BIS,
-                                                     const Connection_Handle_t* Connection_Handle )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_BIG_SYNC_ESTABLISHED_EVENT process function */
-static tBleStatus hci_le_big_sync_established_event_process( const uint8_t* in )
-{
-  hci_le_big_sync_established_event_rp0 *rp0 = (void*)in;
-  return hci_le_big_sync_established_event( rp0->Status,
-                                            rp0->BIG_Handle,
-                                            rp0->Transport_Latency_BIG,
-                                            rp0->NSE,
-                                            rp0->BN,
-                                            rp0->PTO,
-                                            rp0->IRC,
-                                            rp0->Max_PDU,
-                                            rp0->ISO_Interval,
-                                            rp0->Num_BIS,
-                                            rp0->Connection_Handle );
-}
-
-/* HCI_LE_BIG_SYNC_LOST_EVENT callback function */
-__WEAK tBleStatus hci_le_big_sync_lost_event( uint8_t BIG_Handle,
-                                              uint8_t Reason )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_BIG_SYNC_LOST_EVENT process function */
-static tBleStatus hci_le_big_sync_lost_event_process( const uint8_t* in )
-{
-  hci_le_big_sync_lost_event_rp0 *rp0 = (void*)in;
-  return hci_le_big_sync_lost_event( rp0->BIG_Handle,
-                                     rp0->Reason );
-}
-
-/* HCI_LE_REQUEST_PEER_SCA_COMPLETE_EVENT callback function */
-__WEAK tBleStatus hci_le_request_peer_sca_complete_event( uint8_t Status,
-                                                          uint16_t Connection_Handle,
-                                                          uint8_t Peer_Clock_Accuracy )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_REQUEST_PEER_SCA_COMPLETE_EVENT process function */
-static tBleStatus hci_le_request_peer_sca_complete_event_process( const uint8_t* in )
-{
-  hci_le_request_peer_sca_complete_event_rp0 *rp0 = (void*)in;
-  return hci_le_request_peer_sca_complete_event( rp0->Status,
-                                                 rp0->Connection_Handle,
-                                                 rp0->Peer_Clock_Accuracy );
-}
-
-/* HCI_LE_PATH_LOSS_THRESHOLD_EVENT callback function */
-__WEAK tBleStatus hci_le_path_loss_threshold_event( uint16_t Connection_Handle,
-                                                    uint8_t Current_Path_Loss,
-                                                    uint8_t Zone_Entered )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_PATH_LOSS_THRESHOLD_EVENT process function */
-static tBleStatus hci_le_path_loss_threshold_event_process( const uint8_t* in )
-{
-  hci_le_path_loss_threshold_event_rp0 *rp0 = (void*)in;
-  return hci_le_path_loss_threshold_event( rp0->Connection_Handle,
-                                           rp0->Current_Path_Loss,
-                                           rp0->Zone_Entered );
-}
-
-/* HCI_LE_TRANSMIT_POWER_REPORTING_EVENT callback function */
-__WEAK tBleStatus hci_le_transmit_power_reporting_event( uint8_t Status,
-                                                         uint16_t Connection_Handle,
-                                                         uint8_t Reason,
-                                                         uint8_t PHY,
-                                                         uint8_t TX_Power_Level,
-                                                         uint8_t TX_Power_Level_Flag,
-                                                         uint8_t Delta )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_TRANSMIT_POWER_REPORTING_EVENT process function */
-static tBleStatus hci_le_transmit_power_reporting_event_process( const uint8_t* in )
-{
-  hci_le_transmit_power_reporting_event_rp0 *rp0 = (void*)in;
-  return hci_le_transmit_power_reporting_event( rp0->Status,
-                                                rp0->Connection_Handle,
-                                                rp0->Reason,
-                                                rp0->PHY,
-                                                rp0->TX_Power_Level,
-                                                rp0->TX_Power_Level_Flag,
-                                                rp0->Delta );
-}
-
-/* HCI_LE_BIGINFO_ADVERTISING_REPORT_EVENT callback function */
-__WEAK tBleStatus hci_le_biginfo_advertising_report_event( uint16_t Sync_Handle,
-                                                           uint8_t Num_BIS,
-                                                           uint8_t NSE,
-                                                           uint16_t ISO_Interval,
-                                                           uint8_t BN,
-                                                           uint8_t PTO,
-                                                           uint8_t IRC,
-                                                           uint16_t Max_PDU,
-                                                           const uint8_t* SDU_Interval,
-                                                           uint16_t Max_SDU,
-                                                           uint8_t PHY,
-                                                           uint8_t Framing,
-                                                           uint8_t Encryption )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_BIGINFO_ADVERTISING_REPORT_EVENT process function */
-static tBleStatus hci_le_biginfo_advertising_report_event_process( const uint8_t* in )
-{
-  hci_le_biginfo_advertising_report_event_rp0 *rp0 = (void*)in;
-  return hci_le_biginfo_advertising_report_event( rp0->Sync_Handle,
-                                                  rp0->Num_BIS,
-                                                  rp0->NSE,
-                                                  rp0->ISO_Interval,
-                                                  rp0->BN,
-                                                  rp0->PTO,
-                                                  rp0->IRC,
-                                                  rp0->Max_PDU,
-                                                  rp0->SDU_Interval,
-                                                  rp0->Max_SDU,
-                                                  rp0->PHY,
-                                                  rp0->Framing,
-                                                  rp0->Encryption );
-}
-
-/* HCI_LE_SUBRATE_CHANGE_EVENT callback function */
-__WEAK tBleStatus hci_le_subrate_change_event( uint8_t Status,
-                                               uint16_t Connection_Handle,
-                                               uint16_t Subrate_Factor,
-                                               uint16_t Peripheral_Latency,
-                                               uint16_t Continuation_Number,
-                                               uint16_t Supervision_Timeout )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_SUBRATE_CHANGE_EVENT process function */
-static tBleStatus hci_le_subrate_change_event_process( const uint8_t* in )
-{
-  hci_le_subrate_change_event_rp0 *rp0 = (void*)in;
-  return hci_le_subrate_change_event( rp0->Status,
-                                      rp0->Connection_Handle,
-                                      rp0->Subrate_Factor,
-                                      rp0->Peripheral_Latency,
-                                      rp0->Continuation_Number,
-                                      rp0->Supervision_Timeout );
-}
-
-/* HCI_LE_PERIODIC_ADVERTISING_SYNC_ESTABLISHED_V2_EVENT callback function */
-__WEAK tBleStatus hci_le_periodic_advertising_sync_established_v2_event( uint8_t Status,
-                                                                         uint16_t Sync_Handle,
-                                                                         uint8_t Advertising_SID,
-                                                                         uint8_t Advertiser_Address_Type,
-                                                                         const uint8_t* Advertiser_Address,
-                                                                         uint8_t Advertiser_PHY,
-                                                                         uint16_t Periodic_Advertising_Interval,
-                                                                         uint8_t Advertiser_Clock_Accuracy,
-                                                                         uint8_t Num_Subevents,
-                                                                         uint8_t Subevent_Interval,
-                                                                         uint8_t Response_Slot_Delay,
-                                                                         uint8_t Response_Slot_Spacing )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_PERIODIC_ADVERTISING_SYNC_ESTABLISHED_V2_EVENT process function */
-static tBleStatus hci_le_periodic_advertising_sync_established_v2_event_process( const uint8_t* in )
-{
-  hci_le_periodic_advertising_sync_established_v2_event_rp0 *rp0 = (void*)in;
-  return hci_le_periodic_advertising_sync_established_v2_event( rp0->Status,
-                                                                rp0->Sync_Handle,
-                                                                rp0->Advertising_SID,
-                                                                rp0->Advertiser_Address_Type,
-                                                                rp0->Advertiser_Address,
-                                                                rp0->Advertiser_PHY,
-                                                                rp0->Periodic_Advertising_Interval,
-                                                                rp0->Advertiser_Clock_Accuracy,
-                                                                rp0->Num_Subevents,
-                                                                rp0->Subevent_Interval,
-                                                                rp0->Response_Slot_Delay,
-                                                                rp0->Response_Slot_Spacing );
-}
-
-/* HCI_LE_PERIODIC_ADVERTISING_REPORT_V2_EVENT callback function */
-__WEAK tBleStatus hci_le_periodic_advertising_report_v2_event( uint16_t Sync_Handle,
-                                                               uint8_t Tx_Power,
-                                                               uint8_t RSSI,
-                                                               uint8_t CTE_Type,
-                                                               uint16_t Periodic_Event_Counter,
-                                                               uint8_t Subevent,
-                                                               uint8_t Data_Status,
-                                                               uint8_t Data_Length,
-                                                               const uint8_t* Data )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_PERIODIC_ADVERTISING_REPORT_V2_EVENT process function */
-static tBleStatus hci_le_periodic_advertising_report_v2_event_process( const uint8_t* in )
-{
-  hci_le_periodic_advertising_report_v2_event_rp0 *rp0 = (void*)in;
-  return hci_le_periodic_advertising_report_v2_event( rp0->Sync_Handle,
-                                                      rp0->Tx_Power,
-                                                      rp0->RSSI,
-                                                      rp0->CTE_Type,
-                                                      rp0->Periodic_Event_Counter,
-                                                      rp0->Subevent,
-                                                      rp0->Data_Status,
-                                                      rp0->Data_Length,
-                                                      rp0->Data );
-}
-
-/* HCI_LE_PERIODIC_ADVERTISING_SYNC_TRANSFER_RECEIVED_V2_EVENT callback function */
-__WEAK tBleStatus hci_le_periodic_advertising_sync_transfer_received_v2_event( uint8_t Status,
-                                                                               uint16_t Connection_Handle,
-                                                                               uint16_t Service_Data,
-                                                                               uint16_t Sync_Handle,
-                                                                               uint8_t Advertising_SID,
-                                                                               uint8_t Advertiser_Address_Type,
-                                                                               const uint8_t* Advertiser_Address,
-                                                                               uint8_t Advertiser_PHY,
-                                                                               uint16_t Periodic_Advertising_Interval,
-                                                                               uint8_t Advertiser_Clock_Accuracy,
-                                                                               uint8_t Num_Subevents,
-                                                                               uint8_t Subevent_Interval,
-                                                                               uint8_t Response_Slot_Delay,
-                                                                               uint8_t Response_Slot_Spacing )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_PERIODIC_ADVERTISING_SYNC_TRANSFER_RECEIVED_V2_EVENT process function */
-static tBleStatus hci_le_periodic_advertising_sync_transfer_received_v2_event_process( const uint8_t* in )
-{
-  hci_le_periodic_advertising_sync_transfer_received_v2_event_rp0 *rp0 = (void*)in;
-  return hci_le_periodic_advertising_sync_transfer_received_v2_event( rp0->Status,
-                                                                      rp0->Connection_Handle,
-                                                                      rp0->Service_Data,
-                                                                      rp0->Sync_Handle,
-                                                                      rp0->Advertising_SID,
-                                                                      rp0->Advertiser_Address_Type,
-                                                                      rp0->Advertiser_Address,
-                                                                      rp0->Advertiser_PHY,
-                                                                      rp0->Periodic_Advertising_Interval,
-                                                                      rp0->Advertiser_Clock_Accuracy,
-                                                                      rp0->Num_Subevents,
-                                                                      rp0->Subevent_Interval,
-                                                                      rp0->Response_Slot_Delay,
-                                                                      rp0->Response_Slot_Spacing );
-}
-
-/* HCI_LE_PERIODIC_ADVERTISING_SUBEVENT_DATA_REQUEST_EVENT callback function */
-__WEAK tBleStatus hci_le_periodic_advertising_subevent_data_request_event( uint8_t Advertising_Handle,
-                                                                           uint8_t Subevent_Start,
-                                                                           uint8_t Subevent_Data_Count )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_PERIODIC_ADVERTISING_SUBEVENT_DATA_REQUEST_EVENT process function */
-static tBleStatus hci_le_periodic_advertising_subevent_data_request_event_process( const uint8_t* in )
-{
-  hci_le_periodic_advertising_subevent_data_request_event_rp0 *rp0 = (void*)in;
-  return hci_le_periodic_advertising_subevent_data_request_event( rp0->Advertising_Handle,
-                                                                  rp0->Subevent_Start,
-                                                                  rp0->Subevent_Data_Count );
-}
-
-/* HCI_LE_PERIODIC_ADVERTISING_RESPONSE_REPORT_EVENT callback function */
-__WEAK tBleStatus hci_le_periodic_advertising_response_report_event( uint8_t Advertising_Handle,
-                                                                     uint8_t Subevent,
-                                                                     uint8_t Tx_Status,
-                                                                     uint8_t Num_Responses,
-                                                                     const uint8_t* Responses )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_PERIODIC_ADVERTISING_RESPONSE_REPORT_EVENT process function */
-static tBleStatus hci_le_periodic_advertising_response_report_event_process( const uint8_t* in )
-{
-  hci_le_periodic_advertising_response_report_event_rp0 *rp0 = (void*)in;
-  return hci_le_periodic_advertising_response_report_event( rp0->Advertising_Handle,
-                                                            rp0->Subevent,
-                                                            rp0->Tx_Status,
-                                                            rp0->Num_Responses,
-                                                            rp0->Responses );
-}
-
-/* HCI_LE_ENHANCED_CONNECTION_COMPLETE_V2_EVENT callback function */
-__WEAK tBleStatus hci_le_enhanced_connection_complete_v2_event( uint8_t Status,
-                                                                uint16_t Connection_Handle,
-                                                                uint8_t Role,
-                                                                uint8_t Peer_Address_Type,
-                                                                const uint8_t* Peer_Address,
-                                                                const uint8_t* Local_Resolvable_Private_Address,
-                                                                const uint8_t* Peer_Resolvable_Private_Address,
-                                                                uint16_t Conn_Interval,
-                                                                uint16_t Conn_Latency,
-                                                                uint16_t Supervision_Timeout,
-                                                                uint8_t Central_Clock_Accuracy,
-                                                                uint8_t Advertising_Handle,
-                                                                uint16_t Sync_Handle )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_ENHANCED_CONNECTION_COMPLETE_V2_EVENT process function */
-static tBleStatus hci_le_enhanced_connection_complete_v2_event_process( const uint8_t* in )
-{
-  hci_le_enhanced_connection_complete_v2_event_rp0 *rp0 = (void*)in;
-  return hci_le_enhanced_connection_complete_v2_event( rp0->Status,
-                                                       rp0->Connection_Handle,
-                                                       rp0->Role,
-                                                       rp0->Peer_Address_Type,
-                                                       rp0->Peer_Address,
-                                                       rp0->Local_Resolvable_Private_Address,
-                                                       rp0->Peer_Resolvable_Private_Address,
-                                                       rp0->Conn_Interval,
-                                                       rp0->Conn_Latency,
-                                                       rp0->Supervision_Timeout,
-                                                       rp0->Central_Clock_Accuracy,
-                                                       rp0->Advertising_Handle,
-                                                       rp0->Sync_Handle );
-}
-
-/* HCI_LE_CIS_ESTABLISHED_V2_EVENT callback function */
-__WEAK tBleStatus hci_le_cis_established_v2_event( uint8_t Status,
-                                                   uint16_t Connection_Handle,
-                                                   const uint8_t* CIG_Sync_Delay,
-                                                   const uint8_t* CIS_Sync_Delay,
-                                                   const uint8_t* Transport_Latency_C_To_P,
-                                                   const uint8_t* Transport_Latency_P_To_C,
-                                                   uint8_t PHY_C_To_P,
-                                                   uint8_t PHY_P_To_C,
-                                                   uint8_t NSE,
-                                                   uint8_t BN_C_To_P,
-                                                   uint8_t BN_P_To_C,
-                                                   uint8_t FT_C_To_P,
-                                                   uint8_t FT_P_To_C,
-                                                   uint16_t Max_PDU_C_To_P,
-                                                   uint16_t Max_PDU_P_To_C,
-                                                   uint16_t ISO_Interval,
-                                                   const uint8_t* Sub_Interval,
-                                                   uint16_t Max_SDU_C_To_P,
-                                                   uint16_t Max_SDU_P_To_C,
-                                                   const uint8_t* SDU_Interval_C_To_P,
-                                                   const uint8_t* SDU_Interval_P_To_C,
-                                                   uint8_t Framing )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_CIS_ESTABLISHED_V2_EVENT process function */
-static tBleStatus hci_le_cis_established_v2_event_process( const uint8_t* in )
-{
-  hci_le_cis_established_v2_event_rp0 *rp0 = (void*)in;
-  return hci_le_cis_established_v2_event( rp0->Status,
-                                          rp0->Connection_Handle,
-                                          rp0->CIG_Sync_Delay,
-                                          rp0->CIS_Sync_Delay,
-                                          rp0->Transport_Latency_C_To_P,
-                                          rp0->Transport_Latency_P_To_C,
-                                          rp0->PHY_C_To_P,
-                                          rp0->PHY_P_To_C,
-                                          rp0->NSE,
-                                          rp0->BN_C_To_P,
-                                          rp0->BN_P_To_C,
-                                          rp0->FT_C_To_P,
-                                          rp0->FT_P_To_C,
-                                          rp0->Max_PDU_C_To_P,
-                                          rp0->Max_PDU_P_To_C,
-                                          rp0->ISO_Interval,
-                                          rp0->Sub_Interval,
-                                          rp0->Max_SDU_C_To_P,
-                                          rp0->Max_SDU_P_To_C,
-                                          rp0->SDU_Interval_C_To_P,
-                                          rp0->SDU_Interval_P_To_C,
-                                          rp0->Framing );
-}
-
-/* HCI_LE_READ_ALL_REMOTE_FEATURES_COMPLETE_EVENT callback function */
-__WEAK tBleStatus hci_le_read_all_remote_features_complete_event( uint8_t Status,
-                                                                  uint16_t Connection_Handle,
-                                                                  uint8_t Max_Remote_Page,
-                                                                  uint8_t Max_Valid_Page,
-                                                                  const uint8_t* LE_Features )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_READ_ALL_REMOTE_FEATURES_COMPLETE_EVENT process function */
-static tBleStatus hci_le_read_all_remote_features_complete_event_process( const uint8_t* in )
-{
-  hci_le_read_all_remote_features_complete_event_rp0 *rp0 = (void*)in;
-  return hci_le_read_all_remote_features_complete_event( rp0->Status,
-                                                         rp0->Connection_Handle,
-                                                         rp0->Max_Remote_Page,
-                                                         rp0->Max_Valid_Page,
-                                                         rp0->LE_Features );
-}
-
-/* HCI_LE_CS_READ_REMOTE_SUPPORTED_CAPABILITIES_COMPLETE_EVENT callback function */
-__WEAK tBleStatus hci_le_cs_read_remote_supported_capabilities_complete_event( uint8_t Status,
-                                                                               uint16_t Connection_Handle,
-                                                                               uint8_t Num_Config_Supported,
-                                                                               uint16_t Max_Consecutive_Procedures_Supported,
-                                                                               uint8_t Num_Antennas_Supported,
-                                                                               uint8_t Max_Antenna_Paths_Supported,
-                                                                               uint8_t Roles_Supported,
-                                                                               uint8_t Optional_Modes_Supported,
-                                                                               uint8_t RTT_Capability,
-                                                                               uint8_t RTT_AA_Only_N,
-                                                                               uint8_t RTT_Sounding_N,
-                                                                               uint8_t RTT_Random_Payload_N,
-                                                                               uint16_t NADM_Sounding_Capability,
-                                                                               uint16_t NADM_Random_Capability,
-                                                                               uint8_t CS_SYNC_PHYs_Supported,
-                                                                               uint16_t Subfeatures_Supported,
-                                                                               uint16_t T_IP1_Times_Supported,
-                                                                               uint16_t T_IP2_Times_Supported,
-                                                                               uint16_t T_FCS_Times_Supported,
-                                                                               uint16_t T_PM_Times_Supported,
-                                                                               uint8_t T_SW_Time_Supported,
-                                                                               uint8_t TX_SNR_Capability )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_CS_READ_REMOTE_SUPPORTED_CAPABILITIES_COMPLETE_EVENT process function */
-static tBleStatus hci_le_cs_read_remote_supported_capabilities_complete_event_process( const uint8_t* in )
-{
-  hci_le_cs_read_remote_supported_capabilities_complete_event_rp0 *rp0 = (void*)in;
-  return hci_le_cs_read_remote_supported_capabilities_complete_event( rp0->Status,
-                                                                      rp0->Connection_Handle,
-                                                                      rp0->Num_Config_Supported,
-                                                                      rp0->Max_Consecutive_Procedures_Supported,
-                                                                      rp0->Num_Antennas_Supported,
-                                                                      rp0->Max_Antenna_Paths_Supported,
-                                                                      rp0->Roles_Supported,
-                                                                      rp0->Optional_Modes_Supported,
-                                                                      rp0->RTT_Capability,
-                                                                      rp0->RTT_AA_Only_N,
-                                                                      rp0->RTT_Sounding_N,
-                                                                      rp0->RTT_Random_Payload_N,
-                                                                      rp0->NADM_Sounding_Capability,
-                                                                      rp0->NADM_Random_Capability,
-                                                                      rp0->CS_SYNC_PHYs_Supported,
-                                                                      rp0->Subfeatures_Supported,
-                                                                      rp0->T_IP1_Times_Supported,
-                                                                      rp0->T_IP2_Times_Supported,
-                                                                      rp0->T_FCS_Times_Supported,
-                                                                      rp0->T_PM_Times_Supported,
-                                                                      rp0->T_SW_Time_Supported,
-                                                                      rp0->TX_SNR_Capability );
-}
-
-/* HCI_LE_CS_READ_REMOTE_FAE_TABLE_COMPLETE_EVENT callback function */
-__WEAK tBleStatus hci_le_cs_read_remote_fae_table_complete_event( uint8_t Status,
-                                                                  uint16_t Connection_Handle,
-                                                                  const uint8_t* Remote_FAE_Table )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_CS_READ_REMOTE_FAE_TABLE_COMPLETE_EVENT process function */
-static tBleStatus hci_le_cs_read_remote_fae_table_complete_event_process( const uint8_t* in )
-{
-  hci_le_cs_read_remote_fae_table_complete_event_rp0 *rp0 = (void*)in;
-  return hci_le_cs_read_remote_fae_table_complete_event( rp0->Status,
-                                                         rp0->Connection_Handle,
-                                                         rp0->Remote_FAE_Table );
-}
-
-/* HCI_LE_CS_SECURITY_ENABLE_COMPLETE_EVENT callback function */
-__WEAK tBleStatus hci_le_cs_security_enable_complete_event( uint8_t Status,
-                                                            uint16_t Connection_Handle )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_CS_SECURITY_ENABLE_COMPLETE_EVENT process function */
-static tBleStatus hci_le_cs_security_enable_complete_event_process( const uint8_t* in )
-{
-  hci_le_cs_security_enable_complete_event_rp0 *rp0 = (void*)in;
-  return hci_le_cs_security_enable_complete_event( rp0->Status,
-                                                   rp0->Connection_Handle );
-}
-
-/* HCI_LE_CS_CONFIG_COMPLETE_EVENT callback function */
-__WEAK tBleStatus hci_le_cs_config_complete_event( uint8_t Status,
-                                                   uint16_t Connection_Handle,
-                                                   uint8_t Config_ID,
-                                                   uint8_t Action,
-                                                   uint8_t Main_Mode_Type,
-                                                   uint8_t Sub_Mode_Type,
-                                                   uint8_t Min_Main_Mode_Steps,
-                                                   uint8_t Max_Main_Mode_Steps,
-                                                   uint8_t Main_Mode_Repetition,
-                                                   uint8_t Mode_0_Steps,
-                                                   uint8_t Role,
-                                                   uint8_t RTT_Type,
-                                                   uint8_t CS_SYNC_PHY,
-                                                   const uint8_t* Channel_Map,
-                                                   uint8_t Channel_Map_Repetition,
-                                                   uint8_t Channel_Selection_Type,
-                                                   uint8_t Ch3c_Shape,
-                                                   uint8_t Ch3c_Jump,
-                                                   uint8_t Reserved,
-                                                   uint8_t T_IP1_Time,
-                                                   uint8_t T_IP2_Time,
-                                                   uint8_t T_FCS_Time,
-                                                   uint8_t T_PM_Time )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_CS_CONFIG_COMPLETE_EVENT process function */
-static tBleStatus hci_le_cs_config_complete_event_process( const uint8_t* in )
-{
-  hci_le_cs_config_complete_event_rp0 *rp0 = (void*)in;
-  return hci_le_cs_config_complete_event( rp0->Status,
-                                          rp0->Connection_Handle,
-                                          rp0->Config_ID,
-                                          rp0->Action,
-                                          rp0->Main_Mode_Type,
-                                          rp0->Sub_Mode_Type,
-                                          rp0->Min_Main_Mode_Steps,
-                                          rp0->Max_Main_Mode_Steps,
-                                          rp0->Main_Mode_Repetition,
-                                          rp0->Mode_0_Steps,
-                                          rp0->Role,
-                                          rp0->RTT_Type,
-                                          rp0->CS_SYNC_PHY,
-                                          rp0->Channel_Map,
-                                          rp0->Channel_Map_Repetition,
-                                          rp0->Channel_Selection_Type,
-                                          rp0->Ch3c_Shape,
-                                          rp0->Ch3c_Jump,
-                                          rp0->Reserved,
-                                          rp0->T_IP1_Time,
-                                          rp0->T_IP2_Time,
-                                          rp0->T_FCS_Time,
-                                          rp0->T_PM_Time );
-}
-
-/* HCI_LE_CS_PROCEDURE_ENABLE_COMPLETE_EVENT callback function */
-__WEAK tBleStatus hci_le_cs_procedure_enable_complete_event( uint8_t Status,
-                                                             uint16_t Connection_Handle,
-                                                             uint8_t Config_ID,
-                                                             uint8_t State,
-                                                             uint8_t Tone_Antenna_Config_Selection,
-                                                             uint8_t Selected_TX_Power,
-                                                             const uint8_t* Subevent_Len,
-                                                             uint8_t Subevents_Per_Event,
-                                                             uint16_t Subevent_Interval,
-                                                             uint16_t Event_Interval,
-                                                             uint16_t Procedure_Interval,
-                                                             uint16_t Procedure_Count,
-                                                             uint16_t Max_Procedure_Len )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_CS_PROCEDURE_ENABLE_COMPLETE_EVENT process function */
-static tBleStatus hci_le_cs_procedure_enable_complete_event_process( const uint8_t* in )
-{
-  hci_le_cs_procedure_enable_complete_event_rp0 *rp0 = (void*)in;
-  return hci_le_cs_procedure_enable_complete_event( rp0->Status,
-                                                    rp0->Connection_Handle,
-                                                    rp0->Config_ID,
-                                                    rp0->State,
-                                                    rp0->Tone_Antenna_Config_Selection,
-                                                    rp0->Selected_TX_Power,
-                                                    rp0->Subevent_Len,
-                                                    rp0->Subevents_Per_Event,
-                                                    rp0->Subevent_Interval,
-                                                    rp0->Event_Interval,
-                                                    rp0->Procedure_Interval,
-                                                    rp0->Procedure_Count,
-                                                    rp0->Max_Procedure_Len );
-}
-
-/* HCI_LE_CS_SUBEVENT_RESULT_EVENT callback function */
-__WEAK tBleStatus hci_le_cs_subevent_result_event( uint16_t Connection_Handle,
-                                                   uint8_t Config_ID,
-                                                   uint16_t Start_ACL_Conn_Event_Counter,
-                                                   uint16_t Procedure_Counter,
-                                                   uint16_t Frequency_Compensation,
-                                                   uint8_t Reference_Power_Level,
-                                                   uint8_t Procedure_Done_Status,
-                                                   uint8_t Subevent_Done_Status,
-                                                   uint8_t Abort_Reason,
-                                                   uint8_t Num_Antenna_Paths,
-                                                   uint8_t Num_Steps_Reported,
-                                                   const uint8_t* Step_Param )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_CS_SUBEVENT_RESULT_EVENT process function */
-static tBleStatus hci_le_cs_subevent_result_event_process( const uint8_t* in )
-{
-  hci_le_cs_subevent_result_event_rp0 *rp0 = (void*)in;
-  return hci_le_cs_subevent_result_event( rp0->Connection_Handle,
-                                          rp0->Config_ID,
-                                          rp0->Start_ACL_Conn_Event_Counter,
-                                          rp0->Procedure_Counter,
-                                          rp0->Frequency_Compensation,
-                                          rp0->Reference_Power_Level,
-                                          rp0->Procedure_Done_Status,
-                                          rp0->Subevent_Done_Status,
-                                          rp0->Abort_Reason,
-                                          rp0->Num_Antenna_Paths,
-                                          rp0->Num_Steps_Reported,
-                                          rp0->Step_Param );
-}
-
-/* HCI_LE_CS_SUBEVENT_RESULT_CONTINUE_EVENT callback function */
-__WEAK tBleStatus hci_le_cs_subevent_result_continue_event( uint16_t Connection_Handle,
-                                                            uint8_t Config_ID,
-                                                            uint8_t Procedure_Done_Status,
-                                                            uint8_t Subevent_Done_Status,
-                                                            uint8_t Abort_Reason,
-                                                            uint8_t Num_Antenna_Paths,
-                                                            uint8_t Num_Steps_Reported,
-                                                            const uint8_t* Step_Param )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_CS_SUBEVENT_RESULT_CONTINUE_EVENT process function */
-static tBleStatus hci_le_cs_subevent_result_continue_event_process( const uint8_t* in )
-{
-  hci_le_cs_subevent_result_continue_event_rp0 *rp0 = (void*)in;
-  return hci_le_cs_subevent_result_continue_event( rp0->Connection_Handle,
-                                                   rp0->Config_ID,
-                                                   rp0->Procedure_Done_Status,
-                                                   rp0->Subevent_Done_Status,
-                                                   rp0->Abort_Reason,
-                                                   rp0->Num_Antenna_Paths,
-                                                   rp0->Num_Steps_Reported,
-                                                   rp0->Step_Param );
-}
-
-/* HCI_LE_CS_TEST_END_COMPLETE_EVENT callback function */
-__WEAK tBleStatus hci_le_cs_test_end_complete_event( uint8_t Status )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_CS_TEST_END_COMPLETE_EVENT process function */
-static tBleStatus hci_le_cs_test_end_complete_event_process( const uint8_t* in )
-{
-  hci_le_cs_test_end_complete_event_rp0 *rp0 = (void*)in;
-  return hci_le_cs_test_end_complete_event( rp0->Status );
-}
-
-/* HCI_LE_MONITORED_ADVERTISERS_REPORT_EVENT callback function */
-__WEAK tBleStatus hci_le_monitored_advertisers_report_event( uint8_t Address_Type,
-                                                             const uint8_t* Address,
-                                                             uint8_t Condition )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_MONITORED_ADVERTISERS_REPORT_EVENT process function */
-static tBleStatus hci_le_monitored_advertisers_report_event_process( const uint8_t* in )
-{
-  hci_le_monitored_advertisers_report_event_rp0 *rp0 = (void*)in;
-  return hci_le_monitored_advertisers_report_event( rp0->Address_Type,
-                                                    rp0->Address,
-                                                    rp0->Condition );
-}
-
-/* HCI_LE_FRAME_SPACE_UPDATE_COMPLETE_EVENT callback function */
-__WEAK tBleStatus hci_le_frame_space_update_complete_event( uint8_t Status,
-                                                            uint16_t Connection_Handle,
-                                                            uint8_t Initiator,
-                                                            uint16_t Frame_Space,
-                                                            uint8_t PHYS,
-                                                            uint16_t Spacing_Types )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* HCI_LE_FRAME_SPACE_UPDATE_COMPLETE_EVENT process function */
-static tBleStatus hci_le_frame_space_update_complete_event_process( const uint8_t* in )
-{
-  hci_le_frame_space_update_complete_event_rp0 *rp0 = (void*)in;
-  return hci_le_frame_space_update_complete_event( rp0->Status,
-                                                   rp0->Connection_Handle,
-                                                   rp0->Initiator,
-                                                   rp0->Frame_Space,
-                                                   rp0->PHYS,
-                                                   rp0->Spacing_Types );
-}
-
-/* ACI_WARNING_EVENT callback function */
-__WEAK tBleStatus aci_warning_event( uint8_t Warning_Type,
-                                     uint8_t Data_Length,
-                                     const uint8_t* Data )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_WARNING_EVENT process function */
-static tBleStatus aci_warning_event_process( const uint8_t* in )
-{
-  aci_warning_event_rp0 *rp0 = (void*)in;
-  return aci_warning_event( rp0->Warning_Type,
-                            rp0->Data_Length,
-                            rp0->Data );
-}
-
-/* ACI_GAP_LIMITED_DISCOVERABLE_EVENT callback function */
-__WEAK tBleStatus aci_gap_limited_discoverable_event( void )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_GAP_LIMITED_DISCOVERABLE_EVENT process function */
-static tBleStatus aci_gap_limited_discoverable_event_process( const uint8_t* in )
-{
-  return aci_gap_limited_discoverable_event( );
-}
-
-/* ACI_GAP_PAIRING_COMPLETE_EVENT callback function */
-__WEAK tBleStatus aci_gap_pairing_complete_event( uint16_t Connection_Handle,
-                                                  uint8_t Status,
-                                                  uint8_t Reason )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_GAP_PAIRING_COMPLETE_EVENT process function */
-static tBleStatus aci_gap_pairing_complete_event_process( const uint8_t* in )
-{
-  aci_gap_pairing_complete_event_rp0 *rp0 = (void*)in;
-  return aci_gap_pairing_complete_event( rp0->Connection_Handle,
-                                         rp0->Status,
-                                         rp0->Reason );
-}
-
-/* ACI_GAP_PASS_KEY_REQ_EVENT callback function */
-__WEAK tBleStatus aci_gap_pass_key_req_event( uint16_t Connection_Handle,
-                                              uint8_t IO_Capability )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_GAP_PASS_KEY_REQ_EVENT process function */
-static tBleStatus aci_gap_pass_key_req_event_process( const uint8_t* in )
-{
-  aci_gap_pass_key_req_event_rp0 *rp0 = (void*)in;
-  return aci_gap_pass_key_req_event( rp0->Connection_Handle,
-                                     rp0->IO_Capability );
-}
-
-/* ACI_GAP_AUTHORIZATION_REQ_EVENT callback function */
-__WEAK tBleStatus aci_gap_authorization_req_event( uint16_t Connection_Handle )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_GAP_AUTHORIZATION_REQ_EVENT process function */
-static tBleStatus aci_gap_authorization_req_event_process( const uint8_t* in )
-{
-  aci_gap_authorization_req_event_rp0 *rp0 = (void*)in;
-  return aci_gap_authorization_req_event( rp0->Connection_Handle );
-}
-
-/* ACI_GAP_BOND_LOST_EVENT callback function */
-__WEAK tBleStatus aci_gap_bond_lost_event( uint16_t Connection_Handle )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_GAP_BOND_LOST_EVENT process function */
-static tBleStatus aci_gap_bond_lost_event_process( const uint8_t* in )
-{
-  aci_gap_bond_lost_event_rp0 *rp0 = (void*)in;
-  return aci_gap_bond_lost_event( rp0->Connection_Handle );
-}
-
-/* ACI_GAP_PROC_COMPLETE_EVENT callback function */
-__WEAK tBleStatus aci_gap_proc_complete_event( uint8_t Procedure_Code,
-                                               uint8_t Status,
-                                               uint8_t Data_Length,
-                                               const uint8_t* Data )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_GAP_PROC_COMPLETE_EVENT process function */
-static tBleStatus aci_gap_proc_complete_event_process( const uint8_t* in )
-{
-  aci_gap_proc_complete_event_rp0 *rp0 = (void*)in;
-  return aci_gap_proc_complete_event( rp0->Procedure_Code,
-                                      rp0->Status,
-                                      rp0->Data_Length,
-                                      rp0->Data );
-}
-
-/* ACI_GAP_ADDR_NOT_RESOLVED_EVENT callback function */
-__WEAK tBleStatus aci_gap_addr_not_resolved_event( uint16_t Connection_Handle )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_GAP_ADDR_NOT_RESOLVED_EVENT process function */
-static tBleStatus aci_gap_addr_not_resolved_event_process( const uint8_t* in )
-{
-  aci_gap_addr_not_resolved_event_rp0 *rp0 = (void*)in;
-  return aci_gap_addr_not_resolved_event( rp0->Connection_Handle );
-}
-
-/* ACI_GAP_NUMERIC_COMPARISON_VALUE_EVENT callback function */
-__WEAK tBleStatus aci_gap_numeric_comparison_value_event( uint16_t Connection_Handle,
-                                                          uint32_t Numeric_Value )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_GAP_NUMERIC_COMPARISON_VALUE_EVENT process function */
-static tBleStatus aci_gap_numeric_comparison_value_event_process( const uint8_t* in )
-{
-  aci_gap_numeric_comparison_value_event_rp0 *rp0 = (void*)in;
-  return aci_gap_numeric_comparison_value_event( rp0->Connection_Handle,
-                                                 rp0->Numeric_Value );
-}
-
-/* ACI_GAP_KEYPRESS_NOTIFICATION_EVENT callback function */
-__WEAK tBleStatus aci_gap_keypress_notification_event( uint16_t Connection_Handle,
-                                                       uint8_t Notification_Type )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_GAP_KEYPRESS_NOTIFICATION_EVENT process function */
-static tBleStatus aci_gap_keypress_notification_event_process( const uint8_t* in )
-{
-  aci_gap_keypress_notification_event_rp0 *rp0 = (void*)in;
-  return aci_gap_keypress_notification_event( rp0->Connection_Handle,
-                                              rp0->Notification_Type );
-}
-
-/* ACI_GAP_PAIRING_REQUEST_EVENT callback function */
-__WEAK tBleStatus aci_gap_pairing_request_event( uint16_t Connection_Handle,
-                                                 uint8_t Bonded,
-                                                 uint8_t Auth_Req )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_GAP_PAIRING_REQUEST_EVENT process function */
-static tBleStatus aci_gap_pairing_request_event_process( const uint8_t* in )
-{
-  aci_gap_pairing_request_event_rp0 *rp0 = (void*)in;
-  return aci_gap_pairing_request_event( rp0->Connection_Handle,
-                                        rp0->Bonded,
-                                        rp0->Auth_Req );
-}
-
-/* ACI_L2CAP_CONNECTION_UPDATE_RESP_EVENT callback function */
-__WEAK tBleStatus aci_l2cap_connection_update_resp_event( uint16_t Connection_Handle,
-                                                          uint16_t Result )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_L2CAP_CONNECTION_UPDATE_RESP_EVENT process function */
-static tBleStatus aci_l2cap_connection_update_resp_event_process( const uint8_t* in )
-{
-  aci_l2cap_connection_update_resp_event_rp0 *rp0 = (void*)in;
-  return aci_l2cap_connection_update_resp_event( rp0->Connection_Handle,
-                                                 rp0->Result );
-}
-
-/* ACI_L2CAP_PROC_TIMEOUT_EVENT callback function */
-__WEAK tBleStatus aci_l2cap_proc_timeout_event( uint16_t Connection_Handle,
-                                                uint8_t Data_Length,
-                                                const uint8_t* Data )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_L2CAP_PROC_TIMEOUT_EVENT process function */
-static tBleStatus aci_l2cap_proc_timeout_event_process( const uint8_t* in )
-{
-  aci_l2cap_proc_timeout_event_rp0 *rp0 = (void*)in;
-  return aci_l2cap_proc_timeout_event( rp0->Connection_Handle,
-                                       rp0->Data_Length,
-                                       rp0->Data );
-}
-
-/* ACI_L2CAP_CONNECTION_UPDATE_REQ_EVENT callback function */
-__WEAK tBleStatus aci_l2cap_connection_update_req_event( uint16_t Connection_Handle,
-                                                         uint8_t Identifier,
-                                                         uint16_t L2CAP_Length,
-                                                         uint16_t Interval_Min,
-                                                         uint16_t Interval_Max,
-                                                         uint16_t Latency,
-                                                         uint16_t Timeout_Multiplier )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_L2CAP_CONNECTION_UPDATE_REQ_EVENT process function */
-static tBleStatus aci_l2cap_connection_update_req_event_process( const uint8_t* in )
-{
-  aci_l2cap_connection_update_req_event_rp0 *rp0 = (void*)in;
-  return aci_l2cap_connection_update_req_event( rp0->Connection_Handle,
-                                                rp0->Identifier,
-                                                rp0->L2CAP_Length,
-                                                rp0->Interval_Min,
-                                                rp0->Interval_Max,
-                                                rp0->Latency,
-                                                rp0->Timeout_Multiplier );
-}
-
-/* ACI_L2CAP_COMMAND_REJECT_EVENT callback function */
-__WEAK tBleStatus aci_l2cap_command_reject_event( uint16_t Connection_Handle,
-                                                  uint8_t Identifier,
-                                                  uint16_t Reason,
-                                                  uint8_t Data_Length,
-                                                  const uint8_t* Data )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_L2CAP_COMMAND_REJECT_EVENT process function */
-static tBleStatus aci_l2cap_command_reject_event_process( const uint8_t* in )
-{
-  aci_l2cap_command_reject_event_rp0 *rp0 = (void*)in;
-  return aci_l2cap_command_reject_event( rp0->Connection_Handle,
-                                         rp0->Identifier,
-                                         rp0->Reason,
-                                         rp0->Data_Length,
-                                         rp0->Data );
-}
-
-/* ACI_L2CAP_COC_CONNECT_EVENT callback function */
-__WEAK tBleStatus aci_l2cap_coc_connect_event( uint16_t Connection_Handle,
-                                               uint16_t SPSM,
-                                               uint16_t MTU,
-                                               uint16_t MPS,
-                                               uint16_t Initial_Credits,
-                                               uint8_t Channel_Number )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_L2CAP_COC_CONNECT_EVENT process function */
-static tBleStatus aci_l2cap_coc_connect_event_process( const uint8_t* in )
-{
-  aci_l2cap_coc_connect_event_rp0 *rp0 = (void*)in;
-  return aci_l2cap_coc_connect_event( rp0->Connection_Handle,
-                                      rp0->SPSM,
-                                      rp0->MTU,
-                                      rp0->MPS,
-                                      rp0->Initial_Credits,
-                                      rp0->Channel_Number );
-}
-
-/* ACI_L2CAP_COC_CONNECT_CONFIRM_EVENT callback function */
-__WEAK tBleStatus aci_l2cap_coc_connect_confirm_event( uint16_t Connection_Handle,
-                                                       uint16_t MTU,
-                                                       uint16_t MPS,
-                                                       uint16_t Initial_Credits,
-                                                       uint16_t Result,
-                                                       uint8_t Channel_Number,
-                                                       const uint8_t* Channel_Index_List )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_L2CAP_COC_CONNECT_CONFIRM_EVENT process function */
-static tBleStatus aci_l2cap_coc_connect_confirm_event_process( const uint8_t* in )
-{
-  aci_l2cap_coc_connect_confirm_event_rp0 *rp0 = (void*)in;
-  return aci_l2cap_coc_connect_confirm_event( rp0->Connection_Handle,
-                                              rp0->MTU,
-                                              rp0->MPS,
-                                              rp0->Initial_Credits,
-                                              rp0->Result,
-                                              rp0->Channel_Number,
-                                              rp0->Channel_Index_List );
-}
-
-/* ACI_L2CAP_COC_RECONF_EVENT callback function */
-__WEAK tBleStatus aci_l2cap_coc_reconf_event( uint16_t Connection_Handle,
-                                              uint16_t MTU,
-                                              uint16_t MPS,
-                                              uint8_t Channel_Number,
-                                              const uint8_t* Channel_Index_List )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_L2CAP_COC_RECONF_EVENT process function */
-static tBleStatus aci_l2cap_coc_reconf_event_process( const uint8_t* in )
-{
-  aci_l2cap_coc_reconf_event_rp0 *rp0 = (void*)in;
-  return aci_l2cap_coc_reconf_event( rp0->Connection_Handle,
-                                     rp0->MTU,
-                                     rp0->MPS,
-                                     rp0->Channel_Number,
-                                     rp0->Channel_Index_List );
-}
-
-/* ACI_L2CAP_COC_RECONF_CONFIRM_EVENT callback function */
-__WEAK tBleStatus aci_l2cap_coc_reconf_confirm_event( uint16_t Connection_Handle,
-                                                      uint16_t Result )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_L2CAP_COC_RECONF_CONFIRM_EVENT process function */
-static tBleStatus aci_l2cap_coc_reconf_confirm_event_process( const uint8_t* in )
-{
-  aci_l2cap_coc_reconf_confirm_event_rp0 *rp0 = (void*)in;
-  return aci_l2cap_coc_reconf_confirm_event( rp0->Connection_Handle,
-                                             rp0->Result );
-}
-
-/* ACI_L2CAP_COC_DISCONNECT_EVENT callback function */
-__WEAK tBleStatus aci_l2cap_coc_disconnect_event( uint8_t Channel_Index )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_L2CAP_COC_DISCONNECT_EVENT process function */
-static tBleStatus aci_l2cap_coc_disconnect_event_process( const uint8_t* in )
-{
-  aci_l2cap_coc_disconnect_event_rp0 *rp0 = (void*)in;
-  return aci_l2cap_coc_disconnect_event( rp0->Channel_Index );
-}
-
-/* ACI_L2CAP_COC_FLOW_CONTROL_EVENT callback function */
-__WEAK tBleStatus aci_l2cap_coc_flow_control_event( uint8_t Channel_Index,
-                                                    uint16_t Credits )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_L2CAP_COC_FLOW_CONTROL_EVENT process function */
-static tBleStatus aci_l2cap_coc_flow_control_event_process( const uint8_t* in )
-{
-  aci_l2cap_coc_flow_control_event_rp0 *rp0 = (void*)in;
-  return aci_l2cap_coc_flow_control_event( rp0->Channel_Index,
-                                           rp0->Credits );
-}
-
-/* ACI_L2CAP_COC_RX_DATA_EVENT callback function */
-__WEAK tBleStatus aci_l2cap_coc_rx_data_event( uint8_t Channel_Index,
-                                               uint16_t Length,
-                                               const uint8_t* Data )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_L2CAP_COC_RX_DATA_EVENT process function */
-static tBleStatus aci_l2cap_coc_rx_data_event_process( const uint8_t* in )
-{
-  aci_l2cap_coc_rx_data_event_rp0 *rp0 = (void*)in;
-  return aci_l2cap_coc_rx_data_event( rp0->Channel_Index,
-                                      rp0->Length,
-                                      rp0->Data );
-}
-
-/* ACI_L2CAP_COC_TX_POOL_AVAILABLE_EVENT callback function */
-__WEAK tBleStatus aci_l2cap_coc_tx_pool_available_event( void )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_L2CAP_COC_TX_POOL_AVAILABLE_EVENT process function */
-static tBleStatus aci_l2cap_coc_tx_pool_available_event_process( const uint8_t* in )
-{
-  return aci_l2cap_coc_tx_pool_available_event( );
-}
-
-/* ACI_GATT_ATTRIBUTE_MODIFIED_EVENT callback function */
-__WEAK tBleStatus aci_gatt_attribute_modified_event( uint16_t Connection_Handle,
-                                                     uint16_t Attr_Handle,
-                                                     uint16_t Offset,
-                                                     uint16_t Attr_Data_Length,
-                                                     const uint8_t* Attr_Data )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_GATT_ATTRIBUTE_MODIFIED_EVENT process function */
-static tBleStatus aci_gatt_attribute_modified_event_process( const uint8_t* in )
-{
-  aci_gatt_attribute_modified_event_rp0 *rp0 = (void*)in;
-  return aci_gatt_attribute_modified_event( rp0->Connection_Handle,
-                                            rp0->Attr_Handle,
-                                            rp0->Offset,
-                                            rp0->Attr_Data_Length,
-                                            rp0->Attr_Data );
-}
-
-/* ACI_GATT_PROC_TIMEOUT_EVENT callback function */
-__WEAK tBleStatus aci_gatt_proc_timeout_event( uint16_t Connection_Handle )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_GATT_PROC_TIMEOUT_EVENT process function */
-static tBleStatus aci_gatt_proc_timeout_event_process( const uint8_t* in )
-{
-  aci_gatt_proc_timeout_event_rp0 *rp0 = (void*)in;
-  return aci_gatt_proc_timeout_event( rp0->Connection_Handle );
-}
-
-/* ACI_ATT_EXCHANGE_MTU_RESP_EVENT callback function */
-__WEAK tBleStatus aci_att_exchange_mtu_resp_event( uint16_t Connection_Handle,
-                                                   uint16_t Server_RX_MTU )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_ATT_EXCHANGE_MTU_RESP_EVENT process function */
-static tBleStatus aci_att_exchange_mtu_resp_event_process( const uint8_t* in )
-{
-  aci_att_exchange_mtu_resp_event_rp0 *rp0 = (void*)in;
-  return aci_att_exchange_mtu_resp_event( rp0->Connection_Handle,
-                                          rp0->Server_RX_MTU );
-}
-
-/* ACI_ATT_FIND_INFO_RESP_EVENT callback function */
-__WEAK tBleStatus aci_att_find_info_resp_event( uint16_t Connection_Handle,
-                                                uint8_t Format,
-                                                uint8_t Event_Data_Length,
-                                                const uint8_t* Handle_UUID_Pair )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_ATT_FIND_INFO_RESP_EVENT process function */
-static tBleStatus aci_att_find_info_resp_event_process( const uint8_t* in )
-{
-  aci_att_find_info_resp_event_rp0 *rp0 = (void*)in;
-  return aci_att_find_info_resp_event( rp0->Connection_Handle,
-                                       rp0->Format,
-                                       rp0->Event_Data_Length,
-                                       rp0->Handle_UUID_Pair );
-}
-
-/* ACI_ATT_FIND_BY_TYPE_VALUE_RESP_EVENT callback function */
-__WEAK tBleStatus aci_att_find_by_type_value_resp_event( uint16_t Connection_Handle,
-                                                         uint8_t Num_of_Handle_Pair,
-                                                         const Attribute_Group_Handle_Pair_t* Attribute_Group_Handle_Pair )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_ATT_FIND_BY_TYPE_VALUE_RESP_EVENT process function */
-static tBleStatus aci_att_find_by_type_value_resp_event_process( const uint8_t* in )
-{
-  aci_att_find_by_type_value_resp_event_rp0 *rp0 = (void*)in;
-  return aci_att_find_by_type_value_resp_event( rp0->Connection_Handle,
-                                                rp0->Num_of_Handle_Pair,
-                                                rp0->Attribute_Group_Handle_Pair );
-}
-
-/* ACI_ATT_READ_BY_TYPE_RESP_EVENT callback function */
-__WEAK tBleStatus aci_att_read_by_type_resp_event( uint16_t Connection_Handle,
-                                                   uint8_t Handle_Value_Pair_Length,
-                                                   uint8_t Data_Length,
-                                                   const uint8_t* Handle_Value_Pair_Data )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_ATT_READ_BY_TYPE_RESP_EVENT process function */
-static tBleStatus aci_att_read_by_type_resp_event_process( const uint8_t* in )
-{
-  aci_att_read_by_type_resp_event_rp0 *rp0 = (void*)in;
-  return aci_att_read_by_type_resp_event( rp0->Connection_Handle,
-                                          rp0->Handle_Value_Pair_Length,
-                                          rp0->Data_Length,
-                                          rp0->Handle_Value_Pair_Data );
-}
-
-/* ACI_ATT_READ_RESP_EVENT callback function */
-__WEAK tBleStatus aci_att_read_resp_event( uint16_t Connection_Handle,
-                                           uint8_t Event_Data_Length,
-                                           const uint8_t* Attribute_Value )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_ATT_READ_RESP_EVENT process function */
-static tBleStatus aci_att_read_resp_event_process( const uint8_t* in )
-{
-  aci_att_read_resp_event_rp0 *rp0 = (void*)in;
-  return aci_att_read_resp_event( rp0->Connection_Handle,
-                                  rp0->Event_Data_Length,
-                                  rp0->Attribute_Value );
-}
-
-/* ACI_ATT_READ_BLOB_RESP_EVENT callback function */
-__WEAK tBleStatus aci_att_read_blob_resp_event( uint16_t Connection_Handle,
-                                                uint8_t Event_Data_Length,
-                                                const uint8_t* Attribute_Value )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_ATT_READ_BLOB_RESP_EVENT process function */
-static tBleStatus aci_att_read_blob_resp_event_process( const uint8_t* in )
-{
-  aci_att_read_blob_resp_event_rp0 *rp0 = (void*)in;
-  return aci_att_read_blob_resp_event( rp0->Connection_Handle,
-                                       rp0->Event_Data_Length,
-                                       rp0->Attribute_Value );
-}
-
-/* ACI_ATT_READ_MULTIPLE_RESP_EVENT callback function */
-__WEAK tBleStatus aci_att_read_multiple_resp_event( uint16_t Connection_Handle,
-                                                    uint8_t Event_Data_Length,
-                                                    const uint8_t* Set_Of_Values )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_ATT_READ_MULTIPLE_RESP_EVENT process function */
-static tBleStatus aci_att_read_multiple_resp_event_process( const uint8_t* in )
-{
-  aci_att_read_multiple_resp_event_rp0 *rp0 = (void*)in;
-  return aci_att_read_multiple_resp_event( rp0->Connection_Handle,
-                                           rp0->Event_Data_Length,
-                                           rp0->Set_Of_Values );
-}
-
-/* ACI_ATT_READ_BY_GROUP_TYPE_RESP_EVENT callback function */
-__WEAK tBleStatus aci_att_read_by_group_type_resp_event( uint16_t Connection_Handle,
-                                                         uint8_t Attribute_Data_Length,
-                                                         uint8_t Data_Length,
-                                                         const uint8_t* Attribute_Data_List )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_ATT_READ_BY_GROUP_TYPE_RESP_EVENT process function */
-static tBleStatus aci_att_read_by_group_type_resp_event_process( const uint8_t* in )
-{
-  aci_att_read_by_group_type_resp_event_rp0 *rp0 = (void*)in;
-  return aci_att_read_by_group_type_resp_event( rp0->Connection_Handle,
-                                                rp0->Attribute_Data_Length,
-                                                rp0->Data_Length,
-                                                rp0->Attribute_Data_List );
-}
-
-/* ACI_ATT_PREPARE_WRITE_RESP_EVENT callback function */
-__WEAK tBleStatus aci_att_prepare_write_resp_event( uint16_t Connection_Handle,
-                                                    uint16_t Attribute_Handle,
-                                                    uint16_t Offset,
-                                                    uint8_t Part_Attribute_Value_Length,
-                                                    const uint8_t* Part_Attribute_Value )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_ATT_PREPARE_WRITE_RESP_EVENT process function */
-static tBleStatus aci_att_prepare_write_resp_event_process( const uint8_t* in )
-{
-  aci_att_prepare_write_resp_event_rp0 *rp0 = (void*)in;
-  return aci_att_prepare_write_resp_event( rp0->Connection_Handle,
-                                           rp0->Attribute_Handle,
-                                           rp0->Offset,
-                                           rp0->Part_Attribute_Value_Length,
-                                           rp0->Part_Attribute_Value );
-}
-
-/* ACI_ATT_EXEC_WRITE_RESP_EVENT callback function */
-__WEAK tBleStatus aci_att_exec_write_resp_event( uint16_t Connection_Handle )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_ATT_EXEC_WRITE_RESP_EVENT process function */
-static tBleStatus aci_att_exec_write_resp_event_process( const uint8_t* in )
-{
-  aci_att_exec_write_resp_event_rp0 *rp0 = (void*)in;
-  return aci_att_exec_write_resp_event( rp0->Connection_Handle );
-}
-
-/* ACI_GATT_INDICATION_EVENT callback function */
-__WEAK tBleStatus aci_gatt_indication_event( uint16_t Connection_Handle,
-                                             uint16_t Attribute_Handle,
-                                             uint8_t Attribute_Value_Length,
-                                             const uint8_t* Attribute_Value )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_GATT_INDICATION_EVENT process function */
-static tBleStatus aci_gatt_indication_event_process( const uint8_t* in )
-{
-  aci_gatt_indication_event_rp0 *rp0 = (void*)in;
-  return aci_gatt_indication_event( rp0->Connection_Handle,
-                                    rp0->Attribute_Handle,
-                                    rp0->Attribute_Value_Length,
-                                    rp0->Attribute_Value );
-}
-
-/* ACI_GATT_NOTIFICATION_EVENT callback function */
-__WEAK tBleStatus aci_gatt_notification_event( uint16_t Connection_Handle,
-                                               uint16_t Attribute_Handle,
-                                               uint8_t Attribute_Value_Length,
-                                               const uint8_t* Attribute_Value )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_GATT_NOTIFICATION_EVENT process function */
-static tBleStatus aci_gatt_notification_event_process( const uint8_t* in )
-{
-  aci_gatt_notification_event_rp0 *rp0 = (void*)in;
-  return aci_gatt_notification_event( rp0->Connection_Handle,
-                                      rp0->Attribute_Handle,
-                                      rp0->Attribute_Value_Length,
-                                      rp0->Attribute_Value );
-}
-
-/* ACI_GATT_PROC_COMPLETE_EVENT callback function */
-__WEAK tBleStatus aci_gatt_proc_complete_event( uint16_t Connection_Handle,
-                                                uint8_t Error_Code )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_GATT_PROC_COMPLETE_EVENT process function */
-static tBleStatus aci_gatt_proc_complete_event_process( const uint8_t* in )
-{
-  aci_gatt_proc_complete_event_rp0 *rp0 = (void*)in;
-  return aci_gatt_proc_complete_event( rp0->Connection_Handle,
-                                       rp0->Error_Code );
-}
-
-/* ACI_GATT_ERROR_RESP_EVENT callback function */
-__WEAK tBleStatus aci_gatt_error_resp_event( uint16_t Connection_Handle,
-                                             uint8_t Req_Opcode,
-                                             uint16_t Attribute_Handle,
-                                             uint8_t Error_Code )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_GATT_ERROR_RESP_EVENT process function */
-static tBleStatus aci_gatt_error_resp_event_process( const uint8_t* in )
-{
-  aci_gatt_error_resp_event_rp0 *rp0 = (void*)in;
-  return aci_gatt_error_resp_event( rp0->Connection_Handle,
-                                    rp0->Req_Opcode,
-                                    rp0->Attribute_Handle,
-                                    rp0->Error_Code );
-}
-
-/* ACI_GATT_DISC_READ_CHAR_BY_UUID_RESP_EVENT callback function */
-__WEAK tBleStatus aci_gatt_disc_read_char_by_uuid_resp_event( uint16_t Connection_Handle,
-                                                              uint16_t Attribute_Handle,
-                                                              uint8_t Attribute_Value_Length,
-                                                              const uint8_t* Attribute_Value )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_GATT_DISC_READ_CHAR_BY_UUID_RESP_EVENT process function */
-static tBleStatus aci_gatt_disc_read_char_by_uuid_resp_event_process( const uint8_t* in )
-{
-  aci_gatt_disc_read_char_by_uuid_resp_event_rp0 *rp0 = (void*)in;
-  return aci_gatt_disc_read_char_by_uuid_resp_event( rp0->Connection_Handle,
-                                                     rp0->Attribute_Handle,
-                                                     rp0->Attribute_Value_Length,
-                                                     rp0->Attribute_Value );
-}
-
-/* ACI_GATT_WRITE_PERMIT_REQ_EVENT callback function */
-__WEAK tBleStatus aci_gatt_write_permit_req_event( uint16_t Connection_Handle,
-                                                   uint16_t Attribute_Handle,
-                                                   uint8_t Data_Length,
-                                                   const uint8_t* Data )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_GATT_WRITE_PERMIT_REQ_EVENT process function */
-static tBleStatus aci_gatt_write_permit_req_event_process( const uint8_t* in )
-{
-  aci_gatt_write_permit_req_event_rp0 *rp0 = (void*)in;
-  return aci_gatt_write_permit_req_event( rp0->Connection_Handle,
-                                          rp0->Attribute_Handle,
-                                          rp0->Data_Length,
-                                          rp0->Data );
-}
-
-/* ACI_GATT_READ_PERMIT_REQ_EVENT callback function */
-__WEAK tBleStatus aci_gatt_read_permit_req_event( uint16_t Connection_Handle,
-                                                  uint16_t Attribute_Handle,
-                                                  uint16_t Offset )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_GATT_READ_PERMIT_REQ_EVENT process function */
-static tBleStatus aci_gatt_read_permit_req_event_process( const uint8_t* in )
-{
-  aci_gatt_read_permit_req_event_rp0 *rp0 = (void*)in;
-  return aci_gatt_read_permit_req_event( rp0->Connection_Handle,
-                                         rp0->Attribute_Handle,
-                                         rp0->Offset );
-}
-
-/* ACI_GATT_READ_MULTI_PERMIT_REQ_EVENT callback function */
-__WEAK tBleStatus aci_gatt_read_multi_permit_req_event( uint16_t Connection_Handle,
-                                                        uint8_t Number_of_Handles,
-                                                        const Handle_Item_t* Handle_Item )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_GATT_READ_MULTI_PERMIT_REQ_EVENT process function */
-static tBleStatus aci_gatt_read_multi_permit_req_event_process( const uint8_t* in )
-{
-  aci_gatt_read_multi_permit_req_event_rp0 *rp0 = (void*)in;
-  return aci_gatt_read_multi_permit_req_event( rp0->Connection_Handle,
-                                               rp0->Number_of_Handles,
-                                               rp0->Handle_Item );
-}
-
-/* ACI_GATT_TX_POOL_AVAILABLE_EVENT callback function */
-__WEAK tBleStatus aci_gatt_tx_pool_available_event( uint16_t Connection_Handle,
-                                                    uint16_t Available_Buffers )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_GATT_TX_POOL_AVAILABLE_EVENT process function */
-static tBleStatus aci_gatt_tx_pool_available_event_process( const uint8_t* in )
-{
-  aci_gatt_tx_pool_available_event_rp0 *rp0 = (void*)in;
-  return aci_gatt_tx_pool_available_event( rp0->Connection_Handle,
-                                           rp0->Available_Buffers );
-}
-
-/* ACI_GATT_SERVER_CONFIRMATION_EVENT callback function */
-__WEAK tBleStatus aci_gatt_server_confirmation_event( uint16_t Connection_Handle )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_GATT_SERVER_CONFIRMATION_EVENT process function */
-static tBleStatus aci_gatt_server_confirmation_event_process( const uint8_t* in )
-{
-  aci_gatt_server_confirmation_event_rp0 *rp0 = (void*)in;
-  return aci_gatt_server_confirmation_event( rp0->Connection_Handle );
-}
-
-/* ACI_GATT_PREPARE_WRITE_PERMIT_REQ_EVENT callback function */
-__WEAK tBleStatus aci_gatt_prepare_write_permit_req_event( uint16_t Connection_Handle,
-                                                           uint16_t Attribute_Handle,
-                                                           uint16_t Offset,
-                                                           uint8_t Data_Length,
-                                                           const uint8_t* Data )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_GATT_PREPARE_WRITE_PERMIT_REQ_EVENT process function */
-static tBleStatus aci_gatt_prepare_write_permit_req_event_process( const uint8_t* in )
-{
-  aci_gatt_prepare_write_permit_req_event_rp0 *rp0 = (void*)in;
-  return aci_gatt_prepare_write_permit_req_event( rp0->Connection_Handle,
-                                                  rp0->Attribute_Handle,
-                                                  rp0->Offset,
-                                                  rp0->Data_Length,
-                                                  rp0->Data );
-}
-
-/* ACI_GATT_EATT_BEARER_EVENT callback function */
-__WEAK tBleStatus aci_gatt_eatt_bearer_event( uint16_t Connection_Handle,
-                                              uint8_t Channel_Index,
-                                              uint8_t EAB_State,
-                                              uint16_t MTU )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_GATT_EATT_BEARER_EVENT process function */
-static tBleStatus aci_gatt_eatt_bearer_event_process( const uint8_t* in )
-{
-  aci_gatt_eatt_bearer_event_rp0 *rp0 = (void*)in;
-  return aci_gatt_eatt_bearer_event( rp0->Connection_Handle,
-                                     rp0->Channel_Index,
-                                     rp0->EAB_State,
-                                     rp0->MTU );
-}
-
-/* ACI_GATT_MULT_NOTIFICATION_EVENT callback function */
-__WEAK tBleStatus aci_gatt_mult_notification_event( uint16_t Connection_Handle,
-                                                    uint16_t Offset,
-                                                    uint16_t Data_Length,
-                                                    const uint8_t* Data )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_GATT_MULT_NOTIFICATION_EVENT process function */
-static tBleStatus aci_gatt_mult_notification_event_process( const uint8_t* in )
-{
-  aci_gatt_mult_notification_event_rp0 *rp0 = (void*)in;
-  return aci_gatt_mult_notification_event( rp0->Connection_Handle,
-                                           rp0->Offset,
-                                           rp0->Data_Length,
-                                           rp0->Data );
-}
-
-/* ACI_GATT_NOTIFICATION_COMPLETE_EVENT callback function */
-__WEAK tBleStatus aci_gatt_notification_complete_event( uint16_t Attr_Handle )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_GATT_NOTIFICATION_COMPLETE_EVENT process function */
-static tBleStatus aci_gatt_notification_complete_event_process( const uint8_t* in )
-{
-  aci_gatt_notification_complete_event_rp0 *rp0 = (void*)in;
-  return aci_gatt_notification_complete_event( rp0->Attr_Handle );
-}
-
-/* ACI_GATT_READ_EXT_EVENT callback function */
-__WEAK tBleStatus aci_gatt_read_ext_event( uint16_t Connection_Handle,
-                                           uint16_t Offset,
-                                           uint16_t Event_Data_Length,
-                                           const uint8_t* Attribute_Value )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_GATT_READ_EXT_EVENT process function */
-static tBleStatus aci_gatt_read_ext_event_process( const uint8_t* in )
-{
-  aci_gatt_read_ext_event_rp0 *rp0 = (void*)in;
-  return aci_gatt_read_ext_event( rp0->Connection_Handle,
-                                  rp0->Offset,
-                                  rp0->Event_Data_Length,
-                                  rp0->Attribute_Value );
-}
-
-/* ACI_GATT_INDICATION_EXT_EVENT callback function */
-__WEAK tBleStatus aci_gatt_indication_ext_event( uint16_t Connection_Handle,
-                                                 uint16_t Attribute_Handle,
-                                                 uint16_t Offset,
-                                                 uint16_t Attribute_Value_Length,
-                                                 const uint8_t* Attribute_Value )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_GATT_INDICATION_EXT_EVENT process function */
-static tBleStatus aci_gatt_indication_ext_event_process( const uint8_t* in )
-{
-  aci_gatt_indication_ext_event_rp0 *rp0 = (void*)in;
-  return aci_gatt_indication_ext_event( rp0->Connection_Handle,
-                                        rp0->Attribute_Handle,
-                                        rp0->Offset,
-                                        rp0->Attribute_Value_Length,
-                                        rp0->Attribute_Value );
-}
-
-/* ACI_GATT_NOTIFICATION_EXT_EVENT callback function */
-__WEAK tBleStatus aci_gatt_notification_ext_event( uint16_t Connection_Handle,
-                                                   uint16_t Attribute_Handle,
-                                                   uint16_t Offset,
-                                                   uint16_t Attribute_Value_Length,
-                                                   const uint8_t* Attribute_Value )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_GATT_NOTIFICATION_EXT_EVENT process function */
-static tBleStatus aci_gatt_notification_ext_event_process( const uint8_t* in )
-{
-  aci_gatt_notification_ext_event_rp0 *rp0 = (void*)in;
-  return aci_gatt_notification_ext_event( rp0->Connection_Handle,
-                                          rp0->Attribute_Handle,
-                                          rp0->Offset,
-                                          rp0->Attribute_Value_Length,
-                                          rp0->Attribute_Value );
-}
-
-/* ACI_HAL_END_OF_RADIO_ACTIVITY_EVENT callback function */
-__WEAK tBleStatus aci_hal_end_of_radio_activity_event( uint8_t Last_State,
-                                                       uint8_t Next_State,
-                                                       uint32_t Next_State_SysTime,
-                                                       uint8_t Last_State_Slot,
-                                                       uint8_t Next_State_Slot )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_HAL_END_OF_RADIO_ACTIVITY_EVENT process function */
-static tBleStatus aci_hal_end_of_radio_activity_event_process( const uint8_t* in )
-{
-  aci_hal_end_of_radio_activity_event_rp0 *rp0 = (void*)in;
-  return aci_hal_end_of_radio_activity_event( rp0->Last_State,
-                                              rp0->Next_State,
-                                              rp0->Next_State_SysTime,
-                                              rp0->Last_State_Slot,
-                                              rp0->Next_State_Slot );
-}
-
-/* ACI_HAL_SYNC_EVENT callback function */
-__WEAK tBleStatus aci_hal_sync_event( uint8_t Group_Id,
-                                      uint32_t Next_Anchor_Point,
-                                      uint32_t Time_Stamp,
-                                      uint32_t Next_Sdu_Delivery_Timeout )
-{
-  return HCI_SUCCESS_ERR_CODE;
-}
-
-/* ACI_HAL_SYNC_EVENT process function */
-static tBleStatus aci_hal_sync_event_process( const uint8_t* in )
-{
-  aci_hal_sync_event_rp0 *rp0 = (void*)in;
-  return aci_hal_sync_event( rp0->Group_Id,
-                             rp0->Next_Anchor_Point,
-                             rp0->Time_Stamp,
-                             rp0->Next_Sdu_Delivery_Timeout );
-}
-
-/* ACI/HCI events processing */
-uint8_t BLE_EventProcess( const uint8_t* buffer )
-{
-  uint16_t code;
-
-  /* Check packet type */
-  if ( buffer[0] == HCI_EVENT_PKT_TYPE )
-  {
-    /* Get event code */
-    code = buffer[1];
-
-    switch ( code )
-    {
-    case HCI_LE_META_EVT_CODE:
-      code = buffer[3];
-      for ( int i = 0; i < HCI_LE_EVENT_TABLE_SIZE; i++ )
-        if ( code == hci_le_event_table[i].evt_code )
-        {
-          return hci_le_event_table[i].process( buffer + 4 );
-        }
-      break;
-
-    case HCI_VENDOR_SPECIFIC_EVT_CODE:
-      code = (((uint16_t)(buffer[4])) <<  8) | buffer[3];
-      for ( int i = 0; i < HCI_VS_EVENT_TABLE_SIZE; i++ )
-        if ( code == hci_vs_event_table[i].evt_code )
-        {
-          return hci_vs_event_table[i].process( buffer + 5 );
-        }
-      break;
-
-    default:
-      for ( int i = 0; i < HCI_EVENT_TABLE_SIZE; i++ )
-        if ( code == hci_event_table[i].evt_code )
-        {
-          return hci_event_table[i].process( buffer + 3 );
-        }
-      break;
-    }
-  }
-
-  return HCI_UNSPECIFIED_ERROR_ERR_CODE;
-}
-
-/* ----------------------------------------------------------------------------
  * FEATURE LINK TIME OPTIMIZATION
  * ----------------------------------------------------------------------------
  */
@@ -10417,17 +7554,31 @@ uint8_t BLE_EventProcess( const uint8_t* buffer )
 #endif /* defined STM32WBA65xx */
 
 #if (BLE_FEATURE_BONDING_UNUSED)
-#define ACI_GAP_CONFIGURE_FILTER_ACCEPT_LIST_UNUSED 1
 #define ACI_GAP_CLEAR_SECURITY_DB_UNUSED 1
 #define ACI_GAP_GET_BONDED_DEVICES_UNUSED 1
 #define ACI_GAP_CHECK_BONDED_DEVICE_UNUSED 1
 #define ACI_GAP_REMOVE_BONDED_DEVICE_UNUSED 1
 #define ACI_GATT_STORE_DB_UNUSED 1
+void GATT_Check_For_Service_Change( void );
+void GATT_Check_For_Service_Change( void ) { }
+void GATT_Store_Server_Database( void );
+void GATT_Store_Server_Database( void ) { }
+void SDB_Init( void );
+void SDB_Init( void ) { }
+int SDB_Get_Sec_Record( void );
+int SDB_Get_Sec_Record( void ) { return 0xFFU; }
+int SDB_Read_Sec_Record( void );
+int SDB_Read_Sec_Record( void ) { return 0xFFU; }
+int SDB_Get_Number_Of_Sec_Records( void );
+int SDB_Get_Number_Of_Sec_Records( void ) { return 0xFFU; }
+void SMP_Save_Sec_Data( void );
+void SMP_Save_Sec_Data( void ) { }
+int SMP_Retrieve_Sec_Data( void );
+int SMP_Retrieve_Sec_Data( void ) { return 0xFFU; }
 #endif /* BLE_FEATURE_BONDING_UNUSED */
 
 #if (BLE_FEATURE_COC_EATT_UNUSED)
 #define ACI_GATT_SEND_MULT_NOTIFICATION_UNUSED 1
-#define ACI_GATT_READ_MULTIPLE_VAR_CHAR_VALUE_UNUSED 1
 #define ACI_L2CAP_COC_CONNECT_UNUSED 1
 #define ACI_L2CAP_COC_CONNECT_CONFIRM_UNUSED 1
 #define ACI_L2CAP_COC_RECONF_UNUSED 1
@@ -10435,6 +7586,30 @@ uint8_t BLE_EventProcess( const uint8_t* buffer )
 #define ACI_L2CAP_COC_DISCONNECT_UNUSED 1
 #define ACI_L2CAP_COC_FLOW_CONTROL_UNUSED 1
 #define ACI_L2CAP_COC_TX_DATA_UNUSED 1
+#define ACI_L2CAP_COC_CONNECT_EVENT_UNUSED 1
+#define ACI_L2CAP_COC_CONNECT_CONFIRM_EVENT_UNUSED 1
+#define ACI_L2CAP_COC_RECONF_EVENT_UNUSED 1
+#define ACI_L2CAP_COC_RECONF_CONFIRM_EVENT_UNUSED 1
+#define ACI_L2CAP_COC_DISCONNECT_EVENT_UNUSED 1
+#define ACI_L2CAP_COC_FLOW_CONTROL_EVENT_UNUSED 1
+#define ACI_L2CAP_COC_RX_DATA_EVENT_UNUSED 1
+#define ACI_L2CAP_COC_TX_POOL_AVAILABLE_EVENT_UNUSED 1
+#define ACI_GATT_EATT_BEARER_EVENT_UNUSED 1
+#define ACI_GATT_MULT_NOTIFICATION_EVENT_UNUSED 1
+void GATT_Eab_Reset( void );
+void GATT_Eab_Reset( void ) { }
+int GATT_Eab_Find( void );
+int GATT_Eab_Find( void ) { return 0; }
+int GATT_Eab_Send_Data( void );
+int GATT_Eab_Send_Data( void ) { return 0xFFU; }
+void L2C_COC_MemAlloc( void );
+void L2C_COC_MemAlloc( void ) { }
+int L2C_COC_Msg_Rx_Handler( void );
+int L2C_COC_Msg_Rx_Handler( void ) { return 0xFFU; }
+int L2C_COC_Data_Handler( void );
+int L2C_COC_Data_Handler( void ) { return 0xFFU; }
+void L2C_COC_Connection_Reset( void );
+void L2C_COC_Connection_Reset( void ) { }
 #endif /* BLE_FEATURE_COC_EATT_UNUSED */
 
 #if (BLE_FEATURE_GATT_CLIENT_UNUSED)
@@ -10459,15 +7634,39 @@ uint8_t BLE_EventProcess( const uint8_t* buffer )
 #define ACI_GATT_WRITE_LONG_CHAR_VALUE_UNUSED 1
 #define ACI_GATT_WRITE_CHAR_RELIABLE_UNUSED 1
 #define ACI_GATT_WRITE_WITHOUT_RESP_UNUSED 1
-#define ACI_GATT_SIGNED_WRITE_WITHOUT_RESP_UNUSED 1
 #define ACI_GATT_CONFIRM_INDICATION_UNUSED 1
 #define ACI_GATT_READ_MULTIPLE_VAR_CHAR_VALUE_UNUSED 1
 #define ACI_GATT_WRITE_WITHOUT_RESP_EXT_UNUSED 1
 #define ACI_GATT_WRITE_WITH_RESP_EXT_UNUSED 1
+#define ACI_ATT_FIND_INFO_RESP_EVENT_UNUSED 1
+#define ACI_ATT_FIND_BY_TYPE_VALUE_RESP_EVENT_UNUSED 1
+#define ACI_ATT_READ_BY_TYPE_RESP_EVENT_UNUSED 1
+#define ACI_ATT_READ_RESP_EVENT_UNUSED 1
+#define ACI_ATT_READ_BLOB_RESP_EVENT_UNUSED 1
+#define ACI_ATT_READ_MULTIPLE_RESP_EVENT_UNUSED 1
+#define ACI_ATT_READ_BY_GROUP_TYPE_RESP_EVENT_UNUSED 1
+#define ACI_ATT_PREPARE_WRITE_RESP_EVENT_UNUSED 1
+#define ACI_ATT_EXEC_WRITE_RESP_EVENT_UNUSED 1
+#define ACI_GATT_INDICATION_EVENT_UNUSED 1
+#define ACI_GATT_NOTIFICATION_EVENT_UNUSED 1
+#define ACI_GATT_PROC_COMPLETE_EVENT_UNUSED 1
+#define ACI_GATT_ERROR_RESP_EVENT_UNUSED 1
+#define ACI_GATT_DISC_READ_CHAR_BY_UUID_RESP_EVENT_UNUSED 1
+#define ACI_GATT_MULT_NOTIFICATION_EVENT_UNUSED 1
+#define ACI_GATT_READ_EXT_EVENT_UNUSED 1
+#define ACI_GATT_INDICATION_EXT_EVENT_UNUSED 1
+#define ACI_GATT_NOTIFICATION_EXT_EVENT_UNUSED 1
+int GATT_Client_Support( void );
+int GATT_Client_Support( void ) { return (0); }
+int GATT_Client_Handle_Notif( void );
+int GATT_Client_Handle_Notif( void ) { return 0xFFU; }
+void GATT_Client_Process( void );
+void GATT_Client_Process( void ) { }
+void GATT_Client_Reset( void );
+void GATT_Client_Reset( void ) { }
 #endif /* BLE_FEATURE_GATT_CLIENT_UNUSED */
 
 #if (BLE_FEATURE_CENTRAL_UNUSED)
-#define HCI_LE_CONNECTION_UPDATE_UNUSED 1
 #define HCI_LE_SET_HOST_CHANNEL_CLASSIFICATION_UNUSED 1
 #define HCI_LE_PERIODIC_ADVERTISING_CREATE_SYNC_UNUSED 1
 #define HCI_LE_PERIODIC_ADVERTISING_CREATE_SYNC_CANCEL_UNUSED 1
@@ -10482,19 +7681,34 @@ uint8_t BLE_EventProcess( const uint8_t* buffer )
 #define HCI_LE_SET_CIG_PARAMETERS_TEST_UNUSED 1
 #define HCI_LE_CREATE_CIS_UNUSED 1
 #define HCI_LE_REMOVE_CIG_UNUSED 1
-#define ACI_GAP_START_LIMITED_DISCOVERY_PROC_UNUSED 1
-#define ACI_GAP_START_GENERAL_DISCOVERY_PROC_UNUSED 1
 #define ACI_GAP_START_AUTO_CONNECTION_ESTABLISH_PROC_UNUSED 1
-#define ACI_GAP_START_GENERAL_CONNECTION_ESTABLISH_PROC_UNUSED 1
-#define ACI_GAP_START_SELECTIVE_CONNECTION_ESTABLISH_PROC_UNUSED 1
 #define ACI_GAP_CREATE_CONNECTION_UNUSED 1
 #define ACI_GAP_TERMINATE_GAP_PROC_UNUSED 1
-#define ACI_GAP_START_CONNECTION_UPDATE_UNUSED 1
 #define ACI_GAP_SEND_PAIRING_REQ_UNUSED 1
-#define ACI_GAP_START_OBSERVATION_PROC_UNUSED 1
-#define ACI_GAP_EXT_START_SCAN_UNUSED 1
+#define ACI_GAP_START_SCAN_UNUSED 1
 #define ACI_GAP_EXT_CREATE_CONNECTION_UNUSED 1
 #define ACI_L2CAP_CONNECTION_PARAMETER_UPDATE_RESP_UNUSED 1
+#define HCI_LE_ADVERTISING_REPORT_EVENT_UNUSED 1
+#define HCI_LE_DIRECTED_ADVERTISING_REPORT_EVENT_UNUSED 1
+#define HCI_LE_PERIODIC_ADVERTISING_SYNC_ESTABLISHED_EVENT_UNUSED 1
+#define HCI_LE_PERIODIC_ADVERTISING_REPORT_EVENT_UNUSED 1
+#define HCI_LE_PERIODIC_ADVERTISING_SYNC_LOST_EVENT_UNUSED 1
+#define HCI_LE_SCAN_TIMEOUT_EVENT_UNUSED 1
+#define ACI_L2CAP_CONNECTION_UPDATE_REQ_EVENT_UNUSED 1
+void GAP_Scan_Disc_Proc_Timeout_Cb( void );
+void GAP_Scan_Disc_Proc_Timeout_Cb( void ) { }
+void GAP_Proc_Connection_Complete_Handler( void );
+void GAP_Proc_Connection_Complete_Handler( void ) { }
+int L2C_CPU_Req_Rx_Handler( void );
+int L2C_CPU_Req_Rx_Handler( void ) { return 0xFFU; }
+int SMP_MI_Rx_Handler( void );
+int SMP_MI_Rx_Handler( void ) { return 0xFFU; }
+void SMP_MI_Start_Pairing_Phase_2AS1( void );
+void SMP_MI_Start_Pairing_Phase_2AS1( void ) { }
+int SMP_MI_Start_Encryption( void );
+int SMP_MI_Start_Encryption( void ) { return 0xFFU; }
+int SMP_MI_Enable_Encryption( void );
+int SMP_MI_Enable_Encryption( void ) { return 0xFFU; }
 #endif /* BLE_FEATURE_CENTRAL_UNUSED */
 
 #if (BLE_FEATURE_PRIVACY_UNUSED)
@@ -10508,6 +7722,17 @@ uint8_t BLE_EventProcess( const uint8_t* buffer )
 #define HCI_LE_SET_RESOLVABLE_PRIVATE_ADDRESS_TIMEOUT_UNUSED 1
 #define HCI_LE_SET_PRIVACY_MODE_UNUSED 1
 #define HCI_LE_SET_DATA_RELATED_ADDRESS_CHANGES_UNUSED 1
+#define HCI_LE_DIRECTED_ADVERTISING_REPORT_EVENT_UNUSED 1
+int GAP_Enable_Privacy( void );
+int GAP_Enable_Privacy( void ) { return 0xFFU; }
+int GAP_Clear_Resolving_List( void );
+int GAP_Clear_Resolving_List( void ) { return 0xFFU; }
+int GAP_Add_To_Resolving_List( void );
+int GAP_Add_To_Resolving_List( void ) { return 0xFFU; }
+void RndAddr_Generate_Non_Resolvable_Address( void );
+void RndAddr_Generate_Non_Resolvable_Address( void ) { }
+int RndAddr_Check_Resolvable_Address( void );
+int RndAddr_Check_Resolvable_Address( void ) { return 0xFFU; }
 #endif /* BLE_FEATURE_PRIVACY_UNUSED */
 
 #if (BLE_FEATURE_EXTENDED_ADV_UNUSED)
@@ -10532,8 +7757,17 @@ uint8_t BLE_EventProcess( const uint8_t* buffer )
 #define ACI_GAP_ADV_CLEAR_SETS_UNUSED 1
 #define ACI_GAP_ADV_SET_RANDOM_ADDRESS_UNUSED 1
 #define ACI_GAP_ADV_SET_CONFIGURATION_V2_UNUSED 1
-#define ACI_GAP_EXT_START_SCAN_UNUSED 1
 #define ACI_GAP_EXT_CREATE_CONNECTION_UNUSED 1
+#define HCI_LE_EXTENDED_ADVERTISING_REPORT_EVENT_UNUSED 1
+#define HCI_LE_SCAN_TIMEOUT_EVENT_UNUSED 1
+#define HCI_LE_ADVERTISING_SET_TERMINATED_EVENT_UNUSED 1
+#define HCI_LE_SCAN_REQUEST_RECEIVED_EVENT_UNUSED 1
+int GAP_Ext_Scan_Parameters( void );
+int GAP_Ext_Scan_Parameters( void ) { return 0xFFU; }
+int GAP_Ext_Scan_Enable( void );
+int GAP_Ext_Scan_Enable( void ) { return 0xFFU; }
+int GAP_Ext_Connect( void );
+int GAP_Ext_Connect( void ) { return 0xFFU; }
 #endif /* BLE_FEATURE_EXTENDED_ADV_UNUSED */
 
 #if (BLE_FEATURE_AOA_AOD_UNUSED)
@@ -10547,6 +7781,9 @@ uint8_t BLE_EventProcess( const uint8_t* buffer )
 #define HCI_LE_CONNECTION_CTE_REQUEST_ENABLE_UNUSED 1
 #define HCI_LE_CONNECTION_CTE_RESPONSE_ENABLE_UNUSED 1
 #define HCI_LE_READ_ANTENNA_INFORMATION_UNUSED 1
+#define HCI_LE_CONNECTIONLESS_IQ_REPORT_EVENT_UNUSED 1
+#define HCI_LE_CONNECTION_IQ_REPORT_EVENT_UNUSED 1
+#define HCI_LE_CTE_REQUEST_FAILED_EVENT_UNUSED 1
 #endif /* BLE_FEATURE_AOA_AOD_UNUSED */
 
 #if (BLE_FEATURE_CHAN_SOUND_UNUSED)
@@ -10564,6 +7801,14 @@ uint8_t BLE_EventProcess( const uint8_t* buffer )
 #define HCI_LE_CS_PROCEDURE_ENABLE_UNUSED 1
 #define HCI_LE_CS_TEST_UNUSED 1
 #define HCI_LE_CS_TEST_END_UNUSED 1
+#define HCI_LE_CS_READ_REMOTE_SUPPORTED_CAPABILITIES_COMPLETE_EVENT_UNUSED 1
+#define HCI_LE_CS_READ_REMOTE_FAE_TABLE_COMPLETE_EVENT_UNUSED 1
+#define HCI_LE_CS_SECURITY_ENABLE_COMPLETE_EVENT_UNUSED 1
+#define HCI_LE_CS_CONFIG_COMPLETE_EVENT_UNUSED 1
+#define HCI_LE_CS_PROCEDURE_ENABLE_COMPLETE_EVENT_UNUSED 1
+#define HCI_LE_CS_SUBEVENT_RESULT_EVENT_UNUSED 1
+#define HCI_LE_CS_SUBEVENT_RESULT_CONTINUE_EVENT_UNUSED 1
+#define HCI_LE_CS_TEST_END_COMPLETE_EVENT_UNUSED 1
 #endif /* BLE_FEATURE_CHAN_SOUND_UNUSED */
 
 #if (BLE_FEATURE_ISO_UNUSED)
@@ -10595,10 +7840,20 @@ uint8_t BLE_EventProcess( const uint8_t* buffer )
 #define HCI_LE_ISO_TEST_END_UNUSED 1
 #define HCI_LE_READ_ISO_LINK_QUALITY_UNUSED 1
 #define ACI_HAL_SET_SYNC_EVENT_CONFIG_UNUSED 1
+#define HCI_LE_CIS_ESTABLISHED_EVENT_UNUSED 1
+#define HCI_LE_CIS_REQUEST_EVENT_UNUSED 1
+#define HCI_LE_CREATE_BIG_COMPLETE_EVENT_UNUSED 1
+#define HCI_LE_TERMINATE_BIG_COMPLETE_EVENT_UNUSED 1
+#define HCI_LE_BIG_SYNC_ESTABLISHED_EVENT_UNUSED 1
+#define HCI_LE_BIG_SYNC_LOST_EVENT_UNUSED 1
+#define HCI_LE_BIGINFO_ADVERTISING_REPORT_EVENT_UNUSED 1
+#define HCI_LE_CIS_ESTABLISHED_V2_EVENT_UNUSED 1
+#define ACI_HAL_SYNC_EVENT_UNUSED 1
+int hci_tx_iso_data_process( void );
+int hci_tx_iso_data_process( void ) { return (0); }
 #endif /* BLE_FEATURE_ISO_UNUSED */
 
 #if (BLE_FEATURE_FULL_HCI_UNUSED)
-#define HCI_DISCONNECT_UNUSED 1
 #define HCI_SET_CONTROLLER_TO_HOST_FLOW_CONTROL_UNUSED 1
 #define HCI_HOST_BUFFER_SIZE_UNUSED 1
 #define HCI_HOST_NUMBER_OF_COMPLETED_PACKETS_UNUSED 1
@@ -10618,7 +7873,6 @@ uint8_t BLE_EventProcess( const uint8_t* buffer )
 #define HCI_LE_CLEAR_FILTER_ACCEPT_LIST_UNUSED 1
 #define HCI_LE_ADD_DEVICE_TO_FILTER_ACCEPT_LIST_UNUSED 1
 #define HCI_LE_REMOVE_DEVICE_FROM_FILTER_ACCEPT_LIST_UNUSED 1
-#define HCI_LE_CONNECTION_UPDATE_UNUSED 1
 #define HCI_LE_ENABLE_ENCRYPTION_UNUSED 1
 #define HCI_LE_READ_SUPPORTED_STATES_UNUSED 1
 #define HCI_LE_ADD_DEVICE_TO_RESOLVING_LIST_UNUSED 1
@@ -10626,16 +7880,8 @@ uint8_t BLE_EventProcess( const uint8_t* buffer )
 #define HCI_LE_CLEAR_RESOLVING_LIST_UNUSED 1
 #define HCI_LE_READ_RESOLVING_LIST_SIZE_UNUSED 1
 #define HCI_LE_SET_ADDRESS_RESOLUTION_ENABLE_UNUSED 1
-#define HCI_LE_SET_ADVERTISING_SET_RANDOM_ADDRESS_UNUSED 1
 #define HCI_LE_SET_EXTENDED_ADVERTISING_PARAMETERS_UNUSED 1
-#define HCI_LE_SET_EXTENDED_ADVERTISING_DATA_UNUSED 1
-#define HCI_LE_SET_EXTENDED_SCAN_RESPONSE_DATA_UNUSED 1
-#define HCI_LE_SET_EXTENDED_ADVERTISING_ENABLE_UNUSED 1
-#define HCI_LE_REMOVE_ADVERTISING_SET_UNUSED 1
-#define HCI_LE_CLEAR_ADVERTISING_SETS_UNUSED 1
 #define HCI_LE_SET_PERIODIC_ADVERTISING_PARAMETERS_UNUSED 1
-#define HCI_LE_SET_PERIODIC_ADVERTISING_DATA_UNUSED 1
-#define HCI_LE_SET_PERIODIC_ADVERTISING_ENABLE_UNUSED 1
 #define HCI_LE_SET_EXTENDED_SCAN_PARAMETERS_UNUSED 1
 #define HCI_LE_SET_EXTENDED_SCAN_ENABLE_UNUSED 1
 #define HCI_LE_EXTENDED_CREATE_CONNECTION_UNUSED 1
@@ -10644,6 +7890,10 @@ uint8_t BLE_EventProcess( const uint8_t* buffer )
 #define HCI_LE_WRITE_RF_PATH_COMPENSATION_UNUSED 1
 #define HCI_LE_GENERATE_DHKEY_V2_UNUSED 1
 #define HCI_LE_SET_EXTENDED_ADVERTISING_PARAMETERS_V2_UNUSED 1
+#define HCI_LE_EXTENDED_CREATE_CONNECTION_V2_UNUSED 1
+#define HCI_LE_SET_PERIODIC_ADVERTISING_PARAMETERS_V2_UNUSED 1
+#define HCI_NUMBER_OF_COMPLETED_PACKETS_EVENT_UNUSED 1
+#define HCI_DATA_BUFFER_OVERFLOW_EVENT_UNUSED 1
 #endif /* BLE_FEATURE_FULL_HCI_UNUSED */
 
 #if (BLE_FEATURE_ADVANCED_1_UNUSED)
@@ -10659,6 +7909,9 @@ uint8_t BLE_EventProcess( const uint8_t* buffer )
 #define HCI_LE_SET_DATA_RELATED_ADDRESS_CHANGES_UNUSED 1
 #define HCI_LE_SET_DEFAULT_SUBRATE_UNUSED 1
 #define HCI_LE_SUBRATE_REQUEST_UNUSED 1
+#define HCI_LE_PATH_LOSS_THRESHOLD_EVENT_UNUSED 1
+#define HCI_LE_TRANSMIT_POWER_REPORTING_EVENT_UNUSED 1
+#define HCI_LE_SUBRATE_CHANGE_EVENT_UNUSED 1
 #endif /* BLE_FEATURE_ADVANCED_1_UNUSED */
 
 #if (BLE_FEATURE_ADVANCED_2_UNUSED)
@@ -10683,6 +7936,11 @@ uint8_t BLE_EventProcess( const uint8_t* buffer )
 #define ACI_GAP_ADV_SET_PERIODIC_PARAMETERS_UNUSED 1
 #define ACI_GAP_ADV_SET_PERIODIC_DATA_UNUSED 1
 #define ACI_GAP_ADV_SET_PERIODIC_ENABLE_UNUSED 1
+#define HCI_LE_PERIODIC_ADVERTISING_SYNC_ESTABLISHED_EVENT_UNUSED 1
+#define HCI_LE_PERIODIC_ADVERTISING_REPORT_EVENT_UNUSED 1
+#define HCI_LE_PERIODIC_ADVERTISING_SYNC_LOST_EVENT_UNUSED 1
+#define HCI_LE_PERIODIC_ADVERTISING_SYNC_TRANSFER_RECEIVED_EVENT_UNUSED 1
+#define HCI_LE_REQUEST_PEER_SCA_COMPLETE_EVENT_UNUSED 1
 #endif /* BLE_FEATURE_ADVANCED_2_UNUSED */
 
 #if (BLE_FEATURE_ADVANCED_3_UNUSED)
@@ -10699,7 +7957,21 @@ uint8_t BLE_EventProcess( const uint8_t* buffer )
 #define HCI_LE_READ_MONITORED_ADVERTISERS_LIST_SIZE_UNUSED 1
 #define HCI_LE_ENABLE_MONITORING_ADVERTISERS_UNUSED 1
 #define HCI_LE_FRAME_SPACE_UPDATE_UNUSED 1
+#define HCI_LE_PERIODIC_ADVERTISING_SYNC_ESTABLISHED_V2_EVENT_UNUSED 1
+#define HCI_LE_PERIODIC_ADVERTISING_REPORT_V2_EVENT_UNUSED 1
+#define HCI_LE_PERIODIC_ADVERTISING_SYNC_TRANSFER_RECEIVED_V2_EVENT_UNUSED 1
+#define HCI_LE_PERIODIC_ADVERTISING_SUBEVENT_DATA_REQUEST_EVENT_UNUSED 1
+#define HCI_LE_PERIODIC_ADVERTISING_RESPONSE_REPORT_EVENT_UNUSED 1
+#define HCI_LE_ENHANCED_CONNECTION_COMPLETE_V2_EVENT_UNUSED 1
+#define HCI_LE_READ_ALL_REMOTE_FEATURES_COMPLETE_EVENT_UNUSED 1
+#define HCI_LE_MONITORED_ADVERTISERS_REPORT_EVENT_UNUSED 1
+#define HCI_LE_FRAME_SPACE_UPDATE_COMPLETE_EVENT_UNUSED 1
 #endif /* BLE_FEATURE_ADVANCED_3_UNUSED */
+
+/* ----------------------------------------------------------------------------
+ * UNUSED COMMAND STUBS
+ * ----------------------------------------------------------------------------
+ */
 
 uint16_t hci_unknown_command_status_event( uint8_t* buffer );
 
@@ -12231,6 +9503,22 @@ uint16_t aci_hal_ead_encrypt_decrypt_process( uint8_t* buffer )
 }
 #endif
 
+#if (ACI_HAL_PTA_ENABLE_UNUSED)
+uint16_t aci_hal_pta_enable_process( uint8_t* buffer );
+uint16_t aci_hal_pta_enable_process( uint8_t* buffer )
+{
+  return hci_unknown_command_status_event( buffer );
+}
+#endif
+
+#if (ACI_HAL_PTA_SET_PRIORITY_UNUSED)
+uint16_t aci_hal_pta_set_priority_process( uint8_t* buffer );
+uint16_t aci_hal_pta_set_priority_process( uint8_t* buffer )
+{
+  return hci_unknown_command_status_event( buffer );
+}
+#endif
+
 #if (ACI_GAP_SET_NON_DISCOVERABLE_UNUSED)
 uint16_t aci_gap_set_non_discoverable_process( uint8_t* buffer );
 uint16_t aci_gap_set_non_discoverable_process( uint8_t* buffer )
@@ -12367,14 +9655,6 @@ uint16_t aci_gap_set_event_mask_process( uint8_t* buffer )
 }
 #endif
 
-#if (ACI_GAP_CONFIGURE_FILTER_ACCEPT_LIST_UNUSED)
-uint16_t aci_gap_configure_filter_accept_list_process( uint8_t* buffer );
-uint16_t aci_gap_configure_filter_accept_list_process( uint8_t* buffer )
-{
-  return hci_unknown_command_status_event( buffer );
-}
-#endif
-
 #if (ACI_GAP_TERMINATE_UNUSED)
 uint16_t aci_gap_terminate_process( uint8_t* buffer );
 uint16_t aci_gap_terminate_process( uint8_t* buffer )
@@ -12399,41 +9679,9 @@ uint16_t aci_gap_allow_rebond_process( uint8_t* buffer )
 }
 #endif
 
-#if (ACI_GAP_START_LIMITED_DISCOVERY_PROC_UNUSED)
-uint16_t aci_gap_start_limited_discovery_proc_process( uint8_t* buffer );
-uint16_t aci_gap_start_limited_discovery_proc_process( uint8_t* buffer )
-{
-  return hci_unknown_command_status_event( buffer );
-}
-#endif
-
-#if (ACI_GAP_START_GENERAL_DISCOVERY_PROC_UNUSED)
-uint16_t aci_gap_start_general_discovery_proc_process( uint8_t* buffer );
-uint16_t aci_gap_start_general_discovery_proc_process( uint8_t* buffer )
-{
-  return hci_unknown_command_status_event( buffer );
-}
-#endif
-
 #if (ACI_GAP_START_AUTO_CONNECTION_ESTABLISH_PROC_UNUSED)
 uint16_t aci_gap_start_auto_connection_establish_proc_process( uint8_t* buffer );
 uint16_t aci_gap_start_auto_connection_establish_proc_process( uint8_t* buffer )
-{
-  return hci_unknown_command_status_event( buffer );
-}
-#endif
-
-#if (ACI_GAP_START_GENERAL_CONNECTION_ESTABLISH_PROC_UNUSED)
-uint16_t aci_gap_start_general_connection_establish_proc_process( uint8_t* buffer );
-uint16_t aci_gap_start_general_connection_establish_proc_process( uint8_t* buffer )
-{
-  return hci_unknown_command_status_event( buffer );
-}
-#endif
-
-#if (ACI_GAP_START_SELECTIVE_CONNECTION_ESTABLISH_PROC_UNUSED)
-uint16_t aci_gap_start_selective_connection_establish_proc_process( uint8_t* buffer );
-uint16_t aci_gap_start_selective_connection_establish_proc_process( uint8_t* buffer )
 {
   return hci_unknown_command_status_event( buffer );
 }
@@ -12474,14 +9722,6 @@ uint16_t aci_gap_send_pairing_req_process( uint8_t* buffer )
 #if (ACI_GAP_SET_BROADCAST_MODE_UNUSED)
 uint16_t aci_gap_set_broadcast_mode_process( uint8_t* buffer );
 uint16_t aci_gap_set_broadcast_mode_process( uint8_t* buffer )
-{
-  return hci_unknown_command_status_event( buffer );
-}
-#endif
-
-#if (ACI_GAP_START_OBSERVATION_PROC_UNUSED)
-uint16_t aci_gap_start_observation_proc_process( uint8_t* buffer );
-uint16_t aci_gap_start_observation_proc_process( uint8_t* buffer )
 {
   return hci_unknown_command_status_event( buffer );
 }
@@ -12647,9 +9887,9 @@ uint16_t aci_gap_adv_set_configuration_v2_process( uint8_t* buffer )
 }
 #endif
 
-#if (ACI_GAP_EXT_START_SCAN_UNUSED)
-uint16_t aci_gap_ext_start_scan_process( uint8_t* buffer );
-uint16_t aci_gap_ext_start_scan_process( uint8_t* buffer )
+#if (ACI_GAP_START_SCAN_UNUSED)
+uint16_t aci_gap_start_scan_process( uint8_t* buffer );
+uint16_t aci_gap_start_scan_process( uint8_t* buffer )
 {
   return hci_unknown_command_status_event( buffer );
 }
@@ -12911,14 +10151,6 @@ uint16_t aci_gatt_write_without_resp_process( uint8_t* buffer )
 }
 #endif
 
-#if (ACI_GATT_SIGNED_WRITE_WITHOUT_RESP_UNUSED)
-uint16_t aci_gatt_signed_write_without_resp_process( uint8_t* buffer );
-uint16_t aci_gatt_signed_write_without_resp_process( uint8_t* buffer )
-{
-  return hci_unknown_command_status_event( buffer );
-}
-#endif
-
 #if (ACI_GATT_CONFIRM_INDICATION_UNUSED)
 uint16_t aci_gatt_confirm_indication_process( uint8_t* buffer );
 uint16_t aci_gatt_confirm_indication_process( uint8_t* buffer )
@@ -13135,3 +10367,3060 @@ uint16_t aci_read_config_data_process( uint8_t* buffer )
 }
 #endif
 
+/* ----------------------------------------------------------------------------
+ * EVENT WRAPPER
+ * ----------------------------------------------------------------------------
+ */
+
+/* Event tables */
+
+typedef struct
+{
+  uint16_t evt_code;
+  tBleStatus (*process)( const uint8_t* in );
+} hci_event_table_t;
+
+/* HCI_DISCONNECTION_COMPLETE_EVENT callback function */
+__WEAK tBleStatus hci_disconnection_complete_event( uint8_t Status,
+                                                    uint16_t Connection_Handle,
+                                                    uint8_t Reason )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_DISCONNECTION_COMPLETE_EVENT process function */
+#if (!HCI_DISCONNECTION_COMPLETE_EVENT_UNUSED)
+static tBleStatus hci_disconnection_complete_event_process( const uint8_t* in )
+{
+  hci_disconnection_complete_event_rp0 *rp0 = (void*)in;
+  return hci_disconnection_complete_event( rp0->Status,
+                                           rp0->Connection_Handle,
+                                           rp0->Reason );
+}
+#endif
+
+/* HCI_ENCRYPTION_CHANGE_EVENT callback function */
+__WEAK tBleStatus hci_encryption_change_event( uint8_t Status,
+                                               uint16_t Connection_Handle,
+                                               uint8_t Encryption_Enabled )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_ENCRYPTION_CHANGE_EVENT process function */
+#if (!HCI_ENCRYPTION_CHANGE_EVENT_UNUSED)
+static tBleStatus hci_encryption_change_event_process( const uint8_t* in )
+{
+  hci_encryption_change_event_rp0 *rp0 = (void*)in;
+  return hci_encryption_change_event( rp0->Status,
+                                      rp0->Connection_Handle,
+                                      rp0->Encryption_Enabled );
+}
+#endif
+
+/* HCI_READ_REMOTE_VERSION_INFORMATION_COMPLETE_EVENT callback function */
+__WEAK tBleStatus hci_read_remote_version_information_complete_event( uint8_t Status,
+                                                                      uint16_t Connection_Handle,
+                                                                      uint8_t Version,
+                                                                      uint16_t Manufacturer_Name,
+                                                                      uint16_t Subversion )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_READ_REMOTE_VERSION_INFORMATION_COMPLETE_EVENT process function */
+#if (!HCI_READ_REMOTE_VERSION_INFORMATION_COMPLETE_EVENT_UNUSED)
+static tBleStatus hci_read_remote_version_information_complete_event_process( const uint8_t* in )
+{
+  hci_read_remote_version_information_complete_event_rp0 *rp0 = (void*)in;
+  return hci_read_remote_version_information_complete_event( rp0->Status,
+                                                             rp0->Connection_Handle,
+                                                             rp0->Version,
+                                                             rp0->Manufacturer_Name,
+                                                             rp0->Subversion );
+}
+#endif
+
+/* HCI_HARDWARE_ERROR_EVENT callback function */
+__WEAK tBleStatus hci_hardware_error_event( uint8_t Hardware_Code )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_HARDWARE_ERROR_EVENT process function */
+#if (!HCI_HARDWARE_ERROR_EVENT_UNUSED)
+static tBleStatus hci_hardware_error_event_process( const uint8_t* in )
+{
+  hci_hardware_error_event_rp0 *rp0 = (void*)in;
+  return hci_hardware_error_event( rp0->Hardware_Code );
+}
+#endif
+
+/* HCI_NUMBER_OF_COMPLETED_PACKETS_EVENT callback function */
+__WEAK tBleStatus hci_number_of_completed_packets_event( uint8_t Number_of_Handles,
+                                                         const Handle_Packets_Pair_Entry_t* Handle_Packets_Pair_Entry )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_NUMBER_OF_COMPLETED_PACKETS_EVENT process function */
+#if (!HCI_NUMBER_OF_COMPLETED_PACKETS_EVENT_UNUSED)
+static tBleStatus hci_number_of_completed_packets_event_process( const uint8_t* in )
+{
+  hci_number_of_completed_packets_event_rp0 *rp0 = (void*)in;
+  return hci_number_of_completed_packets_event( rp0->Number_of_Handles,
+                                                rp0->Handle_Packets_Pair_Entry );
+}
+#endif
+
+/* HCI_DATA_BUFFER_OVERFLOW_EVENT callback function */
+__WEAK tBleStatus hci_data_buffer_overflow_event( uint8_t Link_Type )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_DATA_BUFFER_OVERFLOW_EVENT process function */
+#if (!HCI_DATA_BUFFER_OVERFLOW_EVENT_UNUSED)
+static tBleStatus hci_data_buffer_overflow_event_process( const uint8_t* in )
+{
+  hci_data_buffer_overflow_event_rp0 *rp0 = (void*)in;
+  return hci_data_buffer_overflow_event( rp0->Link_Type );
+}
+#endif
+
+/* HCI_ENCRYPTION_KEY_REFRESH_COMPLETE_EVENT callback function */
+__WEAK tBleStatus hci_encryption_key_refresh_complete_event( uint8_t Status,
+                                                             uint16_t Connection_Handle )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_ENCRYPTION_KEY_REFRESH_COMPLETE_EVENT process function */
+#if (!HCI_ENCRYPTION_KEY_REFRESH_COMPLETE_EVENT_UNUSED)
+static tBleStatus hci_encryption_key_refresh_complete_event_process( const uint8_t* in )
+{
+  hci_encryption_key_refresh_complete_event_rp0 *rp0 = (void*)in;
+  return hci_encryption_key_refresh_complete_event( rp0->Status,
+                                                    rp0->Connection_Handle );
+}
+#endif
+
+/* HCI_AUTHENTICATED_PAYLOAD_TIMEOUT_EXPIRED_EVENT callback function */
+__WEAK tBleStatus hci_authenticated_payload_timeout_expired_event( uint16_t Connection_Handle )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_AUTHENTICATED_PAYLOAD_TIMEOUT_EXPIRED_EVENT process function */
+#if (!HCI_AUTHENTICATED_PAYLOAD_TIMEOUT_EXPIRED_EVENT_UNUSED)
+static tBleStatus hci_authenticated_payload_timeout_expired_event_process( const uint8_t* in )
+{
+  hci_authenticated_payload_timeout_expired_event_rp0 *rp0 = (void*)in;
+  return hci_authenticated_payload_timeout_expired_event( rp0->Connection_Handle );
+}
+#endif
+
+/* HCI_LE_CONNECTION_COMPLETE_EVENT callback function */
+__WEAK tBleStatus hci_le_connection_complete_event( uint8_t Status,
+                                                    uint16_t Connection_Handle,
+                                                    uint8_t Role,
+                                                    uint8_t Peer_Address_Type,
+                                                    const uint8_t* Peer_Address,
+                                                    uint16_t Conn_Interval,
+                                                    uint16_t Conn_Latency,
+                                                    uint16_t Supervision_Timeout,
+                                                    uint8_t Central_Clock_Accuracy )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_CONNECTION_COMPLETE_EVENT process function */
+#if (!HCI_LE_CONNECTION_COMPLETE_EVENT_UNUSED)
+static tBleStatus hci_le_connection_complete_event_process( const uint8_t* in )
+{
+  hci_le_connection_complete_event_rp0 *rp0 = (void*)in;
+  return hci_le_connection_complete_event( rp0->Status,
+                                           rp0->Connection_Handle,
+                                           rp0->Role,
+                                           rp0->Peer_Address_Type,
+                                           rp0->Peer_Address,
+                                           rp0->Conn_Interval,
+                                           rp0->Conn_Latency,
+                                           rp0->Supervision_Timeout,
+                                           rp0->Central_Clock_Accuracy );
+}
+#endif
+
+/* HCI_LE_ADVERTISING_REPORT_EVENT callback function */
+__WEAK tBleStatus hci_le_advertising_report_event( uint8_t Num_Reports,
+                                                   const Advertising_Report_t* Advertising_Report )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_ADVERTISING_REPORT_EVENT process function */
+#if (!HCI_LE_ADVERTISING_REPORT_EVENT_UNUSED)
+static tBleStatus hci_le_advertising_report_event_process( const uint8_t* in )
+{
+  hci_le_advertising_report_event_rp0 *rp0 = (void*)in;
+  Advertising_Report_t Advertising_Report[1];
+  int i;
+  for ( i = 0; i < rp0->Num_Reports; i++ )
+  {
+    in += 1;
+    memcpy( (void*)&Advertising_Report[0], (const void*)in, 9 );
+    Advertising_Report[0].Data = &in[9];
+    in += 9 + in[8];
+    Advertising_Report[0].RSSI = in[0];
+    (void)hci_le_advertising_report_event( 1, Advertising_Report );
+  }
+  return HCI_SUCCESS_ERR_CODE;
+}
+#endif
+
+/* HCI_LE_CONNECTION_UPDATE_COMPLETE_EVENT callback function */
+__WEAK tBleStatus hci_le_connection_update_complete_event( uint8_t Status,
+                                                           uint16_t Connection_Handle,
+                                                           uint16_t Conn_Interval,
+                                                           uint16_t Conn_Latency,
+                                                           uint16_t Supervision_Timeout )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_CONNECTION_UPDATE_COMPLETE_EVENT process function */
+#if (!HCI_LE_CONNECTION_UPDATE_COMPLETE_EVENT_UNUSED)
+static tBleStatus hci_le_connection_update_complete_event_process( const uint8_t* in )
+{
+  hci_le_connection_update_complete_event_rp0 *rp0 = (void*)in;
+  return hci_le_connection_update_complete_event( rp0->Status,
+                                                  rp0->Connection_Handle,
+                                                  rp0->Conn_Interval,
+                                                  rp0->Conn_Latency,
+                                                  rp0->Supervision_Timeout );
+}
+#endif
+
+/* HCI_LE_READ_REMOTE_FEATURES_PAGE_0_COMPLETE_EVENT callback function */
+__WEAK tBleStatus hci_le_read_remote_features_page_0_complete_event( uint8_t Status,
+                                                                     uint16_t Connection_Handle,
+                                                                     const uint8_t* LE_Features )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_READ_REMOTE_FEATURES_PAGE_0_COMPLETE_EVENT process function */
+#if (!HCI_LE_READ_REMOTE_FEATURES_PAGE_0_COMPLETE_EVENT_UNUSED)
+static tBleStatus hci_le_read_remote_features_page_0_complete_event_process( const uint8_t* in )
+{
+  hci_le_read_remote_features_page_0_complete_event_rp0 *rp0 = (void*)in;
+  return hci_le_read_remote_features_page_0_complete_event( rp0->Status,
+                                                            rp0->Connection_Handle,
+                                                            rp0->LE_Features );
+}
+#endif
+
+/* HCI_LE_LONG_TERM_KEY_REQUEST_EVENT callback function */
+__WEAK tBleStatus hci_le_long_term_key_request_event( uint16_t Connection_Handle,
+                                                      const uint8_t* Random_Number,
+                                                      uint16_t Encrypted_Diversifier )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_LONG_TERM_KEY_REQUEST_EVENT process function */
+#if (!HCI_LE_LONG_TERM_KEY_REQUEST_EVENT_UNUSED)
+static tBleStatus hci_le_long_term_key_request_event_process( const uint8_t* in )
+{
+  hci_le_long_term_key_request_event_rp0 *rp0 = (void*)in;
+  return hci_le_long_term_key_request_event( rp0->Connection_Handle,
+                                             rp0->Random_Number,
+                                             rp0->Encrypted_Diversifier );
+}
+#endif
+
+/* HCI_LE_REMOTE_CONNECTION_PARAMETER_REQUEST_EVENT callback function */
+__WEAK tBleStatus hci_le_remote_connection_parameter_request_event( uint16_t Connection_Handle,
+                                                                    uint16_t Interval_Min,
+                                                                    uint16_t Interval_Max,
+                                                                    uint16_t Max_Latency,
+                                                                    uint16_t Timeout )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_REMOTE_CONNECTION_PARAMETER_REQUEST_EVENT process function */
+#if (!HCI_LE_REMOTE_CONNECTION_PARAMETER_REQUEST_EVENT_UNUSED)
+static tBleStatus hci_le_remote_connection_parameter_request_event_process( const uint8_t* in )
+{
+  hci_le_remote_connection_parameter_request_event_rp0 *rp0 = (void*)in;
+  return hci_le_remote_connection_parameter_request_event( rp0->Connection_Handle,
+                                                           rp0->Interval_Min,
+                                                           rp0->Interval_Max,
+                                                           rp0->Max_Latency,
+                                                           rp0->Timeout );
+}
+#endif
+
+/* HCI_LE_DATA_LENGTH_CHANGE_EVENT callback function */
+__WEAK tBleStatus hci_le_data_length_change_event( uint16_t Connection_Handle,
+                                                   uint16_t MaxTxOctets,
+                                                   uint16_t MaxTxTime,
+                                                   uint16_t MaxRxOctets,
+                                                   uint16_t MaxRxTime )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_DATA_LENGTH_CHANGE_EVENT process function */
+#if (!HCI_LE_DATA_LENGTH_CHANGE_EVENT_UNUSED)
+static tBleStatus hci_le_data_length_change_event_process( const uint8_t* in )
+{
+  hci_le_data_length_change_event_rp0 *rp0 = (void*)in;
+  return hci_le_data_length_change_event( rp0->Connection_Handle,
+                                          rp0->MaxTxOctets,
+                                          rp0->MaxTxTime,
+                                          rp0->MaxRxOctets,
+                                          rp0->MaxRxTime );
+}
+#endif
+
+/* HCI_LE_READ_LOCAL_P256_PUBLIC_KEY_COMPLETE_EVENT callback function */
+__WEAK tBleStatus hci_le_read_local_p256_public_key_complete_event( uint8_t Status,
+                                                                    const uint8_t* Local_P256_Public_Key )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_READ_LOCAL_P256_PUBLIC_KEY_COMPLETE_EVENT process function */
+#if (!HCI_LE_READ_LOCAL_P256_PUBLIC_KEY_COMPLETE_EVENT_UNUSED)
+static tBleStatus hci_le_read_local_p256_public_key_complete_event_process( const uint8_t* in )
+{
+  hci_le_read_local_p256_public_key_complete_event_rp0 *rp0 = (void*)in;
+  return hci_le_read_local_p256_public_key_complete_event( rp0->Status,
+                                                           rp0->Local_P256_Public_Key );
+}
+#endif
+
+/* HCI_LE_GENERATE_DHKEY_COMPLETE_EVENT callback function */
+__WEAK tBleStatus hci_le_generate_dhkey_complete_event( uint8_t Status,
+                                                        const uint8_t* DHKey )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_GENERATE_DHKEY_COMPLETE_EVENT process function */
+#if (!HCI_LE_GENERATE_DHKEY_COMPLETE_EVENT_UNUSED)
+static tBleStatus hci_le_generate_dhkey_complete_event_process( const uint8_t* in )
+{
+  hci_le_generate_dhkey_complete_event_rp0 *rp0 = (void*)in;
+  return hci_le_generate_dhkey_complete_event( rp0->Status,
+                                               rp0->DHKey );
+}
+#endif
+
+/* HCI_LE_ENHANCED_CONNECTION_COMPLETE_EVENT callback function */
+__WEAK tBleStatus hci_le_enhanced_connection_complete_event( uint8_t Status,
+                                                             uint16_t Connection_Handle,
+                                                             uint8_t Role,
+                                                             uint8_t Peer_Address_Type,
+                                                             const uint8_t* Peer_Address,
+                                                             const uint8_t* Local_Resolvable_Private_Address,
+                                                             const uint8_t* Peer_Resolvable_Private_Address,
+                                                             uint16_t Conn_Interval,
+                                                             uint16_t Conn_Latency,
+                                                             uint16_t Supervision_Timeout,
+                                                             uint8_t Central_Clock_Accuracy )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_ENHANCED_CONNECTION_COMPLETE_EVENT process function */
+#if (!HCI_LE_ENHANCED_CONNECTION_COMPLETE_EVENT_UNUSED)
+static tBleStatus hci_le_enhanced_connection_complete_event_process( const uint8_t* in )
+{
+  hci_le_enhanced_connection_complete_event_rp0 *rp0 = (void*)in;
+  return hci_le_enhanced_connection_complete_event( rp0->Status,
+                                                    rp0->Connection_Handle,
+                                                    rp0->Role,
+                                                    rp0->Peer_Address_Type,
+                                                    rp0->Peer_Address,
+                                                    rp0->Local_Resolvable_Private_Address,
+                                                    rp0->Peer_Resolvable_Private_Address,
+                                                    rp0->Conn_Interval,
+                                                    rp0->Conn_Latency,
+                                                    rp0->Supervision_Timeout,
+                                                    rp0->Central_Clock_Accuracy );
+}
+#endif
+
+/* HCI_LE_DIRECTED_ADVERTISING_REPORT_EVENT callback function */
+__WEAK tBleStatus hci_le_directed_advertising_report_event( uint8_t Num_Reports,
+                                                            const Direct_Advertising_Report_t* Direct_Advertising_Report )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_DIRECTED_ADVERTISING_REPORT_EVENT process function */
+#if (!HCI_LE_DIRECTED_ADVERTISING_REPORT_EVENT_UNUSED)
+static tBleStatus hci_le_directed_advertising_report_event_process( const uint8_t* in )
+{
+  hci_le_directed_advertising_report_event_rp0 *rp0 = (void*)in;
+  return hci_le_directed_advertising_report_event( rp0->Num_Reports,
+                                                   rp0->Direct_Advertising_Report );
+}
+#endif
+
+/* HCI_LE_PHY_UPDATE_COMPLETE_EVENT callback function */
+__WEAK tBleStatus hci_le_phy_update_complete_event( uint8_t Status,
+                                                    uint16_t Connection_Handle,
+                                                    uint8_t TX_PHY,
+                                                    uint8_t RX_PHY )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_PHY_UPDATE_COMPLETE_EVENT process function */
+#if (!HCI_LE_PHY_UPDATE_COMPLETE_EVENT_UNUSED)
+static tBleStatus hci_le_phy_update_complete_event_process( const uint8_t* in )
+{
+  hci_le_phy_update_complete_event_rp0 *rp0 = (void*)in;
+  return hci_le_phy_update_complete_event( rp0->Status,
+                                           rp0->Connection_Handle,
+                                           rp0->TX_PHY,
+                                           rp0->RX_PHY );
+}
+#endif
+
+/* HCI_LE_EXTENDED_ADVERTISING_REPORT_EVENT callback function */
+__WEAK tBleStatus hci_le_extended_advertising_report_event( uint8_t Num_Reports,
+                                                            uint16_t Event_Type,
+                                                            uint8_t Address_Type,
+                                                            const uint8_t* Address,
+                                                            uint8_t Primary_PHY,
+                                                            uint8_t Secondary_PHY,
+                                                            uint8_t Advertising_SID,
+                                                            uint8_t TX_Power,
+                                                            uint8_t RSSI,
+                                                            uint16_t Periodic_Adv_Interval,
+                                                            uint8_t Direct_Address_Type,
+                                                            const uint8_t* Direct_Address,
+                                                            uint8_t Data_Length,
+                                                            const uint8_t* Data )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_EXTENDED_ADVERTISING_REPORT_EVENT process function */
+#if (!HCI_LE_EXTENDED_ADVERTISING_REPORT_EVENT_UNUSED)
+static tBleStatus hci_le_extended_advertising_report_event_process( const uint8_t* in )
+{
+  hci_le_extended_advertising_report_event_rp0 *rp0 = (void*)in;
+  return hci_le_extended_advertising_report_event( rp0->Num_Reports,
+                                                   rp0->Event_Type,
+                                                   rp0->Address_Type,
+                                                   rp0->Address,
+                                                   rp0->Primary_PHY,
+                                                   rp0->Secondary_PHY,
+                                                   rp0->Advertising_SID,
+                                                   rp0->TX_Power,
+                                                   rp0->RSSI,
+                                                   rp0->Periodic_Adv_Interval,
+                                                   rp0->Direct_Address_Type,
+                                                   rp0->Direct_Address,
+                                                   rp0->Data_Length,
+                                                   rp0->Data );
+}
+#endif
+
+/* HCI_LE_PERIODIC_ADVERTISING_SYNC_ESTABLISHED_EVENT callback function */
+__WEAK tBleStatus hci_le_periodic_advertising_sync_established_event( uint8_t Status,
+                                                                      uint16_t Sync_Handle,
+                                                                      uint8_t Advertising_SID,
+                                                                      uint8_t Advertiser_Address_Type,
+                                                                      const uint8_t* Advertiser_Address,
+                                                                      uint8_t Advertiser_PHY,
+                                                                      uint16_t Periodic_Advertising_Interval,
+                                                                      uint8_t Advertiser_Clock_Accuracy )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_PERIODIC_ADVERTISING_SYNC_ESTABLISHED_EVENT process function */
+#if (!HCI_LE_PERIODIC_ADVERTISING_SYNC_ESTABLISHED_EVENT_UNUSED)
+static tBleStatus hci_le_periodic_advertising_sync_established_event_process( const uint8_t* in )
+{
+  hci_le_periodic_advertising_sync_established_event_rp0 *rp0 = (void*)in;
+  return hci_le_periodic_advertising_sync_established_event( rp0->Status,
+                                                             rp0->Sync_Handle,
+                                                             rp0->Advertising_SID,
+                                                             rp0->Advertiser_Address_Type,
+                                                             rp0->Advertiser_Address,
+                                                             rp0->Advertiser_PHY,
+                                                             rp0->Periodic_Advertising_Interval,
+                                                             rp0->Advertiser_Clock_Accuracy );
+}
+#endif
+
+/* HCI_LE_PERIODIC_ADVERTISING_REPORT_EVENT callback function */
+__WEAK tBleStatus hci_le_periodic_advertising_report_event( uint16_t Sync_Handle,
+                                                            uint8_t TX_Power,
+                                                            uint8_t RSSI,
+                                                            uint8_t CTE_Type,
+                                                            uint8_t Data_Status,
+                                                            uint8_t Data_Length,
+                                                            const uint8_t* Data )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_PERIODIC_ADVERTISING_REPORT_EVENT process function */
+#if (!HCI_LE_PERIODIC_ADVERTISING_REPORT_EVENT_UNUSED)
+static tBleStatus hci_le_periodic_advertising_report_event_process( const uint8_t* in )
+{
+  hci_le_periodic_advertising_report_event_rp0 *rp0 = (void*)in;
+  return hci_le_periodic_advertising_report_event( rp0->Sync_Handle,
+                                                   rp0->TX_Power,
+                                                   rp0->RSSI,
+                                                   rp0->CTE_Type,
+                                                   rp0->Data_Status,
+                                                   rp0->Data_Length,
+                                                   rp0->Data );
+}
+#endif
+
+/* HCI_LE_PERIODIC_ADVERTISING_SYNC_LOST_EVENT callback function */
+__WEAK tBleStatus hci_le_periodic_advertising_sync_lost_event( uint16_t Sync_Handle )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_PERIODIC_ADVERTISING_SYNC_LOST_EVENT process function */
+#if (!HCI_LE_PERIODIC_ADVERTISING_SYNC_LOST_EVENT_UNUSED)
+static tBleStatus hci_le_periodic_advertising_sync_lost_event_process( const uint8_t* in )
+{
+  hci_le_periodic_advertising_sync_lost_event_rp0 *rp0 = (void*)in;
+  return hci_le_periodic_advertising_sync_lost_event( rp0->Sync_Handle );
+}
+#endif
+
+/* HCI_LE_SCAN_TIMEOUT_EVENT callback function */
+__WEAK tBleStatus hci_le_scan_timeout_event( void )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_SCAN_TIMEOUT_EVENT process function */
+#if (!HCI_LE_SCAN_TIMEOUT_EVENT_UNUSED)
+static tBleStatus hci_le_scan_timeout_event_process( const uint8_t* in )
+{
+  return hci_le_scan_timeout_event( );
+}
+#endif
+
+/* HCI_LE_ADVERTISING_SET_TERMINATED_EVENT callback function */
+__WEAK tBleStatus hci_le_advertising_set_terminated_event( uint8_t Status,
+                                                           uint8_t Advertising_Handle,
+                                                           uint16_t Connection_Handle,
+                                                           uint8_t Num_Completed_Ext_Adv_Events )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_ADVERTISING_SET_TERMINATED_EVENT process function */
+#if (!HCI_LE_ADVERTISING_SET_TERMINATED_EVENT_UNUSED)
+static tBleStatus hci_le_advertising_set_terminated_event_process( const uint8_t* in )
+{
+  hci_le_advertising_set_terminated_event_rp0 *rp0 = (void*)in;
+  return hci_le_advertising_set_terminated_event( rp0->Status,
+                                                  rp0->Advertising_Handle,
+                                                  rp0->Connection_Handle,
+                                                  rp0->Num_Completed_Ext_Adv_Events );
+}
+#endif
+
+/* HCI_LE_SCAN_REQUEST_RECEIVED_EVENT callback function */
+__WEAK tBleStatus hci_le_scan_request_received_event( uint8_t Advertising_Handle,
+                                                      uint8_t Scanner_Address_Type,
+                                                      const uint8_t* Scanner_Address )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_SCAN_REQUEST_RECEIVED_EVENT process function */
+#if (!HCI_LE_SCAN_REQUEST_RECEIVED_EVENT_UNUSED)
+static tBleStatus hci_le_scan_request_received_event_process( const uint8_t* in )
+{
+  hci_le_scan_request_received_event_rp0 *rp0 = (void*)in;
+  return hci_le_scan_request_received_event( rp0->Advertising_Handle,
+                                             rp0->Scanner_Address_Type,
+                                             rp0->Scanner_Address );
+}
+#endif
+
+/* HCI_LE_CHANNEL_SELECTION_ALGORITHM_EVENT callback function */
+__WEAK tBleStatus hci_le_channel_selection_algorithm_event( uint16_t Connection_Handle,
+                                                            uint8_t Channel_Selection_Algorithm )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_CHANNEL_SELECTION_ALGORITHM_EVENT process function */
+#if (!HCI_LE_CHANNEL_SELECTION_ALGORITHM_EVENT_UNUSED)
+static tBleStatus hci_le_channel_selection_algorithm_event_process( const uint8_t* in )
+{
+  hci_le_channel_selection_algorithm_event_rp0 *rp0 = (void*)in;
+  return hci_le_channel_selection_algorithm_event( rp0->Connection_Handle,
+                                                   rp0->Channel_Selection_Algorithm );
+}
+#endif
+
+/* HCI_LE_CONNECTIONLESS_IQ_REPORT_EVENT callback function */
+__WEAK tBleStatus hci_le_connectionless_iq_report_event( uint16_t Sync_Handle,
+                                                         uint8_t Channel_Index,
+                                                         uint16_t RSSI,
+                                                         uint8_t RSSI_Antenna_ID,
+                                                         uint8_t CTE_Type,
+                                                         uint8_t Slot_Durations,
+                                                         uint8_t Packet_Status,
+                                                         uint16_t Periodic_Event_Counter,
+                                                         uint8_t Sample_Count,
+                                                         const IQ_Sample_t* IQ_Sample )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_CONNECTIONLESS_IQ_REPORT_EVENT process function */
+#if (!HCI_LE_CONNECTIONLESS_IQ_REPORT_EVENT_UNUSED)
+static tBleStatus hci_le_connectionless_iq_report_event_process( const uint8_t* in )
+{
+  hci_le_connectionless_iq_report_event_rp0 *rp0 = (void*)in;
+  return hci_le_connectionless_iq_report_event( rp0->Sync_Handle,
+                                                rp0->Channel_Index,
+                                                rp0->RSSI,
+                                                rp0->RSSI_Antenna_ID,
+                                                rp0->CTE_Type,
+                                                rp0->Slot_Durations,
+                                                rp0->Packet_Status,
+                                                rp0->Periodic_Event_Counter,
+                                                rp0->Sample_Count,
+                                                rp0->IQ_Sample );
+}
+#endif
+
+/* HCI_LE_CONNECTION_IQ_REPORT_EVENT callback function */
+__WEAK tBleStatus hci_le_connection_iq_report_event( uint16_t Connection_Handle,
+                                                     uint8_t RX_PHY,
+                                                     uint8_t Data_Channel_Index,
+                                                     uint16_t RSSI,
+                                                     uint8_t RSSI_Antenna_ID,
+                                                     uint8_t CTE_Type,
+                                                     uint8_t Slot_Durations,
+                                                     uint8_t Packet_Status,
+                                                     uint16_t Connection_Event_Counter,
+                                                     uint8_t Sample_Count,
+                                                     const IQ_Sample_t* IQ_Sample )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_CONNECTION_IQ_REPORT_EVENT process function */
+#if (!HCI_LE_CONNECTION_IQ_REPORT_EVENT_UNUSED)
+static tBleStatus hci_le_connection_iq_report_event_process( const uint8_t* in )
+{
+  hci_le_connection_iq_report_event_rp0 *rp0 = (void*)in;
+  return hci_le_connection_iq_report_event( rp0->Connection_Handle,
+                                            rp0->RX_PHY,
+                                            rp0->Data_Channel_Index,
+                                            rp0->RSSI,
+                                            rp0->RSSI_Antenna_ID,
+                                            rp0->CTE_Type,
+                                            rp0->Slot_Durations,
+                                            rp0->Packet_Status,
+                                            rp0->Connection_Event_Counter,
+                                            rp0->Sample_Count,
+                                            rp0->IQ_Sample );
+}
+#endif
+
+/* HCI_LE_CTE_REQUEST_FAILED_EVENT callback function */
+__WEAK tBleStatus hci_le_cte_request_failed_event( uint8_t Status,
+                                                   uint16_t Connection_Handle )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_CTE_REQUEST_FAILED_EVENT process function */
+#if (!HCI_LE_CTE_REQUEST_FAILED_EVENT_UNUSED)
+static tBleStatus hci_le_cte_request_failed_event_process( const uint8_t* in )
+{
+  hci_le_cte_request_failed_event_rp0 *rp0 = (void*)in;
+  return hci_le_cte_request_failed_event( rp0->Status,
+                                          rp0->Connection_Handle );
+}
+#endif
+
+/* HCI_LE_PERIODIC_ADVERTISING_SYNC_TRANSFER_RECEIVED_EVENT callback function */
+__WEAK tBleStatus hci_le_periodic_advertising_sync_transfer_received_event( uint8_t Status,
+                                                                            uint16_t Connection_Handle,
+                                                                            uint16_t Service_Data,
+                                                                            uint16_t Sync_Handle,
+                                                                            uint8_t Advertising_SID,
+                                                                            uint8_t Advertiser_Address_Type,
+                                                                            const uint8_t* Advertiser_Address,
+                                                                            uint8_t Advertiser_PHY,
+                                                                            uint16_t Periodic_Advertising_Interval,
+                                                                            uint8_t Advertiser_Clock_Accuracy )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_PERIODIC_ADVERTISING_SYNC_TRANSFER_RECEIVED_EVENT process function */
+#if (!HCI_LE_PERIODIC_ADVERTISING_SYNC_TRANSFER_RECEIVED_EVENT_UNUSED)
+static tBleStatus hci_le_periodic_advertising_sync_transfer_received_event_process( const uint8_t* in )
+{
+  hci_le_periodic_advertising_sync_transfer_received_event_rp0 *rp0 = (void*)in;
+  return hci_le_periodic_advertising_sync_transfer_received_event( rp0->Status,
+                                                                   rp0->Connection_Handle,
+                                                                   rp0->Service_Data,
+                                                                   rp0->Sync_Handle,
+                                                                   rp0->Advertising_SID,
+                                                                   rp0->Advertiser_Address_Type,
+                                                                   rp0->Advertiser_Address,
+                                                                   rp0->Advertiser_PHY,
+                                                                   rp0->Periodic_Advertising_Interval,
+                                                                   rp0->Advertiser_Clock_Accuracy );
+}
+#endif
+
+/* HCI_LE_CIS_ESTABLISHED_EVENT callback function */
+__WEAK tBleStatus hci_le_cis_established_event( uint8_t Status,
+                                                uint16_t Connection_Handle,
+                                                const uint8_t* CIG_Sync_Delay,
+                                                const uint8_t* CIS_Sync_Delay,
+                                                const uint8_t* Transport_Latency_C_To_P,
+                                                const uint8_t* Transport_Latency_P_To_C,
+                                                uint8_t PHY_C_To_P,
+                                                uint8_t PHY_P_To_C,
+                                                uint8_t NSE,
+                                                uint8_t BN_C_To_P,
+                                                uint8_t BN_P_To_C,
+                                                uint8_t FT_C_To_P,
+                                                uint8_t FT_P_To_C,
+                                                uint16_t Max_PDU_C_To_P,
+                                                uint16_t Max_PDU_P_To_C,
+                                                uint16_t ISO_Interval )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_CIS_ESTABLISHED_EVENT process function */
+#if (!HCI_LE_CIS_ESTABLISHED_EVENT_UNUSED)
+static tBleStatus hci_le_cis_established_event_process( const uint8_t* in )
+{
+  hci_le_cis_established_event_rp0 *rp0 = (void*)in;
+  return hci_le_cis_established_event( rp0->Status,
+                                       rp0->Connection_Handle,
+                                       rp0->CIG_Sync_Delay,
+                                       rp0->CIS_Sync_Delay,
+                                       rp0->Transport_Latency_C_To_P,
+                                       rp0->Transport_Latency_P_To_C,
+                                       rp0->PHY_C_To_P,
+                                       rp0->PHY_P_To_C,
+                                       rp0->NSE,
+                                       rp0->BN_C_To_P,
+                                       rp0->BN_P_To_C,
+                                       rp0->FT_C_To_P,
+                                       rp0->FT_P_To_C,
+                                       rp0->Max_PDU_C_To_P,
+                                       rp0->Max_PDU_P_To_C,
+                                       rp0->ISO_Interval );
+}
+#endif
+
+/* HCI_LE_CIS_REQUEST_EVENT callback function */
+__WEAK tBleStatus hci_le_cis_request_event( uint16_t ACL_Connection_Handle,
+                                            uint16_t CIS_Connection_Handle,
+                                            uint8_t CIG_ID,
+                                            uint8_t CIS_ID )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_CIS_REQUEST_EVENT process function */
+#if (!HCI_LE_CIS_REQUEST_EVENT_UNUSED)
+static tBleStatus hci_le_cis_request_event_process( const uint8_t* in )
+{
+  hci_le_cis_request_event_rp0 *rp0 = (void*)in;
+  return hci_le_cis_request_event( rp0->ACL_Connection_Handle,
+                                   rp0->CIS_Connection_Handle,
+                                   rp0->CIG_ID,
+                                   rp0->CIS_ID );
+}
+#endif
+
+/* HCI_LE_CREATE_BIG_COMPLETE_EVENT callback function */
+__WEAK tBleStatus hci_le_create_big_complete_event( uint8_t Status,
+                                                    uint8_t BIG_Handle,
+                                                    const uint8_t* BIG_Sync_Delay,
+                                                    const uint8_t* Transport_Latency_BIG,
+                                                    uint8_t PHY,
+                                                    uint8_t NSE,
+                                                    uint8_t BN,
+                                                    uint8_t PTO,
+                                                    uint8_t IRC,
+                                                    uint16_t Max_PDU,
+                                                    uint16_t ISO_Interval,
+                                                    uint8_t Num_BIS,
+                                                    const Connection_Handle_t* Connection_Handle )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_CREATE_BIG_COMPLETE_EVENT process function */
+#if (!HCI_LE_CREATE_BIG_COMPLETE_EVENT_UNUSED)
+static tBleStatus hci_le_create_big_complete_event_process( const uint8_t* in )
+{
+  hci_le_create_big_complete_event_rp0 *rp0 = (void*)in;
+  return hci_le_create_big_complete_event( rp0->Status,
+                                           rp0->BIG_Handle,
+                                           rp0->BIG_Sync_Delay,
+                                           rp0->Transport_Latency_BIG,
+                                           rp0->PHY,
+                                           rp0->NSE,
+                                           rp0->BN,
+                                           rp0->PTO,
+                                           rp0->IRC,
+                                           rp0->Max_PDU,
+                                           rp0->ISO_Interval,
+                                           rp0->Num_BIS,
+                                           rp0->Connection_Handle );
+}
+#endif
+
+/* HCI_LE_TERMINATE_BIG_COMPLETE_EVENT callback function */
+__WEAK tBleStatus hci_le_terminate_big_complete_event( uint8_t BIG_Handle,
+                                                       uint8_t Reason )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_TERMINATE_BIG_COMPLETE_EVENT process function */
+#if (!HCI_LE_TERMINATE_BIG_COMPLETE_EVENT_UNUSED)
+static tBleStatus hci_le_terminate_big_complete_event_process( const uint8_t* in )
+{
+  hci_le_terminate_big_complete_event_rp0 *rp0 = (void*)in;
+  return hci_le_terminate_big_complete_event( rp0->BIG_Handle,
+                                              rp0->Reason );
+}
+#endif
+
+/* HCI_LE_BIG_SYNC_ESTABLISHED_EVENT callback function */
+__WEAK tBleStatus hci_le_big_sync_established_event( uint8_t Status,
+                                                     uint8_t BIG_Handle,
+                                                     const uint8_t* Transport_Latency_BIG,
+                                                     uint8_t NSE,
+                                                     uint8_t BN,
+                                                     uint8_t PTO,
+                                                     uint8_t IRC,
+                                                     uint16_t Max_PDU,
+                                                     uint16_t ISO_Interval,
+                                                     uint8_t Num_BIS,
+                                                     const Connection_Handle_t* Connection_Handle )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_BIG_SYNC_ESTABLISHED_EVENT process function */
+#if (!HCI_LE_BIG_SYNC_ESTABLISHED_EVENT_UNUSED)
+static tBleStatus hci_le_big_sync_established_event_process( const uint8_t* in )
+{
+  hci_le_big_sync_established_event_rp0 *rp0 = (void*)in;
+  return hci_le_big_sync_established_event( rp0->Status,
+                                            rp0->BIG_Handle,
+                                            rp0->Transport_Latency_BIG,
+                                            rp0->NSE,
+                                            rp0->BN,
+                                            rp0->PTO,
+                                            rp0->IRC,
+                                            rp0->Max_PDU,
+                                            rp0->ISO_Interval,
+                                            rp0->Num_BIS,
+                                            rp0->Connection_Handle );
+}
+#endif
+
+/* HCI_LE_BIG_SYNC_LOST_EVENT callback function */
+__WEAK tBleStatus hci_le_big_sync_lost_event( uint8_t BIG_Handle,
+                                              uint8_t Reason )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_BIG_SYNC_LOST_EVENT process function */
+#if (!HCI_LE_BIG_SYNC_LOST_EVENT_UNUSED)
+static tBleStatus hci_le_big_sync_lost_event_process( const uint8_t* in )
+{
+  hci_le_big_sync_lost_event_rp0 *rp0 = (void*)in;
+  return hci_le_big_sync_lost_event( rp0->BIG_Handle,
+                                     rp0->Reason );
+}
+#endif
+
+/* HCI_LE_REQUEST_PEER_SCA_COMPLETE_EVENT callback function */
+__WEAK tBleStatus hci_le_request_peer_sca_complete_event( uint8_t Status,
+                                                          uint16_t Connection_Handle,
+                                                          uint8_t Peer_Clock_Accuracy )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_REQUEST_PEER_SCA_COMPLETE_EVENT process function */
+#if (!HCI_LE_REQUEST_PEER_SCA_COMPLETE_EVENT_UNUSED)
+static tBleStatus hci_le_request_peer_sca_complete_event_process( const uint8_t* in )
+{
+  hci_le_request_peer_sca_complete_event_rp0 *rp0 = (void*)in;
+  return hci_le_request_peer_sca_complete_event( rp0->Status,
+                                                 rp0->Connection_Handle,
+                                                 rp0->Peer_Clock_Accuracy );
+}
+#endif
+
+/* HCI_LE_PATH_LOSS_THRESHOLD_EVENT callback function */
+__WEAK tBleStatus hci_le_path_loss_threshold_event( uint16_t Connection_Handle,
+                                                    uint8_t Current_Path_Loss,
+                                                    uint8_t Zone_Entered )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_PATH_LOSS_THRESHOLD_EVENT process function */
+#if (!HCI_LE_PATH_LOSS_THRESHOLD_EVENT_UNUSED)
+static tBleStatus hci_le_path_loss_threshold_event_process( const uint8_t* in )
+{
+  hci_le_path_loss_threshold_event_rp0 *rp0 = (void*)in;
+  return hci_le_path_loss_threshold_event( rp0->Connection_Handle,
+                                           rp0->Current_Path_Loss,
+                                           rp0->Zone_Entered );
+}
+#endif
+
+/* HCI_LE_TRANSMIT_POWER_REPORTING_EVENT callback function */
+__WEAK tBleStatus hci_le_transmit_power_reporting_event( uint8_t Status,
+                                                         uint16_t Connection_Handle,
+                                                         uint8_t Reason,
+                                                         uint8_t PHY,
+                                                         uint8_t TX_Power_Level,
+                                                         uint8_t TX_Power_Level_Flag,
+                                                         uint8_t Delta )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_TRANSMIT_POWER_REPORTING_EVENT process function */
+#if (!HCI_LE_TRANSMIT_POWER_REPORTING_EVENT_UNUSED)
+static tBleStatus hci_le_transmit_power_reporting_event_process( const uint8_t* in )
+{
+  hci_le_transmit_power_reporting_event_rp0 *rp0 = (void*)in;
+  return hci_le_transmit_power_reporting_event( rp0->Status,
+                                                rp0->Connection_Handle,
+                                                rp0->Reason,
+                                                rp0->PHY,
+                                                rp0->TX_Power_Level,
+                                                rp0->TX_Power_Level_Flag,
+                                                rp0->Delta );
+}
+#endif
+
+/* HCI_LE_BIGINFO_ADVERTISING_REPORT_EVENT callback function */
+__WEAK tBleStatus hci_le_biginfo_advertising_report_event( uint16_t Sync_Handle,
+                                                           uint8_t Num_BIS,
+                                                           uint8_t NSE,
+                                                           uint16_t ISO_Interval,
+                                                           uint8_t BN,
+                                                           uint8_t PTO,
+                                                           uint8_t IRC,
+                                                           uint16_t Max_PDU,
+                                                           const uint8_t* SDU_Interval,
+                                                           uint16_t Max_SDU,
+                                                           uint8_t PHY,
+                                                           uint8_t Framing,
+                                                           uint8_t Encryption )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_BIGINFO_ADVERTISING_REPORT_EVENT process function */
+#if (!HCI_LE_BIGINFO_ADVERTISING_REPORT_EVENT_UNUSED)
+static tBleStatus hci_le_biginfo_advertising_report_event_process( const uint8_t* in )
+{
+  hci_le_biginfo_advertising_report_event_rp0 *rp0 = (void*)in;
+  return hci_le_biginfo_advertising_report_event( rp0->Sync_Handle,
+                                                  rp0->Num_BIS,
+                                                  rp0->NSE,
+                                                  rp0->ISO_Interval,
+                                                  rp0->BN,
+                                                  rp0->PTO,
+                                                  rp0->IRC,
+                                                  rp0->Max_PDU,
+                                                  rp0->SDU_Interval,
+                                                  rp0->Max_SDU,
+                                                  rp0->PHY,
+                                                  rp0->Framing,
+                                                  rp0->Encryption );
+}
+#endif
+
+/* HCI_LE_SUBRATE_CHANGE_EVENT callback function */
+__WEAK tBleStatus hci_le_subrate_change_event( uint8_t Status,
+                                               uint16_t Connection_Handle,
+                                               uint16_t Subrate_Factor,
+                                               uint16_t Peripheral_Latency,
+                                               uint16_t Continuation_Number,
+                                               uint16_t Supervision_Timeout )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_SUBRATE_CHANGE_EVENT process function */
+#if (!HCI_LE_SUBRATE_CHANGE_EVENT_UNUSED)
+static tBleStatus hci_le_subrate_change_event_process( const uint8_t* in )
+{
+  hci_le_subrate_change_event_rp0 *rp0 = (void*)in;
+  return hci_le_subrate_change_event( rp0->Status,
+                                      rp0->Connection_Handle,
+                                      rp0->Subrate_Factor,
+                                      rp0->Peripheral_Latency,
+                                      rp0->Continuation_Number,
+                                      rp0->Supervision_Timeout );
+}
+#endif
+
+/* HCI_LE_PERIODIC_ADVERTISING_SYNC_ESTABLISHED_V2_EVENT callback function */
+__WEAK tBleStatus hci_le_periodic_advertising_sync_established_v2_event( uint8_t Status,
+                                                                         uint16_t Sync_Handle,
+                                                                         uint8_t Advertising_SID,
+                                                                         uint8_t Advertiser_Address_Type,
+                                                                         const uint8_t* Advertiser_Address,
+                                                                         uint8_t Advertiser_PHY,
+                                                                         uint16_t Periodic_Advertising_Interval,
+                                                                         uint8_t Advertiser_Clock_Accuracy,
+                                                                         uint8_t Num_Subevents,
+                                                                         uint8_t Subevent_Interval,
+                                                                         uint8_t Response_Slot_Delay,
+                                                                         uint8_t Response_Slot_Spacing )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_PERIODIC_ADVERTISING_SYNC_ESTABLISHED_V2_EVENT process function */
+#if (!HCI_LE_PERIODIC_ADVERTISING_SYNC_ESTABLISHED_V2_EVENT_UNUSED)
+static tBleStatus hci_le_periodic_advertising_sync_established_v2_event_process( const uint8_t* in )
+{
+  hci_le_periodic_advertising_sync_established_v2_event_rp0 *rp0 = (void*)in;
+  return hci_le_periodic_advertising_sync_established_v2_event( rp0->Status,
+                                                                rp0->Sync_Handle,
+                                                                rp0->Advertising_SID,
+                                                                rp0->Advertiser_Address_Type,
+                                                                rp0->Advertiser_Address,
+                                                                rp0->Advertiser_PHY,
+                                                                rp0->Periodic_Advertising_Interval,
+                                                                rp0->Advertiser_Clock_Accuracy,
+                                                                rp0->Num_Subevents,
+                                                                rp0->Subevent_Interval,
+                                                                rp0->Response_Slot_Delay,
+                                                                rp0->Response_Slot_Spacing );
+}
+#endif
+
+/* HCI_LE_PERIODIC_ADVERTISING_REPORT_V2_EVENT callback function */
+__WEAK tBleStatus hci_le_periodic_advertising_report_v2_event( uint16_t Sync_Handle,
+                                                               uint8_t Tx_Power,
+                                                               uint8_t RSSI,
+                                                               uint8_t CTE_Type,
+                                                               uint16_t Periodic_Event_Counter,
+                                                               uint8_t Subevent,
+                                                               uint8_t Data_Status,
+                                                               uint8_t Data_Length,
+                                                               const uint8_t* Data )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_PERIODIC_ADVERTISING_REPORT_V2_EVENT process function */
+#if (!HCI_LE_PERIODIC_ADVERTISING_REPORT_V2_EVENT_UNUSED)
+static tBleStatus hci_le_periodic_advertising_report_v2_event_process( const uint8_t* in )
+{
+  hci_le_periodic_advertising_report_v2_event_rp0 *rp0 = (void*)in;
+  return hci_le_periodic_advertising_report_v2_event( rp0->Sync_Handle,
+                                                      rp0->Tx_Power,
+                                                      rp0->RSSI,
+                                                      rp0->CTE_Type,
+                                                      rp0->Periodic_Event_Counter,
+                                                      rp0->Subevent,
+                                                      rp0->Data_Status,
+                                                      rp0->Data_Length,
+                                                      rp0->Data );
+}
+#endif
+
+/* HCI_LE_PERIODIC_ADVERTISING_SYNC_TRANSFER_RECEIVED_V2_EVENT callback function */
+__WEAK tBleStatus hci_le_periodic_advertising_sync_transfer_received_v2_event( uint8_t Status,
+                                                                               uint16_t Connection_Handle,
+                                                                               uint16_t Service_Data,
+                                                                               uint16_t Sync_Handle,
+                                                                               uint8_t Advertising_SID,
+                                                                               uint8_t Advertiser_Address_Type,
+                                                                               const uint8_t* Advertiser_Address,
+                                                                               uint8_t Advertiser_PHY,
+                                                                               uint16_t Periodic_Advertising_Interval,
+                                                                               uint8_t Advertiser_Clock_Accuracy,
+                                                                               uint8_t Num_Subevents,
+                                                                               uint8_t Subevent_Interval,
+                                                                               uint8_t Response_Slot_Delay,
+                                                                               uint8_t Response_Slot_Spacing )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_PERIODIC_ADVERTISING_SYNC_TRANSFER_RECEIVED_V2_EVENT process function */
+#if (!HCI_LE_PERIODIC_ADVERTISING_SYNC_TRANSFER_RECEIVED_V2_EVENT_UNUSED)
+static tBleStatus hci_le_periodic_advertising_sync_transfer_received_v2_event_process( const uint8_t* in )
+{
+  hci_le_periodic_advertising_sync_transfer_received_v2_event_rp0 *rp0 = (void*)in;
+  return hci_le_periodic_advertising_sync_transfer_received_v2_event( rp0->Status,
+                                                                      rp0->Connection_Handle,
+                                                                      rp0->Service_Data,
+                                                                      rp0->Sync_Handle,
+                                                                      rp0->Advertising_SID,
+                                                                      rp0->Advertiser_Address_Type,
+                                                                      rp0->Advertiser_Address,
+                                                                      rp0->Advertiser_PHY,
+                                                                      rp0->Periodic_Advertising_Interval,
+                                                                      rp0->Advertiser_Clock_Accuracy,
+                                                                      rp0->Num_Subevents,
+                                                                      rp0->Subevent_Interval,
+                                                                      rp0->Response_Slot_Delay,
+                                                                      rp0->Response_Slot_Spacing );
+}
+#endif
+
+/* HCI_LE_PERIODIC_ADVERTISING_SUBEVENT_DATA_REQUEST_EVENT callback function */
+__WEAK tBleStatus hci_le_periodic_advertising_subevent_data_request_event( uint8_t Advertising_Handle,
+                                                                           uint8_t Subevent_Start,
+                                                                           uint8_t Subevent_Data_Count )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_PERIODIC_ADVERTISING_SUBEVENT_DATA_REQUEST_EVENT process function */
+#if (!HCI_LE_PERIODIC_ADVERTISING_SUBEVENT_DATA_REQUEST_EVENT_UNUSED)
+static tBleStatus hci_le_periodic_advertising_subevent_data_request_event_process( const uint8_t* in )
+{
+  hci_le_periodic_advertising_subevent_data_request_event_rp0 *rp0 = (void*)in;
+  return hci_le_periodic_advertising_subevent_data_request_event( rp0->Advertising_Handle,
+                                                                  rp0->Subevent_Start,
+                                                                  rp0->Subevent_Data_Count );
+}
+#endif
+
+/* HCI_LE_PERIODIC_ADVERTISING_RESPONSE_REPORT_EVENT callback function */
+__WEAK tBleStatus hci_le_periodic_advertising_response_report_event( uint8_t Advertising_Handle,
+                                                                     uint8_t Subevent,
+                                                                     uint8_t Tx_Status,
+                                                                     uint8_t Num_Responses,
+                                                                     const uint8_t* Responses )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_PERIODIC_ADVERTISING_RESPONSE_REPORT_EVENT process function */
+#if (!HCI_LE_PERIODIC_ADVERTISING_RESPONSE_REPORT_EVENT_UNUSED)
+static tBleStatus hci_le_periodic_advertising_response_report_event_process( const uint8_t* in )
+{
+  hci_le_periodic_advertising_response_report_event_rp0 *rp0 = (void*)in;
+  return hci_le_periodic_advertising_response_report_event( rp0->Advertising_Handle,
+                                                            rp0->Subevent,
+                                                            rp0->Tx_Status,
+                                                            rp0->Num_Responses,
+                                                            rp0->Responses );
+}
+#endif
+
+/* HCI_LE_ENHANCED_CONNECTION_COMPLETE_V2_EVENT callback function */
+__WEAK tBleStatus hci_le_enhanced_connection_complete_v2_event( uint8_t Status,
+                                                                uint16_t Connection_Handle,
+                                                                uint8_t Role,
+                                                                uint8_t Peer_Address_Type,
+                                                                const uint8_t* Peer_Address,
+                                                                const uint8_t* Local_Resolvable_Private_Address,
+                                                                const uint8_t* Peer_Resolvable_Private_Address,
+                                                                uint16_t Conn_Interval,
+                                                                uint16_t Conn_Latency,
+                                                                uint16_t Supervision_Timeout,
+                                                                uint8_t Central_Clock_Accuracy,
+                                                                uint8_t Advertising_Handle,
+                                                                uint16_t Sync_Handle )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_ENHANCED_CONNECTION_COMPLETE_V2_EVENT process function */
+#if (!HCI_LE_ENHANCED_CONNECTION_COMPLETE_V2_EVENT_UNUSED)
+static tBleStatus hci_le_enhanced_connection_complete_v2_event_process( const uint8_t* in )
+{
+  hci_le_enhanced_connection_complete_v2_event_rp0 *rp0 = (void*)in;
+  return hci_le_enhanced_connection_complete_v2_event( rp0->Status,
+                                                       rp0->Connection_Handle,
+                                                       rp0->Role,
+                                                       rp0->Peer_Address_Type,
+                                                       rp0->Peer_Address,
+                                                       rp0->Local_Resolvable_Private_Address,
+                                                       rp0->Peer_Resolvable_Private_Address,
+                                                       rp0->Conn_Interval,
+                                                       rp0->Conn_Latency,
+                                                       rp0->Supervision_Timeout,
+                                                       rp0->Central_Clock_Accuracy,
+                                                       rp0->Advertising_Handle,
+                                                       rp0->Sync_Handle );
+}
+#endif
+
+/* HCI_LE_CIS_ESTABLISHED_V2_EVENT callback function */
+__WEAK tBleStatus hci_le_cis_established_v2_event( uint8_t Status,
+                                                   uint16_t Connection_Handle,
+                                                   const uint8_t* CIG_Sync_Delay,
+                                                   const uint8_t* CIS_Sync_Delay,
+                                                   const uint8_t* Transport_Latency_C_To_P,
+                                                   const uint8_t* Transport_Latency_P_To_C,
+                                                   uint8_t PHY_C_To_P,
+                                                   uint8_t PHY_P_To_C,
+                                                   uint8_t NSE,
+                                                   uint8_t BN_C_To_P,
+                                                   uint8_t BN_P_To_C,
+                                                   uint8_t FT_C_To_P,
+                                                   uint8_t FT_P_To_C,
+                                                   uint16_t Max_PDU_C_To_P,
+                                                   uint16_t Max_PDU_P_To_C,
+                                                   uint16_t ISO_Interval,
+                                                   const uint8_t* Sub_Interval,
+                                                   uint16_t Max_SDU_C_To_P,
+                                                   uint16_t Max_SDU_P_To_C,
+                                                   const uint8_t* SDU_Interval_C_To_P,
+                                                   const uint8_t* SDU_Interval_P_To_C,
+                                                   uint8_t Framing )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_CIS_ESTABLISHED_V2_EVENT process function */
+#if (!HCI_LE_CIS_ESTABLISHED_V2_EVENT_UNUSED)
+static tBleStatus hci_le_cis_established_v2_event_process( const uint8_t* in )
+{
+  hci_le_cis_established_v2_event_rp0 *rp0 = (void*)in;
+  return hci_le_cis_established_v2_event( rp0->Status,
+                                          rp0->Connection_Handle,
+                                          rp0->CIG_Sync_Delay,
+                                          rp0->CIS_Sync_Delay,
+                                          rp0->Transport_Latency_C_To_P,
+                                          rp0->Transport_Latency_P_To_C,
+                                          rp0->PHY_C_To_P,
+                                          rp0->PHY_P_To_C,
+                                          rp0->NSE,
+                                          rp0->BN_C_To_P,
+                                          rp0->BN_P_To_C,
+                                          rp0->FT_C_To_P,
+                                          rp0->FT_P_To_C,
+                                          rp0->Max_PDU_C_To_P,
+                                          rp0->Max_PDU_P_To_C,
+                                          rp0->ISO_Interval,
+                                          rp0->Sub_Interval,
+                                          rp0->Max_SDU_C_To_P,
+                                          rp0->Max_SDU_P_To_C,
+                                          rp0->SDU_Interval_C_To_P,
+                                          rp0->SDU_Interval_P_To_C,
+                                          rp0->Framing );
+}
+#endif
+
+/* HCI_LE_READ_ALL_REMOTE_FEATURES_COMPLETE_EVENT callback function */
+__WEAK tBleStatus hci_le_read_all_remote_features_complete_event( uint8_t Status,
+                                                                  uint16_t Connection_Handle,
+                                                                  uint8_t Max_Remote_Page,
+                                                                  uint8_t Max_Valid_Page,
+                                                                  const uint8_t* LE_Features )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_READ_ALL_REMOTE_FEATURES_COMPLETE_EVENT process function */
+#if (!HCI_LE_READ_ALL_REMOTE_FEATURES_COMPLETE_EVENT_UNUSED)
+static tBleStatus hci_le_read_all_remote_features_complete_event_process( const uint8_t* in )
+{
+  hci_le_read_all_remote_features_complete_event_rp0 *rp0 = (void*)in;
+  return hci_le_read_all_remote_features_complete_event( rp0->Status,
+                                                         rp0->Connection_Handle,
+                                                         rp0->Max_Remote_Page,
+                                                         rp0->Max_Valid_Page,
+                                                         rp0->LE_Features );
+}
+#endif
+
+/* HCI_LE_CS_READ_REMOTE_SUPPORTED_CAPABILITIES_COMPLETE_EVENT callback function */
+__WEAK tBleStatus hci_le_cs_read_remote_supported_capabilities_complete_event( uint8_t Status,
+                                                                               uint16_t Connection_Handle,
+                                                                               uint8_t Num_Config_Supported,
+                                                                               uint16_t Max_Consecutive_Procedures_Supported,
+                                                                               uint8_t Num_Antennas_Supported,
+                                                                               uint8_t Max_Antenna_Paths_Supported,
+                                                                               uint8_t Roles_Supported,
+                                                                               uint8_t Optional_Modes_Supported,
+                                                                               uint8_t RTT_Capability,
+                                                                               uint8_t RTT_AA_Only_N,
+                                                                               uint8_t RTT_Sounding_N,
+                                                                               uint8_t RTT_Random_Payload_N,
+                                                                               uint16_t NADM_Sounding_Capability,
+                                                                               uint16_t NADM_Random_Capability,
+                                                                               uint8_t CS_SYNC_PHYs_Supported,
+                                                                               uint16_t Subfeatures_Supported,
+                                                                               uint16_t T_IP1_Times_Supported,
+                                                                               uint16_t T_IP2_Times_Supported,
+                                                                               uint16_t T_FCS_Times_Supported,
+                                                                               uint16_t T_PM_Times_Supported,
+                                                                               uint8_t T_SW_Time_Supported,
+                                                                               uint8_t TX_SNR_Capability )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_CS_READ_REMOTE_SUPPORTED_CAPABILITIES_COMPLETE_EVENT process function */
+#if (!HCI_LE_CS_READ_REMOTE_SUPPORTED_CAPABILITIES_COMPLETE_EVENT_UNUSED)
+static tBleStatus hci_le_cs_read_remote_supported_capabilities_complete_event_process( const uint8_t* in )
+{
+  hci_le_cs_read_remote_supported_capabilities_complete_event_rp0 *rp0 = (void*)in;
+  return hci_le_cs_read_remote_supported_capabilities_complete_event( rp0->Status,
+                                                                      rp0->Connection_Handle,
+                                                                      rp0->Num_Config_Supported,
+                                                                      rp0->Max_Consecutive_Procedures_Supported,
+                                                                      rp0->Num_Antennas_Supported,
+                                                                      rp0->Max_Antenna_Paths_Supported,
+                                                                      rp0->Roles_Supported,
+                                                                      rp0->Optional_Modes_Supported,
+                                                                      rp0->RTT_Capability,
+                                                                      rp0->RTT_AA_Only_N,
+                                                                      rp0->RTT_Sounding_N,
+                                                                      rp0->RTT_Random_Payload_N,
+                                                                      rp0->NADM_Sounding_Capability,
+                                                                      rp0->NADM_Random_Capability,
+                                                                      rp0->CS_SYNC_PHYs_Supported,
+                                                                      rp0->Subfeatures_Supported,
+                                                                      rp0->T_IP1_Times_Supported,
+                                                                      rp0->T_IP2_Times_Supported,
+                                                                      rp0->T_FCS_Times_Supported,
+                                                                      rp0->T_PM_Times_Supported,
+                                                                      rp0->T_SW_Time_Supported,
+                                                                      rp0->TX_SNR_Capability );
+}
+#endif
+
+/* HCI_LE_CS_READ_REMOTE_FAE_TABLE_COMPLETE_EVENT callback function */
+__WEAK tBleStatus hci_le_cs_read_remote_fae_table_complete_event( uint8_t Status,
+                                                                  uint16_t Connection_Handle,
+                                                                  const uint8_t* Remote_FAE_Table )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_CS_READ_REMOTE_FAE_TABLE_COMPLETE_EVENT process function */
+#if (!HCI_LE_CS_READ_REMOTE_FAE_TABLE_COMPLETE_EVENT_UNUSED)
+static tBleStatus hci_le_cs_read_remote_fae_table_complete_event_process( const uint8_t* in )
+{
+  hci_le_cs_read_remote_fae_table_complete_event_rp0 *rp0 = (void*)in;
+  return hci_le_cs_read_remote_fae_table_complete_event( rp0->Status,
+                                                         rp0->Connection_Handle,
+                                                         rp0->Remote_FAE_Table );
+}
+#endif
+
+/* HCI_LE_CS_SECURITY_ENABLE_COMPLETE_EVENT callback function */
+__WEAK tBleStatus hci_le_cs_security_enable_complete_event( uint8_t Status,
+                                                            uint16_t Connection_Handle )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_CS_SECURITY_ENABLE_COMPLETE_EVENT process function */
+#if (!HCI_LE_CS_SECURITY_ENABLE_COMPLETE_EVENT_UNUSED)
+static tBleStatus hci_le_cs_security_enable_complete_event_process( const uint8_t* in )
+{
+  hci_le_cs_security_enable_complete_event_rp0 *rp0 = (void*)in;
+  return hci_le_cs_security_enable_complete_event( rp0->Status,
+                                                   rp0->Connection_Handle );
+}
+#endif
+
+/* HCI_LE_CS_CONFIG_COMPLETE_EVENT callback function */
+__WEAK tBleStatus hci_le_cs_config_complete_event( uint8_t Status,
+                                                   uint16_t Connection_Handle,
+                                                   uint8_t Config_ID,
+                                                   uint8_t Action,
+                                                   uint8_t Main_Mode_Type,
+                                                   uint8_t Sub_Mode_Type,
+                                                   uint8_t Min_Main_Mode_Steps,
+                                                   uint8_t Max_Main_Mode_Steps,
+                                                   uint8_t Main_Mode_Repetition,
+                                                   uint8_t Mode_0_Steps,
+                                                   uint8_t Role,
+                                                   uint8_t RTT_Type,
+                                                   uint8_t CS_SYNC_PHY,
+                                                   const uint8_t* Channel_Map,
+                                                   uint8_t Channel_Map_Repetition,
+                                                   uint8_t Channel_Selection_Type,
+                                                   uint8_t Ch3c_Shape,
+                                                   uint8_t Ch3c_Jump,
+                                                   uint8_t Reserved,
+                                                   uint8_t T_IP1_Time,
+                                                   uint8_t T_IP2_Time,
+                                                   uint8_t T_FCS_Time,
+                                                   uint8_t T_PM_Time )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_CS_CONFIG_COMPLETE_EVENT process function */
+#if (!HCI_LE_CS_CONFIG_COMPLETE_EVENT_UNUSED)
+static tBleStatus hci_le_cs_config_complete_event_process( const uint8_t* in )
+{
+  hci_le_cs_config_complete_event_rp0 *rp0 = (void*)in;
+  return hci_le_cs_config_complete_event( rp0->Status,
+                                          rp0->Connection_Handle,
+                                          rp0->Config_ID,
+                                          rp0->Action,
+                                          rp0->Main_Mode_Type,
+                                          rp0->Sub_Mode_Type,
+                                          rp0->Min_Main_Mode_Steps,
+                                          rp0->Max_Main_Mode_Steps,
+                                          rp0->Main_Mode_Repetition,
+                                          rp0->Mode_0_Steps,
+                                          rp0->Role,
+                                          rp0->RTT_Type,
+                                          rp0->CS_SYNC_PHY,
+                                          rp0->Channel_Map,
+                                          rp0->Channel_Map_Repetition,
+                                          rp0->Channel_Selection_Type,
+                                          rp0->Ch3c_Shape,
+                                          rp0->Ch3c_Jump,
+                                          rp0->Reserved,
+                                          rp0->T_IP1_Time,
+                                          rp0->T_IP2_Time,
+                                          rp0->T_FCS_Time,
+                                          rp0->T_PM_Time );
+}
+#endif
+
+/* HCI_LE_CS_PROCEDURE_ENABLE_COMPLETE_EVENT callback function */
+__WEAK tBleStatus hci_le_cs_procedure_enable_complete_event( uint8_t Status,
+                                                             uint16_t Connection_Handle,
+                                                             uint8_t Config_ID,
+                                                             uint8_t State,
+                                                             uint8_t Tone_Antenna_Config_Selection,
+                                                             uint8_t Selected_TX_Power,
+                                                             const uint8_t* Subevent_Len,
+                                                             uint8_t Subevents_Per_Event,
+                                                             uint16_t Subevent_Interval,
+                                                             uint16_t Event_Interval,
+                                                             uint16_t Procedure_Interval,
+                                                             uint16_t Procedure_Count,
+                                                             uint16_t Max_Procedure_Len )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_CS_PROCEDURE_ENABLE_COMPLETE_EVENT process function */
+#if (!HCI_LE_CS_PROCEDURE_ENABLE_COMPLETE_EVENT_UNUSED)
+static tBleStatus hci_le_cs_procedure_enable_complete_event_process( const uint8_t* in )
+{
+  hci_le_cs_procedure_enable_complete_event_rp0 *rp0 = (void*)in;
+  return hci_le_cs_procedure_enable_complete_event( rp0->Status,
+                                                    rp0->Connection_Handle,
+                                                    rp0->Config_ID,
+                                                    rp0->State,
+                                                    rp0->Tone_Antenna_Config_Selection,
+                                                    rp0->Selected_TX_Power,
+                                                    rp0->Subevent_Len,
+                                                    rp0->Subevents_Per_Event,
+                                                    rp0->Subevent_Interval,
+                                                    rp0->Event_Interval,
+                                                    rp0->Procedure_Interval,
+                                                    rp0->Procedure_Count,
+                                                    rp0->Max_Procedure_Len );
+}
+#endif
+
+/* HCI_LE_CS_SUBEVENT_RESULT_EVENT callback function */
+__WEAK tBleStatus hci_le_cs_subevent_result_event( uint16_t Connection_Handle,
+                                                   uint8_t Config_ID,
+                                                   uint16_t Start_ACL_Conn_Event_Counter,
+                                                   uint16_t Procedure_Counter,
+                                                   uint16_t Frequency_Compensation,
+                                                   uint8_t Reference_Power_Level,
+                                                   uint8_t Procedure_Done_Status,
+                                                   uint8_t Subevent_Done_Status,
+                                                   uint8_t Abort_Reason,
+                                                   uint8_t Num_Antenna_Paths,
+                                                   uint8_t Num_Steps_Reported,
+                                                   const uint8_t* Step_Param )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_CS_SUBEVENT_RESULT_EVENT process function */
+#if (!HCI_LE_CS_SUBEVENT_RESULT_EVENT_UNUSED)
+static tBleStatus hci_le_cs_subevent_result_event_process( const uint8_t* in )
+{
+  hci_le_cs_subevent_result_event_rp0 *rp0 = (void*)in;
+  return hci_le_cs_subevent_result_event( rp0->Connection_Handle,
+                                          rp0->Config_ID,
+                                          rp0->Start_ACL_Conn_Event_Counter,
+                                          rp0->Procedure_Counter,
+                                          rp0->Frequency_Compensation,
+                                          rp0->Reference_Power_Level,
+                                          rp0->Procedure_Done_Status,
+                                          rp0->Subevent_Done_Status,
+                                          rp0->Abort_Reason,
+                                          rp0->Num_Antenna_Paths,
+                                          rp0->Num_Steps_Reported,
+                                          rp0->Step_Param );
+}
+#endif
+
+/* HCI_LE_CS_SUBEVENT_RESULT_CONTINUE_EVENT callback function */
+__WEAK tBleStatus hci_le_cs_subevent_result_continue_event( uint16_t Connection_Handle,
+                                                            uint8_t Config_ID,
+                                                            uint8_t Procedure_Done_Status,
+                                                            uint8_t Subevent_Done_Status,
+                                                            uint8_t Abort_Reason,
+                                                            uint8_t Num_Antenna_Paths,
+                                                            uint8_t Num_Steps_Reported,
+                                                            const uint8_t* Step_Param )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_CS_SUBEVENT_RESULT_CONTINUE_EVENT process function */
+#if (!HCI_LE_CS_SUBEVENT_RESULT_CONTINUE_EVENT_UNUSED)
+static tBleStatus hci_le_cs_subevent_result_continue_event_process( const uint8_t* in )
+{
+  hci_le_cs_subevent_result_continue_event_rp0 *rp0 = (void*)in;
+  return hci_le_cs_subevent_result_continue_event( rp0->Connection_Handle,
+                                                   rp0->Config_ID,
+                                                   rp0->Procedure_Done_Status,
+                                                   rp0->Subevent_Done_Status,
+                                                   rp0->Abort_Reason,
+                                                   rp0->Num_Antenna_Paths,
+                                                   rp0->Num_Steps_Reported,
+                                                   rp0->Step_Param );
+}
+#endif
+
+/* HCI_LE_CS_TEST_END_COMPLETE_EVENT callback function */
+__WEAK tBleStatus hci_le_cs_test_end_complete_event( uint8_t Status )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_CS_TEST_END_COMPLETE_EVENT process function */
+#if (!HCI_LE_CS_TEST_END_COMPLETE_EVENT_UNUSED)
+static tBleStatus hci_le_cs_test_end_complete_event_process( const uint8_t* in )
+{
+  hci_le_cs_test_end_complete_event_rp0 *rp0 = (void*)in;
+  return hci_le_cs_test_end_complete_event( rp0->Status );
+}
+#endif
+
+/* HCI_LE_MONITORED_ADVERTISERS_REPORT_EVENT callback function */
+__WEAK tBleStatus hci_le_monitored_advertisers_report_event( uint8_t Address_Type,
+                                                             const uint8_t* Address,
+                                                             uint8_t Condition )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_MONITORED_ADVERTISERS_REPORT_EVENT process function */
+#if (!HCI_LE_MONITORED_ADVERTISERS_REPORT_EVENT_UNUSED)
+static tBleStatus hci_le_monitored_advertisers_report_event_process( const uint8_t* in )
+{
+  hci_le_monitored_advertisers_report_event_rp0 *rp0 = (void*)in;
+  return hci_le_monitored_advertisers_report_event( rp0->Address_Type,
+                                                    rp0->Address,
+                                                    rp0->Condition );
+}
+#endif
+
+/* HCI_LE_FRAME_SPACE_UPDATE_COMPLETE_EVENT callback function */
+__WEAK tBleStatus hci_le_frame_space_update_complete_event( uint8_t Status,
+                                                            uint16_t Connection_Handle,
+                                                            uint8_t Initiator,
+                                                            uint16_t Frame_Space,
+                                                            uint8_t PHYS,
+                                                            uint16_t Spacing_Types )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* HCI_LE_FRAME_SPACE_UPDATE_COMPLETE_EVENT process function */
+#if (!HCI_LE_FRAME_SPACE_UPDATE_COMPLETE_EVENT_UNUSED)
+static tBleStatus hci_le_frame_space_update_complete_event_process( const uint8_t* in )
+{
+  hci_le_frame_space_update_complete_event_rp0 *rp0 = (void*)in;
+  return hci_le_frame_space_update_complete_event( rp0->Status,
+                                                   rp0->Connection_Handle,
+                                                   rp0->Initiator,
+                                                   rp0->Frame_Space,
+                                                   rp0->PHYS,
+                                                   rp0->Spacing_Types );
+}
+#endif
+
+/* ACI_WARNING_EVENT callback function */
+__WEAK tBleStatus aci_warning_event( uint8_t Warning_Type,
+                                     uint8_t Data_Length,
+                                     const uint8_t* Data )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_WARNING_EVENT process function */
+#if (!ACI_WARNING_EVENT_UNUSED)
+static tBleStatus aci_warning_event_process( const uint8_t* in )
+{
+  aci_warning_event_rp0 *rp0 = (void*)in;
+  return aci_warning_event( rp0->Warning_Type,
+                            rp0->Data_Length,
+                            rp0->Data );
+}
+#endif
+
+/* ACI_GAP_LIMITED_DISCOVERABLE_EVENT callback function */
+__WEAK tBleStatus aci_gap_limited_discoverable_event( void )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_GAP_LIMITED_DISCOVERABLE_EVENT process function */
+#if (!ACI_GAP_LIMITED_DISCOVERABLE_EVENT_UNUSED)
+static tBleStatus aci_gap_limited_discoverable_event_process( const uint8_t* in )
+{
+  return aci_gap_limited_discoverable_event( );
+}
+#endif
+
+/* ACI_GAP_PAIRING_COMPLETE_EVENT callback function */
+__WEAK tBleStatus aci_gap_pairing_complete_event( uint16_t Connection_Handle,
+                                                  uint8_t Status,
+                                                  uint8_t Reason )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_GAP_PAIRING_COMPLETE_EVENT process function */
+#if (!ACI_GAP_PAIRING_COMPLETE_EVENT_UNUSED)
+static tBleStatus aci_gap_pairing_complete_event_process( const uint8_t* in )
+{
+  aci_gap_pairing_complete_event_rp0 *rp0 = (void*)in;
+  return aci_gap_pairing_complete_event( rp0->Connection_Handle,
+                                         rp0->Status,
+                                         rp0->Reason );
+}
+#endif
+
+/* ACI_GAP_PASS_KEY_REQ_EVENT callback function */
+__WEAK tBleStatus aci_gap_pass_key_req_event( uint16_t Connection_Handle,
+                                              uint8_t IO_Capability )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_GAP_PASS_KEY_REQ_EVENT process function */
+#if (!ACI_GAP_PASS_KEY_REQ_EVENT_UNUSED)
+static tBleStatus aci_gap_pass_key_req_event_process( const uint8_t* in )
+{
+  aci_gap_pass_key_req_event_rp0 *rp0 = (void*)in;
+  return aci_gap_pass_key_req_event( rp0->Connection_Handle,
+                                     rp0->IO_Capability );
+}
+#endif
+
+/* ACI_GAP_AUTHORIZATION_REQ_EVENT callback function */
+__WEAK tBleStatus aci_gap_authorization_req_event( uint16_t Connection_Handle )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_GAP_AUTHORIZATION_REQ_EVENT process function */
+#if (!ACI_GAP_AUTHORIZATION_REQ_EVENT_UNUSED)
+static tBleStatus aci_gap_authorization_req_event_process( const uint8_t* in )
+{
+  aci_gap_authorization_req_event_rp0 *rp0 = (void*)in;
+  return aci_gap_authorization_req_event( rp0->Connection_Handle );
+}
+#endif
+
+/* ACI_GAP_BOND_LOST_EVENT callback function */
+__WEAK tBleStatus aci_gap_bond_lost_event( uint16_t Connection_Handle )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_GAP_BOND_LOST_EVENT process function */
+#if (!ACI_GAP_BOND_LOST_EVENT_UNUSED)
+static tBleStatus aci_gap_bond_lost_event_process( const uint8_t* in )
+{
+  aci_gap_bond_lost_event_rp0 *rp0 = (void*)in;
+  return aci_gap_bond_lost_event( rp0->Connection_Handle );
+}
+#endif
+
+/* ACI_GAP_PROC_COMPLETE_EVENT callback function */
+__WEAK tBleStatus aci_gap_proc_complete_event( uint8_t Procedure_Code,
+                                               uint8_t Status,
+                                               uint8_t Data_Length,
+                                               const uint8_t* Data )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_GAP_PROC_COMPLETE_EVENT process function */
+#if (!ACI_GAP_PROC_COMPLETE_EVENT_UNUSED)
+static tBleStatus aci_gap_proc_complete_event_process( const uint8_t* in )
+{
+  aci_gap_proc_complete_event_rp0 *rp0 = (void*)in;
+  return aci_gap_proc_complete_event( rp0->Procedure_Code,
+                                      rp0->Status,
+                                      rp0->Data_Length,
+                                      rp0->Data );
+}
+#endif
+
+/* ACI_GAP_ADDR_NOT_RESOLVED_EVENT callback function */
+__WEAK tBleStatus aci_gap_addr_not_resolved_event( uint16_t Connection_Handle )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_GAP_ADDR_NOT_RESOLVED_EVENT process function */
+#if (!ACI_GAP_ADDR_NOT_RESOLVED_EVENT_UNUSED)
+static tBleStatus aci_gap_addr_not_resolved_event_process( const uint8_t* in )
+{
+  aci_gap_addr_not_resolved_event_rp0 *rp0 = (void*)in;
+  return aci_gap_addr_not_resolved_event( rp0->Connection_Handle );
+}
+#endif
+
+/* ACI_GAP_NUMERIC_COMPARISON_VALUE_EVENT callback function */
+__WEAK tBleStatus aci_gap_numeric_comparison_value_event( uint16_t Connection_Handle,
+                                                          uint32_t Numeric_Value )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_GAP_NUMERIC_COMPARISON_VALUE_EVENT process function */
+#if (!ACI_GAP_NUMERIC_COMPARISON_VALUE_EVENT_UNUSED)
+static tBleStatus aci_gap_numeric_comparison_value_event_process( const uint8_t* in )
+{
+  aci_gap_numeric_comparison_value_event_rp0 *rp0 = (void*)in;
+  return aci_gap_numeric_comparison_value_event( rp0->Connection_Handle,
+                                                 rp0->Numeric_Value );
+}
+#endif
+
+/* ACI_GAP_KEYPRESS_NOTIFICATION_EVENT callback function */
+__WEAK tBleStatus aci_gap_keypress_notification_event( uint16_t Connection_Handle,
+                                                       uint8_t Notification_Type )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_GAP_KEYPRESS_NOTIFICATION_EVENT process function */
+#if (!ACI_GAP_KEYPRESS_NOTIFICATION_EVENT_UNUSED)
+static tBleStatus aci_gap_keypress_notification_event_process( const uint8_t* in )
+{
+  aci_gap_keypress_notification_event_rp0 *rp0 = (void*)in;
+  return aci_gap_keypress_notification_event( rp0->Connection_Handle,
+                                              rp0->Notification_Type );
+}
+#endif
+
+/* ACI_GAP_PAIRING_REQUEST_EVENT callback function */
+__WEAK tBleStatus aci_gap_pairing_request_event( uint16_t Connection_Handle,
+                                                 uint8_t Bonded,
+                                                 uint8_t Auth_Req )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_GAP_PAIRING_REQUEST_EVENT process function */
+#if (!ACI_GAP_PAIRING_REQUEST_EVENT_UNUSED)
+static tBleStatus aci_gap_pairing_request_event_process( const uint8_t* in )
+{
+  aci_gap_pairing_request_event_rp0 *rp0 = (void*)in;
+  return aci_gap_pairing_request_event( rp0->Connection_Handle,
+                                        rp0->Bonded,
+                                        rp0->Auth_Req );
+}
+#endif
+
+/* ACI_L2CAP_CONNECTION_UPDATE_RESP_EVENT callback function */
+__WEAK tBleStatus aci_l2cap_connection_update_resp_event( uint16_t Connection_Handle,
+                                                          uint16_t Result )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_L2CAP_CONNECTION_UPDATE_RESP_EVENT process function */
+#if (!ACI_L2CAP_CONNECTION_UPDATE_RESP_EVENT_UNUSED)
+static tBleStatus aci_l2cap_connection_update_resp_event_process( const uint8_t* in )
+{
+  aci_l2cap_connection_update_resp_event_rp0 *rp0 = (void*)in;
+  return aci_l2cap_connection_update_resp_event( rp0->Connection_Handle,
+                                                 rp0->Result );
+}
+#endif
+
+/* ACI_L2CAP_PROC_TIMEOUT_EVENT callback function */
+__WEAK tBleStatus aci_l2cap_proc_timeout_event( uint16_t Connection_Handle,
+                                                uint8_t Data_Length,
+                                                const uint8_t* Data )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_L2CAP_PROC_TIMEOUT_EVENT process function */
+#if (!ACI_L2CAP_PROC_TIMEOUT_EVENT_UNUSED)
+static tBleStatus aci_l2cap_proc_timeout_event_process( const uint8_t* in )
+{
+  aci_l2cap_proc_timeout_event_rp0 *rp0 = (void*)in;
+  return aci_l2cap_proc_timeout_event( rp0->Connection_Handle,
+                                       rp0->Data_Length,
+                                       rp0->Data );
+}
+#endif
+
+/* ACI_L2CAP_CONNECTION_UPDATE_REQ_EVENT callback function */
+__WEAK tBleStatus aci_l2cap_connection_update_req_event( uint16_t Connection_Handle,
+                                                         uint8_t Identifier,
+                                                         uint16_t L2CAP_Length,
+                                                         uint16_t Interval_Min,
+                                                         uint16_t Interval_Max,
+                                                         uint16_t Latency,
+                                                         uint16_t Timeout_Multiplier )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_L2CAP_CONNECTION_UPDATE_REQ_EVENT process function */
+#if (!ACI_L2CAP_CONNECTION_UPDATE_REQ_EVENT_UNUSED)
+static tBleStatus aci_l2cap_connection_update_req_event_process( const uint8_t* in )
+{
+  aci_l2cap_connection_update_req_event_rp0 *rp0 = (void*)in;
+  return aci_l2cap_connection_update_req_event( rp0->Connection_Handle,
+                                                rp0->Identifier,
+                                                rp0->L2CAP_Length,
+                                                rp0->Interval_Min,
+                                                rp0->Interval_Max,
+                                                rp0->Latency,
+                                                rp0->Timeout_Multiplier );
+}
+#endif
+
+/* ACI_L2CAP_COMMAND_REJECT_EVENT callback function */
+__WEAK tBleStatus aci_l2cap_command_reject_event( uint16_t Connection_Handle,
+                                                  uint8_t Identifier,
+                                                  uint16_t Reason,
+                                                  uint8_t Data_Length,
+                                                  const uint8_t* Data )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_L2CAP_COMMAND_REJECT_EVENT process function */
+#if (!ACI_L2CAP_COMMAND_REJECT_EVENT_UNUSED)
+static tBleStatus aci_l2cap_command_reject_event_process( const uint8_t* in )
+{
+  aci_l2cap_command_reject_event_rp0 *rp0 = (void*)in;
+  return aci_l2cap_command_reject_event( rp0->Connection_Handle,
+                                         rp0->Identifier,
+                                         rp0->Reason,
+                                         rp0->Data_Length,
+                                         rp0->Data );
+}
+#endif
+
+/* ACI_L2CAP_COC_CONNECT_EVENT callback function */
+__WEAK tBleStatus aci_l2cap_coc_connect_event( uint16_t Connection_Handle,
+                                               uint16_t SPSM,
+                                               uint16_t MTU,
+                                               uint16_t MPS,
+                                               uint16_t Initial_Credits,
+                                               uint8_t Channel_Number )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_L2CAP_COC_CONNECT_EVENT process function */
+#if (!ACI_L2CAP_COC_CONNECT_EVENT_UNUSED)
+static tBleStatus aci_l2cap_coc_connect_event_process( const uint8_t* in )
+{
+  aci_l2cap_coc_connect_event_rp0 *rp0 = (void*)in;
+  return aci_l2cap_coc_connect_event( rp0->Connection_Handle,
+                                      rp0->SPSM,
+                                      rp0->MTU,
+                                      rp0->MPS,
+                                      rp0->Initial_Credits,
+                                      rp0->Channel_Number );
+}
+#endif
+
+/* ACI_L2CAP_COC_CONNECT_CONFIRM_EVENT callback function */
+__WEAK tBleStatus aci_l2cap_coc_connect_confirm_event( uint16_t Connection_Handle,
+                                                       uint16_t MTU,
+                                                       uint16_t MPS,
+                                                       uint16_t Initial_Credits,
+                                                       uint16_t Result,
+                                                       uint8_t Channel_Number,
+                                                       const uint8_t* Channel_Index_List )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_L2CAP_COC_CONNECT_CONFIRM_EVENT process function */
+#if (!ACI_L2CAP_COC_CONNECT_CONFIRM_EVENT_UNUSED)
+static tBleStatus aci_l2cap_coc_connect_confirm_event_process( const uint8_t* in )
+{
+  aci_l2cap_coc_connect_confirm_event_rp0 *rp0 = (void*)in;
+  return aci_l2cap_coc_connect_confirm_event( rp0->Connection_Handle,
+                                              rp0->MTU,
+                                              rp0->MPS,
+                                              rp0->Initial_Credits,
+                                              rp0->Result,
+                                              rp0->Channel_Number,
+                                              rp0->Channel_Index_List );
+}
+#endif
+
+/* ACI_L2CAP_COC_RECONF_EVENT callback function */
+__WEAK tBleStatus aci_l2cap_coc_reconf_event( uint16_t Connection_Handle,
+                                              uint16_t MTU,
+                                              uint16_t MPS,
+                                              uint8_t Channel_Number,
+                                              const uint8_t* Channel_Index_List )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_L2CAP_COC_RECONF_EVENT process function */
+#if (!ACI_L2CAP_COC_RECONF_EVENT_UNUSED)
+static tBleStatus aci_l2cap_coc_reconf_event_process( const uint8_t* in )
+{
+  aci_l2cap_coc_reconf_event_rp0 *rp0 = (void*)in;
+  return aci_l2cap_coc_reconf_event( rp0->Connection_Handle,
+                                     rp0->MTU,
+                                     rp0->MPS,
+                                     rp0->Channel_Number,
+                                     rp0->Channel_Index_List );
+}
+#endif
+
+/* ACI_L2CAP_COC_RECONF_CONFIRM_EVENT callback function */
+__WEAK tBleStatus aci_l2cap_coc_reconf_confirm_event( uint16_t Connection_Handle,
+                                                      uint16_t Result )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_L2CAP_COC_RECONF_CONFIRM_EVENT process function */
+#if (!ACI_L2CAP_COC_RECONF_CONFIRM_EVENT_UNUSED)
+static tBleStatus aci_l2cap_coc_reconf_confirm_event_process( const uint8_t* in )
+{
+  aci_l2cap_coc_reconf_confirm_event_rp0 *rp0 = (void*)in;
+  return aci_l2cap_coc_reconf_confirm_event( rp0->Connection_Handle,
+                                             rp0->Result );
+}
+#endif
+
+/* ACI_L2CAP_COC_DISCONNECT_EVENT callback function */
+__WEAK tBleStatus aci_l2cap_coc_disconnect_event( uint8_t Channel_Index )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_L2CAP_COC_DISCONNECT_EVENT process function */
+#if (!ACI_L2CAP_COC_DISCONNECT_EVENT_UNUSED)
+static tBleStatus aci_l2cap_coc_disconnect_event_process( const uint8_t* in )
+{
+  aci_l2cap_coc_disconnect_event_rp0 *rp0 = (void*)in;
+  return aci_l2cap_coc_disconnect_event( rp0->Channel_Index );
+}
+#endif
+
+/* ACI_L2CAP_COC_FLOW_CONTROL_EVENT callback function */
+__WEAK tBleStatus aci_l2cap_coc_flow_control_event( uint8_t Channel_Index,
+                                                    uint16_t Credits )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_L2CAP_COC_FLOW_CONTROL_EVENT process function */
+#if (!ACI_L2CAP_COC_FLOW_CONTROL_EVENT_UNUSED)
+static tBleStatus aci_l2cap_coc_flow_control_event_process( const uint8_t* in )
+{
+  aci_l2cap_coc_flow_control_event_rp0 *rp0 = (void*)in;
+  return aci_l2cap_coc_flow_control_event( rp0->Channel_Index,
+                                           rp0->Credits );
+}
+#endif
+
+/* ACI_L2CAP_COC_RX_DATA_EVENT callback function */
+__WEAK tBleStatus aci_l2cap_coc_rx_data_event( uint8_t Channel_Index,
+                                               uint16_t Length,
+                                               const uint8_t* Data )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_L2CAP_COC_RX_DATA_EVENT process function */
+#if (!ACI_L2CAP_COC_RX_DATA_EVENT_UNUSED)
+static tBleStatus aci_l2cap_coc_rx_data_event_process( const uint8_t* in )
+{
+  aci_l2cap_coc_rx_data_event_rp0 *rp0 = (void*)in;
+  return aci_l2cap_coc_rx_data_event( rp0->Channel_Index,
+                                      rp0->Length,
+                                      rp0->Data );
+}
+#endif
+
+/* ACI_L2CAP_COC_TX_POOL_AVAILABLE_EVENT callback function */
+__WEAK tBleStatus aci_l2cap_coc_tx_pool_available_event( void )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_L2CAP_COC_TX_POOL_AVAILABLE_EVENT process function */
+#if (!ACI_L2CAP_COC_TX_POOL_AVAILABLE_EVENT_UNUSED)
+static tBleStatus aci_l2cap_coc_tx_pool_available_event_process( const uint8_t* in )
+{
+  return aci_l2cap_coc_tx_pool_available_event( );
+}
+#endif
+
+/* ACI_GATT_ATTRIBUTE_MODIFIED_EVENT callback function */
+__WEAK tBleStatus aci_gatt_attribute_modified_event( uint16_t Connection_Handle,
+                                                     uint16_t Attr_Handle,
+                                                     uint16_t Offset,
+                                                     uint16_t Attr_Data_Length,
+                                                     const uint8_t* Attr_Data )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_GATT_ATTRIBUTE_MODIFIED_EVENT process function */
+#if (!ACI_GATT_ATTRIBUTE_MODIFIED_EVENT_UNUSED)
+static tBleStatus aci_gatt_attribute_modified_event_process( const uint8_t* in )
+{
+  aci_gatt_attribute_modified_event_rp0 *rp0 = (void*)in;
+  return aci_gatt_attribute_modified_event( rp0->Connection_Handle,
+                                            rp0->Attr_Handle,
+                                            rp0->Offset,
+                                            rp0->Attr_Data_Length,
+                                            rp0->Attr_Data );
+}
+#endif
+
+/* ACI_GATT_PROC_TIMEOUT_EVENT callback function */
+__WEAK tBleStatus aci_gatt_proc_timeout_event( uint16_t Connection_Handle )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_GATT_PROC_TIMEOUT_EVENT process function */
+#if (!ACI_GATT_PROC_TIMEOUT_EVENT_UNUSED)
+static tBleStatus aci_gatt_proc_timeout_event_process( const uint8_t* in )
+{
+  aci_gatt_proc_timeout_event_rp0 *rp0 = (void*)in;
+  return aci_gatt_proc_timeout_event( rp0->Connection_Handle );
+}
+#endif
+
+/* ACI_ATT_EXCHANGE_MTU_RESP_EVENT callback function */
+__WEAK tBleStatus aci_att_exchange_mtu_resp_event( uint16_t Connection_Handle,
+                                                   uint16_t Server_RX_MTU )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_ATT_EXCHANGE_MTU_RESP_EVENT process function */
+#if (!ACI_ATT_EXCHANGE_MTU_RESP_EVENT_UNUSED)
+static tBleStatus aci_att_exchange_mtu_resp_event_process( const uint8_t* in )
+{
+  aci_att_exchange_mtu_resp_event_rp0 *rp0 = (void*)in;
+  return aci_att_exchange_mtu_resp_event( rp0->Connection_Handle,
+                                          rp0->Server_RX_MTU );
+}
+#endif
+
+/* ACI_ATT_FIND_INFO_RESP_EVENT callback function */
+__WEAK tBleStatus aci_att_find_info_resp_event( uint16_t Connection_Handle,
+                                                uint8_t Format,
+                                                uint8_t Event_Data_Length,
+                                                const uint8_t* Handle_UUID_Pair )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_ATT_FIND_INFO_RESP_EVENT process function */
+#if (!ACI_ATT_FIND_INFO_RESP_EVENT_UNUSED)
+static tBleStatus aci_att_find_info_resp_event_process( const uint8_t* in )
+{
+  aci_att_find_info_resp_event_rp0 *rp0 = (void*)in;
+  return aci_att_find_info_resp_event( rp0->Connection_Handle,
+                                       rp0->Format,
+                                       rp0->Event_Data_Length,
+                                       rp0->Handle_UUID_Pair );
+}
+#endif
+
+/* ACI_ATT_FIND_BY_TYPE_VALUE_RESP_EVENT callback function */
+__WEAK tBleStatus aci_att_find_by_type_value_resp_event( uint16_t Connection_Handle,
+                                                         uint8_t Num_of_Handle_Pair,
+                                                         const Attribute_Group_Handle_Pair_t* Attribute_Group_Handle_Pair )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_ATT_FIND_BY_TYPE_VALUE_RESP_EVENT process function */
+#if (!ACI_ATT_FIND_BY_TYPE_VALUE_RESP_EVENT_UNUSED)
+static tBleStatus aci_att_find_by_type_value_resp_event_process( const uint8_t* in )
+{
+  aci_att_find_by_type_value_resp_event_rp0 *rp0 = (void*)in;
+  return aci_att_find_by_type_value_resp_event( rp0->Connection_Handle,
+                                                rp0->Num_of_Handle_Pair,
+                                                rp0->Attribute_Group_Handle_Pair );
+}
+#endif
+
+/* ACI_ATT_READ_BY_TYPE_RESP_EVENT callback function */
+__WEAK tBleStatus aci_att_read_by_type_resp_event( uint16_t Connection_Handle,
+                                                   uint8_t Handle_Value_Pair_Length,
+                                                   uint8_t Data_Length,
+                                                   const uint8_t* Handle_Value_Pair_Data )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_ATT_READ_BY_TYPE_RESP_EVENT process function */
+#if (!ACI_ATT_READ_BY_TYPE_RESP_EVENT_UNUSED)
+static tBleStatus aci_att_read_by_type_resp_event_process( const uint8_t* in )
+{
+  aci_att_read_by_type_resp_event_rp0 *rp0 = (void*)in;
+  return aci_att_read_by_type_resp_event( rp0->Connection_Handle,
+                                          rp0->Handle_Value_Pair_Length,
+                                          rp0->Data_Length,
+                                          rp0->Handle_Value_Pair_Data );
+}
+#endif
+
+/* ACI_ATT_READ_RESP_EVENT callback function */
+__WEAK tBleStatus aci_att_read_resp_event( uint16_t Connection_Handle,
+                                           uint8_t Event_Data_Length,
+                                           const uint8_t* Attribute_Value )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_ATT_READ_RESP_EVENT process function */
+#if (!ACI_ATT_READ_RESP_EVENT_UNUSED)
+static tBleStatus aci_att_read_resp_event_process( const uint8_t* in )
+{
+  aci_att_read_resp_event_rp0 *rp0 = (void*)in;
+  return aci_att_read_resp_event( rp0->Connection_Handle,
+                                  rp0->Event_Data_Length,
+                                  rp0->Attribute_Value );
+}
+#endif
+
+/* ACI_ATT_READ_BLOB_RESP_EVENT callback function */
+__WEAK tBleStatus aci_att_read_blob_resp_event( uint16_t Connection_Handle,
+                                                uint8_t Event_Data_Length,
+                                                const uint8_t* Attribute_Value )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_ATT_READ_BLOB_RESP_EVENT process function */
+#if (!ACI_ATT_READ_BLOB_RESP_EVENT_UNUSED)
+static tBleStatus aci_att_read_blob_resp_event_process( const uint8_t* in )
+{
+  aci_att_read_blob_resp_event_rp0 *rp0 = (void*)in;
+  return aci_att_read_blob_resp_event( rp0->Connection_Handle,
+                                       rp0->Event_Data_Length,
+                                       rp0->Attribute_Value );
+}
+#endif
+
+/* ACI_ATT_READ_MULTIPLE_RESP_EVENT callback function */
+__WEAK tBleStatus aci_att_read_multiple_resp_event( uint16_t Connection_Handle,
+                                                    uint8_t Event_Data_Length,
+                                                    const uint8_t* Set_Of_Values )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_ATT_READ_MULTIPLE_RESP_EVENT process function */
+#if (!ACI_ATT_READ_MULTIPLE_RESP_EVENT_UNUSED)
+static tBleStatus aci_att_read_multiple_resp_event_process( const uint8_t* in )
+{
+  aci_att_read_multiple_resp_event_rp0 *rp0 = (void*)in;
+  return aci_att_read_multiple_resp_event( rp0->Connection_Handle,
+                                           rp0->Event_Data_Length,
+                                           rp0->Set_Of_Values );
+}
+#endif
+
+/* ACI_ATT_READ_BY_GROUP_TYPE_RESP_EVENT callback function */
+__WEAK tBleStatus aci_att_read_by_group_type_resp_event( uint16_t Connection_Handle,
+                                                         uint8_t Attribute_Data_Length,
+                                                         uint8_t Data_Length,
+                                                         const uint8_t* Attribute_Data_List )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_ATT_READ_BY_GROUP_TYPE_RESP_EVENT process function */
+#if (!ACI_ATT_READ_BY_GROUP_TYPE_RESP_EVENT_UNUSED)
+static tBleStatus aci_att_read_by_group_type_resp_event_process( const uint8_t* in )
+{
+  aci_att_read_by_group_type_resp_event_rp0 *rp0 = (void*)in;
+  return aci_att_read_by_group_type_resp_event( rp0->Connection_Handle,
+                                                rp0->Attribute_Data_Length,
+                                                rp0->Data_Length,
+                                                rp0->Attribute_Data_List );
+}
+#endif
+
+/* ACI_ATT_PREPARE_WRITE_RESP_EVENT callback function */
+__WEAK tBleStatus aci_att_prepare_write_resp_event( uint16_t Connection_Handle,
+                                                    uint16_t Attribute_Handle,
+                                                    uint16_t Offset,
+                                                    uint8_t Part_Attribute_Value_Length,
+                                                    const uint8_t* Part_Attribute_Value )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_ATT_PREPARE_WRITE_RESP_EVENT process function */
+#if (!ACI_ATT_PREPARE_WRITE_RESP_EVENT_UNUSED)
+static tBleStatus aci_att_prepare_write_resp_event_process( const uint8_t* in )
+{
+  aci_att_prepare_write_resp_event_rp0 *rp0 = (void*)in;
+  return aci_att_prepare_write_resp_event( rp0->Connection_Handle,
+                                           rp0->Attribute_Handle,
+                                           rp0->Offset,
+                                           rp0->Part_Attribute_Value_Length,
+                                           rp0->Part_Attribute_Value );
+}
+#endif
+
+/* ACI_ATT_EXEC_WRITE_RESP_EVENT callback function */
+__WEAK tBleStatus aci_att_exec_write_resp_event( uint16_t Connection_Handle )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_ATT_EXEC_WRITE_RESP_EVENT process function */
+#if (!ACI_ATT_EXEC_WRITE_RESP_EVENT_UNUSED)
+static tBleStatus aci_att_exec_write_resp_event_process( const uint8_t* in )
+{
+  aci_att_exec_write_resp_event_rp0 *rp0 = (void*)in;
+  return aci_att_exec_write_resp_event( rp0->Connection_Handle );
+}
+#endif
+
+/* ACI_GATT_INDICATION_EVENT callback function */
+__WEAK tBleStatus aci_gatt_indication_event( uint16_t Connection_Handle,
+                                             uint16_t Attribute_Handle,
+                                             uint8_t Attribute_Value_Length,
+                                             const uint8_t* Attribute_Value )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_GATT_INDICATION_EVENT process function */
+#if (!ACI_GATT_INDICATION_EVENT_UNUSED)
+static tBleStatus aci_gatt_indication_event_process( const uint8_t* in )
+{
+  aci_gatt_indication_event_rp0 *rp0 = (void*)in;
+  return aci_gatt_indication_event( rp0->Connection_Handle,
+                                    rp0->Attribute_Handle,
+                                    rp0->Attribute_Value_Length,
+                                    rp0->Attribute_Value );
+}
+#endif
+
+/* ACI_GATT_NOTIFICATION_EVENT callback function */
+__WEAK tBleStatus aci_gatt_notification_event( uint16_t Connection_Handle,
+                                               uint16_t Attribute_Handle,
+                                               uint8_t Attribute_Value_Length,
+                                               const uint8_t* Attribute_Value )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_GATT_NOTIFICATION_EVENT process function */
+#if (!ACI_GATT_NOTIFICATION_EVENT_UNUSED)
+static tBleStatus aci_gatt_notification_event_process( const uint8_t* in )
+{
+  aci_gatt_notification_event_rp0 *rp0 = (void*)in;
+  return aci_gatt_notification_event( rp0->Connection_Handle,
+                                      rp0->Attribute_Handle,
+                                      rp0->Attribute_Value_Length,
+                                      rp0->Attribute_Value );
+}
+#endif
+
+/* ACI_GATT_PROC_COMPLETE_EVENT callback function */
+__WEAK tBleStatus aci_gatt_proc_complete_event( uint16_t Connection_Handle,
+                                                uint8_t Error_Code )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_GATT_PROC_COMPLETE_EVENT process function */
+#if (!ACI_GATT_PROC_COMPLETE_EVENT_UNUSED)
+static tBleStatus aci_gatt_proc_complete_event_process( const uint8_t* in )
+{
+  aci_gatt_proc_complete_event_rp0 *rp0 = (void*)in;
+  return aci_gatt_proc_complete_event( rp0->Connection_Handle,
+                                       rp0->Error_Code );
+}
+#endif
+
+/* ACI_GATT_ERROR_RESP_EVENT callback function */
+__WEAK tBleStatus aci_gatt_error_resp_event( uint16_t Connection_Handle,
+                                             uint8_t Req_Opcode,
+                                             uint16_t Attribute_Handle,
+                                             uint8_t Error_Code )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_GATT_ERROR_RESP_EVENT process function */
+#if (!ACI_GATT_ERROR_RESP_EVENT_UNUSED)
+static tBleStatus aci_gatt_error_resp_event_process( const uint8_t* in )
+{
+  aci_gatt_error_resp_event_rp0 *rp0 = (void*)in;
+  return aci_gatt_error_resp_event( rp0->Connection_Handle,
+                                    rp0->Req_Opcode,
+                                    rp0->Attribute_Handle,
+                                    rp0->Error_Code );
+}
+#endif
+
+/* ACI_GATT_DISC_READ_CHAR_BY_UUID_RESP_EVENT callback function */
+__WEAK tBleStatus aci_gatt_disc_read_char_by_uuid_resp_event( uint16_t Connection_Handle,
+                                                              uint16_t Attribute_Handle,
+                                                              uint8_t Attribute_Value_Length,
+                                                              const uint8_t* Attribute_Value )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_GATT_DISC_READ_CHAR_BY_UUID_RESP_EVENT process function */
+#if (!ACI_GATT_DISC_READ_CHAR_BY_UUID_RESP_EVENT_UNUSED)
+static tBleStatus aci_gatt_disc_read_char_by_uuid_resp_event_process( const uint8_t* in )
+{
+  aci_gatt_disc_read_char_by_uuid_resp_event_rp0 *rp0 = (void*)in;
+  return aci_gatt_disc_read_char_by_uuid_resp_event( rp0->Connection_Handle,
+                                                     rp0->Attribute_Handle,
+                                                     rp0->Attribute_Value_Length,
+                                                     rp0->Attribute_Value );
+}
+#endif
+
+/* ACI_GATT_WRITE_PERMIT_REQ_EVENT callback function */
+__WEAK tBleStatus aci_gatt_write_permit_req_event( uint16_t Connection_Handle,
+                                                   uint16_t Attribute_Handle,
+                                                   uint8_t Data_Length,
+                                                   const uint8_t* Data )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_GATT_WRITE_PERMIT_REQ_EVENT process function */
+#if (!ACI_GATT_WRITE_PERMIT_REQ_EVENT_UNUSED)
+static tBleStatus aci_gatt_write_permit_req_event_process( const uint8_t* in )
+{
+  aci_gatt_write_permit_req_event_rp0 *rp0 = (void*)in;
+  return aci_gatt_write_permit_req_event( rp0->Connection_Handle,
+                                          rp0->Attribute_Handle,
+                                          rp0->Data_Length,
+                                          rp0->Data );
+}
+#endif
+
+/* ACI_GATT_READ_PERMIT_REQ_EVENT callback function */
+__WEAK tBleStatus aci_gatt_read_permit_req_event( uint16_t Connection_Handle,
+                                                  uint16_t Attribute_Handle,
+                                                  uint16_t Offset )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_GATT_READ_PERMIT_REQ_EVENT process function */
+#if (!ACI_GATT_READ_PERMIT_REQ_EVENT_UNUSED)
+static tBleStatus aci_gatt_read_permit_req_event_process( const uint8_t* in )
+{
+  aci_gatt_read_permit_req_event_rp0 *rp0 = (void*)in;
+  return aci_gatt_read_permit_req_event( rp0->Connection_Handle,
+                                         rp0->Attribute_Handle,
+                                         rp0->Offset );
+}
+#endif
+
+/* ACI_GATT_READ_MULTI_PERMIT_REQ_EVENT callback function */
+__WEAK tBleStatus aci_gatt_read_multi_permit_req_event( uint16_t Connection_Handle,
+                                                        uint8_t Number_of_Handles,
+                                                        const Handle_Item_t* Handle_Item )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_GATT_READ_MULTI_PERMIT_REQ_EVENT process function */
+#if (!ACI_GATT_READ_MULTI_PERMIT_REQ_EVENT_UNUSED)
+static tBleStatus aci_gatt_read_multi_permit_req_event_process( const uint8_t* in )
+{
+  aci_gatt_read_multi_permit_req_event_rp0 *rp0 = (void*)in;
+  return aci_gatt_read_multi_permit_req_event( rp0->Connection_Handle,
+                                               rp0->Number_of_Handles,
+                                               rp0->Handle_Item );
+}
+#endif
+
+/* ACI_GATT_TX_POOL_AVAILABLE_EVENT callback function */
+__WEAK tBleStatus aci_gatt_tx_pool_available_event( uint16_t Connection_Handle,
+                                                    uint16_t Available_Buffers )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_GATT_TX_POOL_AVAILABLE_EVENT process function */
+#if (!ACI_GATT_TX_POOL_AVAILABLE_EVENT_UNUSED)
+static tBleStatus aci_gatt_tx_pool_available_event_process( const uint8_t* in )
+{
+  aci_gatt_tx_pool_available_event_rp0 *rp0 = (void*)in;
+  return aci_gatt_tx_pool_available_event( rp0->Connection_Handle,
+                                           rp0->Available_Buffers );
+}
+#endif
+
+/* ACI_GATT_SERVER_CONFIRMATION_EVENT callback function */
+__WEAK tBleStatus aci_gatt_server_confirmation_event( uint16_t Connection_Handle )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_GATT_SERVER_CONFIRMATION_EVENT process function */
+#if (!ACI_GATT_SERVER_CONFIRMATION_EVENT_UNUSED)
+static tBleStatus aci_gatt_server_confirmation_event_process( const uint8_t* in )
+{
+  aci_gatt_server_confirmation_event_rp0 *rp0 = (void*)in;
+  return aci_gatt_server_confirmation_event( rp0->Connection_Handle );
+}
+#endif
+
+/* ACI_GATT_PREPARE_WRITE_PERMIT_REQ_EVENT callback function */
+__WEAK tBleStatus aci_gatt_prepare_write_permit_req_event( uint16_t Connection_Handle,
+                                                           uint16_t Attribute_Handle,
+                                                           uint16_t Offset,
+                                                           uint8_t Data_Length,
+                                                           const uint8_t* Data )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_GATT_PREPARE_WRITE_PERMIT_REQ_EVENT process function */
+#if (!ACI_GATT_PREPARE_WRITE_PERMIT_REQ_EVENT_UNUSED)
+static tBleStatus aci_gatt_prepare_write_permit_req_event_process( const uint8_t* in )
+{
+  aci_gatt_prepare_write_permit_req_event_rp0 *rp0 = (void*)in;
+  return aci_gatt_prepare_write_permit_req_event( rp0->Connection_Handle,
+                                                  rp0->Attribute_Handle,
+                                                  rp0->Offset,
+                                                  rp0->Data_Length,
+                                                  rp0->Data );
+}
+#endif
+
+/* ACI_GATT_EATT_BEARER_EVENT callback function */
+__WEAK tBleStatus aci_gatt_eatt_bearer_event( uint16_t Connection_Handle,
+                                              uint8_t Channel_Index,
+                                              uint8_t EAB_State,
+                                              uint16_t MTU )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_GATT_EATT_BEARER_EVENT process function */
+#if (!ACI_GATT_EATT_BEARER_EVENT_UNUSED)
+static tBleStatus aci_gatt_eatt_bearer_event_process( const uint8_t* in )
+{
+  aci_gatt_eatt_bearer_event_rp0 *rp0 = (void*)in;
+  return aci_gatt_eatt_bearer_event( rp0->Connection_Handle,
+                                     rp0->Channel_Index,
+                                     rp0->EAB_State,
+                                     rp0->MTU );
+}
+#endif
+
+/* ACI_GATT_MULT_NOTIFICATION_EVENT callback function */
+__WEAK tBleStatus aci_gatt_mult_notification_event( uint16_t Connection_Handle,
+                                                    uint16_t Offset,
+                                                    uint16_t Data_Length,
+                                                    const uint8_t* Data )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_GATT_MULT_NOTIFICATION_EVENT process function */
+#if (!ACI_GATT_MULT_NOTIFICATION_EVENT_UNUSED)
+static tBleStatus aci_gatt_mult_notification_event_process( const uint8_t* in )
+{
+  aci_gatt_mult_notification_event_rp0 *rp0 = (void*)in;
+  return aci_gatt_mult_notification_event( rp0->Connection_Handle,
+                                           rp0->Offset,
+                                           rp0->Data_Length,
+                                           rp0->Data );
+}
+#endif
+
+/* ACI_GATT_NOTIFICATION_COMPLETE_EVENT callback function */
+__WEAK tBleStatus aci_gatt_notification_complete_event( uint16_t Attr_Handle )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_GATT_NOTIFICATION_COMPLETE_EVENT process function */
+#if (!ACI_GATT_NOTIFICATION_COMPLETE_EVENT_UNUSED)
+static tBleStatus aci_gatt_notification_complete_event_process( const uint8_t* in )
+{
+  aci_gatt_notification_complete_event_rp0 *rp0 = (void*)in;
+  return aci_gatt_notification_complete_event( rp0->Attr_Handle );
+}
+#endif
+
+/* ACI_GATT_READ_EXT_EVENT callback function */
+__WEAK tBleStatus aci_gatt_read_ext_event( uint16_t Connection_Handle,
+                                           uint16_t Offset,
+                                           uint16_t Event_Data_Length,
+                                           const uint8_t* Attribute_Value )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_GATT_READ_EXT_EVENT process function */
+#if (!ACI_GATT_READ_EXT_EVENT_UNUSED)
+static tBleStatus aci_gatt_read_ext_event_process( const uint8_t* in )
+{
+  aci_gatt_read_ext_event_rp0 *rp0 = (void*)in;
+  return aci_gatt_read_ext_event( rp0->Connection_Handle,
+                                  rp0->Offset,
+                                  rp0->Event_Data_Length,
+                                  rp0->Attribute_Value );
+}
+#endif
+
+/* ACI_GATT_INDICATION_EXT_EVENT callback function */
+__WEAK tBleStatus aci_gatt_indication_ext_event( uint16_t Connection_Handle,
+                                                 uint16_t Attribute_Handle,
+                                                 uint16_t Offset,
+                                                 uint16_t Attribute_Value_Length,
+                                                 const uint8_t* Attribute_Value )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_GATT_INDICATION_EXT_EVENT process function */
+#if (!ACI_GATT_INDICATION_EXT_EVENT_UNUSED)
+static tBleStatus aci_gatt_indication_ext_event_process( const uint8_t* in )
+{
+  aci_gatt_indication_ext_event_rp0 *rp0 = (void*)in;
+  return aci_gatt_indication_ext_event( rp0->Connection_Handle,
+                                        rp0->Attribute_Handle,
+                                        rp0->Offset,
+                                        rp0->Attribute_Value_Length,
+                                        rp0->Attribute_Value );
+}
+#endif
+
+/* ACI_GATT_NOTIFICATION_EXT_EVENT callback function */
+__WEAK tBleStatus aci_gatt_notification_ext_event( uint16_t Connection_Handle,
+                                                   uint16_t Attribute_Handle,
+                                                   uint16_t Offset,
+                                                   uint16_t Attribute_Value_Length,
+                                                   const uint8_t* Attribute_Value )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_GATT_NOTIFICATION_EXT_EVENT process function */
+#if (!ACI_GATT_NOTIFICATION_EXT_EVENT_UNUSED)
+static tBleStatus aci_gatt_notification_ext_event_process( const uint8_t* in )
+{
+  aci_gatt_notification_ext_event_rp0 *rp0 = (void*)in;
+  return aci_gatt_notification_ext_event( rp0->Connection_Handle,
+                                          rp0->Attribute_Handle,
+                                          rp0->Offset,
+                                          rp0->Attribute_Value_Length,
+                                          rp0->Attribute_Value );
+}
+#endif
+
+/* ACI_HAL_END_OF_RADIO_ACTIVITY_EVENT callback function */
+__WEAK tBleStatus aci_hal_end_of_radio_activity_event( uint8_t Last_State,
+                                                       uint8_t Next_State,
+                                                       uint32_t Next_State_SysTime,
+                                                       uint8_t Last_State_Slot,
+                                                       uint8_t Next_State_Slot )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_HAL_END_OF_RADIO_ACTIVITY_EVENT process function */
+#if (!ACI_HAL_END_OF_RADIO_ACTIVITY_EVENT_UNUSED)
+static tBleStatus aci_hal_end_of_radio_activity_event_process( const uint8_t* in )
+{
+  aci_hal_end_of_radio_activity_event_rp0 *rp0 = (void*)in;
+  return aci_hal_end_of_radio_activity_event( rp0->Last_State,
+                                              rp0->Next_State,
+                                              rp0->Next_State_SysTime,
+                                              rp0->Last_State_Slot,
+                                              rp0->Next_State_Slot );
+}
+#endif
+
+/* ACI_HAL_SYNC_EVENT callback function */
+__WEAK tBleStatus aci_hal_sync_event( uint8_t Group_Id,
+                                      uint32_t Next_Anchor_Point,
+                                      uint32_t Time_Stamp,
+                                      uint32_t Next_Sdu_Delivery_Timeout )
+{
+  return HCI_SUCCESS_ERR_CODE;
+}
+
+/* ACI_HAL_SYNC_EVENT process function */
+#if (!ACI_HAL_SYNC_EVENT_UNUSED)
+static tBleStatus aci_hal_sync_event_process( const uint8_t* in )
+{
+  aci_hal_sync_event_rp0 *rp0 = (void*)in;
+  return aci_hal_sync_event( rp0->Group_Id,
+                             rp0->Next_Anchor_Point,
+                             rp0->Time_Stamp,
+                             rp0->Next_Sdu_Delivery_Timeout );
+}
+#endif
+
+/* HCI event process functions table */
+static const hci_event_table_t hci_event_table[] =
+{
+#if (!HCI_DISCONNECTION_COMPLETE_EVENT_UNUSED)
+  { 0x0005U, hci_disconnection_complete_event_process },
+#endif
+#if (!HCI_ENCRYPTION_CHANGE_EVENT_UNUSED)
+  { 0x0008U, hci_encryption_change_event_process },
+#endif
+#if (!HCI_READ_REMOTE_VERSION_INFORMATION_COMPLETE_EVENT_UNUSED)
+  { 0x000CU, hci_read_remote_version_information_complete_event_process },
+#endif
+#if (!HCI_HARDWARE_ERROR_EVENT_UNUSED)
+  { 0x0010U, hci_hardware_error_event_process },
+#endif
+#if (!HCI_NUMBER_OF_COMPLETED_PACKETS_EVENT_UNUSED)
+  { 0x0013U, hci_number_of_completed_packets_event_process },
+#endif
+#if (!HCI_DATA_BUFFER_OVERFLOW_EVENT_UNUSED)
+  { 0x001AU, hci_data_buffer_overflow_event_process },
+#endif
+#if (!HCI_ENCRYPTION_KEY_REFRESH_COMPLETE_EVENT_UNUSED)
+  { 0x0030U, hci_encryption_key_refresh_complete_event_process },
+#endif
+#if (!HCI_AUTHENTICATED_PAYLOAD_TIMEOUT_EXPIRED_EVENT_UNUSED)
+  { 0x0057U, hci_authenticated_payload_timeout_expired_event_process },
+#endif
+  { 0, } /* end */
+};
+
+/* HCI LE event process functions table */
+static const hci_event_table_t hci_le_event_table[] =
+{
+#if (!HCI_LE_CONNECTION_COMPLETE_EVENT_UNUSED)
+  { 0x0001U, hci_le_connection_complete_event_process },
+#endif
+#if (!HCI_LE_ADVERTISING_REPORT_EVENT_UNUSED)
+  { 0x0002U, hci_le_advertising_report_event_process },
+#endif
+#if (!HCI_LE_CONNECTION_UPDATE_COMPLETE_EVENT_UNUSED)
+  { 0x0003U, hci_le_connection_update_complete_event_process },
+#endif
+#if (!HCI_LE_READ_REMOTE_FEATURES_PAGE_0_COMPLETE_EVENT_UNUSED)
+  { 0x0004U, hci_le_read_remote_features_page_0_complete_event_process },
+#endif
+#if (!HCI_LE_LONG_TERM_KEY_REQUEST_EVENT_UNUSED)
+  { 0x0005U, hci_le_long_term_key_request_event_process },
+#endif
+#if (!HCI_LE_REMOTE_CONNECTION_PARAMETER_REQUEST_EVENT_UNUSED)
+  { 0x0006U, hci_le_remote_connection_parameter_request_event_process },
+#endif
+#if (!HCI_LE_DATA_LENGTH_CHANGE_EVENT_UNUSED)
+  { 0x0007U, hci_le_data_length_change_event_process },
+#endif
+#if (!HCI_LE_READ_LOCAL_P256_PUBLIC_KEY_COMPLETE_EVENT_UNUSED)
+  { 0x0008U, hci_le_read_local_p256_public_key_complete_event_process },
+#endif
+#if (!HCI_LE_GENERATE_DHKEY_COMPLETE_EVENT_UNUSED)
+  { 0x0009U, hci_le_generate_dhkey_complete_event_process },
+#endif
+#if (!HCI_LE_ENHANCED_CONNECTION_COMPLETE_EVENT_UNUSED)
+  { 0x000AU, hci_le_enhanced_connection_complete_event_process },
+#endif
+#if (!HCI_LE_DIRECTED_ADVERTISING_REPORT_EVENT_UNUSED)
+  { 0x000BU, hci_le_directed_advertising_report_event_process },
+#endif
+#if (!HCI_LE_PHY_UPDATE_COMPLETE_EVENT_UNUSED)
+  { 0x000CU, hci_le_phy_update_complete_event_process },
+#endif
+#if (!HCI_LE_EXTENDED_ADVERTISING_REPORT_EVENT_UNUSED)
+  { 0x000DU, hci_le_extended_advertising_report_event_process },
+#endif
+#if (!HCI_LE_PERIODIC_ADVERTISING_SYNC_ESTABLISHED_EVENT_UNUSED)
+  { 0x000EU, hci_le_periodic_advertising_sync_established_event_process },
+#endif
+#if (!HCI_LE_PERIODIC_ADVERTISING_REPORT_EVENT_UNUSED)
+  { 0x000FU, hci_le_periodic_advertising_report_event_process },
+#endif
+#if (!HCI_LE_PERIODIC_ADVERTISING_SYNC_LOST_EVENT_UNUSED)
+  { 0x0010U, hci_le_periodic_advertising_sync_lost_event_process },
+#endif
+#if (!HCI_LE_SCAN_TIMEOUT_EVENT_UNUSED)
+  { 0x0011U, hci_le_scan_timeout_event_process },
+#endif
+#if (!HCI_LE_ADVERTISING_SET_TERMINATED_EVENT_UNUSED)
+  { 0x0012U, hci_le_advertising_set_terminated_event_process },
+#endif
+#if (!HCI_LE_SCAN_REQUEST_RECEIVED_EVENT_UNUSED)
+  { 0x0013U, hci_le_scan_request_received_event_process },
+#endif
+#if (!HCI_LE_CHANNEL_SELECTION_ALGORITHM_EVENT_UNUSED)
+  { 0x0014U, hci_le_channel_selection_algorithm_event_process },
+#endif
+#if (!HCI_LE_CONNECTIONLESS_IQ_REPORT_EVENT_UNUSED)
+  { 0x0015U, hci_le_connectionless_iq_report_event_process },
+#endif
+#if (!HCI_LE_CONNECTION_IQ_REPORT_EVENT_UNUSED)
+  { 0x0016U, hci_le_connection_iq_report_event_process },
+#endif
+#if (!HCI_LE_CTE_REQUEST_FAILED_EVENT_UNUSED)
+  { 0x0017U, hci_le_cte_request_failed_event_process },
+#endif
+#if (!HCI_LE_PERIODIC_ADVERTISING_SYNC_TRANSFER_RECEIVED_EVENT_UNUSED)
+  { 0x0018U, hci_le_periodic_advertising_sync_transfer_received_event_process },
+#endif
+#if (!HCI_LE_CIS_ESTABLISHED_EVENT_UNUSED)
+  { 0x0019U, hci_le_cis_established_event_process },
+#endif
+#if (!HCI_LE_CIS_REQUEST_EVENT_UNUSED)
+  { 0x001AU, hci_le_cis_request_event_process },
+#endif
+#if (!HCI_LE_CREATE_BIG_COMPLETE_EVENT_UNUSED)
+  { 0x001BU, hci_le_create_big_complete_event_process },
+#endif
+#if (!HCI_LE_TERMINATE_BIG_COMPLETE_EVENT_UNUSED)
+  { 0x001CU, hci_le_terminate_big_complete_event_process },
+#endif
+#if (!HCI_LE_BIG_SYNC_ESTABLISHED_EVENT_UNUSED)
+  { 0x001DU, hci_le_big_sync_established_event_process },
+#endif
+#if (!HCI_LE_BIG_SYNC_LOST_EVENT_UNUSED)
+  { 0x001EU, hci_le_big_sync_lost_event_process },
+#endif
+#if (!HCI_LE_REQUEST_PEER_SCA_COMPLETE_EVENT_UNUSED)
+  { 0x001FU, hci_le_request_peer_sca_complete_event_process },
+#endif
+#if (!HCI_LE_PATH_LOSS_THRESHOLD_EVENT_UNUSED)
+  { 0x0020U, hci_le_path_loss_threshold_event_process },
+#endif
+#if (!HCI_LE_TRANSMIT_POWER_REPORTING_EVENT_UNUSED)
+  { 0x0021U, hci_le_transmit_power_reporting_event_process },
+#endif
+#if (!HCI_LE_BIGINFO_ADVERTISING_REPORT_EVENT_UNUSED)
+  { 0x0022U, hci_le_biginfo_advertising_report_event_process },
+#endif
+#if (!HCI_LE_SUBRATE_CHANGE_EVENT_UNUSED)
+  { 0x0023U, hci_le_subrate_change_event_process },
+#endif
+#if (!HCI_LE_PERIODIC_ADVERTISING_SYNC_ESTABLISHED_V2_EVENT_UNUSED)
+  { 0x0024U, hci_le_periodic_advertising_sync_established_v2_event_process },
+#endif
+#if (!HCI_LE_PERIODIC_ADVERTISING_REPORT_V2_EVENT_UNUSED)
+  { 0x0025U, hci_le_periodic_advertising_report_v2_event_process },
+#endif
+#if (!HCI_LE_PERIODIC_ADVERTISING_SYNC_TRANSFER_RECEIVED_V2_EVENT_UNUSED)
+  { 0x0026U, hci_le_periodic_advertising_sync_transfer_received_v2_event_process },
+#endif
+#if (!HCI_LE_PERIODIC_ADVERTISING_SUBEVENT_DATA_REQUEST_EVENT_UNUSED)
+  { 0x0027U, hci_le_periodic_advertising_subevent_data_request_event_process },
+#endif
+#if (!HCI_LE_PERIODIC_ADVERTISING_RESPONSE_REPORT_EVENT_UNUSED)
+  { 0x0028U, hci_le_periodic_advertising_response_report_event_process },
+#endif
+#if (!HCI_LE_ENHANCED_CONNECTION_COMPLETE_V2_EVENT_UNUSED)
+  { 0x0029U, hci_le_enhanced_connection_complete_v2_event_process },
+#endif
+#if (!HCI_LE_CIS_ESTABLISHED_V2_EVENT_UNUSED)
+  { 0x002AU, hci_le_cis_established_v2_event_process },
+#endif
+#if (!HCI_LE_READ_ALL_REMOTE_FEATURES_COMPLETE_EVENT_UNUSED)
+  { 0x002BU, hci_le_read_all_remote_features_complete_event_process },
+#endif
+#if (!HCI_LE_CS_READ_REMOTE_SUPPORTED_CAPABILITIES_COMPLETE_EVENT_UNUSED)
+  { 0x002CU, hci_le_cs_read_remote_supported_capabilities_complete_event_process },
+#endif
+#if (!HCI_LE_CS_READ_REMOTE_FAE_TABLE_COMPLETE_EVENT_UNUSED)
+  { 0x002DU, hci_le_cs_read_remote_fae_table_complete_event_process },
+#endif
+#if (!HCI_LE_CS_SECURITY_ENABLE_COMPLETE_EVENT_UNUSED)
+  { 0x002EU, hci_le_cs_security_enable_complete_event_process },
+#endif
+#if (!HCI_LE_CS_CONFIG_COMPLETE_EVENT_UNUSED)
+  { 0x002FU, hci_le_cs_config_complete_event_process },
+#endif
+#if (!HCI_LE_CS_PROCEDURE_ENABLE_COMPLETE_EVENT_UNUSED)
+  { 0x0030U, hci_le_cs_procedure_enable_complete_event_process },
+#endif
+#if (!HCI_LE_CS_SUBEVENT_RESULT_EVENT_UNUSED)
+  { 0x0031U, hci_le_cs_subevent_result_event_process },
+#endif
+#if (!HCI_LE_CS_SUBEVENT_RESULT_CONTINUE_EVENT_UNUSED)
+  { 0x0032U, hci_le_cs_subevent_result_continue_event_process },
+#endif
+#if (!HCI_LE_CS_TEST_END_COMPLETE_EVENT_UNUSED)
+  { 0x0033U, hci_le_cs_test_end_complete_event_process },
+#endif
+#if (!HCI_LE_MONITORED_ADVERTISERS_REPORT_EVENT_UNUSED)
+  { 0x0034U, hci_le_monitored_advertisers_report_event_process },
+#endif
+#if (!HCI_LE_FRAME_SPACE_UPDATE_COMPLETE_EVENT_UNUSED)
+  { 0x0035U, hci_le_frame_space_update_complete_event_process },
+#endif
+  { 0, } /* end */
+};
+
+/* HCI VS event process functions table */
+static const hci_event_table_t hci_vs_event_table[] =
+{
+#if (!ACI_WARNING_EVENT_UNUSED)
+  { 0x0006U, aci_warning_event_process },
+#endif
+#if (!ACI_GAP_LIMITED_DISCOVERABLE_EVENT_UNUSED)
+  { 0x0400U, aci_gap_limited_discoverable_event_process },
+#endif
+#if (!ACI_GAP_PAIRING_COMPLETE_EVENT_UNUSED)
+  { 0x0401U, aci_gap_pairing_complete_event_process },
+#endif
+#if (!ACI_GAP_PASS_KEY_REQ_EVENT_UNUSED)
+  { 0x0402U, aci_gap_pass_key_req_event_process },
+#endif
+#if (!ACI_GAP_AUTHORIZATION_REQ_EVENT_UNUSED)
+  { 0x0403U, aci_gap_authorization_req_event_process },
+#endif
+#if (!ACI_GAP_BOND_LOST_EVENT_UNUSED)
+  { 0x0405U, aci_gap_bond_lost_event_process },
+#endif
+#if (!ACI_GAP_PROC_COMPLETE_EVENT_UNUSED)
+  { 0x0407U, aci_gap_proc_complete_event_process },
+#endif
+#if (!ACI_GAP_ADDR_NOT_RESOLVED_EVENT_UNUSED)
+  { 0x0408U, aci_gap_addr_not_resolved_event_process },
+#endif
+#if (!ACI_GAP_NUMERIC_COMPARISON_VALUE_EVENT_UNUSED)
+  { 0x0409U, aci_gap_numeric_comparison_value_event_process },
+#endif
+#if (!ACI_GAP_KEYPRESS_NOTIFICATION_EVENT_UNUSED)
+  { 0x040AU, aci_gap_keypress_notification_event_process },
+#endif
+#if (!ACI_GAP_PAIRING_REQUEST_EVENT_UNUSED)
+  { 0x040BU, aci_gap_pairing_request_event_process },
+#endif
+#if (!ACI_L2CAP_CONNECTION_UPDATE_RESP_EVENT_UNUSED)
+  { 0x0800U, aci_l2cap_connection_update_resp_event_process },
+#endif
+#if (!ACI_L2CAP_PROC_TIMEOUT_EVENT_UNUSED)
+  { 0x0801U, aci_l2cap_proc_timeout_event_process },
+#endif
+#if (!ACI_L2CAP_CONNECTION_UPDATE_REQ_EVENT_UNUSED)
+  { 0x0802U, aci_l2cap_connection_update_req_event_process },
+#endif
+#if (!ACI_L2CAP_COMMAND_REJECT_EVENT_UNUSED)
+  { 0x080AU, aci_l2cap_command_reject_event_process },
+#endif
+#if (!ACI_L2CAP_COC_CONNECT_EVENT_UNUSED)
+  { 0x0810U, aci_l2cap_coc_connect_event_process },
+#endif
+#if (!ACI_L2CAP_COC_CONNECT_CONFIRM_EVENT_UNUSED)
+  { 0x0811U, aci_l2cap_coc_connect_confirm_event_process },
+#endif
+#if (!ACI_L2CAP_COC_RECONF_EVENT_UNUSED)
+  { 0x0812U, aci_l2cap_coc_reconf_event_process },
+#endif
+#if (!ACI_L2CAP_COC_RECONF_CONFIRM_EVENT_UNUSED)
+  { 0x0813U, aci_l2cap_coc_reconf_confirm_event_process },
+#endif
+#if (!ACI_L2CAP_COC_DISCONNECT_EVENT_UNUSED)
+  { 0x0814U, aci_l2cap_coc_disconnect_event_process },
+#endif
+#if (!ACI_L2CAP_COC_FLOW_CONTROL_EVENT_UNUSED)
+  { 0x0815U, aci_l2cap_coc_flow_control_event_process },
+#endif
+#if (!ACI_L2CAP_COC_RX_DATA_EVENT_UNUSED)
+  { 0x0816U, aci_l2cap_coc_rx_data_event_process },
+#endif
+#if (!ACI_L2CAP_COC_TX_POOL_AVAILABLE_EVENT_UNUSED)
+  { 0x0817U, aci_l2cap_coc_tx_pool_available_event_process },
+#endif
+#if (!ACI_GATT_ATTRIBUTE_MODIFIED_EVENT_UNUSED)
+  { 0x0C01U, aci_gatt_attribute_modified_event_process },
+#endif
+#if (!ACI_GATT_PROC_TIMEOUT_EVENT_UNUSED)
+  { 0x0C02U, aci_gatt_proc_timeout_event_process },
+#endif
+#if (!ACI_ATT_EXCHANGE_MTU_RESP_EVENT_UNUSED)
+  { 0x0C03U, aci_att_exchange_mtu_resp_event_process },
+#endif
+#if (!ACI_ATT_FIND_INFO_RESP_EVENT_UNUSED)
+  { 0x0C04U, aci_att_find_info_resp_event_process },
+#endif
+#if (!ACI_ATT_FIND_BY_TYPE_VALUE_RESP_EVENT_UNUSED)
+  { 0x0C05U, aci_att_find_by_type_value_resp_event_process },
+#endif
+#if (!ACI_ATT_READ_BY_TYPE_RESP_EVENT_UNUSED)
+  { 0x0C06U, aci_att_read_by_type_resp_event_process },
+#endif
+#if (!ACI_ATT_READ_RESP_EVENT_UNUSED)
+  { 0x0C07U, aci_att_read_resp_event_process },
+#endif
+#if (!ACI_ATT_READ_BLOB_RESP_EVENT_UNUSED)
+  { 0x0C08U, aci_att_read_blob_resp_event_process },
+#endif
+#if (!ACI_ATT_READ_MULTIPLE_RESP_EVENT_UNUSED)
+  { 0x0C09U, aci_att_read_multiple_resp_event_process },
+#endif
+#if (!ACI_ATT_READ_BY_GROUP_TYPE_RESP_EVENT_UNUSED)
+  { 0x0C0AU, aci_att_read_by_group_type_resp_event_process },
+#endif
+#if (!ACI_ATT_PREPARE_WRITE_RESP_EVENT_UNUSED)
+  { 0x0C0CU, aci_att_prepare_write_resp_event_process },
+#endif
+#if (!ACI_ATT_EXEC_WRITE_RESP_EVENT_UNUSED)
+  { 0x0C0DU, aci_att_exec_write_resp_event_process },
+#endif
+#if (!ACI_GATT_INDICATION_EVENT_UNUSED)
+  { 0x0C0EU, aci_gatt_indication_event_process },
+#endif
+#if (!ACI_GATT_NOTIFICATION_EVENT_UNUSED)
+  { 0x0C0FU, aci_gatt_notification_event_process },
+#endif
+#if (!ACI_GATT_PROC_COMPLETE_EVENT_UNUSED)
+  { 0x0C10U, aci_gatt_proc_complete_event_process },
+#endif
+#if (!ACI_GATT_ERROR_RESP_EVENT_UNUSED)
+  { 0x0C11U, aci_gatt_error_resp_event_process },
+#endif
+#if (!ACI_GATT_DISC_READ_CHAR_BY_UUID_RESP_EVENT_UNUSED)
+  { 0x0C12U, aci_gatt_disc_read_char_by_uuid_resp_event_process },
+#endif
+#if (!ACI_GATT_WRITE_PERMIT_REQ_EVENT_UNUSED)
+  { 0x0C13U, aci_gatt_write_permit_req_event_process },
+#endif
+#if (!ACI_GATT_READ_PERMIT_REQ_EVENT_UNUSED)
+  { 0x0C14U, aci_gatt_read_permit_req_event_process },
+#endif
+#if (!ACI_GATT_READ_MULTI_PERMIT_REQ_EVENT_UNUSED)
+  { 0x0C15U, aci_gatt_read_multi_permit_req_event_process },
+#endif
+#if (!ACI_GATT_TX_POOL_AVAILABLE_EVENT_UNUSED)
+  { 0x0C16U, aci_gatt_tx_pool_available_event_process },
+#endif
+#if (!ACI_GATT_SERVER_CONFIRMATION_EVENT_UNUSED)
+  { 0x0C17U, aci_gatt_server_confirmation_event_process },
+#endif
+#if (!ACI_GATT_PREPARE_WRITE_PERMIT_REQ_EVENT_UNUSED)
+  { 0x0C18U, aci_gatt_prepare_write_permit_req_event_process },
+#endif
+#if (!ACI_GATT_EATT_BEARER_EVENT_UNUSED)
+  { 0x0C19U, aci_gatt_eatt_bearer_event_process },
+#endif
+#if (!ACI_GATT_MULT_NOTIFICATION_EVENT_UNUSED)
+  { 0x0C1AU, aci_gatt_mult_notification_event_process },
+#endif
+#if (!ACI_GATT_NOTIFICATION_COMPLETE_EVENT_UNUSED)
+  { 0x0C1BU, aci_gatt_notification_complete_event_process },
+#endif
+#if (!ACI_GATT_READ_EXT_EVENT_UNUSED)
+  { 0x0C1DU, aci_gatt_read_ext_event_process },
+#endif
+#if (!ACI_GATT_INDICATION_EXT_EVENT_UNUSED)
+  { 0x0C1EU, aci_gatt_indication_ext_event_process },
+#endif
+#if (!ACI_GATT_NOTIFICATION_EXT_EVENT_UNUSED)
+  { 0x0C1FU, aci_gatt_notification_ext_event_process },
+#endif
+#if (!ACI_HAL_END_OF_RADIO_ACTIVITY_EVENT_UNUSED)
+  { 0x1804U, aci_hal_end_of_radio_activity_event_process },
+#endif
+#if (!ACI_HAL_SYNC_EVENT_UNUSED)
+  { 0x1808U, aci_hal_sync_event_process },
+#endif
+  { 0, } /* end */
+};
+
+/* ACI/HCI events processing */
+uint8_t BLE_EventProcess( const uint8_t* buffer )
+{
+  /* This function decodes an event packet and calls the event callback
+   * function associated with the type of event decoded.
+   * "buffer" must point to a valid packet in HCI format.
+   */
+  if ( buffer[0] == HCI_EVENT_PKT_TYPE )
+  {
+    const hci_event_table_t *event = hci_event_table;
+    uint16_t code = buffer[1];
+    const uint8_t *data = buffer + 3;
+
+    if ( code == HCI_LE_META_EVT_CODE )
+    {
+      event = hci_le_event_table;
+      code = buffer[3];
+      data += 1;
+    }
+    else if ( code == HCI_VENDOR_SPECIFIC_EVT_CODE )
+    {
+      event = hci_vs_event_table;
+      code = (((uint16_t)buffer[4]) << 8) | buffer[3];
+      data += 2;
+    }
+
+    for ( ; event->process; event++ )
+      if ( code == event->evt_code )
+        return event->process( data );
+  }
+
+  return HCI_UNSPECIFIED_ERROR_ERR_CODE;
+}

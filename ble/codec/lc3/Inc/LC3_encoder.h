@@ -31,7 +31,6 @@
 #define LC3_ENCODER_STACK_SIZE_24kHz     (3428u)
 #define LC3_ENCODER_STACK_SIZE_48kHz     (4368u)
 
-
 /* Exported functions ------------------------------------------------------- */
 /**
   * @brief  Initialize an encoder channel handle.
