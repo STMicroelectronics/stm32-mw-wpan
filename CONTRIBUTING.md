@@ -18,7 +18,6 @@ When you have checked the previous points, create a new report from the **Issues
 
 ## 2. Pull Requests
 
-<pull_yes>
 ### 2.1 Before opening a pull request
 
 STMicrolectronics is happy to receive contributions from the community, based on an initial Contributor License Agreement (CLA) procedure.
@@ -37,10 +36,6 @@ STMicrolectronics is happy to receive contributions from the community, based on
 * We recommend to engage first a communication thru an issue, in order to present your proposal, just to confirm that it corresponds to STMicroelectronics' domain or scope.
 * Then fork the project to your GitHub account to further develop your contribution. Please use the latest commit version.
 * Please, submit one pull request per new feature or proposal. This will ease the analysis and the final merge if accepted.
-</pull_yes>
-<pull_no>
-Pull requests are **not** accepted. Please use **issues** instead.
-</pull_no>
 
 ## 3. Vulnerabilities
 
@@ -48,4 +43,4 @@ To report a **vulnerability**, please refer to the [SECURITY.md](./SECURITY.md) 
 
 ## 4. Support requests and miscellaneous
 
-For support requests or any other topic not related to the content of this repository, you can submit a post to the **ST Community** on the appropriate topic page.
+For support requests or any other topics not related to the content of this repository, you can submit a post to the **ST Community** on the appropriate topic [page](https://community.st.com/s/topiccatalog).

@@ -2,20 +2,18 @@
  ******************************************************************************
  * @file    uuid.h.h
  * @author  MCD Application Team
- * @version V1.0.0
- * @date    04-September-2018
  * @brief   Header containing the UUIDs of all the services and caharcteristics
- *****************************************************************************
+ ******************************************************************************
  * @attention
  *
- * Copyright (c) 2018-2022 STMicroelectronics.
+ * Copyright (c) 2018-2021 STMicroelectronics.
  * All rights reserved.
  *
  * This software is licensed under terms that can be found in the LICENSE file
  * in the root directory of this software component.
  * If no LICENSE file comes with this software, it is provided AS-IS.
  *
- *****************************************************************************
+ ******************************************************************************
  */
 
 
@@ -276,11 +274,15 @@
 #define OBJECT_ACTION_CONTROL_POINT_CHAR_UUID                          (0x2AC5)
 #define OBJECT_LIST_CONTROL_POINT_CHAR_UUID                            (0x2AC6)
    
+/* UUIDs for Zigbee Direct Service */
+#define ZIGBEE_DIRECT_COMM_SERVICE_UUID                                (0xFFF7)
+
 /* Custom Services*/
 /* UUIDs for data transfer service */
-#define DATA_TRANSFER_SERVICE_UUID                                     (0xFE80)
-#define DATA_TRANSFER_TX_CHAR_UUID                                     (0xFE81)
-#define DATA_TRANSFER_RX_CHAR_UUID                                     (0xFE82)    
+#define DT_SERVICE_UUID                                               (0xFE80)
+#define DT_TX_CHAR_UUID                                               (0xFE81)
+#define DT_RX_CHAR_UUID                                               (0xFE82)
+#define DT_THROUGHPUT_CHAR_UUID                                       (0xFE83)
 
 /* UUIDs for custom battery service */ 
 #define CUSTOM_BATTERY_SERVICE_UUID                                    (0xF2F0)

@@ -7,13 +7,15 @@ component.
 
 __SOFTWARE BILL OF MATERIALS__
 
-Component            | Copyright                                                         | License 
----------            | ----------------------------------------------------------------- | ------- 
-Bluetooth Low Energy | STMicroelectronics                                                | SLA0044 
-Linklayer            | Synopsys, Inc, STMicroelectronics                                 | SLA0044 
-MAC                  | Synopsys, Inc, STMicroelectronics                                 | SLA0044 
-OpenThread stack     | The OpenThread Authors                                            | BSD-3-Clause 
-Zigbee               | Exegin Technologies Limited, STMicroelectronics, Dr Brian Gladman | SLA0044 
+Component                | Copyright                                                         | License
+Bluetooth Low Energy     | STMicroelectronics                                                | SLA
+Bluetooth Low Energy LLD | STMicroelectronics                                                | SLA
+Interface                | STMicroelectronics                                                | SLA
+MAC 802.15.4             | STMicroelectronics                                                | SLA
+PHY                      | STMicroelectronics                                                | SLA
+OpenThread               | The OpenThread Authors                                            | BSD-3-Clause
+Utilities                | STMicroelectronics, Amazon.com Inc.                               | SLA, MIT
+Zigbee                   | Exegin Technologies Limited, STMicroelectronics, Dr Brian Gladman | SLA
 
 
 __Notes:__ If the license is an open source license, then you can access the
@@ -22,11 +24,6 @@ license terms are below. If a component is not listed in the SBOM, then the SLA
 shall apply unless other terms are clearly stated in the package.
 
 
-
-This software component is provided to you as part of a software package and
-applicable license terms are in the Package_license file. If you received this
-software component outside of a package or without applicable license terms,
-the terms of the SLA0044 license shall apply and are fully reproduced below:
 
 SLA0044 Rev6/October 2025
 
