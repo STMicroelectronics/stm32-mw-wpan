@@ -4,7 +4,7 @@
  * @brief ZCL Messaging cluster header
  * ZCL 7 Section 10.5
  * ZCL 8 Section 10.5
- * @copyright Copyright [2009 - 2023] Exegin Technologies Limited. All rights reserved.
+ * @copyright Copyright [2009 - 2025] Exegin Technologies Limited. All rights reserved.
  */
 
 /* EXEGIN - removed '@'PICS escape sequence, since these are not the
@@ -92,8 +92,8 @@ struct ZbZclMsgMessageT {
 /* Message Control bit masks */
 #define ZCL_MESSAGE_CTRL_TRANS_NORMAL           0x00 /* Normal transmission only */
 #define ZCL_MESSAGE_CTRL_TRANS_NORMAL_AND_IP    0x01 /* Normal and InterPAN transmission */
-#define ZCL_MESSAGE_CTRL_TRANS_IP_ONLY          0x02 /* InterPAN only */
-#define ZCL_MESSAGE_CTRL_TRANS_MASK             0x03
+#define ZCL_MESSAGE_CTRL_TRANS_IP_ONLY          0x02U /* InterPAN only */
+#define ZCL_MESSAGE_CTRL_TRANS_MASK             0x03U
 #define ZCL_MESSAGE_CTRL_IMPORT_LOW             0x00 /* Message importance = low */
 #define ZCL_MESSAGE_CTRL_IMPORT_MED             0x04 /* Message importance = medium */
 #define ZCL_MESSAGE_CTRL_IMPORT_HIGH            0x08 /* Message importance = high */
@@ -199,11 +199,11 @@ enum ZclStatusCodeT ZbZclMsgServerDisplayMessageUnsolic(struct ZbZclClusterT *cl
 /**
  * Send a Display or Display Protected Message as response
  * @param cluster Cluster instance from which to send this command
- * @param dstInfo Destination address for command, including sequence number and tx options
+ * @param dst Destination address for command, including sequence number and tx options
  * @param msg Display Message command structure
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
-enum ZclStatusCodeT ZbZclMsgServerDisplayMessageRsp(struct ZbZclClusterT *cluster, struct ZbZclAddrInfoT *dstInfo,
+enum ZclStatusCodeT ZbZclMsgServerDisplayMessageRsp(struct ZbZclClusterT *cluster, struct ZbZclAddrInfoT *dst,
     struct ZbZclMsgMessageT *msg);
 
 /**
@@ -233,11 +233,11 @@ enum ZclStatusCodeT ZbZclMsgServerCancelAllUnsolic(struct ZbZclClusterT *cluster
 /**
  * Send a Cancel All Messages command as a response
  * @param cluster Cluster instance from which to send this command
- * @param dstInfo Destination address for response
+ * @param dst Destination address for response
  * @param cancel_all Cancel All Messages command structure
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
-enum ZclStatusCodeT ZbZclMsgServerCancelAllRsp(struct ZbZclClusterT *cluster, struct ZbZclAddrInfoT *dstInfo,
+enum ZclStatusCodeT ZbZclMsgServerCancelAllRsp(struct ZbZclClusterT *cluster, struct ZbZclAddrInfoT *dst,
     struct ZbZclMsgMessageCancelAllT *cancel_all);
 
 /*
@@ -315,13 +315,13 @@ enum ZclStatusCodeT ZbZclMsgClientConfEnhReq(struct ZbZclClusterT *cluster, cons
  * Send a Get Message Cancellation command
  * @param cluster Cluster instance from which to send this command
  * @param dst Destination address for request
- * @param earliestTime UTC Timestamp indicating the earliest implementation time of a Cancel All Messages command to be returned
+ * @param earliest_time UTC Timestamp indicating the earliest implementation time of a Cancel All Messages command to be returned
  * @param callback Callback function that will be invoked when the response is received.
  * @param arg Pointer to application data that will included in the callback when invoked.
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
 enum ZclStatusCodeT ZbZclMsgClientGetMsgCancelReq(struct ZbZclClusterT *cluster,
-    const struct ZbApsAddrT *dst, uint32_t earliestTime,
+    const struct ZbApsAddrT *dst, uint32_t earliest_time,
     void (*callback)(struct ZbZclCommandRspT *rsp, void *arg), void *arg);
 
 /**

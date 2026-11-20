@@ -3,7 +3,7 @@
  * @heading Security Utilities
  * @brief Zigbee security header file
  * @author Exegin Technologies
- * @copyright Copyright [2009 - 2024] Exegin Technologies Limited. All rights reserved.
+ * @copyright Copyright [2009 - 2026] Exegin Technologies Limited. All rights reserved.
  */
 
 #ifndef ZIGBEE_SECURITY_H
@@ -13,11 +13,6 @@
 #include <stdbool.h>
 
 struct ZigBeeT;
-
-/* For FlexeLint */
-#ifndef CONFIG_ZB_REV
-#define CONFIG_ZB_REV 23
-#endif
 
 /* Security Install Code Max Length (including CRC) */
 #define ZB_SEC_INSTALL_CODE_MAX_LENGTH      18U

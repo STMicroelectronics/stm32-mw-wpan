@@ -4,7 +4,7 @@
  * @brief ZCL Diagnostics cluster header
  * ZCL 7 section 3.15
  * ZCL 8 section 3.15
- * @copyright Copyright [2019 - 2022] Exegin Technologies Limited. All rights reserved.
+ * @copyright Copyright [2019 - 2025] Exegin Technologies Limited. All rights reserved.
  */
 
 #ifndef ZCL_DIAGNOSTICS_H
@@ -63,8 +63,11 @@
  * DIAG.C.Afffe | AttributeReportingStatus | True
  */
 
-/*lint -save -e621 "Identifier clash (symbol 'ZCL_DIAG_SVR_ATTR_APS_TX_UCAST_FAIL'
- [MISRA Rule 5.1 REQUIRED, MISRA Rule 5.2 REQUIRED, MISRA Rule 5.4 REQUIRED, MISRA Rule 5.5 REQUIRED]" */
+/*lint -save -e621 "Identifier clash within 31 chars. For readability,
+ * we need to exceed the 31 character limit before uniqueness, and
+ * extend the limit to 63 charcters.
+ * [MISRA Rule 5.1 (REQUIRED), MISRA Rule 5.2 (REQUIRED),
+ * MISRA Rule 5.4 (REQUIRED), MISRA Rule 5.5 (REQUIRED)]" */
 
 /** Diagnostics Server Attribute IDs */
 enum ZbZclDiagSvrAttrT {
@@ -101,7 +104,6 @@ enum ZbZclDiagSvrAttrT {
     ZCL_DIAG_SVR_ATTR_LAST_MSG_LQI = 0x011c, /**< LastMessageLQI (Optional) */
     ZCL_DIAG_SVR_ATTR_LAST_MSG_RSSI = 0x011d /**< LastMessageRSSI (Optional) */
 };
-/*lint -restore */
 
 /*---------------------------------------------------------------
  * Diagnostics Client
@@ -132,4 +134,6 @@ struct ZbZclClusterT * ZbZclDiagClientAlloc(struct ZigBeeT *zb, uint8_t endpoint
  */
 bool ZbZclDiagServerAlloc(struct ZigBeeT *zb, uint8_t endpoint, uint16_t profileId, enum ZbStatusCodeT minSecurity);
 
-#endif /* __ZCL_DIAGNOSTICS_H */
+/*lint -restore */
+
+#endif

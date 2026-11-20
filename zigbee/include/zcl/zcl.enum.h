@@ -2,7 +2,7 @@
  * @file zcl.enum.h
  * @brief Zigbee ZCL Enumerations header file.
  * @author Exegin Technologies
- * @copyright Copyright [2009 - 2025] Exegin Technologies Limited. All rights reserved.
+ * @copyright Copyright [2009 - 2026] Exegin Technologies Limited. All rights reserved.
  */
 
 #ifndef ZCL_ENUM_H
@@ -10,7 +10,11 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include <stddef.h> /* NULL */
+
+/*lint -save -e451 "does not have a standard include guard [MISRA 2012 Dir 4.10, REQUIRED]" */
+#include <stddef.h> /** For NULL */
+/*lint -restore */
+
 #include "pletoh.h" /* Little endian conversion */
 #include "llist.h" /* Link list */
 
@@ -55,9 +59,13 @@ enum ZbZclNoDefaultResponseT {
 
 /* Max safe ZCL payload size (with APS security and no fragmentation)
  * Assumes not manufacturer specific command. */
-#define ZCL_PAYLOAD_UNFRAG_SAFE_SIZE             (ZB_APS_CONST_SAFE_APSSEC_PAYLOAD_SIZE - ZCL_HEADER_MIN_SIZE) /* 54 */
+#define ZCL_PAYLOAD_UNFRAG_SAFE_SIZE \
+    (ZB_APS_CONST_SAFE_APSSEC_PAYLOAD_SIZE - ZCL_HEADER_MIN_SIZE) /* 54 */
 
-/* Maximum ZSE Message size (after fragmentation). */
+/** SE 1.4a Spec, section 5.3.8: The Maximum Incoming Transfer Size Field in the
+ * Node descriptor defines the largest ASDU that can be transferred using
+ * fragmentation. For the Smart Energy Profile the default value shall be set to
+ * 128 bytes. */
 #define ZCL_ASDU_LENGTH_SMART_ENERGY             128U
 
 /* ZCL Indicator Values */
@@ -66,7 +74,8 @@ enum ZbZclNoDefaultResponseT {
 #define ZCL_INDICATOR_REPLACE                    0x00U
 #define ZCL_INDICATOR_INSERT                     0x10U
 #define ZCL_INDICATOR_REMOVE                     0x20U
-#define ZCL_INDICATOR_DEPTH_DECR(x)              (x = (x & ZCL_INDICATOR_OPERATION_MASK) | ((x - 1) & ZCL_INDICATOR_DEPTH))
+#define ZCL_INDICATOR_DEPTH_DECR(x) \
+    (x = (x & ZCL_INDICATOR_OPERATION_MASK) | ((x - 1) & ZCL_INDICATOR_DEPTH))
 
 /* ZCL Semi-Precision Floating Point Fields. */
 #define ZCL_FLOAT_SEMI_MANTISSA                  0x03ffU
@@ -94,7 +103,8 @@ enum ZbZclNoDefaultResponseT {
 #define ZCL_FLOAT_NAN                            (0.0 / 0.0)
 #endif
 #define ZCL_FLOAT_ISNAN(x)                       ((x) != (x))
-#define ZCL_FLOAT_ISINF(x)                       (((x) == ZCL_FLOAT_INFINITY) || ((x) == -ZCL_FLOAT_INFINITY))
+#define ZCL_FLOAT_ISINF(x) \
+    (((x) == ZCL_FLOAT_INFINITY) || ((x) == -ZCL_FLOAT_INFINITY))
 
 /* Smart Energy Preferred channels: 11, 14, 15, 19, 20, 24, 25 */
 #define ZCL_CHANNELMASK_SMART_ENERGY             0x318c800UL
@@ -110,10 +120,10 @@ enum ZbZclProfileIdT {
     ZCL_PROFILE_RETAIL_SERVICES = 0x010A,
     ZCL_PROFILE_TP2 = 0x7f01, /* ZigBee Test Profile #2 Profile Id */
     ZCL_PROFILE_ZB_STANDARD_MAX = 0x7fff,
-    ZCL_PROFILE_GREENPOWER = 0xa1e0, /* Green Power (was ZB_ZGP_PROFILE_ID) */
+    ZCL_PROFILE_GREENPOWER = 0xa1e0,
     ZCL_PROFILE_MFR_SPECIFIC_MIN = 0xc000,
-    ZCL_PROFILE_ZLL = 0xc05e,
-    ZCL_PROFILE_C4 = 0xc25d,
+    ZCL_PROFILE_ZLL = 0xc05e, /* Zigbee Light Link */
+    ZCL_PROFILE_C4 = 0xc25d, /* Control 4 */
     ZCL_PROFILE_WILDCARD = 0xffff /* Wildcard Profile ID */
 };
 
@@ -127,6 +137,14 @@ enum ZbZclDevIdRangeT {
 enum ZbZclAttrIdRangeT {
     ZCL_ATTRIBUTE_ZB_STANDARD_MIN = 0x0000,
     ZCL_ATTRIBUTE_ZB_STANDARD_MAX = 0x3fff
+};
+
+enum ZbZclManufCodeT {
+    ZCL_MANUF_CODE_INTERNAL = 0xfffe
+        /**< Used with the ZCL Scenes cluster to send internal loopback commands to
+         * set and get cluster scene data. The ZCL_FRAMECTRL_MANUFACTURER frame
+         * control bit must be set. This code is never sent over the air. (Internal
+         * use only) */
 };
 
 /* Command ID Ranges */
@@ -281,7 +299,8 @@ enum ZclDataTypeT {
 #define ZCL_INVALID_SIGNED_40BIT                (-549755813888LL) /* 0x8000000000 */
 #define ZCL_INVALID_SIGNED_48BIT                (-140737488355328LL) /* 0x800000000000 */
 #define ZCL_INVALID_SIGNED_56BIT                (-36028797018963968LL) /* 0x80000000000000 */
-#define ZCL_INVALID_SIGNED_64BIT                0x8000000000000000ULL /* integer constant is so large that it is unsigned  */
+#define ZCL_INVALID_SIGNED_64BIT \
+    0x8000000000000000ULL /* integer constant is so large that it is unsigned  */
 
 #define ZCL_INVALID_ENUMERATION_8BIT            ZCL_INVALID_UNSIGNED_8BIT
 #define ZCL_INVALID_ENUMERATION_16BIT           ZCL_INVALID_UNSIGNED_16BIT
@@ -554,7 +573,7 @@ enum ZbZclDeviceIdT {
 };
 
 /* Cluster ID Ranges */
-enum {
+enum ZbZclClusterIdRangesT {
     ZCL_CLUSTER_ZB_STANDARD_MIN = 0x0000U,
     ZCL_CLUSTER_ZB_STANDARD_MAX = 0x7fffU,
     ZCL_CLUSTER_MFR_SPECIFIC_MIN = 0xfc00U,
@@ -675,17 +694,12 @@ enum ZbZclClusterIdT {
     /* TOUCHLINK */
     ZCL_CLUSTER_TOUCHLINK = 0x1000,
 
-    /* Custom, internal use only, for handling cluster persistence.
-     * Used with ZCL_MANUF_CODE_INTERNAL. */
-    ZCL_CLUSTER_PERSIST = 0xfffe,
-
     /* Custom, internal use only, for local loop-back commands we want to
      * send to all clusters. Used with ZCL_MANUF_CODE_INTERNAL. */
     ZCL_CLUSTER_WILDCARD = 0xffff
 };
 
-/* General ZCL Commands (ZCL_FRAMETYPE_PROFILE) */
-enum {
+enum ZbZclProfileCmdIdT {
     ZCL_COMMAND_READ = 0x00,
     ZCL_COMMAND_READ_RESPONSE = 0x01,
     ZCL_COMMAND_WRITE = 0x02,
@@ -708,20 +722,22 @@ enum {
      * ZCL_FRAMECTRL_MANUFACTURER && ZCL_FRAMETYPE_PROFILE &&
      * (Manufacturer Code == ZCL_MANUF_CODE_INTERNAL) */
 
-    /* For Scene Store Command (ZCL_SCENES_COMMAND_STORE_SCENE)
+    ZCL_CMD_MANUF_INTERNAL_GET_SCENE_EXTDATA = 0xf0,
+    /**< For Scene Store Command (ZCL_SCENES_COMMAND_STORE_SCENE)
      * Payload for Request (to Server): None
      * Payload for Response: [CLUSTER(2) | EXT_LEN(1) | EXT_ATTR_DATA(N)] */
-    ZCL_CMD_MANUF_INTERNAL_GET_SCENE_EXTDATA = 0xf0, /* get_scene_data() */
 
-    /* For Scene Recall Command (ZCL_SCENES_COMMAND_RECALL_SCENE)
+    ZCL_CMD_MANUF_INTERNAL_SET_SCENE_EXTDATA
+    /**< For Scene Recall Command (ZCL_SCENES_COMMAND_RECALL_SCENE)
      * Payload for Request (to Server): [EXT_LEN(1) | EXT_ATTR_DATA(N)]
      * Payload for Response: [STATUS(1)] */
-    ZCL_CMD_MANUF_INTERNAL_SET_SCENE_EXTDATA, /* set_scene_data() */
-
-    /* ZCL Cluster Persistence: Profile-Wide Manufacturer-Specific command
-     * sent to a cluster to restore persistence. */
-    ZCL_CMD_MANUF_INTERNAL_ATTR_PERSIST_SET
 };
+
+/* Offsets into ZCL_CMD_MANUF_INTERNAL_SET_SCENE_EXTDATA message */
+#define SET_SCENE_EXTDATA_OFFSET_TRANSITION             0U /* Length = 4 octets (tenths of a second) */
+#define SET_SCENE_EXTDATA_OFFSET_EXT_LEN                4U /* Length = 1 octet */
+#define SET_SCENE_EXTDATA_OFFSET_EXT_FIELD              5U /* Length = variable */
+#define SET_SCENE_EXTDATA_HEADER_LEN                    (4U + 1U)
 
 /* ZCL Frame Control field. */
 struct ZbZclFrameControlT {
@@ -738,5 +754,34 @@ struct ZbZclHeaderT {
     uint8_t seqNum;
     uint8_t cmdId;
 };
+
+/* ZCL Date Format as defined in Section 2.6.2.23 of the Zigbee Cluster Library (ZCL) v8 specification.
+ *
+ * The ZCL Date is a 4-octet field representing a calendar date in a structured format:
+ *
+ * Octets: [Year][Month][DayOfMonth][DayOfWeek]
+ *
+ * A value of 0xff in any subfield indicates an unused subfield.
+ * If all subfields have the value 0xff, this indicates a non-value of the data type. */
+struct ZbZclDateT {
+    uint8_t year;
+    /**< The year subfield has a range of 0 to 255, representing years from 1900 to 2155. */
+    uint8_t month;
+    /**< The month subfield has a range of 1 to 12, representing January to December. */
+    uint8_t dayOfMonth;
+    /**< The day of month subfield has a range of 1 to 31. */
+    uint8_t dayOfWeek;
+    /**< The day of week subfield has a range of 1 to 7, representing Monday to Sunday. */
+};
+
+/*---------------------------------------------------------------
+ * ZCL MISRA conversion helpers (Internal Use Only)
+ *---------------------------------------------------------------
+ */
+enum ZbZclClusterIdT zcl_misra_uint16_to_cluster_id(uint16_t val);
+enum ZbZclDirectionT zcl_misra_uint8_to_direction(uint8_t val);
+enum ZclDataTypeT zcl_misra_uint8_to_data_type(uint8_t val);
+enum ZclStatusCodeT zcl_misra_uint8_to_status_code(uint8_t val);
+enum ZbZclProfileCmdIdT zcl_misra_uint8_to_profile_id(uint8_t val);
 
 #endif

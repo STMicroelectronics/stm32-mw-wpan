@@ -25,6 +25,7 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
+#include "ble_audio_stack.h"
 
 /* Defines -------------------------------------------------------------------*/
 
@@ -143,13 +144,56 @@ extern "C" {
 #define BLE_MCP_SRV_TOTAL_BUFFER_SIZE(num_ble_links,num_mp_instances,read_long_en,max_media_name_length,max_track_title_length) \
                                       ((MCP_SRV_MEM_PER_MEDIA_PLAYER_SIZE_BYTES * (1+num_mp_instances)) + \
                                        (((read_long_en) == (0x01)) ? (MCP_SRV_MEM_PER_READLONG_PROC_SIZE_BYTES * num_ble_links * (1 + num_mp_instances)) : (0)) + \
-                                        (DIVC((max_media_name_length * (1+num_mp_instances)),4u) * 4u) + \
-                                        (DIVC((max_track_title_length * (1+num_mp_instances)),4u) * 4u))
+                                        (ALIGN_UP_WORD(max_media_name_length * (1+num_mp_instances))) + \
+                                        (ALIGN_UP_WORD(max_track_title_length * (1+num_mp_instances))))
 
 /* #############################################################################
    #       Defines and MACRO used to allocate memory resource required to      #
    #       store information in Non Volatile Memory.                           #
    ############################################################################ */
+
+/*
+ * BLE_MCP_CLT_DB_MCS_BASE_SIZE_BYTES: fixed NVM size per Media Control Service
+ * instance stored by Media Control Profile Client role.
+ * It covers the mandatory MCS part only; optional feature-dependent fields are
+ * added separately in BLE_MCP_CLT_DB_BUFFER_SIZE().
+ */
+#define BLE_MCP_CLT_DB_MCS_BASE_SIZE_BYTES                              (60u)
+
+/*
+ * BLE_MCP_CLT_DB_MCS_PLAYBACK_SPEED_INFO_SIZE_BYTES: NVM size for the optional
+ * Playback Speed feature stored by Media Control Profile Client role.
+ * Only included in buffer size if MCP_FEATURE_PLAYBACK_SPEED is enabled.
+ */
+#define BLE_MCP_CLT_DB_MCS_PLAYBACK_SPEED_INFO_SIZE_BYTES               (8u)
+ 
+/*
+ * BLE_MCP_CLT_DB_MCS_SEEKING_SPEED_INFO_SIZE_BYTES: NVM size for the optional
+ * Seeking Speed feature stored by Media Control Profile Client role.
+ * Only included in buffer size if MCP_FEATURE_SEEKING_SPEED is enabled.
+ */
+#define BLE_MCP_CLT_DB_MCS_SEEKING_SPEED_INFO_SIZE_BYTES                (8u)
+ 
+/*
+ * BLE_MCP_CLT_DB_MCS_PLAYING_ORDER_INFO_SIZE_BYTES: NVM size for the optional
+ * Playing Order feature stored by Media Control Profile Client role.
+ * Only included in buffer size if MCP_FEATURE_PLAYING_ORDER is enabled.
+ */
+#define BLE_MCP_CLT_DB_MCS_PLAYING_ORDER_INFO_SIZE_BYTES                (8u)
+
+/*
+ * BLE_MCP_CLT_DB_MCS_PLAYING_ORDER_SUPPORTED_INFO_SIZE_BYTES: NVM size for the optional
+ * Playing Order Supported feature stored by Media Control Profile Client role.
+ * Only included in buffer size if MCP_FEATURE_PLAYING_ORDER_SUPPORTED is enabled.
+ */
+#define BLE_MCP_CLT_DB_MCS_PLAYING_ORDER_SUPPORTED_INFO_SIZE_BYTES      (5u)
+
+/*
+ * BLE_MCP_CLT_DB_MCS_MEDIA_CTRL_OP_INFO_SIZE_BYTES: NVM size for the optional
+ * Media Control Operation feature stored by Media Control Profile Client role.
+ * Only included in buffer size if MCP_FEATURE_MEDIA_CTRL_OP is enabled.
+ */
+#define BLE_MCP_CLT_DB_MCS_MEDIA_CTRL_OP_INFO_SIZE_BYTES                (16u)
 
 /*
  * BLE_MCP_CLT_DB_BUFFER_SIZE: this macro returns the maximum amount of memory, in bytes, needed for the storage in
@@ -163,28 +207,29 @@ extern "C" {
  * @param mcp_feature: Supported MCP Option Feature (MCP_OptionFeatures_t type).
  */
 #define BLE_MCP_CLT_DB_BUFFER_SIZE(num_db_devices,num_media_player_instances,mcp_feature) \
-        (num_db_devices \
-         * (16u + (DIVC(((1 + num_media_player_instances) * \
-           (61u + (((mcp_feature & MCP_FEATURE_PLAYBACK_SPEED) != (0x00)) ? (8u) : (0u)) \
-           + (((mcp_feature & MCP_FEATURE_SEEKING_SPEED) != (0x00)) ? (8u) : (0u)) \
-           + (((mcp_feature & MCP_FEATURE_PLAYING_ORDER) != (0x00)) ? (8u) : (0u)) \
-           + (((mcp_feature & MCP_FEATURE_PLAYING_ORDERS_SUPPORTED) != (0x00)) ? (5u) : (0u)) \
-           + (((mcp_feature & MCP_FEATURE_MEDIA_CTRL_OP) != (0x00)) ? (16u) : (0u)))),4u) * 4u)))
+         BLE_AUDIO_DB_BUFFER_SIZE(num_db_devices, \
+                                 ((1 + num_media_player_instances) * \
+                                 (BLE_MCP_CLT_DB_MCS_BASE_SIZE_BYTES \
+                                 + (((mcp_feature & MCP_FEATURE_PLAYBACK_SPEED) != (0x00)) ? (BLE_MCP_CLT_DB_MCS_PLAYBACK_SPEED_INFO_SIZE_BYTES) : (0u)) \
+                                 + (((mcp_feature & MCP_FEATURE_SEEKING_SPEED) != (0x00)) ? (BLE_MCP_CLT_DB_MCS_SEEKING_SPEED_INFO_SIZE_BYTES) : (0u)) \
+                                 + (((mcp_feature & MCP_FEATURE_PLAYING_ORDER) != (0x00)) ? (BLE_MCP_CLT_DB_MCS_PLAYING_ORDER_INFO_SIZE_BYTES) : (0u)) \
+                                 + (((mcp_feature & MCP_FEATURE_PLAYING_ORDERS_SUPPORTED) != (0x00)) ? (BLE_MCP_CLT_DB_MCS_PLAYING_ORDER_SUPPORTED_INFO_SIZE_BYTES) : (0u)) \
+                                 + (((mcp_feature & MCP_FEATURE_MEDIA_CTRL_OP) != (0x00)) ? (BLE_MCP_CLT_DB_MCS_MEDIA_CTRL_OP_INFO_SIZE_BYTES) : (0u)))))
 
 /* Types ---------------------------------------------------------------------*/
 /* Types of mask for roles of the Media Control Profile */
 typedef uint8_t MCP_Role_t;
-#define MCP_ROLE_SERVER			        (0x01)
-#define MCP_ROLE_CLIENT			        (0x02)
+#define MCP_ROLE_SERVER                           (0x01)
+#define MCP_ROLE_CLIENT                           (0x02)
 
 
 /* Media Control Optional features*/
 typedef uint16_t MCP_OptionFeatures_t;
-#define MCP_FEATURE_PLAYBACK_SPEED              (0x0001)        /* Playback Speed feature is supported.*/
-#define MCP_FEATURE_SEEKING_SPEED               (0x0002)        /* Seeking Speed feature is supported.*/
-#define MCP_FEATURE_PLAYING_ORDER               (0x0004)        /* Playing Order feature is supported.*/
-#define MCP_FEATURE_PLAYING_ORDERS_SUPPORTED    (0x0008)        /* Playing Orders Supported feature is supported.*/
-#define MCP_FEATURE_MEDIA_CTRL_OP               (0x0010)        /* Media Control Operation feature is supported.*/
+#define MCP_FEATURE_PLAYBACK_SPEED                (0x0001)        /* Playback Speed feature is supported.*/
+#define MCP_FEATURE_SEEKING_SPEED                 (0x0002)        /* Seeking Speed feature is supported.*/
+#define MCP_FEATURE_PLAYING_ORDER                 (0x0004)        /* Playing Order feature is supported.*/
+#define MCP_FEATURE_PLAYING_ORDERS_SUPPORTED      (0x0008)        /* Playing Orders Supported feature is supported.*/
+#define MCP_FEATURE_MEDIA_CTRL_OP                 (0x0010)        /* Media Control Operation feature is supported.*/
 
 /* Media Control Notification Features type in MCP Server side.
  * If notification is supported, an Updated in MCP Server side would be notified to MCP Client in case of MCP Client

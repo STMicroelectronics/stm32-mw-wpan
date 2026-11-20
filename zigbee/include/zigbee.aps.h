@@ -3,26 +3,23 @@
  * @heading APS Layer
  * @brief APS header file
  * @author Exegin Technologies
- * @copyright Copyright [2009 - 2025] Exegin Technologies Limited. All rights reserved.
+ * @copyright Copyright [2009 - 2026] Exegin Technologies Limited. All rights reserved.
  */
 
 #ifndef ZIGBEE_APS_H
 # define ZIGBEE_APS_H
 
+/*lint -save -e621 "Identifier clash [MISRA Rule 5.1 (REQUIRED)],
+ * [MISRA Rule 5.2 (REQUIRED)], [MISRA Rule 5.4 (REQUIRED)],
+ * [MISRA Rule 5.5 (REQUIRED)]" */
+
 /*---------------------------------------------------------------
  * Definitions
  *---------------------------------------------------------------
  */
-
-/* For FlexeLint */
-#ifndef CONFIG_ZB_REV
-#define CONFIG_ZB_REV 23
-#endif
-
 /* APS Constants */
 /* Make sure apscMaxDescriptorSize never exceeds 0xff (length field is 1 byte) */
 #define ZB_APS_CONST_MAX_DESCRIPTOR_SIZE            64U
-#define ZB_APS_CONST_MIN_DUPLICATE_TABLE_SIZE       1U
 
 /* I count 8 bytes as the minimum APS overhead, not 12 (0x0c)  */
 #define ZB_APS_CONST_MIN_HEADER_OVERHEAD            8U
@@ -150,17 +147,6 @@ enum ZbApsAddrModeT {
     ZB_APSDE_ADDRMODE_SHORT, /**< 16-bit address for DstAddress and DstEndpoint present */
     ZB_APSDE_ADDRMODE_EXT, /**< 64-bit extended address for DstAddress and DstEndpoint present */
     ZB_APSDE_ADDRMODE_IPGROUP /**< InterPAN */
-};
-
-/** APS relay information data structure. R23 addition. */
-struct ZbApsRelayInfoT {
-    bool relayMsg; /**< If true, APS packet shall be relayed. */
-    uint64_t relayExtAddr;
-    /**< Destination EUI64 for downstream, source EUI64 in case of upstream relay command. */
-    uint64_t relayDstAddr;
-    /**< APS relay command destination address. Address of intermediate router (multi-hop) or
-     * unauthorized joiner (single-hop) for downstream. Address of intermediate router (multi-hop)
-     * or TC (single-hop) for upstream. */
 };
 
 /** Zigbee APS Diagnostics */
@@ -323,7 +309,6 @@ struct ZbApsdeDataReqT {
     uint8_t radius; /**< Radius - Network radius. If 0, default value is used */
     uint16_t aliasAddr; /**< AliasSrcAddr - Requires ZB_APSDE_DATAREQ_TXOPTIONS_ALIAS to be enabled */
     uint8_t aliasSeqnum; /**< AliasSeqNumb - Requires ZB_APSDE_DATAREQ_TXOPTIONS_ALIAS to be enabled */
-    struct ZbApsRelayInfoT relayInfo; /**< Contains required information to relay the APS packet. R23 addition. */
 };
 
 /**
@@ -365,7 +350,7 @@ struct ZbApsdeDataIndT {
 
     uint16_t linkAddr; /**< Exegin Addon for Inter-PAN portability */
 
-    struct ZbApsRelayInfoT relayInfo; /**< Contains required information to relay the APS packet. R23 addition. */
+    bool is_msg_relayed; /**< Set to true, if the APSDE-DATA.ind was APS Relayed. */
 };
 
 /**
@@ -407,8 +392,9 @@ enum ZbApsmeIbAttrIdT {
     /**< apsLastChannelEnergy (type: uint8_t, reset: yes, persist: no) */
     ZB_APS_IB_ID_LAST_CHANNEL_FAILRATE = 0xcb,
     /**< apsLastChannelFailureRate (type: uint8_t, reset: yes, persist: no) */
-    ZB_APS_IB_ID_CHANNEL_TIMER = 0xcc,
-    /**< apsChannelTimer (type: ZbUptimeT, reset: yes, persist: no) */
+
+    /* Deprecated: ZB_APS_IB_ID_CHANNEL_TIMER = 0xcc */
+
     ZB_APS_IB_ID_MAX_WINDOW_SIZE = 0xcd,
     /**< apsMaxWindow Size (type: uint8_t, reset: no, persist: no) */
     /* Removed -- 0xce (ZB_APS_IB_ID_PARENT_ANNOUNCE_TIMER) */
@@ -497,6 +483,15 @@ enum ZbApsmeIbAttrIdT {
     /**< apsPreconfiguredPasscode. R23 addition. The 128 bit secret derived from short passcode
      * and used for authenticated DLK. (type: array of uint8_t of size ZB_SEC_KEYSIZE,
      * reset: yes, persist: no) */
+
+    /* discontinuity */
+
+    /* EXEGIN add-ons - read only parameters */
+    ZB_APS_IB_ID_BINDING_TABLE_SIZE = 0x05f0,
+    ZB_APS_IB_ID_GROUP_TABLE_SIZE = 0x05f1,
+    ZB_APS_IB_ID_DEVICE_KEY_PAIR_SET_SIZE = 0x05f2,
+
+    /* The end */
     ZB_APS_IB_ID_MAX = 0x05ff
 };
 
@@ -800,11 +795,11 @@ enum ZbApsKeyAttribute {
 
     /* Exegin custom. */
     ZB_APS_KEY_ATTR_VERIFIED_KEY_CBKE = 0xf0U
-        /**< This is an exegin custom key attribute value used to inticate that the key is CBKE derived or verified.
+        /**< This is an exegin custom key attribute value used to indicate that the key is CBKE derived or verified.
          * This is only used with R22 or earlier stack revisions to differentiate a TCLK derived key from CBKE derived
          * key. As with R23, we can use 'PostJoinKeyUpdateMethod' or 'KeyUpdateMethod' field of the APS Key-Pair entry
          * to check if the TC link key is updated using CBKE or not. */
-};
+} __attribute__((packed)); /* Packed to save space in table entry */
 
 /*-------------------------------------------------------------*/
 
@@ -844,10 +839,7 @@ enum ZbApsmePolicyT {
     ZB_APSME_POLICY_TC_KEY_REQ_PROV = 0x00000100,
     /* 0x02 - Provisional */
 
-#if 0 /* not used and has no effect in stack */
-      /* networkKeyUpdateMethod */
-    ZB_APSME_POLICY_NWK_KEY_UNICAST = 0x00000100,
-#endif
+    /* networkKeyUpdateMethod (not implemented) */
 
     ZB_APSME_POLICY_APP_KEY_REQ_MASK = 0x00000C00,
     /**< allowApplicationKeyRequests */
@@ -1009,7 +1001,6 @@ struct ZbApsmeSwitchKeyIndT {
 struct ZbApsmeVerifyKeyReqT {
     uint64_t dstExtAddr; /**< DestAddress */
     enum ZbSecKeyTypeT keyType; /**< StandardKeyType */
-    struct ZbApsRelayInfoT relayInfo; /**< Contains information required to relay the APS packet. R23 addition. */
 };
 
 /** APSME-VERIFY-KEY.indication */
@@ -1018,7 +1009,6 @@ struct ZbApsmeVerifyKeyIndT {
     enum ZbSecKeyTypeT keyType; /**< StandardKeyType */
     uint8_t hash[ZB_SEC_KEYSIZE]; /**< ReceivedInitiatorHashValue */
     enum ZbSecEncryptT encryptKeyType; /* Key used to encrypt the incoming command */
-    struct ZbApsRelayInfoT relayInfo; /**< Contains information required to relay the APS packet. R23 addition. */
 };
 
 /** APSME-CONFIRM-KEY.request */
@@ -1026,16 +1016,15 @@ struct ZbApsmeConfirmKeyReqT {
     enum ZbStatusCodeT status; /**< Status */
     uint64_t dstExtAddr; /**< DestAddress */
     enum ZbSecKeyTypeT keyType; /**< StandardKeyType */
-    struct ZbApsRelayInfoT relayInfo; /**< Contains information required to relay the APS packet. R23 addition. */
 };
 
 /** APSME-CONFIRM-KEY.indication */
 struct ZbApsmeConfirmKeyIndT {
     enum ZbStatusCodeT status; /**< Status */
-    uint64_t srcExtAddr; /**< SrcAddress */
+    uint64_t srcExtAddr;
+    /**< SrcAddress of the device that sent the verify-key command. */
     enum ZbSecKeyTypeT keyType; /**< StandardKeyType */
     enum ZbSecEncryptT encryptKeyType; /* Key used to encrypt the incoming command */
-    struct ZbApsRelayInfoT relayInfo; /**< Contains information required to relay the APS packet. R23 addition. */
 };
 
 /** Initial join authentication method used with DLK. R23 addition. */
@@ -1048,7 +1037,7 @@ enum ZbApsInitialJoinAuthMethodT {
     /**< Initial join authentication - anonymous key negotiation. */
     ZB_APS_INITIAL_JOIN_AUTH_KEY_NEGO_WITH_AUTH = 3U
         /**< Initial join authentication - authentication key negotiation. */
-};
+} __attribute__((packed)); /* Packed to save space in table entry */
 
 /** Post join key update method. */
 enum ZbApsPostJoinKeyUpdateMethodT {
@@ -1062,7 +1051,7 @@ enum ZbApsPostJoinKeyUpdateMethodT {
     /**< Post join key update - authentication DLK. */
     ZB_APS_POST_JOIN_KEY_UPDATE_CBKE = 4U
         /**< Post join key update - CBKE. */
-};
+} __attribute__((packed)); /* Packed to save space in table entry */
 
 /* Dynamic Link Key negotiation state. */
 enum ZbApsKeyNegoStateT {
@@ -1072,17 +1061,30 @@ enum ZbApsKeyNegoStateT {
     /**< APS Key negotiation state start. */
     ZB_APS_KEY_NEGO_STATE_COMPLETE = 2U
         /**< APS Key negotiation state complete. */
-};
+} __attribute__((packed)); /* Packed to save space in table entry */
 
-/* Dynamic Link Key negotiation state. */
+/* Preshared key type enumeration for authenticated DLK, the enum
+ * values are similar to 'enum ZbSelPreSharedSecretT' aligned as
+ * part of R23.2 updates. */
 enum ZbApsPreSharedKeyTypeT {
-    ZB_APS_PRE_SHARED_KEY_TYPE_NONE = 0U,
-    /**< APS pre-shared key type none. */
-    ZB_APS_PRE_SHARED_KEY_TYPE_IC_KEY = 1U,
-    /**< APS pre-shared key type install code derived link key. */
-    ZB_APS_PRE_SHARED_KEY_TYPE_PASSCODE = 2U
-        /**< APS pre-shared key type variable length passcode. */
-};
+    ZB_APS_PSK_TYPE_SYMMETRIC_AUTH_TOKEN = 0x00U,
+    /**< Symmetric authentication token established after DLK */
+    ZB_APS_PSK_TYPE_IC_KEY = 0x01U,
+    /**< Pre-configured link key derived from installation code.
+     * Pre-configured link keys are added to the ZbStartupT struct for joiners,
+     * and via ZbApsmeAddKeyReq on the Trust Center. */
+    ZB_APS_PSK_TYPE_PASSCODE_PAKE = 0x02U,
+    /**< Variable-length pass code (for PAKE protocols) */
+    ZB_APS_PSK_TYPE_BASIC_ACCESS_KEY = 0x03U,
+    /**< Basic Access Key (only used with Zigbee Direct). */
+    ZB_APS_PSK_TYPE_ADMIN_ACCESS_KEY = 0x04U,
+    /**< Administrative Access Key (only used with Zigbee Direct). */
+
+    /* Discontinuity 05 - 254 reserved */
+
+    ZB_APS_PSK_TYPE_INVALID = 0xffU
+        /**< Invalid or no pre-shared key or stack is required to use well-known key. */
+} __attribute__((packed)); /* Packed to save space in table entry */
 
 /** APS Link Key type. */
 enum ZbApsLinkKeyTypeT {
@@ -1090,7 +1092,7 @@ enum ZbApsLinkKeyTypeT {
     /**< Unique link key e.g. IC derived link key. */
     ZB_APS_LINK_KEY_TYPE_GLOBAL_LINK_KEY = 0x01U
         /**< Global link key e.g. 'ZigbeeAlliance09' key. */
-};
+} __attribute__((packed)); /* Packed to save space in table entry */
 
 /** APSME-ADD-KEY.request - Exegin Custom */
 struct ZbApsmeAddKeyReqT {
@@ -1210,10 +1212,6 @@ struct ZbApsmeKeyNegoReqT {
     /**< Selected Pre-Shared secret. */
     uint64_t partnerLongAddr;
     /**< This is the EUI64 of the partner that key negotiation is being performed. */
-    bool relayCommand;
-    /**< This indicates whether or not the request should be relayed through another router. */
-    uint64_t relayLongAddr;
-    /**< Extended address of intermediate relay device. */
 };
 
 /** APSME-KEY-NEGOTIATION.Confirm. R23 addition. */
@@ -1224,10 +1222,6 @@ struct ZbApsmeKeyNegoConfirmT {
     /**< Partner public point data */
     uint64_t partnerLongAddr;
     /**< Partner extended address. */
-    bool relayCommand;
-    /**< This indicates whether or not the response was relayed through another router. */
-    uint64_t relayLongAddr;
-    /**< Extended address of intermediate relay device. */
 };
 
 /** APSME-KEY-NEGOTIATION.indication. R23 addition. */
@@ -1238,10 +1232,6 @@ struct ZbApsmeKeyNegoIndT {
     /**< Partner public point data */
     uint8_t seqnum;
     /**< ZDO sequence number. */
-    bool relayCommand;
-    /**< This indicates whether or not the response should be relayed through another router. */
-    uint64_t relayLongAddr;
-    /**< Extended address of intermediate relay device. */
 
     /* R23.2 addition. */
     bool apsSecured;
@@ -1316,6 +1306,18 @@ struct ZbApsmeKeyPairT {
      * the special nonce and AES-128 key for frame counter synchronization */
     uint8_t capabilities;
     /**< Link key features and capabilities e.g, ZB_APS_SEC_CAPABILITY_FC_SYNC_SUPPORT. */
+
+    /* Exegin Custom additions (only used by TC and not persisted). */
+    bool aps_relay_allowed;
+    /**< Only used by TC. Set to true at the start of off-network DLK and during device
+     * interview with the joiner. This flag will be cleared, once the joiner is permitted
+     * to the network by sending APS Transport Key command with 'Network Key'. */
+    uint64_t aps_relay_dstaddr;
+    /**< Only used by TC and if 'aps_relay_allowed' is set to true. When used it holds the
+     * extended address of the intermediate device from the APSME-UPDATE-DEVICE.indication.
+     * This is used as the destination address of the APS Relay downstream commands from TC
+     * in a multi-hop scenario. In case of single-hop join, this field contains the address
+     * of TC itself. */
 };
 
 /**
@@ -1579,4 +1581,9 @@ struct ZbMsgApsCommandT {
     } data;
 };
 
-#endif /* ZIGBEE_APS_H */
+/* For debugging only */
+void ZbApsmeEndpointList(struct ZigBeeT *zb);
+
+/*lint -restore */
+
+#endif

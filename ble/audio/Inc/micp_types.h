@@ -25,7 +25,7 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "ble_types.h"
+#include "ble_audio_stack.h"
 #include "audio_types.h"
 
 /* Defines -------------------------------------------------------------------*/
@@ -39,7 +39,7 @@ extern "C" {
 /*
  * MICP_DEVICE_NUM_GATT_SERVICES: number of GATT services required for Microphone Control Profile in Device role .
  */
-#define MICP_DEVICE_NUM_GATT_SERVICES(num_aic_instances) (1u + num_aic_instances)
+#define MICP_DEVICE_NUM_GATT_SERVICES(num_aic_instances) 		(1u + num_aic_instances)
 
 /*
  * MICP_DEVICE_NUM_GATT_ATTRIBUTES: minimum number of GATT attributes required for Microphone Control Profile
@@ -47,7 +47,7 @@ extern "C" {
  *
  * @param num_aic_instances: Maximum number of supported Audio Input Control Instances.
  */
-#define MICP_DEVICE_NUM_GATT_ATTRIBUTES(num_aic_instances) (3u + (16u * num_aic_instances))
+#define MICP_DEVICE_NUM_GATT_ATTRIBUTES(num_aic_instances) 	(3u + (16u * num_aic_instances))
 
 /*
  * MICP_DEVICE_ATT_VALUE_ARRAY_SIZE: this macro returns the size of the storage area for Attribute values
@@ -60,8 +60,8 @@ extern "C" {
  * @param max_aic_description_length: Maximum length of the Audio Input Description.
  */
 #define MICP_DEVICE_ATT_VALUE_ARRAY_SIZE(num_ble_links, num_aic_instances, max_aic_description_length) \
-                                          (6u + (2u*num_ble_links) \
-                                            + (num_aic_instances * (48u + max_aic_description_length + (6u*num_ble_links))))
+														(6u + (2u * num_ble_links) \
+														+ (num_aic_instances * (48u + max_aic_description_length + (6u * num_ble_links))))
 
 /* #############################################################################
    #       Defines and MACRO used to allocate memory resource of               #
@@ -90,8 +90,8 @@ extern "C" {
  * @param num_aic_instances: Maximum number of supported Audio Input Control Instances per connection.
  */
 #define BLE_MICP_CTLR_TOTAL_BUFFER_SIZE(num_ble_links,num_aic_instances) \
-          (8u + (MICP_CTLR_MEM_PER_AIC_INST_SIZE_BYTES * num_ble_links * num_aic_instances) + \
-           (MICP_CTLR_MEM_PER_CONN_SIZE_BYTES * num_ble_links))
+								(8u + (MICP_CTLR_MEM_PER_AIC_INST_SIZE_BYTES * num_ble_links * num_aic_instances) + \
+								(MICP_CTLR_MEM_PER_CONN_SIZE_BYTES * num_ble_links))
 
 
 /*
@@ -124,6 +124,17 @@ extern "C" {
    ############################################################################ */
 
 /*
+ * BLE_MICP_CTLR_DB_MICS_BASE_SIZE_BYTES: fixed NVM size per device for the MICS part in
+ * Microphone Control Profile Controller role.
+ */
+#define BLE_MICP_CTLR_DB_MICS_BASE_SIZE_BYTES           (14u)
+
+ /* BLE_MICP_CTLR_DB_PER_AIC_INST_SIZE_BYTES: fixed NVM size for one AICS service instance
+ * stored by MICP Controller role (AICS service header + AICS characteristic entries).
+ */
+#define BLE_MICP_CTLR_DB_PER_AIC_INST_SIZE_BYTES        (54u)
+
+/*
  * BLE_MICP_CTLR_DB_BUFFER_SIZE: this macro returns the maximum amount of memory, in bytes, needed for the storage in
  * Non Volatile Memory of the Microphone Control Profile in Controller role.
  *
@@ -132,8 +143,7 @@ extern "C" {
  * @param num_aic_instances: Maximum number of supported Audio Input Control Instances.
  */
 #define BLE_MICP_CTLR_DB_BUFFER_SIZE(num_db_devices,num_aic_instances) \
-        (num_db_devices \
-         * (16u + (DIVC((15u + (num_aic_instances * 55u)),4u) * 4u)))
+               BLE_AUDIO_DB_BUFFER_SIZE(num_db_devices,(BLE_MICP_CTLR_DB_MICS_BASE_SIZE_BYTES + (num_aic_instances * BLE_MICP_CTLR_DB_PER_AIC_INST_SIZE_BYTES)))
 
 /* Types ---------------------------------------------------------------------*/
 
@@ -149,7 +159,7 @@ typedef uint8_t Microphone_Mute_t;
 #define MICROPHONE_MUTE_DISABLED                         (0x02)  /* Mute command are disabled and microphone is muted*/
 
 
-/* Types of Gain Mode for Audio Input Control representing the MICP Renderer’s gain adjustment functionality.*/
+/* Types of Gain Mode for Audio Input Control representing the MICP Rendererï¿½s gain adjustment functionality.*/
 typedef uint8_t MICP_AICModeGain_t;
 #define MICP_AIC_GAIN_MODE_MANUAL_ONLY                   (0x00u)
 #define MICP_AIC_GAIN_MODE_AUTO_ONLY                     (0x01u)
@@ -298,7 +308,7 @@ typedef struct
                                          * This is a value for which a single increment or decrement results in a
                                          * corresponding increase or decrease of the input amplitude by the value of
                                          * the Gain Setting Units value specified in the Gain Setting Properties.
-                                         * A Gain Setting value of 0 should result in no change to the input’s original
+                                         * A Gain Setting value of 0 should result in no change to the inputï¿½s original
                                          * amplitude.
                                          */
   MICP_AICMute_t         Mute;           /* Mute State */

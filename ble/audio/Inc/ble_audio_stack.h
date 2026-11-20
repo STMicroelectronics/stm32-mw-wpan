@@ -29,6 +29,10 @@ extern "C" {
 
 
 /* Defines ---------------------------------------------------------------------*/
+/*
+ * ALIGN_UP_WORD: macro to return 32-bit aligned value
+ */
+ #define ALIGN_UP_WORD(x)												(((x) + 3) & ~UINT64_C(3))
 
 /*
  * BLE_AUDIO_PER_LINK_SIZE_BYTES: additional memory size used per link
@@ -39,6 +43,14 @@ extern "C" {
  * BLE_AUDIO_PER_EATT_BEARER_SIZE_BYTES: additional memory size used per EATT Bearer
  */
 #define BLE_AUDIO_PER_EATT_BEARER_SIZE_BYTES    (8u)
+
+/*
+ * BLE_AUDIO_DB_HEADER_LEN: memory size to store header information associated to 
+ * an Audio Service in a Non Volatile Memory
+ * 4 bytes : audio type identifier + nvm information total size
+ * 12 bytes : Bd Adress, audio service size information
+ */
+#define BLE_AUDIO_DB_HEADER_LEN    							(16u)
 
 /*
  * BLE_AUDIO_TOTAL_BUFFER_SIZE: this macro returns the amount of memory, in bytes,
@@ -61,7 +73,7 @@ extern "C" {
  * @param data_info_size: Information related to an Audio Service
  */
 #define BLE_AUDIO_DB_BUFFER_SIZE(num_db_devices,data_info_size) \
-                  (num_db_devices * (16u + (DIVC(data_info_size,4u) * 4u)))
+                  (num_db_devices * (BLE_AUDIO_DB_HEADER_LEN + ALIGN_UP_WORD(data_info_size)))
 
 /* Types ---------------------------------------------------------------------*/
 
@@ -142,7 +154,7 @@ extern tBleStatus BLE_AUDIO_STACK_Init(BleAudioInit_t *pBleAudioInit);
   * @brief Return a pointer to the Firmware Version String
   * @retval A pointer to the Firmware Version String
   */
-extern uint8_t* BLE_AUDIO_STACK_GetFwVersion(void);
+extern const uint8_t* BLE_AUDIO_STACK_GetFwVersion(void);
 
 /**
   * @brief The BLE Audio Stack requests to be executed. BLE_AUDIO_STACK_Task() shall be called.

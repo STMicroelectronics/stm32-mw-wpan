@@ -45,43 +45,43 @@ zb_zcl_append_uint8(uint8_t *payload, const unsigned int capacity, unsigned int 
 static inline int
 zb_zcl_append_uint16(uint8_t *payload, const unsigned int capacity, unsigned int *index, uint16_t value)
 {
-    ZCL_BUILDER_TEMPLATE(2U, putle16(payload + *index, value));
+    ZCL_BUILDER_TEMPLATE(2U, putle16(&payload[*index], value));
 }
 
 static inline int
 zb_zcl_append_uint24(uint8_t *payload, const unsigned int capacity, unsigned int *index, uint32_t value)
 {
-    ZCL_BUILDER_TEMPLATE(3U, putle24(payload + *index, value));
+    ZCL_BUILDER_TEMPLATE(3U, putle24(&payload[*index], value));
 }
 
 static inline int
 zb_zcl_append_uint32(uint8_t *payload, const unsigned int capacity, unsigned int *index, uint32_t value)
 {
-    ZCL_BUILDER_TEMPLATE(4U, putle32(payload + *index, value));
+    ZCL_BUILDER_TEMPLATE(4U, putle32(&payload[*index], value));
 }
 
 static inline int
 zb_zcl_append_uint40(uint8_t *payload, const unsigned int capacity, unsigned int *index, uint64_t value)
 {
-    ZCL_BUILDER_TEMPLATE(5U, putle40(payload + *index, value));
+    ZCL_BUILDER_TEMPLATE(5U, putle40(&payload[*index], value));
 }
 
 static inline int
 zb_zcl_append_uint48(uint8_t *payload, const unsigned int capacity, unsigned int *index, uint64_t value)
 {
-    ZCL_BUILDER_TEMPLATE(6U, putle48(payload + *index, value));
+    ZCL_BUILDER_TEMPLATE(6U, putle48(&payload[*index], value));
 }
 
 static inline int
 zb_zcl_append_uint56(uint8_t *payload, const unsigned int capacity, unsigned int *index, uint64_t value)
 {
-    ZCL_BUILDER_TEMPLATE(7U, putle56(payload + *index, value));
+    ZCL_BUILDER_TEMPLATE(7U, putle56(&payload[*index], value));
 }
 
 static inline int
 zb_zcl_append_uint64(uint8_t *payload, const unsigned int capacity, unsigned int *index, uint64_t value)
 {
-    ZCL_BUILDER_TEMPLATE(8U, putle64(payload + *index, value));
+    ZCL_BUILDER_TEMPLATE(8U, putle64(&payload[*index], value));
 }
 
 static inline int
@@ -130,43 +130,43 @@ zb_zcl_parse_uint8(const uint8_t *payload, const unsigned int length, unsigned i
 static inline int
 zb_zcl_parse_uint16(const uint8_t *payload, const unsigned int length, unsigned int *index, uint16_t *value)
 {
-    ZCL_PARSER_TEMPLATE(2U, pletoh16(payload + *index));
+    ZCL_PARSER_TEMPLATE(2U, pletoh16(&payload[*index]));
 }
 
 static inline int
 zb_zcl_parse_uint24(const uint8_t *payload, const unsigned int length, unsigned int *index, uint32_t *value)
 {
-    ZCL_PARSER_TEMPLATE(3U, pletoh24(payload + *index));
+    ZCL_PARSER_TEMPLATE(3U, pletoh24(&payload[*index]));
 }
 
 static inline int
 zb_zcl_parse_uint32(const uint8_t *payload, const unsigned int length, unsigned int *index, uint32_t *value)
 {
-    ZCL_PARSER_TEMPLATE(4U, pletoh32(payload + *index));
+    ZCL_PARSER_TEMPLATE(4U, pletoh32(&payload[*index]));
 }
 
 static inline int
 zb_zcl_parse_uint40(const uint8_t *payload, const unsigned int length, unsigned int *index, uint64_t *value)
 {
-    ZCL_PARSER_TEMPLATE(5U, pletoh40(payload + *index));
+    ZCL_PARSER_TEMPLATE(5U, pletoh40(&payload[*index]));
 }
 
 static inline int
 zb_zcl_parse_uint48(const uint8_t *payload, const unsigned int length, unsigned int *index, uint64_t *value)
 {
-    ZCL_PARSER_TEMPLATE(6U, pletoh48(payload + *index));
+    ZCL_PARSER_TEMPLATE(6U, pletoh48(&payload[*index]));
 }
 
 static inline int
 zb_zcl_parse_uint56(const uint8_t *payload, const unsigned int length, unsigned int *index, uint64_t *value)
 {
-    ZCL_PARSER_TEMPLATE(7U, pletoh56(payload + *index));
+    ZCL_PARSER_TEMPLATE(7U, pletoh56(&payload[*index]));
 }
 
 static inline int
 zb_zcl_parse_uint64(const uint8_t *payload, const unsigned int length, unsigned int *index, uint64_t *value)
 {
-    ZCL_PARSER_TEMPLATE(8U, pletoh64(payload + *index));
+    ZCL_PARSER_TEMPLATE(8U, pletoh64(&payload[*index]));
 }
 
 /* prevent accidental reuse */

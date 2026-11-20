@@ -65,6 +65,11 @@ typedef uint8_t BAP_Broadcast_Source_Encryption_t;
 #define BAP_BROADCAST_SOURCE_ENCRYPTED_CODE_KNOWN   (0x01) /* If added source is encrypted and the broadcast code is known */
 #define BAP_BROADCAST_SOURCE_ENCRYPTED_CODE_UNKNOWN (0x02) /* If added source is encrypted and the broadcast code is unknown */
 
+/* Types of PAC Record Data Packet */
+typedef uint8_t BAP_PACRecordsDataPckt_t;
+#define PAC_RECORDS_DATA_PACKET_FRAGMENTED      0x00U   /*Fragment of PAC Characteristic containing PAC records*/
+#define PAC_RECORDS_DATA_PACKET_COMPLETE        0x01U   /*Data Packet containing all the PAC records of a PAC Characteristic */
+
 /* Configuration settings of Audio Capabilities in Server role structure.
  * These configuration settings are required by Unicast server and Broadcast Sink role.
  */
@@ -90,11 +95,13 @@ typedef struct
  */
 typedef struct
 {
-  uint8_t       MaxNumSnkPACRecordsPerLink;     /* Maximum Number of Sink PAC Records per Link supported by
+  uint8_t       MaxNumSnkPACPerLink;            /* Maximum Number of Sink PAC Characteristic per Link supported by
                                                  * Unicast Client and Broadcast Assistant
+                                                 * (One Sink PAC Characteristic could include one or more PAC Records)
                                                  */
-  uint8_t       MaxNumSrcPACRecordsPerLink;     /* Maximum Number of Source PAC Records per Link supported by
+  uint8_t       MaxNumSrcPACPerLink;            /* Maximum Number of Source PAC Characteristic per Link supported by
                                                  * Unicast Client and Broadcast Assistant
+                                                 * (One Sink PAC Characteristic could include one or more PAC Records)
                                                  */
   uint8_t       *pStartRamAddr;                 /* Start address of the RAM buffer allocated for memory resource of
                                                  * Audio Capabilities in Client role
@@ -275,7 +282,7 @@ typedef struct
   BAP_AudioCapSrvConfig_t               PACSSrvConfig;  /* Published Audio Capabilities Server Configuration for
                                                          * Unicast server and Broadcast Sink
                                                          */
-  BAP_AudioCapCltConfig_t               PACSCltConfig;  /* Published Audio Capabilities Server Configuration for
+  BAP_AudioCapCltConfig_t               PACSCltConfig;  /* Published Audio Capabilities Client Configuration for
                                                          * Unicast Client and Broadcast Assistant
                                                          */
   BAP_AudioStreamCtrlSrvConfig_t        ASCSSrvConfig;  /* Audio Stream Endpoint Management Unicast Server */
@@ -317,6 +324,24 @@ typedef struct
                                                  * (see Metadata group)
                                                  */
 } BAP_AudioCapabilities_t;
+
+/* Information about Packet containing Published Audio Capabilities (PAC) Records associated
+ * In case of 'PacketFragment' flag is PAC_RECORDS_DATA_PACKET_FRAGMENTED and 'Offset' falg is 0, the 'pData' pointer
+ * points on the beginning of the PAC Characteristic (First byte is the number of PAC Records in the PAC Characteristic).
+ * The rest of the data in the PAC Characteristic will be contained in next Fragmented Packets.
+ * In case of 'PacketFragment' flag is PAC_RECORDS_DATA_PACKET_COMPLETE, the whole PAC Characteristic is included in the
+ * data buffer pointed by the the 'pData' pointer.
+ * The PAC Characteristic format is described in the Published Audio Capabilities Service specification.
+ */
+typedef struct
+{
+  uint16_t                      AttrHandle;             /* Attribute handle of the PAC Characteristic */
+  BAP_PACRecordsDataPckt_t      PacketFragment;         /* Fragment type */
+  uint16_t                      Offset;                 /* Offset of the fragment*/
+  uint8_t                       *pData;                 /* Pointer on the PAC Records Data in the PAC Characteristic */
+  uint16_t                      DataLength;             /* Number of bytes of PAC Records Data */
+}BAP_PACRecordsData_t;
+
 
 /* Published Audio Capabilities (PAC) Record type including Audio Codec Specific Capabilities*/
 typedef struct

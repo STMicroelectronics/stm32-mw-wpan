@@ -735,6 +735,8 @@ otError otPlatCryptoPbkdf2GenerateKey(const uint8_t *aPassword,
                                       uint16_t       aKeyLen,
                                       uint8_t       *aKey);
 
+OT_TOOL_WEAK otError otPlatCryptoResetPersistentStorage(void);
+void psa_its_reset_storage(void);
 /**
  * @}
  */

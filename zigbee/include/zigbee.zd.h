@@ -3,7 +3,7 @@
  * @heading Zigbee Direct ZDD
  * @brief Zigbee Direct ZDD header file
  * @author Exegin Technologies
- * @copyright Copyright [2009 - 2025] Exegin Technologies Limited. All rights reserved.
+ * @copyright Copyright [2009 - 2026] Exegin Technologies Limited. All rights reserved.
  */
 
 #ifndef ZIGBEE_ZD_H
@@ -94,12 +94,17 @@ struct zb_zdd_config_t {
  */
 bool zb_zdd_init(struct ZigBeeT *zb, struct zb_zdd_config_t *config);
 
+/**
+ * Called by the application to free the ZDD instance.
+ * @param zb Zigbee stack instance
+ * @return None
+ */
 void zb_zdd_destroy(struct ZigBeeT *zb);
 
 /**
  * Update the advertising data to reflect the current Zigbee stack state,
  * and enable advertisements if there has been a change or 'forced' is set to true.
- * The stack will automatically  update and enable advertisements when the data changes,
+ * The stack will automatically update and enable advertisements when the data changes,
  * including enabling Zigbee permit-join.
  * However, note that advertisements will automatically stop after a few minutes.
  * @param zb Zigbee stack instance
@@ -129,6 +134,8 @@ bool zb_zdd_sec_key_add(struct ZigBeeT *zb, enum zd_sel_psk_type type, const uin
 enum ZclStatusCodeT zb_zdd_server_write_attr(struct ZigBeeT *zb, uint16_t attrId, long long value);
 
 /* NOTE: For debugging only */
+struct zd_sec_session_t;
+void zvd_sec_print_session(struct ZigBeeT *zb, struct zd_sec_session_t *session);
 void zdd_sec_print_session(struct ZigBeeT *zb);
 void zdd_port_status_info(struct ZigBeeT *zb);
 

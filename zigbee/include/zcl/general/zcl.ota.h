@@ -99,6 +99,10 @@
 #ifndef ZCL_OTA_H
 # define ZCL_OTA_H
 
+/*lint -save -e621 "Identifier clash [MISRA Rule 5.1 (REQUIRED)],
+ * [MISRA Rule 5.2 (REQUIRED)], [MISRA Rule 5.4 (REQUIRED)],
+ * [MISRA Rule 5.5 (REQUIRED)]" */
+
 /* OTA cluster dependencies */
 /* Prototype the structs we need in this header file, rather than including
  * other header files. This file is included by tools outside of zigbee.git. */
@@ -134,11 +138,12 @@ enum ZbZclOtaSvrAttrId {
     ZCL_OTA_ATTR_DOWNLOAD_STACK_VERSION = 0x0005, /**< DownloadedZigBeeStackVersion (Optional) */
     ZCL_OTA_ATTR_IMAGE_UPGRADE_STATUS = 0x0006,
     /**< ImageUpgradeStatus (Optional).
-     *
-     * Writing ZCL_OTA_STATUS_NORMAL (0) to this attribute will reset the cluster back to defaults. */
+     * Writing ZCL_OTA_STATUS_NORMAL (0) to this attribute will reset
+     * the cluster back to defaults. Same as calling ZbZclOtaClientAbort. */
+
     ZCL_OTA_ATTR_MANUFACTURER_ID = 0x0007, /**< ManufacturerID (Optional) */
     ZCL_OTA_ATTR_IMAGE_TYPE_ID = 0x0008, /**< ImageTypeID (Optional) */
-    ZCL_OTA_ATTR_MIN_BLOCK_PERIOD = 0x0009, /**< MinimumBlockPeriod (Optional) */
+    ZCL_OTA_ATTR_MIN_BLOCK_PERIOD = 0x0009, /**< MinimumBlockPeriod in milliseconds (Optional) */
     ZCL_OTA_ATTR_IMAGE_STAMP = 0x000a, /**< ImageStamp (Optional) */
     ZCL_OTA_ATTR_UPGRADE_ACTIVATION_POLICY = 0x000b, /**< UpgradeActivationPolicy (Optional) */
     ZCL_OTA_ATTR_UPGRADE_TIMEOUT_POLICY = 0x0000c /**< UpgradeTimeoutPolicy (Optional) */
@@ -315,7 +320,7 @@ struct ZbZclOtaImageData {
 struct ZbZclOtaImageWaitForData {
     uint32_t current_time; /**< Current time */
     uint32_t request_time; /**< Request time */
-    uint16_t minimum_block_period; /**< MinimumBlock Period */
+    uint16_t minimum_block_period; /**< MinimumBlock Period in milliseconds */
 };
 
 /** Upgrade End Response command structure */
@@ -324,8 +329,12 @@ struct ZbZclOtaEndResponseTimes {
     uint32_t upgrade_time; /**< Upgrade time */
 };
 
-/* OTA Client API */
-/** OTA Upgrade callbacks configuration */
+/*-----------------------------------------------------------------------------
+ * OTA Upgrade Client
+ *-----------------------------------------------------------------------------
+ */
+/** OTA Upgrade callbacks configuration. Application should call ZbZclOtaClientGetDefaultCallbacks,
+ * to initialize this structure. */
 struct ZbZclOtaClientCallbacksT {
     void (*discover_complete)(struct ZbZclClusterT *cluster, enum ZclStatusCodeT status,
         void *arg);
@@ -377,9 +386,9 @@ struct ZbZclOtaClientCallbacksT {
 
     void (*query_next)(struct ZbZclClusterT *cluster, enum ZclStatusCodeT status,
         struct ZbZclOtaImageDefinition *image_definition, uint32_t image_size, void *arg);
-    /**< Callback to Server, invoked on receipt of Query Next Image Response command.
-     * If no image was found, the status will be set to ZCL_STATUS_NO_IMAGE_AVAILABLE.
-     * Otherwise the status should be set to ZCL_STATUS_SUCCESS from the OTA Server.
+    /**< Invoked on receipt of a Query Next Image Response command.
+     * If the default callback handler is used, if the status is SUCCESS, the cluster will
+     * start the download automatically by calling ZbZclOtaClientImageTransferStart.
      */
 
     enum ZclStatusCodeT (*update_raw)(struct ZbZclClusterT *cluster, uint8_t length,
@@ -584,9 +593,13 @@ struct ZbZclOtaClientConfig {
     uint8_t endpoint; /**< Endpoint on which the cluster is created on */
 
     enum ZbZclOtaActivationPolicy activation_policy; /**< Activation Policy */
+
     enum ZbZclOtaTimeoutPolicy timeout_policy;
     /**< Timeout Policy - Value written to ZCL_OTA_ATTR_UPGRADE_TIMEOUT_POLICY */
-    uint32_t image_block_delay; /**< Image block delay - milliseconds */
+
+    uint32_t image_block_delay;
+    /**< Image block delay - milliseconds (gets written to the read-only attribute
+     * ZCL_OTA_ATTR_MIN_BLOCK_PERIOD) */
 
     struct ZbZclOtaHeader current_image;
     /**< OTA Upgrade Header Fields structure. This is used to configure the client's
@@ -673,7 +686,27 @@ enum ZclStatusCodeT ZbZclOtaClientImageTransferStart(struct ZbZclClusterT *clust
  */
 enum ZclStatusCodeT ZbZclOtaClientImageTransferResume(struct ZbZclClusterT *cluster);
 
-/* OTA Upgrade Server */
+/**
+ * Helper function to abort an OTA image download and reset the session.
+ * Same as writing ZCL_OTA_STATUS_NORMAL to ZCL_OTA_ATTR_IMAGE_UPGRADE_STATUS attribute.
+ * @param cluster Cluster instance
+ * @return true if successful, false otherwise
+ */
+bool ZbZclOtaClientAbort(struct ZbZclClusterT *cluster);
+
+/**
+ * Helper function to check if an OTA image download is active.
+ * Same as reading ZCL_OTA_ATTR_IMAGE_UPGRADE_STATUS attribute and checking vs
+ * ZCL_OTA_STATUS_NORMAL
+ * @param cluster Cluster instance
+ * @return true if OTA download is active, false otherwise
+ */
+bool ZbZclOtaClientIsActive(struct ZbZclClusterT *cluster);
+
+/*-----------------------------------------------------------------------------
+ * OTA Upgrade Server
+ *-----------------------------------------------------------------------------
+ */
 
 /* OTA Uprade Server callbacks */
 /**
@@ -810,9 +843,11 @@ enum ZclStatusCodeT ZbZclOtaServerUpgradeEndRespSolic(struct ZbZclClusterT *clus
  * @param payload OTA Upgrade Payload buffer
  * @param length Length of OTA Upgrade Payload
  * @param header OTA Upgrade Header Fields structure
- * @return Number of bytes parsed
+ * @return Number of bytes parsed, or zero if more data is required, or -1 on error.
  */
-uint8_t ZbZclOtaHeaderParse(const uint8_t *payload, const uint8_t length,
-    struct ZbZclOtaHeader *header);
+int ZbZclOtaHeaderParse(const uint8_t *payload, unsigned int length,
+    struct ZbZclOtaHeader *ota_header);
+
+/*lint -restore */
 
 #endif

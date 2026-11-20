@@ -43,7 +43,7 @@
 
 #include "event_manager.h"
 #include "thread.h"
-#include "system.h"   
+#include "system.h"
 
 #define CSMA_MAX_BE      6
 #define CSMA_MIN_BE      3
@@ -89,7 +89,7 @@ void otSysInit(int argc, char *argv[])
 	LL_LOCK();
 
 	if (FALSE == g_PseudoReset) {
-		
+
 		if (IsSystemInitCalled == 0)
 		{
 #if (SUPPORT_CONFIG_LIB==1)
@@ -103,8 +103,8 @@ void otSysInit(int argc, char *argv[])
                   IsSystemInitCalled++;
 		}
 
-	arcAlarmInit();
-	g_PseudoReset = FALSE;
+            arcAlarmInit();
+            g_PseudoReset = FALSE;
 	}
         else {
 #if (SUPPORT_CONFIG_LIB==1)
@@ -151,7 +151,7 @@ void otSysProcessDrivers(otInstance *aInstance)
 
 
 /**
- * __2snprintf symbol missing in aeabi OT libs, add it on platform 
+ * __2snprintf symbol missing in aeabi OT libs, add it on platform
  *
  */
 int __2snprintf(char * s, size_t n, const char * format, ...)

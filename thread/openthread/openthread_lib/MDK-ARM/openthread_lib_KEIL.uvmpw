@@ -32,24 +32,7 @@
   </project>
 
   <project>
-    <PathAndName>.\thread_ftd_mbedtls_config\thread_ftd_mbedtls_config.uvprojx</PathAndName>
-  </project>
-
-  <project>
-    <PathAndName>.\thread_mtd_mbedtls_config\thread_mtd_mbedtls_config.uvprojx</PathAndName>
-  </project>
-
-  <project>
-    <PathAndName>.\thread_mtd_light_no_tcp_matter_mbedtls_config\thread_mtd_light_no_tcp_matter_mbedtls_config.uvprojx</PathAndName>
-    <NodeIsActive>1</NodeIsActive>
-  </project>
-
-  <project>
     <PathAndName>.\thread_mtd_light_with_tcp_matter_keil_config\thread_mtd_light_with_tcp_matter_keil_config.uvprojx</PathAndName>
-  </project>
-
-  <project>
-    <PathAndName>.\thread_mtd_light_with_tcp_matter_mbedtls_config\thread_mtd_light_with_tcp_matter_mbedtls_config.uvprojx</PathAndName>
   </project>
 
 </ProjectWorkspace>

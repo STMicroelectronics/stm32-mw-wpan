@@ -4,7 +4,7 @@
  * @brief ZCL Price cluster header
  * ZCL 7 section 10.2
  * ZCL 8 section 10.2
- * @copyright Copyright [2009 - 2023] Exegin Technologies Limited. All rights reserved.
+ * @copyright Copyright [2009 - 2026] Exegin Technologies Limited. All rights reserved.
  */
 
 /* EXEGIN - removed '@'PICS escape sequence, since these are not the
@@ -119,6 +119,12 @@
 
 #include "zcl/zcl.h"
 #include "zcl/se/zcl.meter.h" /* ZbZclMeterUnitsT */
+
+/*lint -save -e621 "Identifier clash within 31 chars. For readability,
+ * we need to exceed the 31 character limit before uniqueness, and
+ * extend the limit to 63 charcters.
+ * [MISRA Rule 5.1 (REQUIRED), MISRA Rule 5.2 (REQUIRED),
+ * MISRA Rule 5.4 (REQUIRED), MISRA Rule 5.5 (REQUIRED)]" */
 
 /** Price Server Attribute IDs */
 enum ZbZclPriceSvrAttrT {
@@ -267,7 +273,7 @@ enum ZbZclPriceSvrAttrT {
     ZCL_PRICE_SVR_ATTR_RECV_CBP_DURATION = 0x8701, /**< ReceivedCurrentBillingPeriodDuration (Optional) */
     ZCL_PRICE_SVR_ATTR_RECV_LBP_START = 0x8702, /**< ReceivedLastBillingPeriodStart (Optional) */
     ZCL_PRICE_SVR_ATTR_RECV_LBP_DURATION = 0x8703, /**< ReceivedLastBillingPeriodDuration (Optional) */
-    ZCL_PRICE_SVR_ATTR_RECV_LBP_CONSOLIDATED_BILL = 0x8704, /**< ReceivedLastBillingPeriodConsolidatedBill (Optional) */
+    ZCL_PRICE_SVR_ATTR_RECV_LBP_CONSOLIDATED_BILL = 0x8704 /**< ReceivedLastBillingPeriodConsolidatedBill (Optional) */
 };
 
 /* Price Cluster Attribute identifiers. */
@@ -331,7 +337,7 @@ enum ZbZclPriceClientCommandT {
 /* Price Cluster get current flags. */
 #define ZCL_PRICE_GET_FLAGS_RX_ON_IDLE           0x01U
 
-/* Price tier label string lengths. */
+/* Price tier label string lengths (not counting the first octet used for length) */
 #define ZCL_PRICE_LABEL_MAX_LENGTH               12U
 
 #define ZCL_PRICE_TARIFF_LABEL_MAX_LENGTH        24U
@@ -371,24 +377,25 @@ enum ZbZclPriceCO2UnitT {
     /* Reserved (0x0) */
     ZCL_PRICE_CO2_UNIT_KG_KWH = 0x01, /**< Kg/kWh, Kilograms per kiloWatt-hour */
     ZCL_PRICE_CO2_UNIT_KG_GAS = 0x02, /**< Kg per gallon of gasoline */
-    ZCL_PRICE_CO2_UNIT_KG_NG = 0x03, /**< Kg per therm of natural gas */
-    /* Reserved (0x4 to 0xFF) */
+    ZCL_PRICE_CO2_UNIT_KG_NG = 0x03 /**< Kg per therm of natural gas */
+        /* Reserved (0x4 to 0xFF) */
 };
 
-/* Block Period Duration Types */
+/** Block Period DurationTimebase Enumeration */
 enum ZbZclPriceBlockPeriodDurationTypeT {
-    ZCL_PRICE_BLOCK_PERIOD_DURATION_MINUTES = 0x00,
-    ZCL_PRICE_BLOCK_PERIOD_DURATION_DAYS = 0x01,
-    ZCL_PRICE_BLOCK_PERIOD_DURATION_WEEKS = 0x02,
-    ZCL_PRICE_BLOCK_PERIOD_DURATION_MONTHS = 0x03,
-    /* Reserved (0x4 to 0xF) */
+    ZCL_PRICE_BLOCK_PERIOD_DURATION_MINUTES = 0x00, /**< Minutes (default) */
+    ZCL_PRICE_BLOCK_PERIOD_DURATION_DAYS = 0x01, /**< Days */
+    ZCL_PRICE_BLOCK_PERIOD_DURATION_WEEKS = 0x02, /**< Weeks */
+    ZCL_PRICE_BLOCK_PERIOD_DURATION_MONTHS = 0x03 /**< Months */
+        /* Reserved (0x4 to 0xF) */
 };
 
+/** Block Period Duration Control Enumeration */
 enum ZbZclPriceBlockPeriodDurationControlT {
-    ZCL_PRICE_BLOCK_PERIOD_START_OF_TIMEBASE = 0x00,
-    ZCL_PRICE_BLOCK_PERIOD_END_OF_TIMEBASE = 0x01,
-    ZCL_PRICE_BLOCK_PERIOD_UNSPECIFIED = 0x02,
-    /* Reserved (0x3 to 0xF) */
+    ZCL_PRICE_BLOCK_PERIOD_START_OF_TIMEBASE = 0x00, /**< Start of Timebase */
+    ZCL_PRICE_BLOCK_PERIOD_END_OF_TIMEBASE = 0x01, /**< End of Timebase */
+    ZCL_PRICE_BLOCK_PERIOD_UNSPECIFIED = 0x02 /**< Not Specified */
+        /* Reserved (0x3 to 0xF) */
 };
 
 /** Tariff Type Enumeration */
@@ -400,13 +407,21 @@ enum ZbZclPriceTariffTypeT {
     ZCL_PRICE_TARIFF_TYPE_UNSPECIFIED = 0xff /**< Unspecified tariff type, meaning any tariff type. */
 };
 
+/** Tariff Resolution Period Enumeration */
+enum ZbZclPriceTariffResolutionPeriodT {
+    ZCL_PRICE_TARIFF_RES_PERIOD_NOT_DEFINED = 0x00, /**< Not Defined */
+    ZCL_PRICE_TARIFF_RES_PERIOD_BLOCK = 0x01, /**< Block Period */
+    ZCL_PRICE_TARIFF_RES_PERIOD_1_DAY = 0x02 /**< 1 Day */
+        /* Reserved (0x3 to 0xF) */
+};
+
 /** Tariff Charging Scheme Enumeration */
 enum ZbZclPriceTariffChargingSchemeT {
-    ZCL_PRICE_CHARGE_TOU_TARIFF, /**< TOU Tariff */
-    ZCL_PRICE_CHARGE_BLOCK_TARIFF, /**< Block Tariff */
-    ZCL_PRICE_CHARGE_BLOCK_TOU_COMM_THRESH, /**< Block/TOU Tariff with common thresholds */
-    ZCL_PRICE_CHARGE_BLOCK_TOU_IND_THRESH /**< Block/TOU Tariff with individual thresholds per tier */
-    /* Reserved (0x4 to 0xF) */
+    ZCL_PRICE_CHARGE_TOU_TARIFF = 0x00, /**< TOU Tariff */
+    ZCL_PRICE_CHARGE_BLOCK_TARIFF = 0x01, /**< Block Tariff */
+    ZCL_PRICE_CHARGE_BLOCK_TOU_COMM_THRESH = 0x02, /**< Block/TOU Tariff with common thresholds */
+    ZCL_PRICE_CHARGE_BLOCK_TOU_IND_THRESH = 0x03 /**< Block/TOU Tariff with individual thresholds per tier */
+        /* Reserved (0x4 to 0xF) */
 };
 
 /** Tier Block Mode Enumeration */
@@ -415,11 +430,11 @@ enum ZbZclPriceTierBlockModeT {
     /**< This tariff employs a single set of thresholds. */
     ZCL_PRICE_TIER_BLOCK_MODE_1 = 0x01,
     /**< This tariff employs a single set of thresholds common across all TOU tiers. */
-    ZCL_PRICE_TIER_BLOCK_MODE_2 = 0x02,
-    /**< This combination tariff employs an individual set of Thresholds for each
-     * TOU tier. */
-    /* Reserved for future use (0x3 to 0xFE) */
-    /* Reserved 0xFF */
+    ZCL_PRICE_TIER_BLOCK_MODE_2 = 0x02
+        /**< This combination tariff employs an individual set of Thresholds for each
+         * TOU tier. */
+        /* Reserved for future use (0x3 to 0xFE) */
+        /* Reserved 0xFF */
 };
 
 /* Price Cluster Structures */
@@ -515,12 +530,13 @@ struct ZbZclPriceServerPublishTariffInfoT {
     uint8_t number_of_price_tiers_in_use; /**< Number of Price Tiers in Use */
     uint8_t number_of_block_thresh_in_use; /**< Number of Block Thresholds in Use */
     uint8_t unit_of_measure; /**< Unit of Measure */
-    uint16_t currency; /**< Currency */
+    enum ZbZclPriceCurrencyCodeT currency; /**< Currency */
     uint8_t price_trailing_digit; /**< Price Trailing Digit */
     uint32_t standing_charge; /**< Standing Charge */
     uint8_t tier_block_mode; /**< TierBlockMode */
     uint32_t block_thresh_multiplier; /**< Block Threshold Multiplier - 24-bit */
     uint32_t block_thresh_divisor; /**< Block Threshold Divisor - 24-bit */
+    uint8_t res_period; /* Tariff Resolution Period */
 };
 
 /** Publish Conversion Factor command structure */
@@ -579,8 +595,8 @@ struct ZbZclPriceServerPublishCurrencyConversionT {
     uint32_t provider_id; /**< Provider ID */
     uint32_t issuer_event_id; /**< Issuer Event ID */
     uint32_t start_time; /**< Start Time - UTC Time */
-    uint16_t old_currency; /**< Old Currency */
-    uint16_t new_currency; /**< New Currency */
+    enum ZbZclPriceCurrencyCodeT old_currency; /**< Old Currency */
+    enum ZbZclPriceCurrencyCodeT new_currency; /**< New Currency */
     uint32_t conversion_factor; /**< Conversion Factor */
     uint8_t conversion_trail_digits; /**< Conversion Trailing Digit */
     uint32_t currency_change_control_flags; /**< Currency Change Control Flags */
@@ -842,10 +858,10 @@ struct ZbZclClusterT * ZbZclPriceServerAlloc(struct ZigBeeT *zb, uint8_t endpoin
 
 /**
  * Initialize Publish Price information
- * @param rsp Publish Price command structure
+ * @param info Publish Price command structure
  * @return Void
  */
-void ZbZclPriceServerPublishPriceInit(struct ZbZclPriceServerPublishPriceT *rsp);
+void ZbZclPriceServerPublishPriceInit(struct ZbZclPriceServerPublishPriceT *info);
 
 /**
  * Send an unsolicited Publish Price command
@@ -1419,5 +1435,7 @@ enum ZclStatusCodeT ZbZclPriceClientCommandGetCurrencyConversionReq(struct ZbZcl
 struct ZbZclClusterT * ZbZclPriceMirrorAlloc(struct ZigBeeT *zb, uint8_t endpoint,
     struct ZbZclClusterT *price_server, struct ZbZclClusterT *meter_mirror,
     struct ZbZclClusterT *meter_client);
+
+/*lint -restore */
 
 #endif

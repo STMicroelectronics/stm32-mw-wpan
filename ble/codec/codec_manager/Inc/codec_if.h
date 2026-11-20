@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file    codec_if.h
   * @author  MCD Application Team
-  * @brief   header filer for codec manager integration: clocks and process
+  * @brief   header for codec manager integration: clocks and process
   ******************************************************************************
   * @attention
   *
@@ -23,11 +23,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "codec_mngr.h"
 
-#if USE_SW_SYNC_METHOD == 1
 #define MAX_TIMER_NB            (MAX_PATH_NB)
-#else
-#define MAX_TIMER_NB            (MAX_PATH_NB + 1)
-#endif /* USE_SW_SYNC_METHOD */
 
 /* Exported typedef ----------------------------------------------------------*/
 typedef enum
@@ -72,24 +68,19 @@ typedef enum
 
 /**
   * @brief Weak function called by the codec manager for initializing process
-  * @param none
-  * @retval none
   */
 void CODEC_ProcessInit( void );
 
 /**
   * @brief Weak function called by the codec manager for requesting CODEC_ManagerProcess to be called
-  * @param none
-  * @retval none
   */
 void CODEC_ProcessReq( void );
 
 /**
   * @brief  Function to request masking and unmasking codec process
   * @note  any masking request should be considered prior unmasking
-  * @param src : requestor of the demand
+  * @param msk_req : requestor of the demand
   * @param req : request type; enable or disable the interrupt
-  * @retval none
   */
 void CODEC_ReqIRQState( CODEC_MaskSrc_t msk_req, CODEC_IRQReq_t req );
 
@@ -97,53 +88,48 @@ void CODEC_ReqIRQState( CODEC_MaskSrc_t msk_req, CODEC_IRQReq_t req );
 /***************************** clock functions ********************************/
 /******************************************************************************/
 /**
-  * @brief Function to be called for initializing the dedicated audio timer
-  * @param none
-  * @retval status
+  * @brief Function to be called by the application for initializing the dedicated timer
+  * @return status
   */
 int32_t CODEC_CLK_Init( void );
 
 /**
   * @brief Function called by the codec manager for getting a timestamp
-  * @param none
-  * @retval timestamp
+  * @return timestamp
   */
 uint32_t CODEC_CLK_GetHostTimestamp( void );
 
 /**
-  * @brief Function called by the codec manager for requesting a event with a specified 32 bits timestamps
+  * @brief Function called by the codec manager for requesting an event with a specified 32-bit timestamps
   * @param ID : path identifier
   * @param trigger_ts : 32 bits timestamp
-  * @retval status
+  * @return status
   */
 int32_t CODEC_CLK_RequestTimerEvent( uint8_t ID, uint32_t trigger_ts );
 
 /**
   * @brief Function called by the codec manager for getting the timer prescaler used from PLL output to timer clock
-  * @param none
-  * @retval timer prescaler value
+  * @return timer prescaler value
   */
 uint16_t CODEC_CLK_GetTimerPrescaler( void );
 
 /**
   * @brief Function called by the codec manager for getting the core clock for a given audio frequency
-  * @note  Used for either CPU load estimation as well as timer timebase correction
+  * @note  Used for CPU load and controller delay calculation only
   * @param freq_index : index of the frequency related to the list defined in the assigned numbers
-  * @retval Core clock in MHz
+  * @return Core clock in MHz
   */
 float CODEC_CLK_GetCoreClock( uint8_t freq_index );
 
 /**
   * @brief Function called by the codec manager for getting the PLL N Frac value
-  * @param none
-  * @retval nfrac register value
+  * @return nfrac register value
   */
 uint16_t CODEC_CLK_GetPLLNfrac( void );
 
 /**
-  * @brief Function called by the codec manager clock corrector for setting the PLL N Frac value for
+  * @brief Function called by the codec manager clock corrector for setting the PLL N Frac
   * @param n_frac : value of n frac register
-  * @retval none
   */
 void CODEC_CLK_SetPLLNfrac( uint16_t n_frac );
 
@@ -151,7 +137,6 @@ void CODEC_CLK_SetPLLNfrac( uint16_t n_frac );
   * @brief Function to provide the captured iso anchor point timestamp to the clock corrector
   * @note  This function is not needed by the corrector initialized with CORRECTOR_MODE_BASIC 
   * @param iso_evnt_hw_ts : value of the captured timestamp
-  * @retval none
   */
 void CODEC_CLK_Provide_ISO_Captured_Timestamp( uint32_t iso_evnt_hw_ts );
 
@@ -163,15 +148,15 @@ void CODEC_CLK_Provide_ISO_Captured_Timestamp( uint32_t iso_evnt_hw_ts );
   * @brief  Function called at specific event used for debugging purpose
   * @note This function is called only if CODEC_DEBUG_GPIO is set to 1
   * @param evnt : event of type CODEC_TraceEvnt_t
-  * @retval none
   */
-void CODEC_TraceEvnt(CODEC_TraceEvnt_t evnt);
+void CODEC_TraceEvnt( CODEC_TraceEvnt_t evnt );
 
 /**
  * @brief Function called by the codec to print some logs
+ * @note logs are not enabled by default in the library
  * @param format: a list of printable arguments
  *
  */
-void CODEC_DBG_Log(char *format,...);
+void CODEC_DBG_Log( char *format,... );
 
 #endif /* __CODEC_TIMER_IF__ */

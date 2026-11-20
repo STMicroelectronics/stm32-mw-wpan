@@ -25,7 +25,7 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "ble_types.h"
+#include "ble_audio_stack.h"
 
 /* Defines -------------------------------------------------------------------*/
 
@@ -128,7 +128,7 @@ extern "C" {
 #define BLE_CCP_CLT_TOTAL_BUFFER_SIZE(num_ble_links, num_bearer_instances,max_uri_length) \
           ((CCP_CLT_MEM_PER_BEARER_SIZE_BYTES * num_ble_links * (1 + num_bearer_instances)) + \
            (CCP_CLT_MEM_PER_CONN_SIZE_BYTES * num_ble_links) + \
-           (DIVC((max_uri_length * num_ble_links * (1 + num_bearer_instances)),4u) * 4u))
+           (ALIGN_UP_WORD(max_uri_length * num_ble_links * (1 + num_bearer_instances))))
 
 /*
  * CCP_SRV_MEM_PER_CALL_SIZE_BYTES: memory size used per call in CCP Server role
@@ -162,7 +162,7 @@ extern "C" {
  * @param max_uri_schemes_list_length: Maximum supported size of the URI Schemes List.
  */
 #define BLE_CCP_SRV_MEM_BLOCKS_URI_SCHEMES_LIST_SIZE_BYTES(num_bearer_instances,max_uri_schemes_list_length) \
-          (DIVC((max_uri_schemes_list_length * (1+num_bearer_instances)),4u) * 4u)
+          (ALIGN_UP_WORD(max_uri_schemes_list_length * (1u + num_bearer_instances)))
 
 /*
  * BLE_CCP_SRV_MEM_BLOCKS_URI_SIZE_BYTES: this macro returns the amount of memory,in bytes, needed for
@@ -178,8 +178,8 @@ extern "C" {
  * @param max_uri_length: Maximum size of the Call URI composed of URI scheme followed by the Caller ID.
  */
 #define BLE_CCP_SRV_MEM_BLOCKS_URI_SIZE_BYTES(num_bearer_instances,max_num_calls,ccp_feature,max_uri_length) \
-          ((DIVC((max_uri_length * max_num_calls * (1+num_bearer_instances)),4u) * 4u) + \
-          (((ccp_feature & CCP_FEATURE_INC_CALL_TARGET_BEARER_URI) != (0x00)) ? ((DIVC((max_uri_length * max_num_calls * (1+num_bearer_instances)),4u) * 4u)) : (0)))
+          ((ALIGN_UP_WORD(max_uri_length * max_num_calls * (1u + num_bearer_instances))) + \
+          (((ccp_feature & CCP_FEATURE_INC_CALL_TARGET_BEARER_URI) != (0x00)) ? ((ALIGN_UP_WORD(max_uri_length * max_num_calls * (1+num_bearer_instances)))) : (0)))
 
 /*
  * BLE_CCP_SRV_MEM_BLOCKS_CALL_FRIENDLY_NAME_SIZE_BYTES: this macro returns the amount of memory,in bytes, needed for
@@ -193,7 +193,7 @@ extern "C" {
  * @param max_call_friendly_name_length: Maximum size of the Call Friendly Name.
  */
 #define BLE_CCP_SRV_MEM_BLOCKS_CALL_FRIENDLY_NAME_SIZE_BYTES(num_bearer_instances,max_num_calls,max_call_friendly_name_length) \
-          (DIVC((max_call_friendly_name_length * max_num_calls * (1+num_bearer_instances)),4u) * 4u)
+          (ALIGN_UP_WORD(max_call_friendly_name_length * max_num_calls * (1+num_bearer_instances)))
 
 /*
  * BLE_CCP_SRV_TOTAL_BUFFER_SIZE:  this macro returns the amount of memory, in bytes,needed for
@@ -229,6 +229,12 @@ extern "C" {
    ############################################################################ */
 
 /*
+ * BLE_CCP_CLT_DB_TBS_BASE_SIZE_BYTES: fixed NVM size per Telephony Bearer instance 
+ * stored by Call Control Profile Client role.
+ */
+#define BLE_CCP_CLT_DB_TBS_BASE_SIZE_BYTES         (93u)
+
+/*
  * BLE_CCP_CLT_DB_BUFFER_SIZE: this macro returns the maximum amount of memory, in bytes, needed for the storage in
  * Non Volatile Memory of the Call Control Profile in Client role.
  *
@@ -238,8 +244,7 @@ extern "C" {
  * take in account the mandatory Generic Telephony Bearer).
  */
 #define BLE_CCP_CLT_DB_BUFFER_SIZE(num_db_devices,num_bearer_instances) \
-        (num_db_devices \
-         * (16u + (DIVC(((1 + num_bearer_instances) * 94u),4u) * 4u)))
+                   BLE_AUDIO_DB_BUFFER_SIZE(num_db_devices,((1 + num_bearer_instances) * BLE_CCP_CLT_DB_TBS_BASE_SIZE_BYTES))
 
 
 /* Types ---------------------------------------------------------------------*/
@@ -247,7 +252,7 @@ extern "C" {
 /* Types of mask for roles of the Call Control Profile */
 typedef uint8_t CCP_Role_t;
 #define CCP_ROLE_SERVER			        (0x01)
-#define CCP_ROLE_CLIENT		                (0x02)
+#define CCP_ROLE_CLIENT							(0x02)
 
 
 /* CCP Client Procedure type.

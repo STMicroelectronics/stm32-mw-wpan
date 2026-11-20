@@ -33,7 +33,10 @@
 #define OPENTHREAD_CONFIG_HEAP_INTERNAL_SIZE (30 * 1024)
 
 /* Use mbedtls as crypto library. */
-#define OPENTHREAD_CONFIG_CRYPTO_LIB OPENTHREAD_CONFIG_CRYPTO_LIB_MBEDTLS  //OPENTHREAD_CONFIG_CRYPTO_LIB_PSA
+#define OPENTHREAD_CONFIG_CRYPTO_LIB OPENTHREAD_CONFIG_CRYPTO_LIB_PSA  //OPENTHREAD_CONFIG_CRYPTO_LIB_MBEDTLS
+
+/* Must be one to allow radio layer to export the key and configure it in LL crypto */
+#define OPENTHREAD_CONFIG_PLATFORM_MAC_KEYS_EXPORTABLE_ENABLE  1
 
 /* Define to 1 if you want to enable default log output. */
 #define OPENTHREAD_CONFIG_LOG_OUTPUT  OPENTHREAD_CONFIG_LOG_OUTPUT_APP
@@ -105,7 +108,7 @@
 #define OPENTHREAD_CONFIG_DUA_ENABLE 1
 
 /* Define to 1 to enable Thread Test Harness reference device support. */
-#define OPENTHREAD_CONFIG_REFERENCE_DEVICE_ENABLE 0
+#define OPENTHREAD_CONFIG_REFERENCE_DEVICE_ENABLE 1
 
 /* Define as 1 to add APIs to allow Vendor Name, Model, SW Version to change at run-time. */
 #define OPENTHREAD_CONFIG_NET_DIAG_VENDOR_INFO_SET_API_ENABLE 1
@@ -162,4 +165,10 @@
 #define OPENTHREAD_CONFIG_MAC_CSL_RECEIVER_ENABLE 1
 #define OPENTHREAD_CONFIG_MAC_CSL_TRANSMITTER_ENABLE 1
 
+/*Define to 0 to enable Mbedtls memory to be managed externally*/
+#define OPENTHREAD_CONFIG_ENABLE_BUILTIN_MBEDTLS 0
+
+/* Enables support for sending DNS Queries over TCP.*/
+#define OPENTHREAD_CONFIG_DNS_CLIENT_OVER_TCP_ENABLE 1
+ 
 #endif /* OPENTHREAD_API_CONFIG_FTD_H_ */

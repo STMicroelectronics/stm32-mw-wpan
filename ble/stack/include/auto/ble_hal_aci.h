@@ -23,11 +23,12 @@
 
 /**
  * @brief ACI_HAL_WRITE_CONFIG_DATA
+ *
  * This command writes a value to the configuration data structure. It is
  * useful to setup directly some parameters for the BLE stack.
  * Refer to Annex for details on the different parameters that can be
  * configured.
- * Note: this command is an alias of ACI_WRITE_CONFIG_DATA.
+ * Note: This command is an alias of ACI_WRITE_CONFIG_DATA.
  *
  * @param Offset Offset of the element in the configuration data structure
  *        which has to be written.
@@ -50,11 +51,11 @@
  *          LL RSSI golden range; 2 bytes
  *        - 0xC4: CONFIG_DATA_LL_RX_ACL_CTRL_OFFSET;
  *          LL RX ACL control; 2 bytes
- *        - 0xC5: CONFIG_DATA_LL_ISO_SCHED_MODE_OFFSET;
- *          LL isochronous scheduling mode; 1 byte
- * @param Length Length of data to be written
- * @param Value Data to be written
- * @return Value indicating success or error code.
+ *        - 0xC5: CONFIG_DATA_LL_OPTION_FLAGS_OFFSET;
+ *          LL option flags; 1 byte
+ * @param Length Length of data to be written.
+ * @param Value Data to be written.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_hal_write_config_data( uint8_t Offset,
                                       uint8_t Length,
@@ -62,9 +63,10 @@ tBleStatus aci_hal_write_config_data( uint8_t Offset,
 
 /**
  * @brief ACI_HAL_READ_CONFIG_DATA
+ *
  * This command requests the value in the configuration data structure. The
  * number of read bytes changes for different Offset.
- * Note: this command is an alias of ACI_READ_CONFIG_DATA.
+ * Note: This command is an alias of ACI_READ_CONFIG_DATA.
  *
  * @param Offset Offset of the element in the configuration data structure
  *        which has to be read.
@@ -80,9 +82,9 @@ tBleStatus aci_hal_write_config_data( uint8_t Offset,
  *        - 0xC2: CONFIG_DATA_LL_RSSI_GOLDEN_RANGE_OFFSET;
  *          LL RSSI golden range (two 8-bit signed values in dBm - byte #0 is
  *          the lower value, byte #1 is the upper value); 2 bytes
- * @param[out] Data_Length Length of Data in octets
+ * @param[out] Data_Length Length of Data in octets.
  * @param[out] Data Data field associated with Offset parameter
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_hal_read_config_data( uint8_t Offset,
                                      uint8_t* Data_Length,
@@ -90,6 +92,7 @@ tBleStatus aci_hal_read_config_data( uint8_t Offset,
 
 /**
  * @brief ACI_HAL_SET_TX_POWER_LEVEL
+ *
  * This command sets the TX power level of the device. By controlling the PA
  * level, it determines the output power level (dBm) at the IC pin.
  * When the system starts up or reboots, the default TX power level is used,
@@ -113,13 +116,14 @@ tBleStatus aci_hal_read_config_data( uint8_t Offset,
  * @param PA_Level Power amplifier output level.
  *        Values:
  *        - 0x00 ... 0x23
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_hal_set_tx_power_level( uint8_t En_High_Power,
                                        uint8_t PA_Level );
 
 /**
  * @brief ACI_HAL_LE_TX_TEST_PACKET_NUMBER
+ *
  * This command returns the number of packets sent in Direct Test Mode.
  * When the Direct TX test is started, a 16-bit counter is used to count how
  * many packets have been transmitted.
@@ -131,12 +135,13 @@ tBleStatus aci_hal_set_tx_power_level( uint8_t En_High_Power,
  *
  * @param[out] Number_Of_Packets Number of packets sent during the last Direct
  *        TX test.
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_hal_le_tx_test_packet_number( uint32_t* Number_Of_Packets );
 
 /**
  * @brief ACI_HAL_TONE_START
+ *
  * This command starts a carrier frequency, i.e. a tone, on a specific channel.
  * The frequency sine wave at the specific channel may be used for debugging
  * purpose only. The channel ID is a parameter from 0x00 to 0x27 for the 40 BLE
@@ -154,22 +159,24 @@ tBleStatus aci_hal_le_tx_test_packet_number( uint32_t* Number_Of_Packets );
  * @param Freq_offset Frequency Offset for tone channel
  *        Values:
  *        - 0x00 ... 0xFF
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_hal_tone_start( uint8_t RF_Channel,
                                uint8_t Freq_offset );
 
 /**
  * @brief ACI_HAL_TONE_STOP
+ *
  * This command is used to stop the previously started ACI_HAL_TONE_START
  * command.
  *
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_hal_tone_stop( void );
 
 /**
  * @brief ACI_HAL_SET_RADIO_ACTIVITY_MASK
+ *
  * This command sets the bitmask associated to
  * ACI_HAL_END_OF_RADIO_ACTIVITY_EVENT.
  * Only the radio activities enabled in the mask will be reported to the
@@ -190,12 +197,13 @@ tBleStatus aci_hal_tone_stop( void );
  *        - 0x1000: Iso sync
  *        - 0x2000: Iso peripheral connection
  *        - 0x4000: Iso central connection
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_hal_set_radio_activity_mask( uint16_t Radio_Activity_Mask );
 
 /**
  * @brief ACI_HAL_SET_EVENT_MASK
+ *
  * This command is used to enable/disable the generation of HAL events. If the
  * bit in the Event_Mask is set to a one, then the event associated with that
  * bit will be enabled.
@@ -204,16 +212,18 @@ tBleStatus aci_hal_set_radio_activity_mask( uint16_t Radio_Activity_Mask );
  *        Flags:
  *        - 0x00000000: No events specified (Default)
  *        - 0x00000002: ACI_HAL_SYNC_EVENT
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_hal_set_event_mask( uint32_t Event_Mask );
 
 /**
  * @brief ACI_HAL_GET_LINK_STATUS_V2
+ *
  * This command returns the status of the BLE links managed by the device.
  *
  * @param[out] Link_Status Array of link status (up to 20 links plus 2 ISO
  *        streams). Each link status is 1 byte.
+ *        Size: 22 bytes.
  *        Values:
  *        - 0x00: Idle
  *        - 0x01: Advertising
@@ -230,13 +240,15 @@ tBleStatus aci_hal_set_event_mask( uint32_t Event_Mask );
  *        - 0x0E: Iso central connection
  * @param[out] Link_Connection_Handle Array of connection handles (2 bytes).
  *        Valid only if the corresponding link status is "connected"
- * @return Value indicating success or error code.
+ *        Size: 22 16-bit words.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_hal_get_link_status_v2( uint8_t* Link_Status,
                                        uint16_t* Link_Connection_Handle );
 
 /**
  * @brief ACI_HAL_SET_PERIPHERAL_LATENCY
+ *
  * This command is used to disable/enable the Peripheral latency feature during
  * a connection. Note that, by default, the Peripheral latency is enabled at
  * connection time.
@@ -245,12 +257,13 @@ tBleStatus aci_hal_get_link_status_v2( uint8_t* Link_Status,
  *        Values:
  *        - 0x00: Peripheral latency is disabled
  *        - 0x01: Peripheral latency is enabled
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_hal_set_peripheral_latency( uint8_t Enable );
 
 /**
  * @brief ACI_HAL_SET_SYNC_EVENT_CONFIG
+ *
  * This command is used to configure ACI_HAL_SYNC_EVENT.
  *
  * @param Group_Id Identifier of the CIG or BIG.
@@ -266,7 +279,7 @@ tBleStatus aci_hal_set_peripheral_latency( uint8_t Enable );
  *        Values:
  *        - 0x00: CIG
  *        - 0x01: BIG
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_hal_set_sync_event_config( uint8_t Group_Id,
                                           uint8_t Enable_Sync,
@@ -275,8 +288,9 @@ tBleStatus aci_hal_set_sync_event_config( uint8_t Group_Id,
 
 /**
  * @brief ACI_HAL_READ_RSSI
+ *
  * This command returns the value of the RSSI.
- * Note: in Direct Test Mode, the RSSI can only be read when the test has ended
+ * Note: In Direct Test Mode, the RSSI can only be read when the test has ended
  * (after LE Test End command).
  *
  * @param[out] RSSI RSSI (signed integer).
@@ -284,13 +298,15 @@ tBleStatus aci_hal_set_sync_event_config( uint8_t Group_Id,
  *        Values:
  *        - 127: RSSI not available
  *        - -127 ... 20
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_hal_read_rssi( uint8_t* RSSI );
 
 /**
  * @brief ACI_HAL_CONTINUOUS_TX_START
+ *
  * This command starts the continuous transmit test mode.
+ * This test mode can be stopped by the ACI_HAL_TONE_STOP command.
  *
  * @param RF_Channel Index of the BLE RF channel used for test mode.
  *        Values:
@@ -309,7 +325,7 @@ tBleStatus aci_hal_read_rssi( uint8_t* RSSI );
  *        - 0x05: Pattern of All '0' bits
  *        - 0x06: Pattern of alternating bits '00001111'
  *        - 0x07: Pattern of alternating bits '0101'
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_hal_continuous_tx_start( uint8_t RF_Channel,
                                         uint8_t PHY,
@@ -317,6 +333,7 @@ tBleStatus aci_hal_continuous_tx_start( uint8_t RF_Channel,
 
 /**
  * @brief ACI_HAL_EAD_ENCRYPT_DECRYPT
+ *
  * This command encrypts or decrypts data following the Encrypted Advertising
  * Data scheme.
  * When encryption mode is selected, In_Data shall only contain the Payload
@@ -334,13 +351,15 @@ tBleStatus aci_hal_continuous_tx_start( uint8_t RF_Channel,
  *        - 0x00: Encryption
  *        - 0x01: Decryption
  * @param Key Session key used for EAD operation (in Little Endian format).
+ *        Size: 16 bytes.
  * @param IV Initialization vector used for EAD operation (in Little Endian
  *        format).
- * @param In_Data_Length Length of input data
+ *        Size: 8 bytes.
+ * @param In_Data_Length Length of input data.
  * @param In_Data Input data
  * @param[out] Out_Data_Length Length of result data
  * @param[out] Out_Data Result data
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_hal_ead_encrypt_decrypt( uint8_t Mode,
                                         const uint8_t* Key,
@@ -352,18 +371,20 @@ tBleStatus aci_hal_ead_encrypt_decrypt( uint8_t Mode,
 
 /**
  * @brief ACI_HAL_PTA_ENABLE
+ *
  * This command enables or disables the PTA in the hardware.
  *
  * @param Enable Enables/disables PTA.
  *        Values:
  *        - 0x00: Disable
  *        - 0x01: Enable
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_hal_pta_enable( uint8_t Enable );
 
 /**
  * @brief ACI_HAL_PTA_SET_PRIORITY
+ *
  * This command configures the PTA priority for a specific event.
  *
  * @param Mode Determines the type of events.
@@ -412,7 +433,7 @@ tBleStatus aci_hal_pta_enable( uint8_t Enable );
  *        Mode 2, 3, 4, or 5).
  *        Values:
  *        - 1 ... 100
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_hal_pta_set_priority( uint8_t Mode,
                                      uint16_t Handle,

@@ -3,13 +3,21 @@
  * @heading Device Management
  * @brief ZCL Device Management cluster header
  * ZCL 8 Section 10.10
- * @copyright Copyright [2009 - 2024] Exegin Technologies Limited. All rights reserved.
+ * @copyright Copyright [2009 - 2025] Exegin Technologies Limited. All rights reserved.
  */
 
 #ifndef ZCL_DEVICE_MGMT_H
 # define ZCL_DEVICE_MGMT_H
 
 #include "zcl/zcl.h"
+
+/*lint -save -e621 "Identifier clash within 31 chars. For readability,
+ * we need to exceed the 31 character limit before uniqueness, and
+ * extend the limit to 63 charcters.
+ * [MISRA Rule 5.1 (REQUIRED), MISRA Rule 5.2 (REQUIRED),
+ * MISRA Rule 5.4 (REQUIRED), MISRA Rule 5.5 (REQUIRED)]" */
+
+/*lint -e849 "Symbol has same enumerator value as another enumerator [LINT]" */
 
 /** Device Management Server Attribute IDs */
 enum ZbZclDeviceMgmtSvrAttrT {
@@ -43,7 +51,7 @@ enum ZbZclDeviceMgmtSvrAttrT {
 
     /* HAN Control Attribute Set */
     ZCL_DEVICE_MGMT_SVR_ATTR_LowMediumThreshold = 0x0400, /**< LowMediumThreshold (Optional) */
-    ZCL_DEVICE_MGMT_SVR_ATTR_MediumHighThreshold = 0x0401, /**< MediumHighThreshold (Optional) */
+    ZCL_DEVICE_MGMT_SVR_ATTR_MediumHighThreshold = 0x0401 /**< MediumHighThreshold (Optional) */
 };
 
 /** Device Management Client Attribute IDs */
@@ -365,7 +373,7 @@ struct ZbZclDeviceMgmtUpdateSiteIdT {
     uint8_t site_id[ZCL_DEVICE_MGMT_SITE_ID_LEN_MAX + 1U]; /**< Site ID */
 };
 
-#define ZCL_DEVICE_MGMT_SET_EVENT_ID_LIST_MAX        (ZCL_PAYLOAD_UNFRAG_SAFE_SIZE - 11U) / 2U
+#define ZCL_DEVICE_MGMT_SET_EVENT_ID_LIST_MAX        ((ZCL_PAYLOAD_UNFRAG_SAFE_SIZE - 11U) / 2U)
 
 /** Set Event command structure */
 struct ZbZclDeviceMgmtSetEventConfigT {
@@ -420,19 +428,22 @@ struct ZbZclDeviceMgmtServerCallbacksT {
         struct ZbZclAddrInfoT *srcInfo);
     /**< Callback to application, invoked on receipt of 'Get Change of Tenancy' command.
      * The ESI may send a PublishChangeofTenancy command (ZbZclDeviceMgmtServerPublishChangeTenancy).
-     * Return ZCL_STATUS_SUCCESS if PublishChangeofTenancy was sent, or ZCL_STATUS_NOT_FOUND otherwise. */
+     * Return ZCL_STATUS_SUCCESS if PublishChangeofTenancy was sent,
+     * or ZCL_STATUS_NOT_FOUND otherwise. */
 
     enum ZclStatusCodeT (*get_change_supplier)(struct ZbZclClusterT *cluster, void *arg,
         struct ZbZclAddrInfoT *srcInfo);
     /**< Callback to application, invoked on receipt of 'Get Change of Supplier' command.
      * The ESI may send a PublishChangeofSupplier command (ZbZclDeviceMgmtServerPublishChangeSupplier).
-     * Return ZCL_STATUS_SUCCESS if PublishChangeofSupplier was sent, or ZCL_STATUS_NOT_FOUND otherwise. */
+     * Return ZCL_STATUS_SUCCESS if PublishChangeofSupplier was sent,
+     * or ZCL_STATUS_NOT_FOUND otherwise. */
 
     enum ZclStatusCodeT (*request_new_pass)(struct ZbZclClusterT *cluster, void *arg,
         struct ZbZclDeviceMgmtReqNewPassT *info, struct ZbZclAddrInfoT *srcInfo);
     /**< Callback to application, invoked on receipt of 'Request New Password' command.
      * The ESI may send a RequestNewPasswordResponse command (ZbZclDeviceMgmtServerReqNewPassRsp).
-     * Return ZCL_STATUS_SUCCESS if RequestNewPasswordResponse was sent, or ZCL_STATUS_NOT_FOUND otherwise. */
+     * Return ZCL_STATUS_SUCCESS if RequestNewPasswordResponse was sent,
+     * or ZCL_STATUS_NOT_FOUND otherwise. */
 
     enum ZclStatusCodeT (*get_site_id)(struct ZbZclClusterT *cluster, void *arg,
         struct ZbZclAddrInfoT *srcInfo);
@@ -464,8 +475,9 @@ struct ZbZclClusterT * ZbZclDeviceMgmtServerAlloc(struct ZigBeeT *zb, uint8_t en
  * @param info Publish Change of Tenancy command structure
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
-enum ZclStatusCodeT ZbZclDeviceMgmtServerPublishChangeTenancyRsp(struct ZbZclClusterT *cluster, struct ZbZclAddrInfoT *dst,
-    struct ZbZclDeviceMgmtPublishChangeTenancyT *info, void (*callback)(struct ZbApsdeDataConfT *conf, void *arg), void *arg);
+enum ZclStatusCodeT ZbZclDeviceMgmtServerPublishChangeTenancyRsp(struct ZbZclClusterT *cluster,
+    struct ZbZclAddrInfoT *dst, struct ZbZclDeviceMgmtPublishChangeTenancyT *info,
+    void (*callback)(struct ZbApsdeDataConfT *conf, void *arg), void *arg);
 
 /**
  * Send a Publish Change of Tenancy as an unsolicited command
@@ -474,8 +486,9 @@ enum ZclStatusCodeT ZbZclDeviceMgmtServerPublishChangeTenancyRsp(struct ZbZclClu
  * @param info Publish Change of Tenancy command structure
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
-enum ZclStatusCodeT ZbZclDeviceMgmtServerPublishChangeTenancyUnsolic(struct ZbZclClusterT *cluster, const struct ZbApsAddrT *dst,
-    struct ZbZclDeviceMgmtPublishChangeTenancyT *info, void (*callback)(struct ZbZclCommandRspT *rsp, void *arg), void *arg);
+enum ZclStatusCodeT ZbZclDeviceMgmtServerPublishChangeTenancyUnsolic(struct ZbZclClusterT *cluster,
+    const struct ZbApsAddrT *dst, struct ZbZclDeviceMgmtPublishChangeTenancyT *info,
+    void (*callback)(struct ZbZclCommandRspT *rsp, void *arg), void *arg);
 
 /**
  * Send a Publish Change of Supplier as a response to the Get Change of Supplier command.
@@ -484,8 +497,9 @@ enum ZclStatusCodeT ZbZclDeviceMgmtServerPublishChangeTenancyUnsolic(struct ZbZc
  * @param info Publish Change of Supplier command structure
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
-enum ZclStatusCodeT ZbZclDeviceMgmtServerPublishChangeSupplierRsp(struct ZbZclClusterT *cluster, struct ZbZclAddrInfoT *dst,
-    struct ZbZclDeviceMgmtPublishChangeSupplierT *info, void (*callback)(struct ZbApsdeDataConfT *conf, void *arg), void *arg);
+enum ZclStatusCodeT ZbZclDeviceMgmtServerPublishChangeSupplierRsp(struct ZbZclClusterT *cluster,
+    struct ZbZclAddrInfoT *dst, struct ZbZclDeviceMgmtPublishChangeSupplierT *info,
+    void (*callback)(struct ZbApsdeDataConfT *conf, void *arg), void *arg);
 
 /**
  * Send a Publish Change of Supplier as an unsolicited command
@@ -494,8 +508,9 @@ enum ZclStatusCodeT ZbZclDeviceMgmtServerPublishChangeSupplierRsp(struct ZbZclCl
  * @param info Publish Change of Supplier command structure
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
-enum ZclStatusCodeT ZbZclDeviceMgmtServerPublishChangeSupplierUnsolic(struct ZbZclClusterT *cluster, const struct ZbApsAddrT *dst,
-    struct ZbZclDeviceMgmtPublishChangeSupplierT *info, void (*callback)(struct ZbZclCommandRspT *rsp, void *arg), void *arg);
+enum ZclStatusCodeT ZbZclDeviceMgmtServerPublishChangeSupplierUnsolic(struct ZbZclClusterT *cluster,
+    const struct ZbApsAddrT *dst, struct ZbZclDeviceMgmtPublishChangeSupplierT *info,
+    void (*callback)(struct ZbZclCommandRspT *rsp, void *arg), void *arg);
 
 /**
  * Send a Request New Password Response as a response to the Request New Password command.
@@ -504,8 +519,9 @@ enum ZclStatusCodeT ZbZclDeviceMgmtServerPublishChangeSupplierUnsolic(struct ZbZ
  * @param info Request New Password Response command structure
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
-enum ZclStatusCodeT ZbZclDeviceMgmtServerReqNewPassRsp(struct ZbZclClusterT *cluster, struct ZbZclAddrInfoT *dst,
-    struct ZbZclDeviceMgmtReqNewPassRspT *info, void (*callback)(struct ZbApsdeDataConfT *conf, void *arg), void *arg);
+enum ZclStatusCodeT ZbZclDeviceMgmtServerReqNewPassRsp(struct ZbZclClusterT *cluster,
+    struct ZbZclAddrInfoT *dst, struct ZbZclDeviceMgmtReqNewPassRspT *info,
+    void (*callback)(struct ZbApsdeDataConfT *conf, void *arg), void *arg);
 
 /**
  * Send a Request New Password Response as an unsolicited command
@@ -514,8 +530,9 @@ enum ZclStatusCodeT ZbZclDeviceMgmtServerReqNewPassRsp(struct ZbZclClusterT *clu
  * @param info Request New Password Response command structure
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
-enum ZclStatusCodeT ZbZclDeviceMgmtServerReqNewPassRspUnsolic(struct ZbZclClusterT *cluster, const struct ZbApsAddrT *dst,
-    struct ZbZclDeviceMgmtReqNewPassRspT *info, void (*callback)(struct ZbZclCommandRspT *rsp, void *arg), void *arg);
+enum ZclStatusCodeT ZbZclDeviceMgmtServerReqNewPassRspUnsolic(struct ZbZclClusterT *cluster,
+    const struct ZbApsAddrT *dst, struct ZbZclDeviceMgmtReqNewPassRspT *info,
+    void (*callback)(struct ZbZclCommandRspT *rsp, void *arg), void *arg);
 
 /**
  * Send an Update SiteID as a response to the Get SiteID command.
@@ -524,8 +541,9 @@ enum ZclStatusCodeT ZbZclDeviceMgmtServerReqNewPassRspUnsolic(struct ZbZclCluste
  * @param info Update SiteID command structure
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
-enum ZclStatusCodeT ZbZclDeviceMgmtServerUpdateSiteIdRsp(struct ZbZclClusterT *cluster, struct ZbZclAddrInfoT *dst,
-    struct ZbZclDeviceMgmtUpdateSiteIdT *info, void (*callback)(struct ZbApsdeDataConfT *conf, void *arg), void *arg);
+enum ZclStatusCodeT ZbZclDeviceMgmtServerUpdateSiteIdRsp(struct ZbZclClusterT *cluster,
+    struct ZbZclAddrInfoT *dst, struct ZbZclDeviceMgmtUpdateSiteIdT *info,
+    void (*callback)(struct ZbApsdeDataConfT *conf, void *arg), void *arg);
 
 /**
  * Send an Update SiteID as an unsolicited command
@@ -534,8 +552,9 @@ enum ZclStatusCodeT ZbZclDeviceMgmtServerUpdateSiteIdRsp(struct ZbZclClusterT *c
  * @param info Update SiteID command structure
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
-enum ZclStatusCodeT ZbZclDeviceMgmtServerUpdateSiteIdUnsolic(struct ZbZclClusterT *cluster, const struct ZbApsAddrT *dst,
-    struct ZbZclDeviceMgmtUpdateSiteIdT *info, void (*callback)(struct ZbZclCommandRspT *rsp, void *arg), void *arg);
+enum ZclStatusCodeT ZbZclDeviceMgmtServerUpdateSiteIdUnsolic(struct ZbZclClusterT *cluster,
+    const struct ZbApsAddrT *dst, struct ZbZclDeviceMgmtUpdateSiteIdT *info,
+    void (*callback)(struct ZbZclCommandRspT *rsp, void *arg), void *arg);
 
 /**
  * Send a Set Event Configuration command
@@ -546,8 +565,9 @@ enum ZclStatusCodeT ZbZclDeviceMgmtServerUpdateSiteIdUnsolic(struct ZbZclCluster
  * @param arg Pointer to application data that will be included in the callback when invoked.
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
-enum ZclStatusCodeT ZbZclDeviceMgmtServerSetEventConfigReq(struct ZbZclClusterT *cluster, const struct ZbApsAddrT *dst,
-    struct ZbZclDeviceMgmtSetEventConfigT *info, void (*callback)(struct ZbZclCommandRspT *rsp, void *arg), void *arg);
+enum ZclStatusCodeT ZbZclDeviceMgmtServerSetEventConfigReq(struct ZbZclClusterT *cluster,
+    const struct ZbApsAddrT *dst, struct ZbZclDeviceMgmtSetEventConfigT *info,
+    void (*callback)(struct ZbZclCommandRspT *rsp, void *arg), void *arg);
 
 /**
  * Send a Get Event Configuration command
@@ -558,8 +578,9 @@ enum ZclStatusCodeT ZbZclDeviceMgmtServerSetEventConfigReq(struct ZbZclClusterT 
  * @param arg Pointer to application data that will be included in the callback when invoked.
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
-enum ZclStatusCodeT ZbZclDeviceMgmtServerGetEventConfigReq(struct ZbZclClusterT *cluster, const struct ZbApsAddrT *dst,
-    struct ZbZclDeviceMgmtGetEventConfigT *info, void (*callback)(struct ZbZclCommandRspT *rsp, void *arg), void *arg);
+enum ZclStatusCodeT ZbZclDeviceMgmtServerGetEventConfigReq(struct ZbZclClusterT *cluster,
+    const struct ZbApsAddrT *dst, struct ZbZclDeviceMgmtGetEventConfigT *info,
+    void (*callback)(struct ZbZclCommandRspT *rsp, void *arg), void *arg);
 
 /**
  * Send an Update CIN as a response to the Get CIN command.
@@ -568,8 +589,9 @@ enum ZclStatusCodeT ZbZclDeviceMgmtServerGetEventConfigReq(struct ZbZclClusterT 
  * @param info Update CIN command structure
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
-enum ZclStatusCodeT ZbZclDeviceMgmtServerUpdateCinRsp(struct ZbZclClusterT *cluster, struct ZbZclAddrInfoT *dst,
-    struct ZbZclDeviceMgmtUpdateCinT *info, void (*callback)(struct ZbApsdeDataConfT *conf, void *arg), void *arg);
+enum ZclStatusCodeT ZbZclDeviceMgmtServerUpdateCinRsp(struct ZbZclClusterT *cluster,
+    struct ZbZclAddrInfoT *dst, struct ZbZclDeviceMgmtUpdateCinT *info,
+    void (*callback)(struct ZbApsdeDataConfT *conf, void *arg), void *arg);
 
 /**
  * Send a Update CIN as an unsolicited command
@@ -578,8 +600,9 @@ enum ZclStatusCodeT ZbZclDeviceMgmtServerUpdateCinRsp(struct ZbZclClusterT *clus
  * @param info Update CIN command structure
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
-enum ZclStatusCodeT ZbZclDeviceMgmtServerUpdateCinUnsolic(struct ZbZclClusterT *cluster, const struct ZbApsAddrT *dst,
-    struct ZbZclDeviceMgmtUpdateCinT *info, void (*callback)(struct ZbZclCommandRspT *rsp, void *arg), void *arg);
+enum ZclStatusCodeT ZbZclDeviceMgmtServerUpdateCinUnsolic(struct ZbZclClusterT *cluster,
+    const struct ZbApsAddrT *dst, struct ZbZclDeviceMgmtUpdateCinT *info,
+    void (*callback)(struct ZbZclCommandRspT *rsp, void *arg), void *arg);
 
 /**
  * Parse a Report Event Configuration command
@@ -588,8 +611,8 @@ enum ZclStatusCodeT ZbZclDeviceMgmtServerUpdateCinUnsolic(struct ZbZclClusterT *
  * @param info Report Event Configuration command structure
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
-enum ZclStatusCodeT ZbZclDeviceMgmtParseReportEvtConfig(struct ZbZclClusterT *cluster, struct ZbApsdeDataIndT *dataIndPtr,
-    struct ZbZclDeviceMgmtReportEvtConfigT *info);
+enum ZclStatusCodeT ZbZclDeviceMgmtParseReportEvtConfig(struct ZbZclClusterT *cluster,
+    struct ZbApsdeDataIndT *dataIndPtr, struct ZbZclDeviceMgmtReportEvtConfigT *info);
 
 /*---------------------------------------------------------------
  * Client API
@@ -758,5 +781,7 @@ enum ZclStatusCodeT ZbZclDeviceMgmtClientGetCin(struct ZbZclClusterT *cluster, c
  */
 struct ZbZclClusterT * ZbZclDeviceMgmtMirrorAlloc(struct ZigBeeT *zb, uint8_t endpoint,
     struct ZbZclClusterT *device_mgmt_server, struct ZbZclClusterT *meter_mirror);
+
+/*lint -restore */
 
 #endif

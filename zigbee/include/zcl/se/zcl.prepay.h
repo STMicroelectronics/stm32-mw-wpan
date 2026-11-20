@@ -3,7 +3,7 @@
  * @heading Prepayment
  * @brief ZCL Prepayment cluster header
  * ZCL 8 section 10.8
- * @copyright Copyright [2009 - 2024] Exegin Technologies Limited. All rights reserved.
+ * @copyright Copyright [2009 - 2025] Exegin Technologies Limited. All rights reserved.
  */
 
 #ifndef ZCL_PREPAY_H
@@ -11,7 +11,11 @@
 
 #include "zcl/zcl.h"
 
-/*lint -e621 "identifier clash within 31 chars [MISRA Rule 5.1 (REQUIRED)]" */
+/*lint -save -e621 "Identifier clash within 31 chars. For readability,
+ * we need to exceed the 31 character limit before uniqueness, and
+ * extend the limit to 63 charcters.
+ * [MISRA Rule 5.1 (REQUIRED), MISRA Rule 5.2 (REQUIRED),
+ * MISRA Rule 5.4 (REQUIRED), MISRA Rule 5.5 (REQUIRED)]" */
 
 /** Prepayment Server Attribute IDs */
 enum ZbZclPreaymentSvrAttrT {
@@ -182,7 +186,7 @@ enum ZbZclPreaymentSvrAttrT {
 #define ZCL_PREPAY_SVR_ATTR_DEBT_REC_FREQ_N(_n_)                (0x0206U + (0x10U * (_n_)))
 #define ZCL_PREPAY_SVR_ATTR_DEBT_REC_AMOUNT_N(_n_)              (0x0207U + (0x10U * (_n_)))
 /* Reserved (0x02N8) */
-#define ZCL_PREPAY_SVR_ATTR_DEBT_REC_TOPUP_PERCENT_N(_n_)      (0x0209U + (0x10U * (_n_)))
+#define ZCL_PREPAY_SVR_ATTR_DEBT_REC_TOPUP_PERCENT_N(_n_)       (0x0209U + (0x10U * (_n_)))
 
 /* CurrentDayCostConsumptionDelivered(N = 0)..PreviousDay8CostConsumptionDelivered(N = 8) */
 #define ZCL_PREPAY_SVR_ATTR_COSTCON_DELIV_DAY_N(prev_day)              (0x051CU + (2U * (prev_day)))
@@ -285,23 +289,23 @@ enum ZbZclPrepayDebtTypeT {
     ZCL_PREPAY_DEBT_TYPE_2_ABSOLUTE = 0x02, /**< Debt Type 2 Absolute */
     ZCL_PREPAY_DEBT_TYPE_2_INCREMENTAL = 0x03, /**< Debt Type 2 Incremental */
     ZCL_PREPAY_DEBT_TYPE_3_ABSOLUTE = 0x04, /**< Debt Type 3 Absolute */
-    ZCL_PREPAY_DEBT_TYPE_3_INCREMENTAL = 0x05, /**< Debt Type 3 Incremental */
-    /**< 0x06 - 0xff Reserved. */
+    ZCL_PREPAY_DEBT_TYPE_3_INCREMENTAL = 0x05 /**< Debt Type 3 Incremental */
+        /**< 0x06 - 0xff Reserved. */
 };
 
 /** Debt Recovery Method enumerations */
 enum ZbZclPrepayDebtRecMethodT {
     ZCL_PREPAY_REC_METHOD_TIME = 0x00, /**< Time Based */
     ZCL_PREPAY_REC_METHOD_PERCENTAGE = 0x01, /**< Percentage Based */
-    ZCL_PREPAY_REC_METHOD_CATCH_UP = 0x02, /**< Catch-up Based */
-    /**< 0x03 -0xff Reserved */
+    ZCL_PREPAY_REC_METHOD_CATCH_UP = 0x02 /**< Catch-up Based */
+        /**< 0x03 -0xff Reserved */
 };
 
 /** Credit Type Field enumerations */
 enum ZbZclPrepayCreditTypeT {
     ZCL_PREPAY_CREDIT_TYPE_INCREMENTAL = 0x00, /**< Credit Incremental */
-    ZCL_PREPAY_CREDIT_TYPE_ABSOLUTE = 0x01, /**< Credit Absolute */
-    /* 0x02 – 0xFF (Reserved) */
+    ZCL_PREPAY_CREDIT_TYPE_ABSOLUTE = 0x01 /**< Credit Absolute */
+        /* 0x02 – 0xFF (Reserved) */
 };
 
 /** Prepayment Snapshot Payload type. */
@@ -731,59 +735,62 @@ enum ZclStatusCodeT ZbZclPrepayServerConsumerTopUpRsp(struct ZbZclClusterT *clus
 /**
  * Send a Publish Prepay Snapshot as a response to the GetPrepaySnapshot command.
  * @param cluster Cluster instance from which to send this command
- * @param dstInfo Destination address for response, including sequence number and tx options
+ * @param dst Destination address for response, including sequence number and tx options
  * @param info Publish Prepay Snapshot command structure
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
 enum ZclStatusCodeT ZbZclPrepayServerPublishPrepaySnapshotRsp(struct ZbZclClusterT *cluster,
-    struct ZbZclAddrInfoT *dstInfo, struct ZbZclPrepayPublishPrepaySnapshotT *info);
+    struct ZbZclAddrInfoT *dst, struct ZbZclPrepayPublishPrepaySnapshotT *info);
 
 /**
  * Send a Publish Prepay Snapshot as an unsolicited command
  * @param cluster Cluster instance from which to send this command
- * @param dstInfo Destination address for response, including sequence number and tx options
+ * @param dst Destination address for response, including sequence number and tx options
  * @param info Publish Prepay Snapshot command structure
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
-enum ZclStatusCodeT ZbZclPrepayServerPublishPrepaySnapshotUnsolic(struct ZbZclClusterT *cluster, const struct ZbApsAddrT *dst,
-    struct ZbZclPrepayPublishPrepaySnapshotT *info, void (*callback)(struct ZbZclCommandRspT *rsp, void *arg), void *arg);
+enum ZclStatusCodeT ZbZclPrepayServerPublishPrepaySnapshotUnsolic(struct ZbZclClusterT *cluster,
+    const struct ZbApsAddrT *dst, struct ZbZclPrepayPublishPrepaySnapshotT *info,
+    void (*callback)(struct ZbZclCommandRspT *rsp, void *arg), void *arg);
 
 /**
  * Send a Publish Top Up Log as a response
  * @param cluster Cluster instance from which to send this command
- * @param dstInfo Destination address for response, including sequence number and tx options
+ * @param dst Destination address for response, including sequence number and tx options
  * @param info Publish Top Up Log command structure
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
-enum ZclStatusCodeT ZbZclPrepayServerPublishTopUpLogRsp(struct ZbZclClusterT *cluster, struct ZbZclAddrInfoT *dstInfo,
-    struct ZbZclPrepayPublishTopUpLogT *info);
+enum ZclStatusCodeT ZbZclPrepayServerPublishTopUpLogRsp(struct ZbZclClusterT *cluster,
+    struct ZbZclAddrInfoT *dst, struct ZbZclPrepayPublishTopUpLogT *info);
 
 /**
  * Send a Publish Top Up Log as an unsolicited command
  * @param cluster Cluster instance from which to send this command
- * @param dstInfo Destination address for response, including sequence number and tx options
+ * @param dst Destination address for response, including sequence number and tx options
  * @param info Publish Top Up Log command structure
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
-enum ZclStatusCodeT ZbZclPrepayServerPublishTopUpLogUnsolic(struct ZbZclClusterT *cluster, const struct ZbApsAddrT *dst,
-    struct ZbZclPrepayPublishTopUpLogT *info, void (*callback)(struct ZbZclCommandRspT *rsp, void *arg), void *arg);
+enum ZclStatusCodeT ZbZclPrepayServerPublishTopUpLogUnsolic(struct ZbZclClusterT *cluster,
+    const struct ZbApsAddrT *dst, struct ZbZclPrepayPublishTopUpLogT *info,
+    void (*callback)(struct ZbZclCommandRspT *rsp, void *arg), void *arg);
 
 /**
  * Send a Publish Debt Log Response
  * @param cluster Cluster instance from which to send this command
- * @param dstInfo Destination address for response, including sequence number and tx options
+ * @param dst Destination address for response, including sequence number and tx options
  * @param info Publish Debt Log command structure
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
 enum ZclStatusCodeT ZbZclPrepayServerPublishDebtLogRsp(struct ZbZclClusterT *cluster,
-    struct ZbZclAddrInfoT *dstInfo, struct ZbZclPrepayPublishDebtLogT *info);
+    struct ZbZclAddrInfoT *dst, struct ZbZclPrepayPublishDebtLogT *info);
 
 /**
  * Send an unsolicited Publish Debt Log
  * @param cluster Cluster instance from which to send this command
- * @param dst Destination address for this unsolicted command.
+ * @param dst Destination address for this unsolicited command.
  * @param info Publish Debt Log command structure.
- * @param callback Callback function that will be invoked when the Default Response is received, or times-out.
+ * @param callback Callback function that will be invoked when the
+ *      Default Response is received, or times-out.
  * @param arg Pointer to application data that will be included in the callback when invoked.
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
@@ -824,7 +831,7 @@ enum ZbZclPrepayTopUpResultT zcl_prepay_update_topup_attrs(struct ZbZclClusterT 
  * @return true if the top up record is retrieved successfully, false otherwise.
  */
 bool zcl_prepay_get_topup_record(struct ZbZclClusterT *cluster,
-    struct ZbZclPrepayTopUpPayloadT *payload, uint8_t attr_idx);
+    struct ZbZclPrepayTopUpPayloadT *payload, uint16_t attr_idx);
 
 /*-----------------------------------------------------------------------------
  * Client API
@@ -1038,5 +1045,7 @@ enum ZclStatusCodeT ZbZclPrepayClientSetOverallDebtCapReq(struct ZbZclClusterT *
 struct ZbZclClusterT * ZbZclPrepayClientCreateMirror(struct ZbZclClusterT *cluster, uint8_t endpoint,
     struct ZbZclClusterT *meter_mirror_client, struct ZbZclClusterT *meter_mirror_server,
     uint64_t rmt_addr, uint8_t rmt_endpoint);
+
+/*lint -restore */
 
 #endif

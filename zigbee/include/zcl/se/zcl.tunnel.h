@@ -4,7 +4,7 @@
  * @brief ZCL Tunneling cluster header
  * ZCL 7 section 10.6
  * ZCL 8 section 10.6
- * @copyright Copyright [2009 - 2024] Exegin Technologies Limited. All rights reserved.
+ * @copyright Copyright [2009 - 2025] Exegin Technologies Limited. All rights reserved.
  */
 
 /* EXEGIN - removed '@'PICS escape sequence, since these are not the
@@ -203,7 +203,9 @@ struct ZbZclTunnelProtoCbT {
     /**< Application private data pointer */
 };
 
-/* Tunneling Server */
+/*
+ * Tunneling Server
+ */
 
 /**
  * Create a new instance of the Tunneling Server cluster
@@ -215,7 +217,7 @@ struct ZbZclClusterT * ZbZclTunnelServerAlloc(struct ZigBeeT *zb, uint8_t endpoi
 
 /**
  * Add a protocol tunnel to the server
- * @param cluster Cluster instance from which to send this command
+ * @param cluster Cluster instance
  * @param protocol Protocol ID enumeration
  * @param mfr Manufacturer ID
  * @param mtu Protocol's MTU
@@ -227,13 +229,24 @@ enum ZclStatusCodeT ZbZclTunnelServerAddProto(struct ZbZclClusterT *cluster, enu
 
 /**
  * Get tunnel server state by tunnel ID
- * @param cluster Cluster instance from which to send this command
+ * @param cluster Cluster instance
  * @param tunnel_id Tunnel ID
  * @return State of the tunnel
  */
 struct ZbZclTunnelStateT * ZbZclTunnelServerStateFindById(struct ZbZclClusterT *cluster, uint16_t tunnel_id);
 
-/* Tunneling Client */
+/**
+ * Closes a tunnel on the Server, but the Client is not notified. If the 'state' parameter is
+ * NULL, then all tunnels on the Server are closed.
+ * @param cluster Cluster instance
+ * @param state Tunnel instance
+ * @return None
+ */
+void ZbZclTunnelServerClose(struct ZbZclClusterT *cluster, struct ZbZclTunnelStateT *state);
+
+/*
+ * Tunneling Client
+ */
 
 /**
  * Create a new instance of the Tunneling Client cluster
@@ -245,7 +258,7 @@ struct ZbZclClusterT * ZbZclTunnelClientAlloc(struct ZigBeeT *zb, uint8_t endpoi
 
 /**
  * Add a protocol tunnel to the server
- * @param cluster Cluster instance from which to send this command
+ * @param cluster Cluster instance
  * @param protocol Protocol ID enumeration
  * @param mfr Manufacturer ID
  * @param mtu Protocol's MTU
@@ -286,7 +299,7 @@ enum ZclStatusCodeT ZbZclTunnelClientCloseReq(struct ZbZclClusterT *cluster, str
 
 /**
  * Close the local tunnel without informing the server
- * @param cluster Cluster instance from which to send this command
+ * @param cluster Cluster instance
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
 enum ZclStatusCodeT ZbZclTunnelClientCloseQuietReq(struct ZbZclClusterT *cluster);
@@ -316,7 +329,9 @@ enum ZclStatusCodeT ZbZclTunnelClientSendReq(struct ZbZclClusterT *cluster,
     struct ZbZclTunnelDataT *data,
     void (*callback)(struct ZbZclCommandRspT *rspPr, void *arg), void *arg);
 
-/* Tunneling Helper Functions */
+/*
+ * Tunneling Helper Functions
+ */
 
 /**
  * Send data via the tunnel. If the input cluster is server then the data will be
@@ -334,28 +349,28 @@ enum ZclStatusCodeT ZbZclTunnelSendData(struct ZbZclClusterT *cluster,
 
 /**
  * Get ID using Tunneling Cluster State structure
- * @param state Tunneling Cluster State structure
+ * @param state Tunnel instance
  * @return Allocated tunnel ID
  */
 uint16_t ZbZclTunnelStateGetId(struct ZbZclTunnelStateT *state);
 
 /**
  * Get Tunneling Protocol Instance using Tunneling Cluster State structure
- * @param state Tunneling Cluster State structure
+ * @param state Tunnel instance
  * @return Tunneling Protocol Instance structure
  */
 enum ZbZclTunnelProtocolT ZbZclTunnelStateGetProtocol(struct ZbZclTunnelStateT *state);
 
 /**
  * Get the current tunnel's MTU, which is the smaller of the two side's MTUs.
- * @param state Tunneling Cluster State structure
+ * @param state Tunnel instance
  * @return MTU size in bytes
  */
 uint16_t ZbZclTunnelStateGetMtu(struct ZbZclTunnelStateT *state);
 
 /**
  * Get the current tunnel's remote addressing.
- * @param state Tunneling Cluster State structure
+ * @param state Tunnel instance
  * @param addr Pointer to write EUI-64 of the remote device's address.
  * @param endpoint Pointer to write EUI-64 of the remote device's endpoint.
  * @return True if address info is present and valid, false otherwise.
@@ -364,7 +379,7 @@ bool ZbZclTunnelStateGetRmtAddr(struct ZbZclTunnelStateT *state, uint64_t *addr,
 
 /**
  * Get received data using Tunneling Cluster State structure
- * @param state Tunneling Cluster State structure
+ * @param state Tunnel instance
  * @return Pointer to received data buffer.
  * Length of data is determined by ZbZclTunnelStateGetDataLen.
  */
@@ -372,7 +387,7 @@ uint8_t * ZbZclTunnelStateGetDataPtr(struct ZbZclTunnelStateT *state);
 
 /**
  * Get received data length using Tunneling Cluster State structure
- * @param state Tunneling Cluster State structure
+ * @param state Tunnel instance
  * @param clear_data If true, clear any data queued in the tunnel.
  * The application would first call ZbZclTunnelStateGetDataLen with clear_data
  * set to false to get the length and process the data. Once complete, it will

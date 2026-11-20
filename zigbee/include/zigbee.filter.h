@@ -3,7 +3,7 @@
  * @heading Zigbee Message Filters
  * @brief Zigbee header file.
  * @author Exegin Technologies
- * @copyright Copyright [2009 - 2025] Exegin Technologies Limited. All rights reserved.
+ * @copyright Copyright [2009 - 2026] Exegin Technologies Limited. All rights reserved.
  */
 
 #ifndef ZIGBEE_FILTER_H
@@ -159,11 +159,38 @@ enum ZbMsgStackEventTypeT {
      * trust center. Will only get this notification if stack built with CONFIG_ZB_ZDD
      * enabled. */
 
-    ZB_MSG_STACK_EVENT_PARENT_LINK_FAIL
-    /** A message that is sent if the device is an end-device and it has received an
-     * NLME-NETWORK-STATUS.indication with the PARENT_LINK_FAILURE status set.
-     * Outside of testing 18.4.* TP/R23/ZDO/APC-*, the application should attempt to
-     * rejoin the network using the ZbStartupRejoin() API call at its convenience. */
+    ZB_MSG_STACK_EVENT_PARENT_LINK_FAIL,
+    /** This message is sent if the device is an end-device and the stack is handling
+     * a NLME-NETWORK-STATUS.indication for PARENT_LINK_FAILURE. The application
+     * should attempt a secure rejoin to the network using the ZbStartupRejoin() API.
+     *
+     * The stack will limit the rate at which these messages can be sent to the
+     * application; however, it is the application's responsibilty for how often
+     * a rejoin attempt should be made and when. */
+
+    ZB_MSG_STACK_EVENT_TC_CONNECTIVITY_FAIL,
+    /** This message is similar to ZB_MSG_STACK_EVENT_PARENT_LINK_FAIL, but indicates
+     * a connectivity loss with the Trust Center (TC) and/or the network. You may refer to
+     * "Figure 17 - Rejoin Procedure" in the BDB 3.1 specification. In this case,
+     * the answer to Step 1 is "Yes", and the application should continue to Step 3
+     * to perform a TC Rejoin by calling the ZbTrustCenterRejoin() API.
+     *
+     * This message may be triggered from the Poll Control cluster, if enabled, if it
+     * encounters consecutive checkin failures with the TC.
+     *
+     * This message may also be triggered if the stack determines that the active
+     * Network Key on the device is older than observed from the network. In this
+     * case, the device may have missed a new Network Key rollout from the TC,
+     * and now must perform a TC Rejoin to obtain the new key and resume normal operation.
+     *
+     * The stack will limit the rate at which these messages can be sent to the
+     * application; however, it is the application's responsibilty for how often
+     * a rejoin attempt should be made and when. */
+
+    ZB_MSG_STACK_EVENT_PERIODIC_EVENTS_UPDATE
+    /** For internal use. Notifies periodic processes, such as ZCL Reporting, if
+     * there has been a change within the stack that may affect it. For example,
+     * modifications to the APS Binding Table may affect ZCL Reports. */
 };
 
 struct ZbMsgStackEventT {

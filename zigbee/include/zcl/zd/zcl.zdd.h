@@ -3,18 +3,52 @@
  * @heading Zigbee Direct Configuration Cluster
  * @brief ZCL Zigbee Direct Configuration Cluster header
  * Zigbee Direct Specification 20-27688-030
- * @copyright Copyright [2021 - 2025] Exegin Technologies Limited. All rights reserved.
+ * @copyright Copyright [2021 - 2026] Exegin Technologies Limited. All rights reserved.
  */
 
 #ifndef ZCL_ZDD_H
 #define ZCL_ZDD_H
+
+/*--------------------------------------------------------------------------
+ *  DESCRIPTION
+ *      Interface definition for the ZCL Zigbee Direct Configuration cluster.
+ *--------------------------------------------------------------------------
+ */
+
+/* @PICS.ZCL.ZBDRCT
+ *
+ * ZBDRCT.S | Server | True
+ * ZBDRCT.C | Client | True
+ *
+ * Server Attributes
+ * ZBDRCT.S.A0000 | InterfaceState | True
+ * ZBDRCT.S.A0001 | AnonymousJoinTimeout | True
+ * ZBDRCT.S.Afffd | ClusterRevision | True
+ *
+ * Commands Received
+ * ZBDRCT.S.C00.Rsp | ConfigureInterface | True
+ * ZBDRCT.S.C01.Rsp | ConfigureAnonymousJoinTimeout | True
+ *
+ * Commands Generated
+ * ZBDRCT.S.C00.Tx | ConfigureInterfaceResponse | True
+ *
+ * Client Attributes
+ * ZBDRCT.C.Afffd | ClusterRevision | True
+ *
+ * Commands Generated
+ * ZBDRCT.C.C00.Tx | ConfigureInterface | True
+ * ZBDRCT.C.C01.Tx | ConfigureAnonymousJoinTimeout | True
+ *
+ * Commands Received
+ * ZBDRCT.C.C00.Rsp | ConfigureInterfaceResponse | True
+ */
 
 #include "zcl/zcl.h"
 
 /** Zigbee Direct Configuration Server Attribute IDs */
 enum ZbZclZddServerAttrT {
     ZCL_ZDD_ATTR_IFC_STATE = 0x0000, /**< Interface State */
-    ZCL_ZDD_ATTR_ANON_JOIN_TIMEOUT = 0x0001, /**< Anonymous Join Timeout */
+    ZCL_ZDD_ATTR_ANON_JOIN_TIMEOUT = 0x0001 /**< Anonymous Join Timeout */
 };
 
 /* The recommended default value for the AnonymousJoinTimeout (seconds). */
@@ -27,8 +61,12 @@ enum ZbZclZddServerAttrT {
 #define ZCL_ZDD_ANON_JOIN_TIMEOUT_MAX       0x100000U /* 1048575 seconds. */
 
 /* ZCL_ZDD_ATTR_IFC_STATE / ZCL_ZDD_CLI_CMD_CONFIG_ZDD_IFC */
-#define ZCL_ZDD_IFC_STATE_DISABLED          0x00U
-#define ZCL_ZDD_IFC_STATE_ENABLED           0x01U
+/* NOTE: These are supposed to be a bitmap */
+enum ZbZclZddServerIfcStateT {
+    ZCL_ZDD_IFC_STATE_DISABLED = 0x00U,
+    ZCL_ZDD_IFC_STATE_ENABLED = 0x01U,
+    ZCL_ZDD_IFC_STATE_RESERVED = 0xfeU
+};
 
 /* Zigbee Direct Configuration Client Generated Commands */
 enum ZbZclZddClientCmdT {

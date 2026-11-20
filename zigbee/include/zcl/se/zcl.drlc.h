@@ -4,7 +4,7 @@
  * @brief ZCL Demand Response and Load Control cluster header
  * ZCL 7 Section 10.3
  * ZCL 8 Section 10.3
- * @copyright Copyright [2009 - 2025] Exegin Technologies Limited. All rights reserved.
+ * @copyright Copyright [2009 - 2026] Exegin Technologies Limited. All rights reserved.
  */
 
 /* EXEGIN - removed '@'PICS escape sequence, since these are not the
@@ -236,9 +236,11 @@ struct ZbZclDrlcGetEventsReqT {
 
 /** DRLC Server callbacks configuration */
 struct ZbZclDrlcServerCallbacksT {
-    void (*report_status)(struct ZbZclClusterT *cluster, struct ZbZclAddrInfoT *srcInfo,
+    enum ZclStatusCodeT (*report_status)(struct ZbZclClusterT *cluster, struct ZbZclAddrInfoT *srcInfo,
         struct ZbZclDrlcStatusT *status, void *arg);
-    /**< Callback to application, invoked on receipt of Report Event Status command */
+    /**< Callback to application, invoked on receipt of Report Event Status command
+     * The report_status callback handler in the application
+     * should return ZCL_STATUS_SUCCESS, or ZCL_STATUS_INVALID_FIELD if a field is invalid */
 
     enum ZclStatusCodeT (*get_events)(struct ZbZclClusterT *cluster, struct ZbZclAddrInfoT *srcInfo,
         struct ZbZclDrlcGetEventsReqT *req, void *arg);
@@ -266,13 +268,10 @@ struct ZbZclClusterT * ZbZclDrlcServerAlloc(struct ZigBeeT *zb, uint8_t endpoint
  * @param cluster Cluster instance from which to send this command
  * @param eventPtr Load Control Event information
  * @param dst Destination address for request
- * @param callback Callback function that will be invoked when the response is received.
- * @param arg Pointer to application data that will included in the callback when invoked.
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
 enum ZclStatusCodeT ZbZclDrlcServerCommandEventReq(struct ZbZclClusterT *cluster,
-    struct ZbZclDrlcEventT *eventPtr, const struct ZbApsAddrT *dst,
-    void (*callback)(struct ZbZclCommandRspT *zcl_rsp, void *arg), void *arg);
+    struct ZbZclDrlcEventT *eventPtr, const struct ZbApsAddrT *dst);
 
 /**
  * Send a Load Control Event command in response to a GetEvents request.
@@ -313,13 +312,15 @@ enum ZclStatusCodeT ZbZclDrlcServerCommandCancelAllReq(struct ZbZclClusterT *clu
  * DRLC Client Functions
  *---------------------------------------------------------------
  */
-
 /** DRLC Client callbacks configuration */
 struct ZbZclDrlcClientCallbacksT {
-    /* Should return true if started successfully, or false otherwise. */
+    bool(*new)(void *arg, struct ZbZclDrlcEventT *event, enum ZbZclDrlcEventStatusT status);
+    /**< Callback to application, invoked on the reception of a new event.
+     * Return false to stop processing this event and return a ZCL error status. */
 
     bool (*start)(void *arg, struct ZbZclDrlcEventT *event);
-    /**< Callback to application, invoked on the start of an event */
+    /**< Callback to application, invoked on the start of an event.
+     * Should return true if started successfully, or false otherwise. */
 
     void (*stop)(void *arg, struct ZbZclDrlcEventT *event);
     /**< Callback to application, invoked on the end of an event */

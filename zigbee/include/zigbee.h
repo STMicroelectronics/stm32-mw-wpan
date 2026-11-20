@@ -21,37 +21,29 @@
 # define ZB_WARN_UNUSED
 #endif
 
-#ifdef __CDT_PARSER__
-/* Eclipse indexer only code */
-#include "zb_make_config.h"
-#endif
-
-/* For FlexeLint */
-#ifndef CONFIG_ZB_REV
-#define CONFIG_ZB_REV                   23
-#endif
-
 #include <stdint.h>
 #include <stdbool.h>
-#include <stddef.h> /* for NULL */
+
+/*lint -save -e451 "does not have a standard include guard [MISRA 2012 Dir 4.10, REQUIRED]" */
+#include <stddef.h> /** For NULL */
+/*lint -restore */
+
 #include "pletoh.h" /* Little endian conversion */
 #include "llist.h" /* Link list */
 #include "ieee802154_enums.h"
 
 #include "zigbee.log.h"
 
-/* Zigbee instance as an opaque data structure. The internal parameters of this structure
- * are only accessible within the Zigbee stack. */
+/* Anonymous stack structures */
 struct ZigBeeT;
-
-/* MAC instance as an opaque data structure. The internal parameters of this structure
- * are only accessible within the Zigbee stack and MAC layers. */
+struct ZbMsgFilterT;
 struct WpanPublicT;
 
+/* Obtain size as an unsigned int */
+#define ZB_SIZEOF(x)                    (unsigned int)sizeof(x)
+
 /* ZigBee Protocol Versions as related to the spec version. */
-#if 0 /* deprecated */
-#define ZB_PROTOCOL_VERSION_2004        0x0001U
-#endif
+#define ZB_PROTOCOL_VERSION_2004        0x0001U /* Deprecated */
 #define ZB_PROTOCOL_VERSION_2007        0x0002U
 
 /* Channel Mask / Page Helpers */
@@ -80,13 +72,14 @@ struct WpanPublicT;
  * NOTE: The max allocation is not the total size of the heap, only the
  * largest chunk of data we can allocate from it at a time.
  * If we define both implementation limits to be 2000, we should be safe. */
-#define ZB_HEAP_MAX_ALLOC               2000U
+#define ZB_HEAP_MAX_ALLOC                   2000U
 
 /* ZigBee Status Codes */
 enum ZbStatusCodeT {
     /* General Status Codes */
-    ZB_STATUS_SUCCESS = 0x00,
-    ZB_STATUS_ALLOC_FAIL = 0x70, /* Memory allocation failure. */
+    ZB_STATUS_SUCCESS = 0x00, /**< SUCCESS */
+    ZB_STATUS_FAILURE = 0x01, /**< FAILURE (used by ZDD to indicate a general failure) */
+    ZB_STATUS_ALLOC_FAIL = 0x70, /**< Exegin custom: Memory allocation failure. */
 
     /* ZDP Status Codes */
     ZB_ZDP_STATUS_SUCCESS = ZB_STATUS_SUCCESS,
@@ -200,13 +193,22 @@ enum ZbStatusCodeT {
     ZB_WPAN_STATUS_DEVICE_ERROR = mcp_STATUS_DEVICE_ERROR /* 0xff */
 };
 
-/* Trust Center Swap Out status codes */
+/** Trust Center Swap Out status codes */
 enum ZbTcsoStatusT {
-    ZB_TCSO_STATUS_SUCCESS = 0x00, /* Successfully performed TCSO with new TC */
-    ZB_TCSO_STATUS_DISCOVERY_UNDERWAY = 0x01, /* ZCL Keepalive has initiated TCSO, because of three consecutive failures. */
-    ZB_TCSO_STATUS_REJOIN_PREV = 0x02, /* Found previous TC and rejoined to it. */
-    ZB_TCSO_STATUS_NOT_FOUND = 0x03, /* Didn't find new or old TC, or process was aborted, resumed previous operation. */
-    ZB_TCSO_STATUS_FATAL = 0x04 /* TCSO failed and unable to restore previous operation. */
+    ZB_TCSO_STATUS_SUCCESS = 0x00,
+    /**< Successfully performed TCSO with new TC */
+
+    ZB_TCSO_STATUS_DISCOVERY_UNDERWAY = 0x01,
+    /**< ZCL Keepalive has initiated TCSO, because of three consecutive failures. */
+
+    ZB_TCSO_STATUS_REJOIN_PREV = 0x02,
+    /**< Found previous TC and rejoined to it. */
+
+    ZB_TCSO_STATUS_NOT_FOUND = 0x03,
+    /**< Didn't find new or old TC, or process was aborted, resumed previous operation. */
+
+    ZB_TCSO_STATUS_FATAL = 0x04
+        /**< TCSO failed and unable to restore previous operation. */
 };
 
 /* Zigbee defines of the scan type. These map directly to the MCP defines,
@@ -215,7 +217,10 @@ enum ZbTcsoStatusT {
 #define ZB_SCAN_TYPE_ACTIVE             1U /* MCP_SCAN_ACTIVE (1) */
 #define ZB_SCAN_TYPE_PASSIVE            2U /* MCP_SCAN_PASSIVE (2) */
 #define ZB_SCAN_TYPE_ORPHAN             3U /* MCP_SCAN_ORPHAN (3) */
-#define ZB_SCAN_TYPE_ENHANCED           4U /* MCP_SCAN_ENHANCED (4) */
+
+/* Zigbee defines of the beacon type. These map directly to the MCP defines,
+ * without having to include the entire MCP headers. */
+#define ZB_BEACON_TYPE_DEFAULT          0U /* MCP_BEACON_DEFAULT (0) */
 
 /*---------------------------------------------------------------
  * Exegin Manufacturing ID
@@ -278,13 +283,8 @@ struct ZbJoinerTLVsT {
  * Stack Initialization
  *---------------------------------------------------------------
  */
-
-/* Anonymous stack structures. */
-struct ZigBeeT;
-struct ZbMsgFilterT;
-
 /* Zigbee uptime structure **/
-typedef unsigned long ZbUptimeT;
+typedef uint64_t ZbUptimeT;
 
 /** A pointer to this struct type is passed to ZbInit to define the various
  * ZigBee tables used in the stack. If the pointer to ZbInit is NULL, the
@@ -303,22 +303,22 @@ struct ZbInitTblSizesT {
      * An FFD vs RFD type of stack is controlled by the CONFIG_ZB_ENDNODE when the stack is built. */
 
     /* NWK Table Sizes */
-    unsigned int nwkNeighborTblSz; /**< Default: FFD:64, RFD:16 */
-    unsigned int nwkRouteTblSz; /**< Default: FFD:32, RFD:0 */
-    unsigned int nwkAddrMapTblSz; /**< Default: FFD:32, RFD:2 */
-    unsigned int nwkBttSz; /**< Default: FFD:32, RFD:9 */
-    unsigned int nwkRReqSz; /**< Default: FFD:16, RFD:0 */
+    uint16_t nwkNeighborTblSz; /**< Default: FFD:64, RFD:16 */
+    uint16_t nwkRouteTblSz; /**< Default: FFD:32, RFD:0 */
+    uint16_t nwkAddrMapTblSz; /**< Default: FFD:32, RFD:2 */
+    uint16_t nwkBttSz; /**< Default: FFD:32, RFD:9 */
+    uint16_t nwkRReqSz; /**< Default: FFD:16, RFD:0 */
 
     /* APS Table Sizes */
-    unsigned int apsBindingTblSz; /**< Default: FFD:64, RFD:16 */
-    unsigned int apsGroupTblSz; /**< Default: FFD:16, RFD:4 */
-    unsigned int apsPeerLinkKeyTblSz; /**< Default: FFD:32, RFD:2 */
+    uint16_t apsBindingTblSz; /**< Default: FFD:64, RFD:16 */
+    uint16_t apsGroupTblSz; /**< Default: FFD:16, RFD:4 */
+    uint16_t apsPeerLinkKeyTblSz; /**< Default: FFD:32, RFD:2 */
 };
 
 /** Same parameters as ZbSetLogging takes. Allows debug log output
  * as stack is being initialized. */
 struct ZbInitSetLoggingT {
-    uint32_t mask; /**< e.g. ZB_LOG_MASK_LEVEL_2 */
+    uint32_t mask; /**< e.g. ZB_LOG_MASK_FATAL */
     void (*func)(struct ZigBeeT *zb, uint32_t mask, const char *hdr,
         const char *fmt, va_list argptr);
     /**< Callback function to print log messages. */
@@ -375,7 +375,7 @@ unsigned int ZbCheckTime(struct ZigBeeT *zb);
  * wrap in the computed expiry time.
  * @param now Current uptime
  * @param timeout Timeout offset in milliseconds
- * @return Timeout expire time, or zero if the timeout exceeds the maximum allowed.
+ * @return Timeout expire time
  */
 ZbUptimeT ZbTimeoutCalc(ZbUptimeT now, unsigned int timeout);
 
@@ -596,7 +596,7 @@ bool ZbPersistNotifyRegister(struct ZigBeeT *zb, void (*callback)(struct ZigBeeT
  * @param maxlen Max length of persistence data
  * @return Returns length of persistence data
  */
-unsigned int ZbPersistGet(struct ZigBeeT *zb, uint8_t *buf, unsigned int maxlen);
+uint16_t ZbPersistGet(struct ZigBeeT *zb, uint8_t *buf, uint16_t maxlen);
 
 /**
  * Same as ZbPersistGet, but saves additional more dynamic data such as routing tables.
@@ -607,7 +607,7 @@ unsigned int ZbPersistGet(struct ZigBeeT *zb, uint8_t *buf, unsigned int maxlen)
  * @param maxlen Max length of persistence and additional data
  * @return Returns length of persistence and additional data
  */
-unsigned int ZbStateGet(struct ZigBeeT *zb, uint8_t *buf, unsigned int maxlen);
+uint16_t ZbStateGet(struct ZigBeeT *zb, uint8_t *buf, uint16_t maxlen);
 
 /*---------------------------------------------------------
  * Shutdown
@@ -692,6 +692,14 @@ unsigned long ZbHeapAvailable(struct ZigBeeT *zb);
  * @return Returns the worst-case heap usage (high-water mark)
  */
 unsigned long ZbHeapHighWaterMark(struct ZigBeeT *zb);
+
+/* For debugging / testing only. Will print memory debug if available.
+ * The stack must be compiled with CONFIG_ZB_MEMPOOL_HISTORY and be using
+ * the zigbee.mem.pool.c implementation. */
+void zb_heap_print_history(struct ZigBeeT *zb);
+
+/* For debugging only */
+void zb_debug_print_table_sizes(struct ZigBeeT *zb);
 
 /*---------------------------------------------------------------
  * Additional Layer Includes

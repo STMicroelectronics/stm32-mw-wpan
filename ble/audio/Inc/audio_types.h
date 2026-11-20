@@ -56,6 +56,7 @@ typedef  uint8_t  Audio_Coding_Format_t;
  * Bitmap of audio location
  */
 typedef  uint32_t Audio_Location_t;
+#define MONO_CHANNEL                            (0x00000000)
 #define FRONT_LEFT                              (0x00000001)
 #define FRONT_RIGHT                             (0x00000002)
 #define FRONT_CENTER                            (0x00000004)

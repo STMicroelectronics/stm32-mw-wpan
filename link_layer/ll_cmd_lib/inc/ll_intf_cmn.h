@@ -1,36 +1,29 @@
-/*$Id: //dwh/bluetooth/DWC_ble154combo/firmware/rel/2.00a-lca06/inc/ll_intf_cmn.h#3 $*/
+/*$Id: //dwh/bluetooth/DWC_ble154combo/firmware/rel/1.11.0/inc/ll_intf_cmn.h#3 $*/
 /**
  ********************************************************************************
  * @file    ll_intf_cmn.h
  * @brief   This file includes declaration of common interfaces of MAC only and BLE/COEXISTENCE APIs.
  ******************************************************************************
- * This Synopsys DWC Bluetooth Low Energy Combo Link Layer/MAC software and
- * associated documentation ( hereinafter the "Software") is an unsupported
- * proprietary work of Synopsys, Inc. unless otherwise expressly agreed to in
- * writing between Synopsys and you. The Software IS NOT an item of Licensed
- * Software or a Licensed Product under any End User Software License Agreement
- * or Agreement for Licensed Products with Synopsys or any supplement thereto.
- * Synopsys is a registered trademark of Synopsys, Inc. Other names included in
- * the SOFTWARE may be the trademarks of their respective owners.
- *
  * Synopsys MIT License:
  * Copyright (c) 2020-Present Synopsys, Inc
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of
- * the Software), to deal in the Software without restriction, including without
+ * Permission is hereby granted, free of charge, to any person obtaining a copy 
+ * of the this software and associated documentation files (the "Software"), 
+ * to deal in the Software without restriction, including without 
  * limitation the rights to use, copy, modify, merge, publish, distribute,
  * sublicense, and/or sell copies of the Software, and to permit persons to whom
  * the Software is furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in 
+ * all copies or substantial portions of the Software.
  *
  * THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING, BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE
  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE ARISING FROM,
- * OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+ * THE SOFTWARE.
  *
  * */
 #ifndef INCLUDE_LL_INTF_CMN_H_
@@ -172,7 +165,22 @@ void ll_intf_cmn_gain_fix_init(
  * @param[in] phy_clbr_evnt_count 	: Indicate the number of the PHY calibration events to be executed.
  */
 void ll_intf_cmn_set_phy_clbr_period(uint32_t phy_clbr_evnt_period, uint32_t phy_clbr_evnt_count);
-
+/*===============  Get sleep timer value  =================*/
+/**
+ * @brief  Get sleep timer value.
+ *
+ * @param[in] None.
+ * @return Current sleep timer value.
+ */
+uint32_t ll_intf_cmn_get_slptmr_value(void);
+/*===============  Get sleep timer state  =================*/
+/**
+ * @brief  Get sleep timer state enabled/disabled.
+ *
+ * @param[in] None.
+ * @return Current sleep timer state.
+ */
+uint8_t ll_intf_cmn_get_slptmr_state(void);
 /** @}
 */
 

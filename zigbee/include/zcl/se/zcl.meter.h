@@ -4,7 +4,7 @@
  * @brief ZCL Metering cluster header
  * ZCL 7 section 10.4
  * ZCL 8 section 10.4
- * @copyright Copyright [2009 - 2025] Exegin Technologies Limited. All rights reserved.
+ * @copyright Copyright [2009 - 2026] Exegin Technologies Limited. All rights reserved.
  */
 
 /* EXEGIN - removed '@'PICS escape sequence, since these are not the
@@ -255,7 +255,11 @@
 
 #include "zcl/zcl.h"
 
-/*lint -save -e621 "identifier clash within 31 chars [MISRA Rule 5.1 (REQUIRED)]" */
+/*lint -save -e621 "Identifier clash within 31 chars. For readability,
+ * we need to exceed the 31 character limit before uniqueness, and
+ * extend the limit to 63 charcters.
+ * [MISRA Rule 5.1 (REQUIRED), MISRA Rule 5.2 (REQUIRED),
+ * MISRA Rule 5.4 (REQUIRED), MISRA Rule 5.5 (REQUIRED)]" */
 
 /**< Metering Server Attribute IDs */
 enum ZbZclMeteringSvrAttrT {
@@ -520,7 +524,7 @@ enum ZbZclMeterCliAttrT {
     ZCL_METER_CLI_ATTR_NOTIF_FLAGS_5 = 0x0004, /**< NotificationFlags5 (Device Management) */
     ZCL_METER_CLI_ATTR_NOTIF_FLAGS_6 = 0x0005, /**< NotificationFlags6 (Not supported) */
     ZCL_METER_CLI_ATTR_NOTIF_FLAGS_7 = 0x0006, /**< NotificationFlags7 (Not supported) */
-    ZCL_METER_CLI_ATTR_NOTIF_FLAGS_8 = 0x0007, /**< NotificationFlags8 (Not supported) */
+    ZCL_METER_CLI_ATTR_NOTIF_FLAGS_8 = 0x0007 /**< NotificationFlags8 (Not supported) */
 };
 
 /* Functional Notification Flags (ZCL_METER_CLI_ATTR_FUNC_NOTIF_FLAGS) */
@@ -815,11 +819,11 @@ enum ZbZclMeterSnapshotPayloadTypeT {
     /**< Block Tier Information Set Received (No Billing). */
 
     /**< 8 - 127 Reserved. */
-    ZCL_METER_SNAPSHOT_PAYLD_TYPE_DATA_UNAVAILABLE = 128U,
-    /**< Data Unavailable - The data for this snapshot is currently unavailable;
-     * if used, there is currently no subsequent snapshot data. */
+    ZCL_METER_SNAPSHOT_PAYLD_TYPE_DATA_UNAVAILABLE = 128U
+        /**< Data Unavailable - The data for this snapshot is currently unavailable;
+         * if used, there is currently no subsequent snapshot data. */
 
-    /**< 129 - 255 Reserved. */
+        /**< 129 - 255 Reserved. */
 };
 
 /**< Metering Snapshot Confirmation Enumerations. */
@@ -844,10 +848,10 @@ enum ZbZclMeterScheduleSnapshotConfT {
     /**< Snapshot Schedule Not Currently Available. */
     ZCL_METER_SCHEDULE_SNAPSHOT_CONF_SCH_NOT_SUPP = 0x04U,
     /**< Snapshot Schedules not supported by device. */
-    ZCL_METER_SCHEDULE_SNAPSHOT_CONF_INSUFFICIENT_SPACE = 0x05U,
-    /**< Insufficient space for snapshot schedule. */
+    ZCL_METER_SCHEDULE_SNAPSHOT_CONF_INSUFFICIENT_SPACE = 0x05U
+        /**< Insufficient space for snapshot schedule. */
 
-    /* 0x06 - 0xff - Reserved. */
+        /* 0x06 - 0xff - Reserved. */
 };
 
 /**< Metering Server Generated Commands */
@@ -912,9 +916,9 @@ enum ZbZclMeterSetSupplyStatusT {
     ZCL_METER_SET_SUPPLY_STATUS_OFF = 0x00U, /**< Supply OFF */
     ZCL_METER_SET_SUPPLY_STATUS_OFF_ARMED = 0x01U, /**< Supply OFF/ARMED */
     ZCL_METER_SET_SUPPLY_STATUS_ON = 0x02U, /**< Supply ON */
-    ZCL_METER_SET_SUPPLY_STATUS_UNCHANGED = 0x03U /**< Supply UNCHANGED */
+    ZCL_METER_SET_SUPPLY_STATUS_UNCHANGED = 0x03U, /**< Supply UNCHANGED */
 
-        /* 0x04-0xFF Reserved */
+    ZCL_METER_SET_SUPPLY_STATUS_RESERVED = 0xffU /* 0x04-0xFF Reserved For MISRA checking */
 };
 
 #if 0 /* not used */
@@ -939,14 +943,14 @@ enum ZbZclMeterNotifSchemesT {
      * meaning that only the FunctionalNotificationFlags is included in the
      * MirrorReportAttributeResponse command. */
 
-    ZCL_METER_NOTIF_SCHEME_PREDEF_B = 0x02,
-    /**< Predefined Notification Scheme B. The notification flags equal 0x01234FFF,
-     * meaning that the first notification flag included in the list will be the
-     * FunctionalNotificationFlags followed by NotificationFlags2 to NotificationFlags5. */
+    ZCL_METER_NOTIF_SCHEME_PREDEF_B = 0x02
+        /**< Predefined Notification Scheme B. The notification flags equal 0x01234FFF,
+         * meaning that the first notification flag included in the list will be the
+         * FunctionalNotificationFlags followed by NotificationFlags2 to NotificationFlags5. */
 
-    /* 0x03 to 0x80 is Reserved */
-    /* 0x81 to 0xfe is For MSP Requirements */
-    /* 0xff is Reserved */
+        /* 0x03 to 0x80 is Reserved */
+        /* 0x81 to 0xfe is For MSP Requirements */
+        /* 0xff is Reserved */
 };
 
 /* There can be a maximum of 8 notification flags (NotificationFlag1-8) */
@@ -1151,7 +1155,7 @@ struct ZbZclMeterClientResetLoadLimitCounterReqT {
 /** Change Supply - Supply Control Bits */
 /* Acknowledge Required: Indicates that a Supply Status Response command is to be
  * sent in response to this command. */
-#define ZCL_METER_SUPPLY_CTRL_BIT_ACK_REQ           0x01
+#define ZCL_METER_SUPPLY_CTRL_BIT_ACK_REQ           0x01U
 /* The remaining bits are reserved */
 
 /**< Metering Change Supply command structure */
@@ -1463,7 +1467,7 @@ enum ZclStatusCodeT ZbZclMeterServerSendStartSamplingRsp(struct ZbZclClusterT *c
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
 enum ZclStatusCodeT ZbZclMeterServerSendSupplyStatusRsp(struct ZbZclClusterT *cluster,
-    struct ZbZclAddrInfoT *dstInfo, struct ZbZclMeterServerSupplyStatusRspT *rsp);
+    struct ZbZclAddrInfoT *dst, struct ZbZclMeterServerSupplyStatusRspT *rsp);
 
 /**
  * Convert an array of 24-bit integers to the Zigbee frame format
@@ -1473,7 +1477,8 @@ enum ZclStatusCodeT ZbZclMeterServerSendSupplyStatusRsp(struct ZbZclClusterT *cl
  * @param num_samples Number of integers to convert
  * @return Returns the number of octets written to sample_data or -1 on error
  */
-int ZbZclMeterFormSampledData(uint8_t *sample_data, unsigned int max_len, uint32_t *samples, uint16_t num_samples);
+int ZbZclMeterFormSampledData(uint8_t *sample_data, unsigned int max_len,
+    const uint32_t *samples, uint16_t num_samples);
 
 /**
  * Send a Get Sampled Data Response command
@@ -1488,22 +1493,22 @@ enum ZclStatusCodeT ZbZclMeterServerSendGetSampledDataRsp(struct ZbZclClusterT *
 /**
  * Send a Request Fast Poll Mode Response command
  * @param cluster Cluster instance from which to send this command
- * @param dstInfo Destination address for response, including sequence number and tx options
+ * @param dst Destination address for response, including sequence number and tx options
  * @param rsp Request Fast Poll Mode Response command structure
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
 enum ZclStatusCodeT ZbZclMeterServerSendFastPollModeRsp(struct ZbZclClusterT *cluster,
-    struct ZbZclAddrInfoT *dstInfo, struct ZbZclMeterServerFastPollModeRspT *rsp);
+    struct ZbZclAddrInfoT *dst, struct ZbZclMeterServerFastPollModeRspT *rsp);
 
 /**
  * Send a Publish Snapshot Response command
  * @param cluster Cluster instance from which to send this command
- * @param dstInfo Destination address for response, including sequence number and tx options
+ * @param dst Destination address for response, including sequence number and tx options
  * @param rsp Publish Snapshot Response command structure
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
 enum ZclStatusCodeT ZbZclMeterServerPublishSnapshotRsp(struct ZbZclClusterT *cluster,
-    struct ZbZclAddrInfoT *dstInfo, struct ZbZclMeterServerPublishSnapshotT *rsp);
+    struct ZbZclAddrInfoT *dst, struct ZbZclMeterServerPublishSnapshotT *rsp);
 
 /**
  * Send a Get Notified Message Command.

@@ -3,7 +3,7 @@
  * @heading DLK Utilities
  * @brief ZigBee DLK implementation.
  * @author Exegin Technologies Limited
- * @copyright Copyright [2019 - 2024] Exegin Technologies Limited. All rights reserved.
+ * @copyright Copyright [2019 - 2026] Exegin Technologies Limited. All rights reserved.
  *
  * This file defines all the Public API's used as part of ZigBee dynamic link key (DLK) implementation.
  */
@@ -46,7 +46,7 @@ enum ZbSelKeyNegoMethodT {
     ZB_SEL_DLK_METHOD_C25519_SHA_256 = 0x02U
         /**< ECDHE using Curve25519 with Hash SHA-256 */
         /* 3 - 255 reserved */
-};
+} __attribute__((packed));
 
 /** Enumeration for selected PSK (Pre-shared) secret. */
 enum ZbSelPreSharedSecretT {
@@ -65,17 +65,21 @@ enum ZbSelPreSharedSecretT {
     /* Discontinuity 05 - 254 reserved */
     ZB_SEL_PSK_ANON_WELL_KNOWN_SECRET = 0xffU
         /**< Well-known secret - 'ZigBeeAlliance18' */
-};
+} __attribute__((packed));
 
 /**
- * Perform dynamic link key negotiation (DLK) with a partner R23 device after the initiator
- * has joined the network. The initiator and the responder devices can be TC or non-TC.
- * In effect this API can be used to negotiate both trust center and application link key.
+ * Performs Dynamic Link Key (DLK) negotiation with a partner R23 device.
+ * This API can be initiated by either a Trust Center (TC) or a non-TC device.
+ * However, one of the two devices involved must be a TC, as R23 only supports
+ * DLK for negotiating the Trust Center Link Key. Application Link Keys cannot
+ * be negotiated using DLK.
  * @param zb Zigbee instance
  * @param partnerAddr EUI64 of the responder for DLK.
  * @param callback Callback function pointer.
- * @param cbarg Callback argument.
- * @return ZB Status Code. If not ZB_STATUS_SUCCESS, then the callback will not be called.
+ * @param arg Callback argument.
+ * @return ZB Status Code. If the return value is ZB_STATUS_SUCCESS, the DLK session
+ * has been started successfully. In that case, the callback provided as an input
+ * argument to this API will be invoked to notify the final status of the DLK procedure.
  */
 enum ZbStatusCodeT ZbDlkKeyNegoWithDevice(struct ZigBeeT *zb, uint64_t partnerAddr,
     void (*callback)(enum ZbStatusCodeT status, void *arg), void *arg);

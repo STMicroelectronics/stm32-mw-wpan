@@ -23,36 +23,38 @@
 
 /**
  * @brief ACI_GAP_SET_NON_DISCOVERABLE
+ *
  * This command stops advertising.
- * Note: this command only supports legacy advertising. For extended
+ * Note: This command only supports legacy advertising. For extended
  * advertising, refer to ACI_GAP_ADV_SET_ENABLE.
  *
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_set_non_discoverable( void );
 
 /**
  * @brief ACI_GAP_SET_LIMITED_DISCOVERABLE
+ *
  * Puts the device in limited discoverable mode (as defined in Core
  * Specification [Vol 3, Part C, 9.2.3]). The device will be discoverable for a
- * maximum period of TGAP (lim_adv_timeout) = 180 seconds. The advertising can
- * be disabled at any time by issuing ACI_GAP_SET_NON_DISCOVERABLE command.
+ * maximum period of TGAP (lim_adv_timeout) = 180 seconds. Advertising can be
+ * disabled at any time by issuing the ACI_GAP_SET_NON_DISCOVERABLE command.
  * The Adv_Interval_Min and Adv_Interval_Max parameters are optional. If both
  * are set to 0, the GAP will use default values for adv intervals for limited
  * discoverable mode (250 ms and 500 ms respectively).
  * To allow a fast connection, the Host can set Local_Name, Service_Uuid_List,
  * Conn_Interval_Min and Conn_Interval_Max. If provided, these data will be
  * inserted into the advertising packet payload as AD data. These parameters
- * are optional in this command. These values can be set in advertised data
- * using ACI_GAP_UPDATE_ADV_DATA command separately.
+ * are optional in this command. These values can also be set separately in the
+ * advertising data using the ACI_GAP_UPDATE_ADV_DATA command.
  * The total size of data in advertising packet cannot exceed 31 bytes.
- * With this command, the BLE Stack will also add automatically the following
+ * With this command, the BLE stack also automatically adds the following
  * standard AD types:
  * - AD Flags
  * - Power Level
  * When advertising timeout happens (i.e. limited discovery period has
  * elapsed), the Controller generates ACI_GAP_LIMITED_DISCOVERABLE_EVENT event.
- * Note: this command only supports legacy advertising. For extended
+ * Note: This command only supports legacy advertising. For extended
  * advertising, refer to ACI_GAP_ADV_SET_CONFIGURATION and
  * ACI_GAP_ADV_SET_ENABLE.
  *
@@ -77,9 +79,9 @@ tBleStatus aci_gap_set_non_discoverable( void );
  *        - 0x01: Static random address
  *        - 0x02: Resolvable private address
  *        - 0x03: Non-resolvable private address
- * @param Advertising_Filter_Policy Advertising filter policy: not applicable
- *        (the value of Advertising_Filter_Policy parameter is not used inside
- *        the Stack)
+ * @param Advertising_Filter_Policy Not used (this parameter is ignored by the
+ *        BLE stack). Note: the Filter Accept List is not in use with this
+ *        command.
  * @param Local_Name_Length Length of the local_name field in octets.
  *        If length is set to 0x00, Local_Name parameter is not used.
  * @param Local_Name Local name of the device. First byte must be 0x08 for
@@ -97,8 +99,8 @@ tBleStatus aci_gap_set_non_discoverable( void );
  *        Connection interval is defined in the following manner:
  *        connIntervalmin = Conn_Interval_Min x 1.25ms.
  *        Values:
- *        - 0x0000 (NaN)
- *        - 0xFFFF (NaN) : No specific minimum
+ *        - 0x0000
+ *        - 0xFFFF: No specific minimum
  *        - 0x0006 (7.50 ms)  ... 0x0C80 (4000.00 ms)
  * @param Conn_Interval_Max Connection interval maximum value suggested by
  *        Peripheral.
@@ -108,10 +110,10 @@ tBleStatus aci_gap_set_non_discoverable( void );
  *        Connection interval is defined in the following manner:
  *        connIntervalmax = Conn_Interval_Max x 1.25ms
  *        Values:
- *        - 0x0000 (NaN)
- *        - 0xFFFF (NaN) : No specific maximum
+ *        - 0x0000
+ *        - 0xFFFF: No specific maximum
  *        - 0x0006 (7.50 ms)  ... 0x0C80 (4000.00 ms)
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_set_limited_discoverable( uint8_t Advertising_Type,
                                              uint16_t Advertising_Interval_Min,
@@ -127,8 +129,9 @@ tBleStatus aci_gap_set_limited_discoverable( uint8_t Advertising_Type,
 
 /**
  * @brief ACI_GAP_SET_DISCOVERABLE
+ *
  * Puts the device in general discoverable mode (as defined in Core
- * Specification [Vol 3, Part C, 9.2.4]). The device will be discoverable until
+ * Specification [Vol 3, Part C, 9.2.4]). The device remains discoverable until
  * the Host issues the ACI_GAP_SET_NON_DISCOVERABLE command. The
  * Adv_Interval_Min and Adv_Interval_Max parameters are optional. If both are
  * set to 0, the GAP uses the default values for adv intervals for general
@@ -144,14 +147,15 @@ tBleStatus aci_gap_set_limited_discoverable( uint8_t Advertising_Type,
  * Connection Interval Range.
  * If provided, these data will be inserted into the advertising packet payload
  * as AD data.
- * These parameters are optional in this command. These values can be also set
- * using ACI_GAP_UPDATE_ADV_DATA command separately.
+ * These parameters are optional in this command. These values can also be set
+ * separately in the advertising data using the ACI_GAP_UPDATE_ADV_DATA
+ * command.
  * The total size of data in advertising packet cannot exceed 31 bytes.
- * With this command, the BLE Stack will also add automatically the following
+ * With this command, the BLE stack also automatically adds the following
  * standard AD types:
  * - AD Flags
  * - TX Power Level
- * Note: this command only supports legacy advertising. For extended
+ * Note: This command only supports legacy advertising. For extended
  * advertising, refer to ACI_GAP_ADV_SET_CONFIGURATION and
  * ACI_GAP_ADV_SET_ENABLE.
  *
@@ -176,9 +180,9 @@ tBleStatus aci_gap_set_limited_discoverable( uint8_t Advertising_Type,
  *        - 0x01: Static random address
  *        - 0x02: Resolvable private address
  *        - 0x03: Non-resolvable private address
- * @param Advertising_Filter_Policy Advertising filter policy: not applicable
- *        (the value of Advertising_Filter_Policy parameter is not used inside
- *        the Stack)
+ * @param Advertising_Filter_Policy Not used (this parameter is ignored by the
+ *        BLE stack). Note: the Filter Accept List is not in use with this
+ *        command.
  * @param Local_Name_Length Length of the local_name field in octets.
  *        If length is set to 0x00, Local_Name parameter is not used.
  * @param Local_Name Local name of the device. First byte must be 0x08 for
@@ -196,8 +200,8 @@ tBleStatus aci_gap_set_limited_discoverable( uint8_t Advertising_Type,
  *        Connection interval is defined in the following manner:
  *        connIntervalmin = Conn_Interval_Min x 1.25ms.
  *        Values:
- *        - 0x0000 (NaN)
- *        - 0xFFFF (NaN) : No specific minimum
+ *        - 0x0000
+ *        - 0xFFFF: No specific minimum
  *        - 0x0006 (7.50 ms)  ... 0x0C80 (4000.00 ms)
  * @param Conn_Interval_Max Connection interval maximum value suggested by
  *        Peripheral.
@@ -207,10 +211,10 @@ tBleStatus aci_gap_set_limited_discoverable( uint8_t Advertising_Type,
  *        Connection interval is defined in the following manner:
  *        connIntervalmax = Conn_Interval_Max x 1.25ms
  *        Values:
- *        - 0x0000 (NaN)
- *        - 0xFFFF (NaN) : No specific maximum
+ *        - 0x0000
+ *        - 0xFFFF: No specific maximum
  *        - 0x0006 (7.50 ms)  ... 0x0C80 (4000.00 ms)
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_set_discoverable( uint8_t Advertising_Type,
                                      uint16_t Advertising_Interval_Min,
@@ -226,6 +230,7 @@ tBleStatus aci_gap_set_discoverable( uint8_t Advertising_Type,
 
 /**
  * @brief ACI_GAP_SET_DIRECT_CONNECTABLE
+ *
  * Sets the device in directed connectable mode (as defined in Core
  * Specification [Vol 3, Part C, 9.3.3]). In this mode, the device advertises
  * using high duty cycle connectable directed advertising events or low duty
@@ -240,7 +245,7 @@ tBleStatus aci_gap_set_discoverable( uint8_t Advertising_Type,
  * status set to HCI_ADVERTISING_TIMEOUT_ERR_CODE if the connection was not
  * established and BLE_STATUS_SUCCESS (0x00) if the connection was successfully
  * established.
- * Note: this command only supports legacy advertising. For extended
+ * Note: This command only supports legacy advertising. For extended
  * advertising, refer to ACI_GAP_ADV_SET_CONFIGURATION and
  * ACI_GAP_ADV_SET_ENABLE.
  *
@@ -260,6 +265,7 @@ tBleStatus aci_gap_set_discoverable( uint8_t Advertising_Type,
  *        - 0x00: Public Device Address
  *        - 0x01: Random Device Address
  * @param Direct_Address Initiator address
+ *        Size: 6 bytes.
  * @param Advertising_Interval_Min Minimum advertising interval.
  *        Time = N * 0.625 ms.
  *        Values:
@@ -272,7 +278,7 @@ tBleStatus aci_gap_set_discoverable( uint8_t Advertising_Type,
  *        - 0x0006 (3.750 ms) : for High Duty Cycle Directed Advertising
  *        - 0x0020 (20.000 ms)  ... 0x4000 (10240.000 ms) : for Low Duty Cycle
  *          Directed Advertising
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_set_direct_connectable( uint8_t Own_Address_Type,
                                            uint8_t Directed_Advertising_Type,
@@ -283,7 +289,8 @@ tBleStatus aci_gap_set_direct_connectable( uint8_t Own_Address_Type,
 
 /**
  * @brief ACI_GAP_SET_IO_CAPABILITY
- * Sets the IO capabilities of the device. This command has to be given only
+ *
+ * Sets the IO capabilities of the device. This command shall be issued only
  * when the device is not in a connected state.
  *
  * @param IO_Capability IO capability of the device.
@@ -293,18 +300,19 @@ tBleStatus aci_gap_set_direct_connectable( uint8_t Own_Address_Type,
  *        - 0x02: IO_CAP_KEYBOARD_ONLY
  *        - 0x03: IO_CAP_NO_INPUT_NO_OUTPUT
  *        - 0x04: IO_CAP_KEYBOARD_DISPLAY
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_set_io_capability( uint8_t IO_Capability );
 
 /**
  * @brief ACI_GAP_SET_AUTHENTICATION_REQUIREMENT
- * Sets the authentication requirements for the device. This command has to be
- * given only when the device is not in a connected state.
+ *
+ * Sets the authentication requirements for the device. This command shall be
+ * issued only when the device is not in a connected state.
  *
  * @param Bonding_Mode Bonding mode.
  *        Only if bonding is enabled (0x01), the bonding information is stored
- *        in flash
+ *        in flash.
  *        Values:
  *        - 0x00: No-bonding mode
  *        - 0x01: Bonding mode
@@ -327,11 +335,11 @@ tBleStatus aci_gap_set_io_capability( uint8_t IO_Capability );
  *        pairing.
  * @param Max_Encryption_Key_Size Maximum encryption key size to be used during
  *        pairing.
- * @param Use_Fixed_Pin Use or not fixed pin.
- *        If set to 0x00, then during the pairing process the application will
- *        not be requested for a pin (Fixed_Pin will be used). If set to 0x01,
- *        then during pairing process if a passkey is required the application
- *        will be notified
+ * @param Use_Fixed_Pin Determines if a fixed pin is used.
+ *        If set to 0x00, the pin specified by Fixed_Pin is used and the
+ *        application is not notified for passkey input. If set to 0x01,
+ *        Fixed_Pin is not used and the application is notified when passkey
+ *        input is required.
  *        Values:
  *        - 0x00: use a fixed pin (deprecated option that should not be used)
  *        - 0x01: do not use a fixed pin
@@ -342,7 +350,7 @@ tBleStatus aci_gap_set_io_capability( uint8_t IO_Capability );
  *        Values:
  *        - 0x00: Public Identity Address
  *        - 0x01: Random (static) Identity Address
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_set_authentication_requirement( uint8_t Bonding_Mode,
                                                    uint8_t MITM_Mode,
@@ -356,8 +364,9 @@ tBleStatus aci_gap_set_authentication_requirement( uint8_t Bonding_Mode,
 
 /**
  * @brief ACI_GAP_SET_AUTHORIZATION_REQUIREMENT
- * Sets the authorization requirements of the device. This command has to be
- * given when connected to a device if authorization is required to access
+ *
+ * Sets the authorization requirements of the device. This command shall be
+ * issued when connected to a device if authorization is required to access
  * services which require authorization.
  *
  * @param Connection_Handle Connection handle for which the command applies.
@@ -365,23 +374,24 @@ tBleStatus aci_gap_set_authentication_requirement( uint8_t Bonding_Mode,
  *        - 0x0000 ... 0x0EFF
  * @param Authorization_Enable Enable the authorization in the device and when
  *        a remote device tries to read/write a characteristic with
- *        authorization requirements, the stack will send back an error
+ *        authorization requirements, the BLE stack will send back an error
  *        response with "Insufficient authorization" error code. After pairing
  *        is complete an ACI_GAP_AUTHORIZATION_REQ_EVENT will be sent to the
  *        Host.
  *        Values:
  *        - 0x00: Authorization not required
  *        - 0x01: Authorization required
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_set_authorization_requirement( uint16_t Connection_Handle,
                                                   uint8_t Authorization_Enable );
 
 /**
  * @brief ACI_GAP_PASS_KEY_RESP
- * This command should be sent by the Host in response to
- * ACI_GAP_PASS_KEY_REQ_EVENT event. The command parameter contains the pass
- * key which will be used during the pairing process.
+ *
+ * This command shall be issued by the application in response to
+ * ACI_GAP_PASS_KEY_REQ_EVENT event. The command parameter contains the passkey
+ * which will be used during the pairing process.
  *
  * @param Connection_Handle Connection handle for which the command applies.
  *        Values:
@@ -390,15 +400,16 @@ tBleStatus aci_gap_set_authorization_requirement( uint16_t Connection_Handle,
  *        Must be a six-digit decimal number.
  *        Values:
  *        - 0 ... 999999
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_pass_key_resp( uint16_t Connection_Handle,
                                   uint32_t Pass_Key );
 
 /**
  * @brief ACI_GAP_AUTHORIZATION_RESP
- * Authorizes a device to access attributes. This command should be sent by the
- * Host in response to ACI_GAP_AUTHORIZATION_REQ_EVENT event.
+ *
+ * Authorizes a device to access attributes. This command shall be issued by
+ * the application in response to ACI_GAP_AUTHORIZATION_REQ_EVENT event.
  *
  * @param Connection_Handle Connection handle for which the command applies.
  *        Values:
@@ -407,13 +418,14 @@ tBleStatus aci_gap_pass_key_resp( uint16_t Connection_Handle,
  *        Values:
  *        - 0x01: Authorize
  *        - 0x02: Reject
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_authorization_resp( uint16_t Connection_Handle,
                                        uint8_t Authorize );
 
 /**
  * @brief ACI_GAP_INIT
+ *
  * Initializes the GAP layer. Register the GAP service with the GATT.
  * All the standard GAP characteristics will also be added:
  * - Device Name
@@ -440,7 +452,7 @@ tBleStatus aci_gap_authorization_resp( uint16_t Connection_Handle,
  * @param[out] Service_Handle Handle of the GAP service
  * @param[out] Dev_Name_Char_Handle Device Name Characteristic handle
  * @param[out] Appearance_Char_Handle Appearance Characteristic handle
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_init( uint8_t Role,
                          uint8_t privacy_enabled,
@@ -451,11 +463,12 @@ tBleStatus aci_gap_init( uint8_t Role,
 
 /**
  * @brief ACI_GAP_SET_NON_CONNECTABLE
+ *
  * This command starts advertising in non connectable mode (i.e., this mode
  * does not support connection).
  * Advertiser filter policy is internally set to 0 (i.e., the Filter Accept
  * List is not in use).
- * Note: this command only supports legacy advertising. For extended
+ * Note: This command only supports legacy advertising. For extended
  * advertising, refer to ACI_GAP_ADV_SET_CONFIGURATION and
  * ACI_GAP_ADV_SET_ENABLE.
  *
@@ -471,18 +484,19 @@ tBleStatus aci_gap_init( uint8_t Role,
  *        - 0x01: Static random address
  *        - 0x02: Resolvable private address
  *        - 0x03: Non-resolvable private address
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_set_non_connectable( uint8_t Advertising_Event_Type,
                                         uint8_t Own_Address_Type );
 
 /**
  * @brief ACI_GAP_SET_UNDIRECTED_CONNECTABLE
+ *
  * This command starts advertising in undirected connectable mode.
  * If privacy is enabled in the device, a resolvable private address is
  * generated and used as the advertiser's address. If not, the address of the
  * type specified in Own_Address_Type is used for advertising.
- * Note: this command only supports legacy advertising. For extended
+ * Note: This command only supports legacy advertising. For extended
  * advertising, refer to ACI_GAP_ADV_SET_CONFIGURATION and
  * ACI_GAP_ADV_SET_ENABLE.
  *
@@ -506,7 +520,7 @@ tBleStatus aci_gap_set_non_connectable( uint8_t Advertising_Event_Type,
  *        - 0x00: Allow Scan Request from Any, Allow Connect Request from Any
  *        - 0x03: Allow Scan Request from Filter Accept List Only, Allow
  *          Connect Request from Filter Accept List Only
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_set_undirected_connectable( uint16_t Advertising_Interval_Min,
                                                uint16_t Advertising_Interval_Max,
@@ -515,54 +529,58 @@ tBleStatus aci_gap_set_undirected_connectable( uint16_t Advertising_Interval_Min
 
 /**
  * @brief ACI_GAP_PERIPHERAL_SECURITY_REQ
+ *
  * Sends a Peripheral Security Request to the Central.
- * This command has to be issued to notify the Central of the security
+ * This command can be issued to notify the Central of the security
  * requirements of the Peripheral. The Central may encrypt the link, initiate
  * the pairing procedure, or reject the request.
  *
  * @param Connection_Handle Connection handle for which the command applies.
  *        Values:
  *        - 0x0000 ... 0x0EFF
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_peripheral_security_req( uint16_t Connection_Handle );
 
 /**
  * @brief ACI_GAP_UPDATE_ADV_DATA
- * This command can be used to update the advertising data for particular AD
- * types. The data argument shall consist of valid advertising data composed of
- * one or more AD types. If one of the specified AD types does not exist in the
- * current advertising data, then it is added to the advertising data; while
- * the AD types already present in the current advertising data are updated
- * with the new values. If the overall advertising data length is more than 31
- * octets after the update, then the command is rejected and the old data is
- * retained.
- * Note: this command only supports legacy advertising. For extended
+ *
+ * This command updates the advertising data for particular AD types. The data
+ * argument shall consist of valid advertising data composed of one or more AD
+ * types. If one of the specified AD types does not exist in the current
+ * advertising data, then it is added to the advertising data; while the AD
+ * types already present in the current advertising data are updated with the
+ * new values. If the overall advertising data length is more than 31 octets
+ * after the update, then the command is rejected and the old data is retained.
+ * Note: This command only supports legacy advertising. For extended
  * advertising, refer to ACI_GAP_ADV_SET_ADV_DATA.
  *
- * @param AdvDataLen Length of AdvData in octets
+ * @param AdvDataLen Length of AdvData in octets.
  * @param AdvData Advertising data used by the device while advertising.
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_update_adv_data( uint8_t AdvDataLen,
                                     const uint8_t* AdvData );
 
 /**
  * @brief ACI_GAP_DELETE_AD_TYPE
- * This command can be used to delete the specified AD type from the
- * advertisement data if present.
- * Note: this command only supports legacy advertising. For extended
+ *
+ * This command deletes the specified AD type from the advertisement data if
+ * present.
+ * Note: This command only supports legacy advertising. For extended
  * advertising, refer to ACI_GAP_ADV_SET_ADV_DATA.
  *
  * @param ADType One of the AD types as in Core Specification [Vol 3, Part C,
  *        11].
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_delete_ad_type( uint8_t ADType );
 
 /**
  * @brief ACI_GAP_GET_SECURITY_LEVEL
- * This command can be used to get the current security settings of the device.
+ *
+ * This command retrieves the current security level of the specified
+ * connection.
  *
  * @param Connection_Handle Connection handle for which the command applies.
  *        Values:
@@ -576,7 +594,7 @@ tBleStatus aci_gap_delete_ad_type( uint8_t ADType );
  *        - 0x02: Security Level 2
  *        - 0x03: Security Level 3
  *        - 0x04: Security Level 4
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_get_security_level( uint16_t Connection_Handle,
                                        uint8_t* Security_Mode,
@@ -584,6 +602,7 @@ tBleStatus aci_gap_get_security_level( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_GAP_SET_EVENT_MASK
+ *
  * This command allows masking events from the GAP. If the bit in the
  * GAP_Evt_Mask is set to a one, then the event associated with that bit will
  * be enabled.
@@ -601,12 +620,13 @@ tBleStatus aci_gap_get_security_level( uint16_t Connection_Handle,
  *        - 0x0200: ACI_L2CAP_CONNECTION_UPDATE_RESP_EVENT
  *        - 0x0400: ACI_L2CAP_PROC_TIMEOUT_EVENT
  *        - 0x0800: ACI_GAP_ADDR_NOT_RESOLVED_EVENT
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_set_event_mask( uint16_t GAP_Evt_Mask );
 
 /**
  * @brief ACI_GAP_TERMINATE
+ *
  * Commands the Controller to terminate the connection. A
  * HCI_DISCONNECTION_COMPLETE_EVENT event is generated when the link is
  * disconnected.
@@ -622,27 +642,29 @@ tBleStatus aci_gap_set_event_mask( uint16_t GAP_Evt_Mask );
  *        - 0x15: Remote Device Terminated Connection due to Power Off
  *        - 0x1A: Unsupported Remote Feature
  *        - 0x3B: Unacceptable Connection Parameters
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_terminate( uint16_t Connection_Handle,
                               uint8_t Reason );
 
 /**
  * @brief ACI_GAP_CLEAR_SECURITY_DB
+ *
  * Clears the bonding table. All the devices in the bonding table are removed.
  * See also ACI_GAP_REMOVE_BONDED_DEVICE to remove only one device.
  * Note: as a fallback mode, in case the bonding table is full, the BLE stack
  * automatically clears the bonding table just before putting into it
  * information about a new bonded device.
  *
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_clear_security_db( void );
 
 /**
  * @brief ACI_GAP_ALLOW_REBOND
+ *
  * Allows the security manager to complete the pairing procedure and re-bond
- * with the Central. This command should be given by the application when it
+ * with the Central. This command shall be issued by the application when it
  * receives the ACI_GAP_BOND_LOST_EVENT if it wants the re-bonding to happen
  * successfully. If this command is not given on receiving the event, the
  * bonding procedure will timeout.
@@ -650,12 +672,13 @@ tBleStatus aci_gap_clear_security_db( void );
  * @param Connection_Handle Connection handle for which the command applies.
  *        Values:
  *        - 0x0000 ... 0x0EFF
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_allow_rebond( uint16_t Connection_Handle );
 
 /**
  * @brief ACI_GAP_START_AUTO_CONNECTION_ESTABLISH_PROC
+ *
  * Starts the auto connection establishment procedure. The devices specified
  * are added to the Filter Accept List of the Controller and a
  * LE_Create_Connection call will be made to the Controller by GAP with the
@@ -723,8 +746,8 @@ tBleStatus aci_gap_allow_rebond( uint16_t Connection_Handle );
  * @param Num_of_Peer_Entries Number of devices that have to be added to the
  *        Filter Accept List. Each device is defined by Peer_Address_Type and
  *        Peer_Address.
- * @param Peer_Entry See @ref Peer_Entry_t
- * @return Value indicating success or error code.
+ * @param Peer_Entry See Peer_Entry_t.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_start_auto_connection_establish_proc( uint16_t LE_Scan_Interval,
                                                          uint16_t LE_Scan_Window,
@@ -740,6 +763,7 @@ tBleStatus aci_gap_start_auto_connection_establish_proc( uint16_t LE_Scan_Interv
 
 /**
  * @brief ACI_GAP_CREATE_CONNECTION
+ *
  * Starts the direct connection establishment procedure. A LE_Create_Connection
  * call will be made to the Controller by GAP with the initiator filter policy
  * set to "Filter Accept List is not used to determine which advertiser to
@@ -774,6 +798,7 @@ tBleStatus aci_gap_start_auto_connection_establish_proc( uint16_t LE_Scan_Interv
  *        - 0x01: Random Device Address
  * @param Peer_Address Public Device Address or Random Device Address of the
  *        device to be connected.
+ *        Size: 6 bytes.
  * @param Own_Address_Type Own address type: if Privacy is disabled, the
  *        address can be public or static random; otherwise, it can be a
  *        resolvable private address.
@@ -809,7 +834,7 @@ tBleStatus aci_gap_start_auto_connection_establish_proc( uint16_t LE_Scan_Interv
  *        Time = N * 0.625 ms.
  *        Values:
  *        - 0x0000 (0.000 ms)  ... 0xFFFF (40959.375 ms)
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_create_connection( uint16_t LE_Scan_Interval,
                                       uint16_t LE_Scan_Window,
@@ -825,9 +850,10 @@ tBleStatus aci_gap_create_connection( uint16_t LE_Scan_Interval,
 
 /**
  * @brief ACI_GAP_TERMINATE_GAP_PROC
+ *
  * Terminates the specified GAP procedure. An ACI_GAP_PROC_COMPLETE_EVENT event
  * is returned with the procedure code set to the corresponding procedure.
- * Note: in case of GAP procedure started with ACI_GAP_CREATE_CONNECTION or
+ * Note: In case of GAP procedure started with ACI_GAP_CREATE_CONNECTION or
  * ACI_GAP_START_AUTO_CONNECTION_ESTABLISH_PROC, a
  * HCI_LE_CREATE_CONNECTION_CANCEL is issued to the Controller.
  *
@@ -839,15 +865,16 @@ tBleStatus aci_gap_create_connection( uint16_t LE_Scan_Interval,
  *        - 0x08: GAP_AUTO_CONNECTION_ESTABLISHMENT_PROC
  *        - 0x40: GAP_DIRECT_CONNECTION_ESTABLISHMENT_PROC
  *        - 0xB0: GAP_GENERIC_SCAN_PROC
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_terminate_gap_proc( uint8_t Procedure_Code );
 
 /**
  * @brief ACI_GAP_START_CONNECTION_UPDATE
+ *
  * Initiates the connection update procedure. An HCI_LE_CONNECTION_UPDATE
  * command is called. Once the procedure is complete, an
- * HCI_LE_CONNECTION_UPDATE_COMPLETE_EVENT is sent back to the application.
+ * HCI_LE_CONNECTION_UPDATE_COMPLETE_EVENT is reported to the application.
  *
  * @param Connection_Handle Connection handle for which the command applies.
  *        Values:
@@ -880,7 +907,7 @@ tBleStatus aci_gap_terminate_gap_proc( uint8_t Procedure_Code );
  *        Time = N * 0.625 ms.
  *        Values:
  *        - 0x0000 (0.000 ms)  ... 0xFFFF (40959.375 ms)
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_start_connection_update( uint16_t Connection_Handle,
                                             uint16_t Conn_Interval_Min,
@@ -892,12 +919,13 @@ tBleStatus aci_gap_start_connection_update( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_GAP_SEND_PAIRING_REQ
+ *
  * Sends the SM pairing request to start a pairing process. The authentication
  * requirements and IO capabilities should be set before issuing this command
  * using the ACI_GAP_SET_IO_CAPABILITY and
  * ACI_GAP_SET_AUTHENTICATION_REQUIREMENT commands.
- * A ACI_GAP_PAIRING_COMPLETE_EVENT event is returned after the pairing process
- * is completed.
+ * An ACI_GAP_PAIRING_COMPLETE_EVENT event is returned after the pairing
+ * process is completed.
  *
  * @param Connection_Handle Connection handle for which the command applies.
  *        Values:
@@ -907,17 +935,18 @@ tBleStatus aci_gap_start_connection_update( uint16_t Connection_Handle,
  *        Values:
  *        - 0x00: NO
  *        - 0x01: YES
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_send_pairing_req( uint16_t Connection_Handle,
                                      uint8_t Force_Rebond );
 
 /**
  * @brief ACI_GAP_SET_BROADCAST_MODE
+ *
  * This command puts the device into broadcast mode. A privacy enabled device
  * uses either a resolvable private address or a non-resolvable private address
  * as specified in the Own_Address_Type parameter of the command.
- * Note: this command only supports legacy advertising. For extended
+ * Note: This command only supports legacy advertising. For extended
  * advertising, refer to ACI_GAP_ADV_SET_CONFIGURATION and
  * ACI_GAP_ADV_SET_ENABLE.
  *
@@ -947,8 +976,8 @@ tBleStatus aci_gap_send_pairing_req( uint16_t Connection_Handle,
  * @param Num_of_Peer_Entries Number of devices that have to be added to the
  *        Filter Accept List. Each device is defined by Peer_Address_Type and
  *        Peer_Address.
- * @param Peer_Entry See @ref Peer_Entry_t
- * @return Value indicating success or error code.
+ * @param Peer_Entry See Peer_Entry_t.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_set_broadcast_mode( uint16_t Advertising_Interval_Min,
                                        uint16_t Advertising_Interval_Max,
@@ -961,23 +990,25 @@ tBleStatus aci_gap_set_broadcast_mode( uint16_t Advertising_Interval_Min,
 
 /**
  * @brief ACI_GAP_GET_BONDED_DEVICES
- * This command gets the list of the devices which are present in the bonding
- * table. It returns the number of addresses and the corresponding address
- * types and values.
+ *
+ * This command retrieves the list of devices present in the bonding table. It
+ * returns the number of addresses and the corresponding address types and
+ * values.
  *
  * @param[out] Num_of_Addresses The number of bonded devices
- * @param[out] Bonded_Device_Entry See @ref Bonded_Device_Entry_t
- * @return Value indicating success or error code.
+ * @param[out] Bonded_Device_Entry See Bonded_Device_Entry_t.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_get_bonded_devices( uint8_t* Num_of_Addresses,
                                        Bonded_Device_Entry_t* Bonded_Device_Entry );
 
 /**
  * @brief ACI_GAP_CHECK_BONDED_DEVICE
- * The command finds whether the device, whose address is specified in the
+ *
+ * The command checks whether the device, whose address is specified in the
  * command, is present in the bonding table. If the device is found, the
  * command returns "Success".
- * Note: the specified address can be a Resolvable Private Address (RPA). In
+ * Note: The specified address can be a Resolvable Private Address (RPA). In
  * this case, even if privacy is not enabled, this address is resolved to check
  * the presence of the peer device in the bonding table. If the address is
  * resolved successfully with any one of the IRKs present in the database, the
@@ -991,11 +1022,13 @@ tBleStatus aci_gap_get_bonded_devices( uint8_t* Num_of_Addresses,
  *        - 0x01: Random Device Address
  * @param Peer_Address Public Device Address or Random Device Address of the
  *        peer device
+ *        Size: 6 bytes.
  * @param[out] Id_Address_Type The address type of the peer device, distributed
  *        during pairing phase.
  * @param[out] Id_Address The public or static random address of the peer
  *        device, distributed during pairing phase.
- * @return Value indicating success or error code.
+ *        Size: 6 bytes.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_check_bonded_device( uint8_t Peer_Address_Type,
                                         const uint8_t* Peer_Address,
@@ -1004,27 +1037,29 @@ tBleStatus aci_gap_check_bonded_device( uint8_t Peer_Address_Type,
 
 /**
  * @brief ACI_GAP_NUMERIC_COMPARISON_VALUE_CONFIRM_YESNO
- * This command allows the User to validate/confirm or not the displayed
+ *
+ * This command allows the application to validate/confirm or not the displayed
  * Numeric Comparison value indicated by the
  * ACI_GAP_NUMERIC_COMPARISON_VALUE_EVENT.
  *
  * @param Connection_Handle Connection handle for which the command applies.
  *        Values:
  *        - 0x0000 ... 0x0EFF
- * @param Confirm_Yes_No Indicates if the numeric values showed on both local
- *        and peer device are different or equal
+ * @param Confirm_Yes_No Indicates whether the numeric values displayed on the
+ *        local and peer devices are equal.
  *        Values:
  *        - 0x00: No (numeric values are different)
  *        - 0x01: Yes (numeric values are equal)
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_numeric_comparison_value_confirm_yesno( uint16_t Connection_Handle,
                                                            uint8_t Confirm_Yes_No );
 
 /**
  * @brief ACI_GAP_PASSKEY_INPUT
- * This command allows the application to signal to the stack the input type
- * detected during Passkey entry.
+ *
+ * This command allows the application to signal to the BLE stack the input
+ * type detected during Passkey entry.
  *
  * @param Connection_Handle Connection handle for which the command applies.
  *        Values:
@@ -1036,15 +1071,15 @@ tBleStatus aci_gap_numeric_comparison_value_confirm_yesno( uint16_t Connection_H
  *        - 0x02: Passkey digit erased
  *        - 0x03: Passkey cleared
  *        - 0x04: Passkey entry completed
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_passkey_input( uint16_t Connection_Handle,
                                   uint8_t Input_Type );
 
 /**
  * @brief ACI_GAP_GET_OOB_DATA
- * This command is sent by the User to get (i.e. to extract from the Stack) the
- * OOB data generated by the Stack itself.
+ *
+ * This command retrieves the OOB data generated by the BLE stack itself.
  *
  * @param OOB_Data_Type Type of OOB data
  *        Values:
@@ -1056,11 +1091,13 @@ tBleStatus aci_gap_passkey_input( uint16_t Connection_Handle,
  *        - 0x00: Public Identity Address
  *        - 0x01: Random (static) Identity Address
  * @param[out] Address Public or Random (static) address of this device
+ *        Size: 6 bytes.
  * @param[out] OOB_Data_Len Length of OOB data
  *        Values:
  *        - 16
  * @param[out] OOB_Data Local OOB data
- * @return Value indicating success or error code.
+ *        Size: 16 bytes.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_get_oob_data( uint8_t OOB_Data_Type,
                                  uint8_t* Address_Type,
@@ -1070,7 +1107,8 @@ tBleStatus aci_gap_get_oob_data( uint8_t OOB_Data_Type,
 
 /**
  * @brief ACI_GAP_SET_OOB_DATA
- * This command is sent (by the User) to provide the OOB data received via OOB
+ *
+ * This command provides to the BLE stack the OOB data received via OOB
  * communication.
  *
  * @param Device_Type OOB Device type
@@ -1082,6 +1120,7 @@ tBleStatus aci_gap_get_oob_data( uint8_t OOB_Data_Type,
  *        - 0x00: Public Identity Address
  *        - 0x01: Random (static) Identity Address
  * @param Address Public or Random (static) Identity Address of the peer device
+ *        Size: 6 bytes.
  * @param OOB_Data_Type Type of OOB data
  *        Values:
  *        - 0x00: TK (Legacy pairing)
@@ -1094,7 +1133,8 @@ tBleStatus aci_gap_get_oob_data( uint8_t OOB_Data_Type,
  *        - 16
  * @param OOB_Data Either local OOB data or remote OOB data received through
  *        OOB from peer device (see Device_Type)
- * @return Value indicating success or error code.
+ *        Size: 16 bytes.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_set_oob_data( uint8_t Device_Type,
                                  uint8_t Address_Type,
@@ -1105,6 +1145,7 @@ tBleStatus aci_gap_set_oob_data( uint8_t Device_Type,
 
 /**
  * @brief ACI_GAP_REMOVE_BONDED_DEVICE
+ *
  * This command removes a specified device from bonding table; i.e. it removes
  * from bonding table all security and GATT information related to the
  * specified device.
@@ -1115,13 +1156,15 @@ tBleStatus aci_gap_set_oob_data( uint8_t Device_Type,
  *        - 0x01: Random (static) Identity Address
  * @param Peer_Identity_Address Public or Random (static) Identity Address of
  *        the peer device
- * @return Value indicating success or error code.
+ *        Size: 6 bytes.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_remove_bonded_device( uint8_t Peer_Identity_Address_Type,
                                          const uint8_t* Peer_Identity_Address );
 
 /**
  * @brief ACI_GAP_ADD_DEVICES_TO_LIST
+ *
  * This command is used to add device addresses to the Filter Accept List
  * and/or the resolving list. Depending on the Mode parameter, the command
  * performs, in order, one or more of the following operations:
@@ -1138,7 +1181,7 @@ tBleStatus aci_gap_remove_bonded_device( uint8_t Peer_Identity_Address_Type,
  *
  * @param Num_of_List_Entries Number of devices that have to be added to the
  *        list.
- * @param List_Entry See @ref List_Entry_t
+ * @param List_Entry See List_Entry_t.
  * @param Mode Mode used for adding devices to the lists.
  *        Values:
  *        - 0x00: Append the devices provided as parameters to the resolving
@@ -1165,7 +1208,7 @@ tBleStatus aci_gap_remove_bonded_device( uint8_t Peer_Identity_Address_Type,
  *          parameters to both the resolving list and the Filter Accept List
  *        - 0x0D: Clear and add the bonded devices plus the devices provided as
  *          parameters to both the resolving list and the Filter Accept List
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_add_devices_to_list( uint8_t Num_of_List_Entries,
                                         const List_Entry_t* List_Entry,
@@ -1173,29 +1216,31 @@ tBleStatus aci_gap_add_devices_to_list( uint8_t Num_of_List_Entries,
 
 /**
  * @brief ACI_GAP_PAIRING_REQUEST_REPLY
+ *
  * This command is used to reply to ACI_GAP_PAIRING_REQUEST_EVENT. It allows
- * the application to accept or reject either the Pairing Request from the
- * Central or the Security Request from the Peripheral.
+ * the application to accept or reject a Pairing Request from the Central or a
+ * Security Request from the Peripheral.
  *
  * @param Connection_Handle Connection handle for which the command applies.
  *        Values:
  *        - 0x0000 ... 0x0EFF
- * @param Accept Enables to accept or reject the pairing request.
+ * @param Accept Indicates whether the pairing request is accepted or rejected.
  *        Values:
  *        - 0x00: Reject
  *        - 0x01: Accept
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_pairing_request_reply( uint16_t Connection_Handle,
                                           uint8_t Accept );
 
 /**
  * @brief ACI_GAP_ADV_SET_CONFIGURATION
+ *
  * This command is used to set the extended advertising configuration for one
  * advertising set.
  * This command, in association with ACI_GAP_ADV_SET_SCAN_RESP_DATA,
- * ACI_GAP_ADV_SET_ADV_DATA and ACI_GAP_ADV_SET_ENABLE, enables to start
- * extended advertising. These commands must be used in replacement of
+ * ACI_GAP_ADV_SET_ADV_DATA and ACI_GAP_ADV_SET_ENABLE, enables extended
+ * advertising to be started. These commands must be used in replacement of
  * ACI_GAP_SET_DISCOVERABLE, ACI_GAP_SET_LIMITED_DISCOVERABLE,
  * ACI_GAP_SET_DIRECT_CONNECTABLE, ACI_GAP_SET_NON_CONNECTABLE,
  * ACI_GAP_SET_UNDIRECTED_CONNECTABLE and ACI_GAP_SET_BROADCAST_MODE that only
@@ -1203,8 +1248,8 @@ tBleStatus aci_gap_pairing_request_reply( uint16_t Connection_Handle,
  * If bit 0 of Adv_Mode is set, the Own_Address_Type parameter is ignored and
  * the own address shall be set with the ACI_GAP_ADV_SET_RANDOM_ADDRESS
  * command. This mode is only valid for non-connectable advertising.
- * Note: this command is deprecated; it is better to use
- * ACI_GAP_ADV_SET_CONFIGURATION_V2.
+ * Note: This command is deprecated. Use ACI_GAP_ADV_SET_CONFIGURATION_V2
+ * instead.
  *
  * @param Adv_Mode Bitmap of extended advertising modes
  *        Flags:
@@ -1250,6 +1295,7 @@ tBleStatus aci_gap_pairing_request_reply( uint16_t Connection_Handle,
  * @param Peer_Address Public Device Address, Random Device Address, Public
  *        Identity Address, or Random (static) Identity Address of the device
  *        to be connected.
+ *        Size: 6 bytes.
  * @param Adv_Filter_Policy Advertising filter policy
  *        Values:
  *        - 0x00: Process scan and connection requests from all devices (i.e.,
@@ -1283,7 +1329,7 @@ tBleStatus aci_gap_pairing_request_reply( uint16_t Connection_Handle,
  *        Values:
  *        - 0x00: Scan request notifications disabled
  *        - 0x01: Scan request notifications enabled
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_adv_set_configuration( uint8_t Adv_Mode,
                                           uint8_t Advertising_Handle,
@@ -1303,6 +1349,7 @@ tBleStatus aci_gap_adv_set_configuration( uint8_t Adv_Mode,
 
 /**
  * @brief ACI_GAP_ADV_SET_ENABLE
+ *
  * This command is used to request the Controller to enable or disable one or
  * more extended advertising sets.
  *
@@ -1314,8 +1361,8 @@ tBleStatus aci_gap_adv_set_configuration( uint8_t Adv_Mode,
  *        Values:
  *        - 0x00: Disable all advertising sets
  *        - 0x01 ... 0x3F: Number of advertising sets to enable or disable
- * @param Adv_Set See @ref Adv_Set_t
- * @return Value indicating success or error code.
+ * @param Adv_Set See Adv_Set_t.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_adv_set_enable( uint8_t Enable,
                                    uint8_t Num_Sets,
@@ -1323,6 +1370,7 @@ tBleStatus aci_gap_adv_set_enable( uint8_t Enable,
 
 /**
  * @brief ACI_GAP_ADV_SET_ADV_DATA
+ *
  * This command is used to set the data used in extended advertising PDUs that
  * have a data field.
  *
@@ -1341,10 +1389,10 @@ tBleStatus aci_gap_adv_set_enable( uint8_t Enable,
  *        - 0x00: The Controller may fragment all data
  *        - 0x01: The Controller should not fragment or should minimize
  *          fragmentation of data
- * @param Advertising_Data_Length Length of Advertising_Data in octets
+ * @param Advertising_Data_Length Length of Advertising_Data in octets.
  * @param Advertising_Data Data formatted as defined in Core Specification [Vol
  *        3, Part C, 11].
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_adv_set_adv_data( uint8_t Advertising_Handle,
                                      uint8_t Operation,
@@ -1354,6 +1402,7 @@ tBleStatus aci_gap_adv_set_adv_data( uint8_t Advertising_Handle,
 
 /**
  * @brief ACI_GAP_ADV_SET_SCAN_RESP_DATA
+ *
  * This command is used to provide scan response data used during extended
  * advertising.
  *
@@ -1371,10 +1420,10 @@ tBleStatus aci_gap_adv_set_adv_data( uint8_t Advertising_Handle,
  *        - 0x00: The Controller may fragment all data
  *        - 0x01: The Controller should not fragment or should minimize
  *          fragmentation of data
- * @param Scan_Response_Data_Length Length of Scan_Response_Data in octets
+ * @param Scan_Response_Data_Length Length of Scan_Response_Data in octets.
  * @param Scan_Response_Data Data formatted as defined in Core Specification
  *        [Vol 3, Part C, 11].
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_adv_set_scan_resp_data( uint8_t Advertising_Handle,
                                            uint8_t Operation,
@@ -1384,26 +1433,29 @@ tBleStatus aci_gap_adv_set_scan_resp_data( uint8_t Advertising_Handle,
 
 /**
  * @brief ACI_GAP_ADV_REMOVE_SET
+ *
  * This command is used to remove an advertising set from the Controller.
  *
  * @param Advertising_Handle Used to identify an advertising set.
  *        Values:
  *        - 0x00 ... 0xEF
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_adv_remove_set( uint8_t Advertising_Handle );
 
 /**
  * @brief ACI_GAP_ADV_CLEAR_SETS
+ *
  * This command is used to remove all existing advertising sets from the
  * Controller.
  *
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_adv_clear_sets( void );
 
 /**
  * @brief ACI_GAP_ADV_SET_RANDOM_ADDRESS
+ *
  * This command is used to set the random device address of an advertising set
  * configured to use specific random address.
  *
@@ -1411,13 +1463,15 @@ tBleStatus aci_gap_adv_clear_sets( void );
  *        Values:
  *        - 0x00 ... 0xEF
  * @param Random_Address Random Device Address.
- * @return Value indicating success or error code.
+ *        Size: 6 bytes.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_adv_set_random_address( uint8_t Advertising_Handle,
                                            const uint8_t* Random_Address );
 
 /**
  * @brief ACI_GAP_ADV_SET_PERIODIC_PARAMETERS
+ *
  * This command is used to set the parameters for periodic advertising.
  *
  * @param Advertising_Handle Used to identify an advertising set.
@@ -1454,9 +1508,8 @@ tBleStatus aci_gap_adv_set_random_address( uint8_t Advertising_Handle,
  *        - 0x02 (0.250 ms)  ... 0xFF (31.875 ms)
  * @param Num_Response_Slots Number of subevent response slots.
  *        Values:
- *        - 0x00: No response slots
  *        - 0x01 ... 0xFF
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_adv_set_periodic_parameters( uint8_t Advertising_Handle,
                                                 uint16_t Periodic_Adv_Interval_Min,
@@ -1470,6 +1523,7 @@ tBleStatus aci_gap_adv_set_periodic_parameters( uint8_t Advertising_Handle,
 
 /**
  * @brief ACI_GAP_ADV_SET_PERIODIC_DATA
+ *
  * This command is used to set the data used in periodic advertising PDUs.
  *
  * @param Advertising_Handle Used to identify an advertising set.
@@ -1482,10 +1536,10 @@ tBleStatus aci_gap_adv_set_periodic_parameters( uint8_t Advertising_Handle,
  *        - 0x02: Last fragment of fragmented extended advertising data
  *        - 0x03: Complete extended advertising data
  *        - 0x04: Unchanged data (just update the Advertising DID)
- * @param Advertising_Data_Length Length of Advertising_Data in octets
+ * @param Advertising_Data_Length Length of Advertising_Data in octets.
  * @param Advertising_Data Data formatted as defined in Core Specification [Vol
  *        3, Part C, 11].
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_adv_set_periodic_data( uint8_t Advertising_Handle,
                                           uint8_t Operation,
@@ -1494,6 +1548,7 @@ tBleStatus aci_gap_adv_set_periodic_data( uint8_t Advertising_Handle,
 
 /**
  * @brief ACI_GAP_ADV_SET_PERIODIC_ENABLE
+ *
  * This command is used to enable or disable the periodic advertising for the
  * advertising set specified by the Advertising_Handle parameter.
  *
@@ -1504,18 +1559,19 @@ tBleStatus aci_gap_adv_set_periodic_data( uint8_t Advertising_Handle,
  * @param Advertising_Handle Used to identify an advertising set.
  *        Values:
  *        - 0x00 ... 0xEF
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_adv_set_periodic_enable( uint8_t Enable,
                                             uint8_t Advertising_Handle );
 
 /**
  * @brief ACI_GAP_ADV_SET_CONFIGURATION_V2
+ *
  * This command is used to set the extended advertising configuration for one
  * advertising set.
  * This command, in association with ACI_GAP_ADV_SET_SCAN_RESP_DATA,
- * ACI_GAP_ADV_SET_ADV_DATA and ACI_GAP_ADV_SET_ENABLE, enables to start
- * extended advertising. These commands must be used in replacement of
+ * ACI_GAP_ADV_SET_ADV_DATA and ACI_GAP_ADV_SET_ENABLE, enables extended
+ * advertising to be started. These commands must be used in replacement of
  * ACI_GAP_SET_DISCOVERABLE, ACI_GAP_SET_LIMITED_DISCOVERABLE,
  * ACI_GAP_SET_DIRECT_CONNECTABLE, ACI_GAP_SET_NON_CONNECTABLE,
  * ACI_GAP_SET_UNDIRECTED_CONNECTABLE and ACI_GAP_SET_BROADCAST_MODE that only
@@ -1571,6 +1627,7 @@ tBleStatus aci_gap_adv_set_periodic_enable( uint8_t Enable,
  * @param Peer_Address Public Device Address, Random Device Address, Public
  *        Identity Address, or Random (static) Identity Address of the device
  *        to be connected.
+ *        Size: 6 bytes.
  * @param Adv_Filter_Policy Advertising filter policy
  *        Values:
  *        - 0x00: Process scan and connection requests from all devices (i.e.,
@@ -1632,7 +1689,7 @@ tBleStatus aci_gap_adv_set_periodic_enable( uint8_t Enable,
  *          on the LE Coded PHY
  *        - 0x04: The Host requires that S=8 coding be used when transmitting
  *          on the LE Coded PHY
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_adv_set_configuration_v2( uint8_t Adv_Mode,
                                              uint8_t Advertising_Handle,
@@ -1655,6 +1712,7 @@ tBleStatus aci_gap_adv_set_configuration_v2( uint8_t Adv_Mode,
 
 /**
  * @brief ACI_GAP_START_SCAN
+ *
  * This command is used to start a scanning procedure. If extended advertising
  * is supported, "extended" scanning is started; otherwise, only "legacy"
  * scanning is performed.
@@ -1674,7 +1732,7 @@ tBleStatus aci_gap_adv_set_configuration_v2( uint8_t Adv_Mode,
  * advertising packets can be filtered by the GAP based on their content.
  * During a generic scanning procedure, the application can, after selecting it
  * from the advertising packets, connect to a device by issuing the command
- * ACI_GAP_CREATE_CONNECTION.
+ * ACI_GAP_CREATE_CONNECTION or ACI_GAP_EXT_CREATE_CONNECTION.
  * The scanning procedure is terminated either when the application issues the
  * ACI_GAP_TERMINATE_GAP_PROC command with the procedure code set to the
  * Procedure value, or when a connection is established, or eventually when a
@@ -1682,7 +1740,7 @@ tBleStatus aci_gap_adv_set_configuration_v2( uint8_t Adv_Mode,
  * ACI_GAP_PROC_COMPLETE_EVENT event is returned with the procedure code set to
  * the Procedure value.
  *
- * @param Scan_Mode Reserved, shall be set to 0.
+ * @param Scan_Mode Reserved; shall be set to 0.
  *        Values:
  *        - 0x00
  * @param Procedure Scan procedure.
@@ -1738,8 +1796,8 @@ tBleStatus aci_gap_adv_set_configuration_v2( uint8_t Adv_Mode,
  *        - 0x01: Scan advertisements on the LE 1M PHY
  *        - 0x04: Scan advertisements on the LE Coded PHY (flag not available
  *          in "legacy" scanning)
- * @param Scan_Param_Phy See @ref Scan_Param_Phy_t
- * @return Value indicating success or error code.
+ * @param Scan_Param_Phy See Scan_Param_Phy_t.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_start_scan( uint8_t Scan_Mode,
                                uint8_t Procedure,
@@ -1753,6 +1811,7 @@ tBleStatus aci_gap_start_scan( uint8_t Scan_Mode,
 
 /**
  * @brief ACI_GAP_EXT_CREATE_CONNECTION
+ *
  * This command is used to create a connection with the local device in the
  * Central role to an advertiser when the extended advertising feature is
  * supported.
@@ -1761,10 +1820,10 @@ tBleStatus aci_gap_start_scan( uint8_t Scan_Mode,
  * The Initiating_PHYs and subsequent parameters are used to specify the
  * initiating parameters as defined for HCI_LE_EXTENDED_CREATE_CONNECTION: for
  * more details, refer to Core Specification [Vol 4, Part E, 7.8.66].
- * Note: this more generic command can be used instead of
+ * Note: This more generic command can be used instead of
  * ACI_GAP_CREATE_CONNECTION or ACI_GAP_START_AUTO_CONNECTION_ESTABLISH_PROC.
  *
- * @param Initiating_Mode Reserved, shall be set to 0.
+ * @param Initiating_Mode Reserved; shall be set to 0.
  *        Values:
  *        - 0x00
  * @param Procedure Connection procedure.
@@ -1785,6 +1844,7 @@ tBleStatus aci_gap_start_scan( uint8_t Scan_Mode,
  *        - 0x01: Random Device Address
  * @param Peer_Address Public Device Address or Random Device Address of the
  *        device to be connected.
+ *        Size: 6 bytes.
  * @param Advertising_Handle Used to identify the subevent where a connection
  *        request shall be initiated from a periodic advertising train.
  *        Values:
@@ -1808,8 +1868,8 @@ tBleStatus aci_gap_start_scan( uint8_t Scan_Mode,
  *        - 0x02: Connection parameters for the LE 2M PHY
  *        - 0x04: Scan connectable advertisements on the LE Coded PHY -
  *          Connection parameters for the LE Coded PHY are provided
- * @param Init_Param_Phy See @ref Init_Param_Phy_t
- * @return Value indicating success or error code.
+ * @param Init_Param_Phy See Init_Param_Phy_t.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_ext_create_connection( uint8_t Initiating_Mode,
                                           uint8_t Procedure,

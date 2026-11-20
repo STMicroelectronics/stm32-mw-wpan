@@ -3,7 +3,7 @@
  * @heading Zigbee Logging Utilities
  * @brief Zigbee header file.
  * @author Exegin Technologies
- * @copyright Copyright [2009 - 2025] Exegin Technologies Limited. All rights reserved.
+ * @copyright Copyright [2009 - 2026] Exegin Technologies Limited. All rights reserved.
  *
  * This file groups global/external definitions from all the layer specific header files
  * e.g, aps, nwk, zdo etc... into a single place, so that one can just include zigbee.h for
@@ -45,7 +45,7 @@ struct ZigBeeT;
 /* Misc */
 #define ZB_LOG_MASK_PERSIST             0x00100000U /* Persistence */
 #define ZB_LOG_MASK_GREENPOWER          0x00200000U /* Green Power */
-/* 0x00400000U Reserved (was ZB_LOG_MASK_HEAP) */
+#define ZB_LOG_MASK_MEMORY              0x00400000U
 #define ZB_LOG_MASK_TIMER               0x00800000U /* ZbTimer */
 #define ZB_LOG_MASK_SLEEPY              0x01000000U /* Sleepy (e.g. Polling) */
 #define ZB_LOG_MASK_MAC_RSSI            0x02000000U /* Print debug message per MCPS-DATA.indication showing RSSI */

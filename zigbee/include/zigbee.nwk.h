@@ -3,18 +3,16 @@
  * @heading NWK Layer
  * @brief NWK header file
  * @author Exegin Technologies
- * @copyright Copyright [2009 - 2025] Exegin Technologies Limited. All rights reserved.
+ * @copyright Copyright [2009 - 2026] Exegin Technologies Limited. All rights reserved.
  */
 
 #ifndef ZIGBEE_NWK_H
 # define ZIGBEE_NWK_H
 
-/* For FlexeLint */
-#ifndef CONFIG_ZB_REV
-#define CONFIG_ZB_REV 23
-#endif
-
-/*lint -e621 "Identifier clash [MISRA Rule 5.1 (REQUIRED), MISRA Rule 5.2 (REQUIRED),
+/*lint -save -e621 "Identifier clash within 31 chars. For readability,
+ * we need to exceed the 31 character limit before uniqueness, and
+ * extend the limit to 63 charcters.
+ * [MISRA Rule 5.1 (REQUIRED), MISRA Rule 5.2 (REQUIRED),
  * MISRA Rule 5.4 (REQUIRED), MISRA Rule 5.5 (REQUIRED)]" */
 
 /*---------------------------------------------------------------
@@ -251,24 +249,6 @@ enum ZbNwkNibAttrIdT {
      * the application can call ZbNwkSendEdkaReq() periodically itself to refresh
      * the timeout on its Parent. (type: uint8_t, reset: no, persist: no) */
 
-    /* R22+ attributes */
-    ZB_NWK_NIB_ID_TxPowerMgmtSupported = 0x040d,
-    /**< (type: uint8_t, reset: no, persist: yes) */
-    ZB_NWK_NIB_ID_LinkPowerDeltaPeriod = 0x040e,
-    /**< (type: uint16_t, reset: no, persist: yes) */
-
-    /* R22 MAC PIB Attributes that are maintained by our NWK layer,
-     * since we support multiple interfaces. */
-    ZB_NWK_NIB_ID_JoiningListUpdateId = 0x040f,
-    /**< IeeeJoiningListUpdateID (type: uint8_t, reset: no, persist: yes) */
-    ZB_NWK_NIB_ID_JoiningPolicy = 0x0410,
-    /**< mibJoiningPolicy (type: uint8_t, reset: yes, persist: yes) */
-    ZB_NWK_NIB_ID_JoiningListTotal = 0x0411,
-    /**< IeeeJoiningListTotal (type: uint8_t, reset: yes, persist: yes) */
-    ZB_NWK_NIB_ID_JoiningListExpiryInterval = 0x0412,
-    /**< mibIeeeExpiryInterval minutes (type: uint16_t, reset: yes, persist: no) */
-    /* mibIeeeExpiryIntervalCountdown is not externally accessible */
-
     ZB_NWK_NIB_ID_ActiveChannelList = 0x0413,
     /**< Read-only. (type: struct ZbChannelListT, reset: yes, persist: no) */
     ZB_NWK_NIB_ID_PermitJoinCounter = 0x0414,
@@ -334,6 +314,16 @@ enum ZbNwkNibAttrIdT {
      * any sort of problem from memory exhaustion or communication log jam.
      * (type: uint8_t, reset: no, persist: no) */
 
+    /* discontinuity */
+
+    /* EXEGIN add-ons - read only parameters */
+    ZB_NWK_NIB_ID_NeighborTableSize = 0x04f0,
+    ZB_NWK_NIB_ID_RouteTableSize = 0x04f1,
+    ZB_NWK_NIB_ID_AddressMapSize = 0x04f2,
+    ZB_NWK_NIB_ID_BttSize = 0x04f3,
+    ZB_NWK_NIB_ID_RReqSize = 0x04f4,
+
+    /* The end */
     ZB_NWK_NIB_ID_Max = 0x04ff
 };
 
@@ -360,7 +350,7 @@ enum WpanJoinPolicyT {
 #define ZB_NWK_CONST_SECURITY_LEVEL                 0x05U
 #define ZB_NWK_CONST_DISCOVERY_RETRY_LIMIT          0x03U
 #define ZB_NWK_CONST_MIN_HEADER_OVERHEAD            0x08U
-#define ZB_NWK_CONST_PROTOCOL_VERSION               ZB_PROTOCOL_VERSION_2007
+#define ZB_NWK_CONST_PROTOCOL_VERSION               ZB_PROTOCOL_VERSION_2007 /* 2 */
 #define ZB_NWK_CONST_WAIT_BEFORE_VALIDATION         0x500U /* In ms. */
 #define ZB_NWK_CONST_REPAIR_THRESHOLD               0x03U
 #define ZB_NWK_CONST_ROUTE_DISCOVERY_TIME           0x2710U /* In ms. (10 seconds) */
@@ -1022,59 +1012,6 @@ enum ZbStatusCodeT ZB_WARN_UNUSED ZbNlmeNetFormReq(struct ZigBeeT *zb, struct Zb
  */
 void ZbNlmePermitJoinReq(struct ZigBeeT *zb, struct ZbNlmePermitJoinReqT *permitReq, struct ZbNlmePermitJoinConfT *permitConf);
 
-/* Exegin Custom API to manage the IEEE Joining List in the NWK layer.
- * Let the NWK layer manage configuring the individual MACs. */
-
-/**
- * Get the value of ZB_NWK_NIB_ID_JoiningPolicy
- * @param zb Pointer to Zigbee stack instance
- * @return Returns joining policy enumeration value
- */
-enum WpanJoinPolicyT ZbNlmeJoiningPolicyGet(struct ZigBeeT *zb);
-
-/**
- * External API to configure the Joining Policy and IEEE Joining List.
- * Should only be called by the Coordinator application. Router and
- * End Devices applications should not be calling this, but rather
- * obtain these parameters from the Coordinator through ZDP commands.
- * @param zb Pointer to Zigbee stack instance
- * @param policy New policy value
- * @param extAddrList Pointer to extended address list
- * @param numExtAddr Extended address index
- * @param updateIdOverride Optional update ID to override old value
- * intead of incrementing
- * @return Returns true on Success, or false otherwise
- */
-bool ZbNlmeJoiningPolicyConfigure(struct ZigBeeT *zb, enum WpanJoinPolicyT policy, uint64_t *extAddrList,
-    unsigned int numExtAddr, uint8_t *updateIdOverride);
-
-/**
- * Refresh join policy timer
- * @param zb Pointer to Zigbee stack instance
- */
-void ZbNlmeJoinPolicyTimeoutRefresh(struct ZigBeeT *zb);
-
-/**
- * Clear IEEE joining list
- * @param zb Pointer to Zigbee stack instance
- */
-void ZbNlmeIeeeJoiningListClear(struct ZigBeeT *zb);
-
-/**
- * Remove extended address from IEEE joining list
- * @param zb Pointer to Zigbee stack instance
- * @param extAddr Extended address to remove
- * @return Returns true on Success, or false otherwise
- */
-bool ZbNlmeIeeeJoiningListRemove(struct ZigBeeT *zb, uint64_t extAddr);
-
-/**
- * Check if join policy is set to WPAN_JOIN_POLICY_IEEELIST
- * @param zb Pointer to Zigbee stack instance
- * @return Returns true on Success, or false otherwise
- */
-bool ZbNwkIeeeJoiningListEnabled(struct ZigBeeT *zb);
-
 /**
  * NLME-JOIN.request
  * @param zb Pointer to Zigbee stack instance
@@ -1188,25 +1125,6 @@ bool ZbNwkIfSetTxPower(struct ZigBeeT *zb, const char *name, int8_t tx_power);
  * @return Returns true on Success, or false otherwise
  */
 bool ZbNwkIfGetTxPower(struct ZigBeeT *zb, const char *name, int8_t *tx_power);
-
-/**
- * Enable or disable Duty Cycle management in the MAC.
- * Disabling duty cycle will also clear the duty cycle history and set the status to
- * MCP_DUTYCYCLE_STATUS_NORMAL.
- * This function would typically be used in conjunction with ZB_NWK_NIB_ID_TxPowerMgmtSupported,
- * which configures TX Power Control in the NWK and MAC.
- * @param zb ZigBee stack structure
- * @param enable New duty cycle setting
- * @param accel Enable or disable accelerated mode. Should only be enabled for testing purposes only.
- * @return Returns true on Success, or false otherwise
- */
-bool ZbNwkToggleDutyCycle(struct ZigBeeT *zb, bool enable, bool accel);
-
-/* Undocumented API. Only used for testing / debugging purposes.
- * Only available when stack compiled with CONFIG_ZB_ENABLE_GU defined.
- * If min_val != 0, check if macDCCurrentBytes is >= min_val
- * If max_val != 0, check if macDCCurrentBytes is <= max_val */
-bool nwk_dutycycle_status_check(struct ZigBeeT *zb, unsigned int min_val, unsigned int max_val);
 
 /**
  * Called by the application to manually send the End Device Timeout Request Command.
@@ -1452,7 +1370,8 @@ struct nwk_fastpoll_entry_t * ZbNwkFastPollRequestWithDesc(struct ZigBeeT *zb,
  * @param entry Fast polling entry pointer (handle) returned by ZbNwkFastPollRequest
  * @return True if found and removed, false otherwise.
  */
-bool ZbNwkFastPollRelease(struct ZigBeeT *zb, struct nwk_fastpoll_entry_t *handle);
+bool ZbNwkFastPollReleaseWithDesc(struct ZigBeeT *zb, struct nwk_fastpoll_entry_t *handle, const char *funcname);
+#define ZbNwkFastPollRelease(zb, handle)                ZbNwkFastPollReleaseWithDesc(zb, handle, __func__)
 
 /**
  * Get the current number of fast polling requests to the stack.
@@ -1546,5 +1465,7 @@ bool ZbNwkReportPanIdConflict(struct ZigBeeT *zb, bool all_from_disc_tbl);
  * @return Returns true on Success, or false otherwise
  */
 bool ZbNwkSendUnsolicitedBeacon(struct ZigBeeT *zb);
+
+/*lint -restore */
 
 #endif

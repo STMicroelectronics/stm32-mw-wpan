@@ -29,9 +29,11 @@
 /* Define to 1 if you want to redirect OT assert */
 #define OPENTHREAD_CONFIG_PLATFORM_ASSERT_MANAGEMENT 1
 
-/* Use mbedtls as crypto library. */
-#define OPENTHREAD_CONFIG_CRYPTO_LIB OPENTHREAD_CONFIG_CRYPTO_LIB_MBEDTLS  //OPENTHREAD_CONFIG_CRYPTO_LIB_PSA
+/* Use PSA as crypto library. */
+#define OPENTHREAD_CONFIG_CRYPTO_LIB OPENTHREAD_CONFIG_CRYPTO_LIB_PSA  //OPENTHREAD_CONFIG_CRYPTO_LIB_MBEDTLS
 
+/* Must be one to allow radio layer to export the key and configure it in LL crypto */
+#define OPENTHREAD_CONFIG_PLATFORM_MAC_KEYS_EXPORTABLE_ENABLE  1
 /* Define to 1 if you want to enable default log output. */
 #define OPENTHREAD_CONFIG_LOG_OUTPUT  OPENTHREAD_CONFIG_LOG_OUTPUT_APP
 
@@ -131,7 +133,10 @@
 /* Define Csl Time Ahead function, Shift Call to TransmitAt function window  */
 #define OPENTHREAD_CONFIG_MAC_CSL_REQUEST_AHEAD_US 3000
 
+/*Define to 0 to enable Mbedtls memory to be managed externally*/
+#define OPENTHREAD_CONFIG_ENABLE_BUILTIN_MBEDTLS 0
+
 /* Enables support for sending DNS Queries over TCP.*/
 #define OPENTHREAD_CONFIG_DNS_CLIENT_OVER_TCP_ENABLE 1
-
+ 
 #endif /* OPENTHREAD_API_CONFIG_MTD_H_ */

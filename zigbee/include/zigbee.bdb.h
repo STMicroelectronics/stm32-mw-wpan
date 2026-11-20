@@ -3,7 +3,7 @@
  * @heading BDB Layer
  * @brief BDB header file
  * @author Exegin Technologies
- * @copyright Copyright [2009 - 2025] Exegin Technologies Limited. All rights reserved.
+ * @copyright Copyright [2009 - 2026] Exegin Technologies Limited. All rights reserved.
  */
 
 #ifndef ZIGBEE_BDB_H
@@ -48,6 +48,7 @@ enum ZbBdbCommissioningStatusT {
          * currently on a network. */
 };
 
+/* ZB_BDB_TrustCenterNodeJoinTimeout */
 #define BDB_DEFAULT_TC_NODE_JOIN_TIMEOUT        15U /* seconds */
 
 /* Min valid BDB commissioning group id. */
@@ -177,7 +178,7 @@ enum ZbBdbTouchlinkKeyIndexT {
 
 /* If set, forcibly set Disable Default Response bit to 0 in the ZCL header.
  * This is used in SE test cases ie. 11.48-11.49 to ensure that, upon receiving a
- * Read/Write Attributes Request, a device will omitsending a Default Response
+ * Read/Write Attributes Request, a device will omit sending a Default Response
  * as per the second criteria of 07-5123-08 Zigbee Cluster Library section
  * "2.5.12.2 When Generated...
  * "No other command is sent in response to the received command,
@@ -234,13 +235,14 @@ enum ZbBdbAttrIdT {
     /**< bdbTrustCenterRequireKey-Exchange. Modifies ZB_APSME_POLICY_TCLK_UPDATE_REQUIRED bit
      * in ZB_APS_IB_ID_TRUST_CENTER_POLICY - Deprecated in BDB 3.1
      * (type: uint8_t, reset: no, persist: no) */
-    ZB_BDB_AcceptNewUnsolicitedTCLinkKey = 0x1010,
+    ZB_BDB_AcceptNewUnsolicitTCLinkKey = 0x1010,
     /**< acceptNewUnsolicitedTrustCenterLinkKey (type: uint8_t, reset: no, persist: no) */
-    ZB_BDB_AcceptNewUnsolicitedApplicationLinkKey = 0x1011,
+    ZB_BDB_AcceptNewUnsolicitAppLinkKey = 0x1011,
     /**< acceptNewUnsolicitedApplicationLinkKey (type: uint8_t, reset: no, persist: no) */
 
-    /* Extra stuff not explicitly covered by the BDB spec. */
     /* discontinuity */
+
+    /* Extra stuff not explicitly covered by the BDB spec. */
     ZB_BDB_vDoPrimaryScan = 0x1101,
     /**< Boolean whether to use ZB_BDB_PrimaryChannelSet or ZB_BDB_SecondaryChannelSet
      * (type: uint8_t, reset: no, persist: no) */
@@ -252,11 +254,15 @@ enum ZbBdbAttrIdT {
     /**< (type: uint16_t, reset: no, persist: no) */
     ZB_BDB_FreeNetAddrEnd = 0x1104,
     /**< (type: uint16_t, reset: no, persist: no) */
+
     /* discontinuity */
+
     ZB_BDB_TLRssiMin = 0x1107,
     /**< Minimum RSSI threshold for Touchlink commissioning
      * (type: int8_t, reset: no, persist: no) */
+
     /* discontinuity */
+
     ZB_BDB_UpdateDeviceKeyId = 0x1109,
     /**< E.g. ZB_SEC_KEYID_NETWORK (default) or ZB_SEC_KEYID_LINK.
      * (type: uint8_t / enum ZbSecHdrKeyIdT, reset: no, persist: no) */
@@ -278,17 +284,23 @@ enum ZbBdbAttrIdT {
     /**< (type: uint16_t, reset: no, persist: no) */
     ZB_BDB_JoinTclkRequestKeyDelay = 0x1110,
     /**< (type: uint16_t, reset: no, persist: no) */
+
     /* discontinuity */
+
     ZB_BDB_TLKey = 0x1112,
     /**< Touchlink preconfigured link key
      * (type: array of uint8_t, reset: no, persist: yes) */
     ZB_BDB_TLKeyIndex = 0x1113,
     /**< Touchlink key encryption algorithm key index
      * (type: uint8_t / enum ZbBdbTouchlinkKeyIndexT, reset: no, persist: yes) */
+
     /* discontinuity */
+
     ZB_BDB_ZdoZigbeeProtocolRevision = 0x1115,
     /**< Default = 23 (R23) (type: uint8_t, reset: no, persist: no) */
+
     /* discontinuity */
+
     ZB_BDB_PersistTimeoutMs = 0x1117,
     /**< Minimum delay between persistence updates. Default value is 10000 mS (10 sec).
      * This delay helps to group a bunch of persistence notifications due to multiple
@@ -313,7 +325,7 @@ enum ZbBdbAttrIdT {
     /**< Minimum delay between "immediate" persistence updates. Default value is 500 mS.
      * Used in conjunction with the ZCL attribute flag ZCL_ATTR_FLAG_PERSIST_IMMED.
      * If ZB_BDB_PersistTimeoutMs is less than the value of this parameter, then
-     * ZB_BDB_PersistTimeoutMs takes presedence.
+     * ZB_BDB_PersistTimeoutMs takes precedence.
      *
      * WARNING: Be careful with how often your application saves persistence data
      * to Flash, if this is applicable to your platform.
@@ -324,13 +336,16 @@ enum ZbBdbAttrIdT {
      * (type: uint32_t, reset: no, persist: no) */
 
     /* discontinuity */
+
     ZB_BDB_Uptime = 0x111d,
     /**< Returns the current stack uptime in milliseconds (ZbUptime).
      * (type: uint32_t, reset: no, persist: no) */
     ZB_BDB_Flags = 0x111e,
     /**< e.g. ZB_BDB_FLAG_IGNORE_COST_DURING_JOIN
      * (type: uint32_t, reset: no, persist: no) */
+
     /* discontinuity */
+
     ZB_BDB_TC_Supports_ZD = 0x1120,
     /**< Boolean value that indicates whether TC supports Zigbee Direct.
      * This value is automatically discovered after joining by Match-Desc.request
@@ -376,6 +391,30 @@ enum ZbBdbAttrIdT {
      * It's a uint8_t type, but it's based on the 'enum ZbZclKeyStatusT' values.
      * (type: uint8_t, reset: no, persist: no) */
 
+    ZB_BDB_ZclDisDefRspForBindingsLimit = 0x1129,
+    /**< If a ZCL Command is being sent via bindings (ZB_APSDE_ADDRMODE_NOTPRESENT), this IB
+     * controls whether to override and set the Disable Default Response = True.
+     *
+     * If this IB is non-zero and the number of matching bindings for this command is equal
+     * or greater than this IB value, the Disable Default Response will be set to True.
+     *
+     * Otherwise, if the value of this IB is zero, or the number of matching bindings is less
+     * than this IB, then the cluster's 'noDefaultResp' configuration is used when sending the
+     * ZCL command.
+     *
+     * The default value is 5.
+     * (type: uint8_t, reset: no, persist: no) */
+
+    ZB_BDB_ZclKeepAliveTcEndpt = 0x112a,
+    /**< This IB parameter should not be modified by the application. It is used by
+     * the stack to save and persist the current TC's ZCL Keep Alive server endpoint.
+     * This allows the local ZCL Keep Alive client to resume ZCL Read requests after
+     * restoring from persistence without having to go through discovery, which doesn't
+     * trigger a TCSO if discovery fails.
+     * (type: uint8_t, reset: yes, persist: yes) */
+
+    /* discontinuity */
+
     /* Constants which are accessible through a BDB GET IB request. */
     ZB_BDBC_MaxSameNetworkRetryAttempts = 0x1200,
     /**< (type: uint8_t, reset: no, persist: no) */
@@ -392,10 +431,27 @@ enum ZbBdbAttrIdT {
     ZB_BDBC_TLScanTimeBaseDuration = 0x1206,
     /**< Milliseconds (type: uint8_t, reset: no, persist: no) */
 
+    /* BDB 3.1 Attributes & constants.  */
+    ZB_BDBC_MinFastPollDurationAfterJoin = 0x1300,
+    /**< A constant value that determines how long to enable fast-polling after joining.
+     * Units are in quarter-seconds. Read-only value.
+     * This may not be available with all distributions and return on error for a GET request.
+     * (type: uint8_t, reset: no, persist: no) */
+
+#if 0 /* EXEGIN - not yet added to the stack */
+    ZB_BDB_InterfaceLinkCostScalar = 0x1301,
+    /**< bdbcfInterfaceLinkCostScalar (type: uint8_t, reset: no, persist: no) */
+#endif
+
     ZB_BDB_RequireCBKESuccess = 0x1305
         /**< A boolean flag to indicate how to handle CBKE failure as part of startup join.
          * (type: uint8_t, reset: no, persist: no) */
 };
+
+/* For backward compatibility. These are now DEPRECATED and should be replaced
+ * with their MISRA friendly counterparts. */
+#define ZB_BDB_AcceptNewUnsolicitedTCLinkKey            ZB_BDB_AcceptNewUnsolicitTCLinkKey
+#define ZB_BDB_AcceptNewUnsolicitedApplicationLinkKey   ZB_BDB_AcceptNewUnsolicitAppLinkKey
 
 /**
  * Read a BDB IB attribute.

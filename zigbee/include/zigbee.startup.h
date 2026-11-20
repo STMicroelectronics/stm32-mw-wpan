@@ -3,21 +3,13 @@
  * @heading Startup
  * @brief Zigbee startup header file
  * @author Exegin Technologies
- * @copyright Copyright [2009 - 2025] Exegin Technologies Limited. All rights reserved.
+ * @copyright Copyright [2009 - 2026] Exegin Technologies Limited. All rights reserved.
  */
 
 #ifndef ZIGBEE_STARTUP_H
 # define ZIGBEE_STARTUP_H
 
 #include "zcl/zcl.touchlink.h"
-
-/* For FlexeLint */
-#ifndef CONFIG_ZB_REV
-#define CONFIG_ZB_REV 23
-#endif
-
-/* Just in case we're not building the R23+ stack. */
-struct ZbApsRelayInfoT;
 
 /** Startup control-codes as per the ZCL Spec, Commissioning Cluster's StartupControl
  * attribute in the "Startup Parameters Attribute Set" */
@@ -109,6 +101,17 @@ struct ZbStartupCbkeT {
     /**< This is the time in seconds to include in the Wait Time field in the Terminate Key
      * Establishment command. The Wait Time is the time for the CBKE initiator to wait before
      * trying again. The default value is 0xfe (254 seconds). */
+};
+
+struct ZbStartupFindbindT {
+    bool initiator;
+    /**< If true, F&B process shall be executed as an initiator. Otherwise, it shall act as
+     * an F&B target. */
+    uint8_t endpoint;
+    /**< F&B initiator/target endpoint.
+     * If set to ZB_ENDPOINT_BCAST, then F&B will be performed on all valid endpoints.
+     * If set to ZB_ENDPOINT_ZDO (0), which is the default, then automatic F&B is
+     * skipped, even if BDB_COMMISSION_MODE_FIND_BIND is enabled in ZB_BDB_CommissioningMode. */
 };
 
 /**
@@ -230,7 +233,7 @@ struct ZbStartupT {
     uint8_t nwkUpdateId;
     /**< ZB_NWK_NIB_ID_UpdateId, only used in case of ZDD (Zigbee Direct Device)
      * Commissioning form/OOB join performed by ZVD (Zigbee Virtual Device).
-     * NOTE: Only applicable with CONFIG_ZB_ZDD_SUPPORT. */
+     * NOTE: Only applicable with CONFIG_ZB_ZIGBEE_DIRECT (EXEGIN - ZDD or ZVD only?) */
 
     uint8_t capability;
     /**< Device capability mask. Default value includes:
@@ -259,17 +262,15 @@ struct ZbStartupT {
         const void *persist_buf;
         /**< Pointer to persistence data. Only applicable if ZCL_TL_ZBINFO_USE_PERSIST
          * flag is set in zb_info. */
-        unsigned int persist_len; /**< Length of persistence data. */
+        uint16_t persist_len; /**< Length of persistence data. */
         struct ZbTouchlinkCallbacks callbacks;
         /**< Callback functions for Touchlink Controller Device Utility commands. */
     } touchlink; /**< Touchlink configuration. Only applicable if BDB_COMMISSION_MODE_TOUCHLINK. */
 
-    struct {
-        uint8_t server_ep;
-        /**< Endpoint to assign to Sub-GHz server cluster to perform duty cycle checks. */
-        uint16_t device_id;
-        /**< DeviceId to assign to the endpoint on which Sub-GHz server cluster is created. */
-    } subghz; /**< Sub-GHz cluster configuration, only applicable on a coordiantor. */
+    struct ZbStartupFindbindT findbind;
+    /**< Finding & Binding configuration to use when BDB_COMMISSION_MODE_FIND_BIND is enabled
+     * in the ZB_BDB_CommissioningMode commissioning bitmask. If this struct is left unconfigured
+     * by the application, then automatic F&B is skipped. */
 
     /*
      * R23 additions
@@ -279,7 +280,7 @@ struct ZbStartupT {
     uint8_t supp_pre_shared_secrets;
     /**< A bitmask of the supported pre-shared secrets e.g, ZB_DLK_SUPP_PSK_SYMMETRIC_AUTH_TOKEN. */
 
-    void (*device_interview_cb)(struct ZbApsRelayInfoT *relay_info, uint64_t joiner_eui, void *arg);
+    void (*device_interview_cb)(uint64_t joiner_eui, void *arg);
     /**< Device Interview callback. This is called when the device is acting as
      * Trust Center in order to start the Device Interview process with the
      * Joiner. As packets are sent as Downstream Relays to the Joiner, the
@@ -323,18 +324,28 @@ enum ZbStatusCodeT ZB_WARN_UNUSED ZbStartup(struct ZigBeeT *zb, struct ZbStartup
 enum ZbStatusCodeT ZbStartupTouchlinkTargetStop(struct ZigBeeT *zb);
 
 /**
- * Manually start Finding & Binding. F&B is also started automatically
- * after joining the network.
+ * Important: This is a DEPRECATED API.
+ * This function was originally called ZbStartupFindBindStart, but that API has
+ * had enhancements made to it, which required changes to the API.
+ * If we still want to call the legacy API, just replace any occurrences with
+ * ZbStartupFindBindStartLegacy in your application code.
+ * Otherwise, use ZbStartupFindBindStart instead.
+ *
+ * Manually start Finding & Binding.
  * @param zb Zigbee stack instance
  * @param callback Application callback to call after Finding & Binding complete
  * @param arg Application callback argument
  * @return Zigbee Status Code
  */
-enum ZbStatusCodeT ZB_WARN_UNUSED ZbStartupFindBindStart(struct ZigBeeT *zb,
+enum ZbStatusCodeT ZB_WARN_UNUSED ZbStartupFindBindStartLegacy(struct ZigBeeT *zb,
     void (*callback)(enum ZbStatusCodeT status, void *arg), void *arg);
 
 /**
- * Same as ZbStartupFindBindStart, but only for a single endpoint.
+ * Important: This is a DEPRECATED API.
+ * Since this is now deprecated, it would be best to use ZbStartupFindBindStart
+ * instead.
+ *
+ * Same as ZbStartupFindBindStartLegacy, but only for a single endpoint.
  * @param zb Zigbee stack instance
  * @param endpoint Endpoint to perform Finding & Binding from.
  * @param callback Application callback to call after Finding & Binding complete
@@ -342,6 +353,20 @@ enum ZbStatusCodeT ZB_WARN_UNUSED ZbStartupFindBindStart(struct ZigBeeT *zb,
  * @return Zigbee Status Code
  */
 enum ZbStatusCodeT ZB_WARN_UNUSED ZbStartupFindBindStartEndpoint(struct ZigBeeT *zb, uint8_t endpoint,
+    void (*callback)(enum ZbStatusCodeT status, void *arg), void *arg);
+
+/**
+ * Manually start Finding & Binding. F&B is also started automatically
+ * after joining the network if BDB_COMMISSION_MODE_FIND_BIND is enabled in
+ * ZB_BDB_CommissioningMode.
+ * @param zb Zigbee stack instance
+ * @param info Findbind configuration info structure.
+ * @param callback Application callback to call after Finding & Binding is complete
+ * @param arg Application callback argument
+ * @return Zigbee Status Code
+ */
+enum ZbStatusCodeT ZB_WARN_UNUSED ZbStartupFindBindStart(struct ZigBeeT *zb,
+    struct ZbStartupFindbindT *info,
     void (*callback)(enum ZbStatusCodeT status, void *arg), void *arg);
 
 /**
@@ -374,6 +399,7 @@ enum ZbStatusCodeT ZB_WARN_UNUSED ZbTrustCenterRejoin(struct ZigBeeT *zb,
 
 /**
  * Try starting stack using persistence data provided.
+ *
  * NOTE: In case of a Zigbee Virtual Device (ZVD) this API only takes care of restoring the
  * stack from persistence data and does not perform secure rejoin. So the ZVD application
  * shall reestablish the secure session over BLE using basic or admin key and then perform
@@ -391,7 +417,7 @@ enum ZbStatusCodeT ZB_WARN_UNUSED ZbTrustCenterRejoin(struct ZigBeeT *zb,
  * @param arg Application callback argument
  * @return Zigbee Status Code
  */
-enum ZbStatusCodeT ZbStartupPersist(struct ZigBeeT *zb, const void *pdata, unsigned int plen,
+enum ZbStatusCodeT ZbStartupPersist(struct ZigBeeT *zb, const void *pdata, uint16_t plen,
     struct ZbStartupT *config, void (*callback)(enum ZbStatusCodeT status, void *arg), void *arg);
 
 /**
@@ -471,58 +497,4 @@ enum ZbStatusCodeT ZbStartupTclkStart(struct ZigBeeT *zb,
  */
 bool ZbStartupDeviceInterviewComplete(struct ZigBeeT *zb, uint64_t joiner_eui64, bool success);
 
-/* Type declaration, required for struct ZbStartupAppLkT. */
-struct ZbZdoSecGetAuthLevelRspT;
-
-/**
- * Application link-key information structure. This structure needs to be populated by
- * the initiator/responder devices at the time of starting the application link-key
- * establishment process. */
-struct ZbStartupAppLkT {
-    bool is_initiator;
-    /**< If true, we take on the initiator role. else, act as responder. */
-
-    uint64_t partner_addr;
-    /**< Extended address of partner device. */
-
-    bool (*auth_level_cb)(struct ZbZdoSecGetAuthLevelRspT *rsp, void *arg);
-    /**< If not NULL, then this callback will be invoked by stack on receiving the ZDO
-     * Security_Get_Authentication_Level_Rsp, so that the application is notified of the
-     * authentication level of target. In case, the ZDO Security_Get_Authentication_Level_Rsp
-     * returns an error status, then this callback marks the termination of the application
-     * link-key establishment process and the aps_link_key_cb callback shall not be invoked by stack.
-     *
-     * In case ZDO Security_Get_Authentication_Level_Rsp returns with a status of SUCCESS, then this
-     * callback, provides application an opportunity to check if it is ok with the authentication level
-     * of target device. If yes, it shall return a boolean value of 'true' as status. Whereas, a status
-     * value of 'false' is an indication to terminate the application link-key establishment process due
-     * to 'insufficient target security'. */
-
-    void (*aps_link_key_cb)(uint64_t partner_addr, enum ZbStatusCodeT status, void *arg);
-    /**< If not NULL, this callback will be invoked by stack once the link-key is successfully verified
-     * by the responder/partner device or in case of timeout to complete the verification process. */
-
-    void *arg;
-    /**< Callback argument pointer to auth_level_cb & aps_link_key_cb. */
-};
-
-/**
- * Perform application link-key establishment with a non-TC partner device after having
- * joined the network. The initiator or the responder devices can't be TC.
- *
- * This API supports application link-key establishment as per BDB 3.1 which involves
- * querying the authentication level of the partner device and verification of new
- * link-key.
- *
- * In case of Initiator, this API starts the application link-key establishment process,
- * whereas, in case of responder, this API shall be called by application on receiving
- * the APS-TRANSPORT-KEY.indication from TC with an application link key and if the
- * application intends to run the responder side of the application link-key state-machine
- * as per BDB 3.1 specification.
- *
- * @param zb Zigbee instance
- * @param info Pointer to application link key information structure.
- * @return ZB Status Code. If not ZB_STATUS_SUCCESS, then the callback will not be called.
- */
-enum ZbStatusCodeT ZbStartupAppLkStart(struct ZigBeeT *zb, struct ZbStartupAppLkT *info);
 #endif

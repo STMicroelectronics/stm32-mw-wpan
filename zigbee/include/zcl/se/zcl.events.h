@@ -3,7 +3,7 @@
  * @heading Events
  * @brief ZCL Events cluster header
  * ZCL 8 section 10.11
- * @copyright Copyright [2009 - 2024] Exegin Technologies Limited. All rights reserved.
+ * @copyright Copyright [2009 - 2026] Exegin Technologies Limited. All rights reserved.
  */
 
 #ifndef ZCL_EVENTS_H
@@ -11,17 +11,23 @@
 
 #include "zcl/zcl.h"
 
+/*lint -save -e621 "Identifier clash within 31 chars. For readability,
+ * we need to exceed the 31 character limit before uniqueness, and
+ * extend the limit to 63 charcters.
+ * [MISRA Rule 5.1 (REQUIRED), MISRA Rule 5.2 (REQUIRED),
+ * MISRA Rule 5.4 (REQUIRED), MISRA Rule 5.5 (REQUIRED)]" */
+
 /* Events Server Cluster Commands Generated */
 enum ZbZclEventsServerCommandT {
     ZCL_EVENTS_SVR_CMD_PUBLISH_EVENT = 0x00,
     ZCL_EVENTS_SVR_CMD_PUBLISH_EVENT_LOG = 0x01,
-    ZCL_EVENTS_SVR_CMD_CLEAR_EVENT_LOG_RESPONSE = 0x02,
+    ZCL_EVENTS_SVR_CMD_CLEAR_EVENT_LOG_RESPONSE = 0x02
 };
 
 /* Events Client Cluster Commands Generated */
 enum ZbZclEventsClientCommandT {
     ZCL_EVENTS_CLI_CMD_GET_EVENT_LOG = 0x00,
-    ZCL_EVENTS_CLI_CMD_CLEAR_EVENT_LOG_REQUEST = 0x01,
+    ZCL_EVENTS_CLI_CMD_CLEAR_EVENT_LOG_REQUEST = 0x01
 };
 
 #define ZCL_EVENTS_SVR_EVENT_DATA_MAX_LEN           (254U)
@@ -56,7 +62,8 @@ struct ZbZclEventsServerPublishEventT {
 struct ZbZclEventsServerEventLogPayloadT {
     uint8_t num_events; /**< Number of Events */
     uint8_t control; /**< Log Payload Control */
-    struct ZbZclEventsServerPublishEventT event_list[ZCL_EVENTS_SVR_EVENT_LIST_MAX_LEN]; /**< Publish Event Response Payload */
+    struct ZbZclEventsServerPublishEventT event_list[ZCL_EVENTS_SVR_EVENT_LIST_MAX_LEN];
+    /**< Publish Event Response Payload */
 };
 
 /** Publish Event Log command structure */
@@ -145,14 +152,21 @@ enum ZclStatusCodeT ZbZclEventsServerPublishEventUnsolic(struct ZbZclClusterT *c
     const struct ZbApsAddrT *dst, struct ZbZclEventsServerPublishEventT *event,
     void (*callback)(struct ZbZclCommandRspT *zcl_rsp, void *arg), void *arg);
 
-enum ZclStatusCodeT ZbZclEventsServerPublishEventLogRsp(struct ZbZclClusterT *cluster,
-    struct ZbZclAddrInfoT *dstInfo, struct ZbZclEventsServerPublishEventLogT *info);
-
 /**
- * Send a Clear Event Log Response command
+ * Send a Publish Event Log command
  * @param cluster Cluster instance from which to send this command
  * @param dst Destination address for command
- * @param rsp Clear Event Log Response command structure
+ * @param info Publish Event Log command structure
+ * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
+ */
+enum ZclStatusCodeT ZbZclEventsServerPublishEventLogRsp(struct ZbZclClusterT *cluster,
+    struct ZbZclAddrInfoT *dst, struct ZbZclEventsServerPublishEventLogT *info);
+
+/**
+ * Send a Clear Event Log command
+ * @param cluster Cluster instance from which to send this command
+ * @param dst Destination address for command
+ * @param rsp Clear Event Log command structure
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
 enum ZclStatusCodeT ZbZclEventsServerClearEventLogRsp(struct ZbZclClusterT *cluster,
@@ -225,5 +239,7 @@ enum ZclStatusCodeT ZbZclEventsClientCommandClearEventLogReq(struct ZbZclCluster
  */
 struct ZbZclClusterT * ZbZclEventsMirrorAlloc(struct ZigBeeT *zb, uint8_t endpoint,
     struct ZbZclClusterT *events_client, struct ZbZclClusterT *meter_mirror);
+
+/*lint -restore */
 
 #endif

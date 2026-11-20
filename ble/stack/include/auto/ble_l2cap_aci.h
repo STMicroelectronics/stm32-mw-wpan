@@ -23,6 +23,7 @@
 
 /**
  * @brief ACI_L2CAP_CONNECTION_PARAMETER_UPDATE_REQ
+ *
  * Sends an L2CAP connection parameter update request from the Peripheral to
  * the Central.
  * An ACI_L2CAP_CONNECTION_UPDATE_RESP_EVENT event is raised when the Central
@@ -48,7 +49,7 @@
  *        - 0x0000 ... 0x01F3
  * @param Timeout_Multiplier Defines connection timeout parameter in the
  *        following manner: Timeout Multiplier * 10ms.
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_l2cap_connection_parameter_update_req( uint16_t Connection_Handle,
                                                       uint16_t Conn_Interval_Min,
@@ -58,7 +59,8 @@ tBleStatus aci_l2cap_connection_parameter_update_req( uint16_t Connection_Handle
 
 /**
  * @brief ACI_L2CAP_CONNECTION_PARAMETER_UPDATE_RESP
- * Accepts or rejects a connection update. This command should be sent in
+ *
+ * Accepts or rejects a connection update. This command should be issued in
  * response to an ACI_L2CAP_CONNECTION_UPDATE_REQ_EVENT event from the
  * Controller. The accept parameter has to be set if the connection parameters
  * given in the event are acceptable.
@@ -91,11 +93,12 @@ tBleStatus aci_l2cap_connection_parameter_update_req( uint16_t Connection_Handle
  *        Values:
  *        - 0x0000 (0.000 ms)  ... 0xFFFF (40959.375 ms)
  * @param Identifier Received identifier.
- * @param Accept Specify if connection update parameters are acceptable or not.
+ * @param Accept Specifies whether connection update parameters are acceptable
+ *        or not.
  *        Values:
  *        - 0x00: Reject
  *        - 0x01: Accept
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_l2cap_connection_parameter_update_resp( uint16_t Connection_Handle,
                                                        uint16_t Conn_Interval_Min,
@@ -109,6 +112,7 @@ tBleStatus aci_l2cap_connection_parameter_update_resp( uint16_t Connection_Handl
 
 /**
  * @brief ACI_L2CAP_COC_CONNECT
+ *
  * This command sends a Credit Based Connection Request packet on the specified
  * connection. See Core Specification [Vol 3, Part A].
  *
@@ -136,7 +140,7 @@ tBleStatus aci_l2cap_connection_parameter_update_resp( uint16_t Connection_Handl
  *        enhanced credit based connection-oriented channels.
  *        Values:
  *        - 0 ... 5
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_l2cap_coc_connect( uint16_t Connection_Handle,
                                   uint16_t SPSM,
@@ -147,6 +151,7 @@ tBleStatus aci_l2cap_coc_connect( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_L2CAP_COC_CONNECT_CONFIRM
+ *
  * This command sends a Credit Based Connection Response packet. It must be
  * used upon receipt of a connection request through an
  * ACI_L2CAP_COC_CONNECT_EVENT event.
@@ -191,7 +196,7 @@ tBleStatus aci_l2cap_coc_connect( uint16_t Connection_Handle,
  *        - 0 ... 5
  * @param[out] Channel_Index_List List of channel indexes for which the
  *        primitive applies.
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_l2cap_coc_connect_confirm( uint16_t Connection_Handle,
                                           uint16_t MTU,
@@ -204,6 +209,7 @@ tBleStatus aci_l2cap_coc_connect_confirm( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_L2CAP_COC_RECONF
+ *
  * This command sends a Credit Based Reconfigure Request packet on the
  * specified connection. See Core Specification [Vol 3, Part A].
  *
@@ -224,7 +230,7 @@ tBleStatus aci_l2cap_coc_connect_confirm( uint16_t Connection_Handle,
  *        - 1 ... 5
  * @param Channel_Index_List List of channel indexes for which the primitive
  *        applies.
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_l2cap_coc_reconf( uint16_t Connection_Handle,
                                  uint16_t MTU,
@@ -234,6 +240,7 @@ tBleStatus aci_l2cap_coc_reconf( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_L2CAP_COC_RECONF_CONFIRM
+ *
  * This command sends a Credit Based Reconfigure Response packet. It must be
  * used upon receipt of a Credit Based Reconfigure Request through an
  * ACI_L2CAP_COC_RECONF_EVENT event. A Result value of 0x0000 indicates success
@@ -247,13 +254,14 @@ tBleStatus aci_l2cap_coc_reconf( uint16_t Connection_Handle,
  *        [Vol 3, Part A, Table 4.18].
  *        Values:
  *        - 0x0000 ... 0x0004
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_l2cap_coc_reconf_confirm( uint16_t Connection_Handle,
                                          uint16_t Result );
 
 /**
  * @brief ACI_L2CAP_COC_DISCONNECT
+ *
  * This command sends a Disconnection Request signaling packet on the specified
  * connection-oriented channel. See Core Specification [Vol 3, Part A].
  * The ACI_L2CAP_COC_DISCONNECT_EVENT event is received when the disconnection
@@ -261,12 +269,13 @@ tBleStatus aci_l2cap_coc_reconf_confirm( uint16_t Connection_Handle,
  *
  * @param Channel_Index Index of the connection-oriented channel for which the
  *        primitive applies.
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_l2cap_coc_disconnect( uint8_t Channel_Index );
 
 /**
  * @brief ACI_L2CAP_COC_FLOW_CONTROL
+ *
  * This command sends a Flow Control Credit signaling packet on the specified
  * connection-oriented channel. See Core Specification [Vol 3, Part A].
  *
@@ -277,27 +286,28 @@ tBleStatus aci_l2cap_coc_disconnect( uint8_t Channel_Index );
  *        device sending the Flow Control Credit packet.
  *        Values:
  *        - 1 ... 65535
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_l2cap_coc_flow_control( uint8_t Channel_Index,
                                        uint16_t Credits );
 
 /**
  * @brief ACI_L2CAP_COC_TX_DATA
+ *
  * This command sends a K-frame packet on the specified connection-oriented
  * channel. See Core Specification [Vol 3, Part A].
- * Note: for the first K-frame of the SDU, the Information data shall contain
+ * Note: For the first K-frame of the SDU, the Information data shall contain
  * the L2CAP SDU Length coded on two octets followed by the K-frame information
  * payload. For the next K-frames of the SDU, the Information data shall only
  * contain the K-frame information payload.
- * The Length value must not exceed (BLE_CMD_MAX_PARAM_LEN - 3) i.e. 252 for
+ * The Length value must not exceed (BLE_CMD_MAX_PARAM_LEN - 3), i.e. 252 for
  * BLE_CMD_MAX_PARAM_LEN default value.
  *
  * @param Channel_Index Index of the connection-oriented channel for which the
  *        primitive applies.
  * @param Length Length of Data (in octets)
  * @param Data Information data
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_l2cap_coc_tx_data( uint8_t Channel_Index,
                                   uint16_t Length,

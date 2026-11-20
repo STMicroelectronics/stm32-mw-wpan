@@ -49,20 +49,16 @@
 #include <stdio.h>
 
 #include "openthread/platform/entropy.h"
-#include "openthread/platform/radio.h"
-#include "platform.h"
+#include "psa/crypto.h"
 
 otError otPlatEntropyGet(uint8_t *aOutput, uint16_t aOutputLength)
 {
   otError error = OT_ERROR_NONE;
-  uint32_t status = 0;
-#if ENHANCED_RX_WHILE_CSMA_BACKOFF_DELAY
-  status = mac_gen_rnd_num(aOutput, aOutputLength, FALSE);
-#else
-  status = mac_gen_rnd_num(aOutput, aOutputLength, TRUE);
-#endif
-
-  if (status != 0)
+ 
+  if (psa_generate_random(aOutput, aOutputLength) != PSA_SUCCESS)
+  {
     error = OT_ERROR_FAILED;
+  }
+  
   return error;
 }

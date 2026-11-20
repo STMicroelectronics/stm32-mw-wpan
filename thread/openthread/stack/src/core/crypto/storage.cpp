@@ -68,6 +68,7 @@ void Storage::KeyRefManager::DestroyPersistentKeys(void)
     DestroyKey(KeyRefFor(kPendingDatasetNetworkKey));
     DestroyKey(KeyRefFor(kPendingDatasetPskc));
     DestroyKey(KeyRefFor(kEcdsa));
+    ResetPersistentStorage();
 }
 
 #endif

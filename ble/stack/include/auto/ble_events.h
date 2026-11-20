@@ -25,12 +25,13 @@
 
 /**
  * @brief HCI_DISCONNECTION_COMPLETE_EVENT
+ *
  * This event occurs when a connection is terminated. The status parameter
  * indicates if the disconnection was successful or not. The reason parameter
  * indicates the reason for the disconnection if the disconnection was
  * successful. If the disconnection was not successful, the value of the reason
  * parameter shall be ignored by the Host.
- * Note: if the connection is terminated by the remote device, the reason
+ * Note: If the connection is terminated by the remote device, the reason
  * parameter of this event is set to the reason specified by the remote device
  * only if it has an allowed value, otherwise the reason is forced to Remote
  * User Terminated Connection error code (0x13). Allowed remote reason values
@@ -45,7 +46,7 @@
  *        - 0x0000 ... 0x0EFF
  * @param Reason Reason for disconnection (see Core Specification [Vol 1, Part
  *        F] Error Codes).
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_disconnection_complete_event( uint8_t Status,
                                              uint16_t Connection_Handle,
@@ -53,6 +54,7 @@ tBleStatus hci_disconnection_complete_event( uint8_t Status,
 
 /**
  * @brief HCI_ENCRYPTION_CHANGE_EVENT
+ *
  * The Encryption Change event is used to indicate that the change of the
  * encryption mode has been completed. The Connection_Handle will be a
  * Connection_Handle for an ACL connection. The Encryption_Enabled event
@@ -78,7 +80,7 @@ tBleStatus hci_disconnection_complete_event( uint8_t Status,
  *        Values:
  *        - 0x00: Link Level Encryption OFF
  *        - 0x01: Link Level Encryption is ON with AES-CCM
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_encryption_change_event( uint8_t Status,
                                         uint16_t Connection_Handle,
@@ -86,6 +88,7 @@ tBleStatus hci_encryption_change_event( uint8_t Status,
 
 /**
  * @brief HCI_READ_REMOTE_VERSION_INFORMATION_COMPLETE_EVENT
+ *
  * The Read Remote Version Information Complete event is used to indicate the
  * completion of the process obtaining the version information of the remote
  * Controller specified by the Connection_Handle event parameter. The
@@ -112,7 +115,7 @@ tBleStatus hci_encryption_change_event( uint8_t Status,
  * @param Version Version of the Current LMP in the remote Controller
  * @param Manufacturer_Name Manufacturer Name of the remote Controller
  * @param Subversion Subversion of the LMP in the remote Controller
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_read_remote_version_information_complete_event( uint8_t Status,
                                                                uint16_t Connection_Handle,
@@ -122,17 +125,19 @@ tBleStatus hci_read_remote_version_information_complete_event( uint8_t Status,
 
 /**
  * @brief HCI_HARDWARE_ERROR_EVENT
+ *
  * This event is used to notify the Host that a hardware failure has occurred
  * in the Controller.
  * Refer to Annex for details on the possible values of Hardware_Code.
  *
  * @param Hardware_Code Implementation-specific hardware code.
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_hardware_error_event( uint8_t Hardware_Code );
 
 /**
  * @brief HCI_NUMBER_OF_COMPLETED_PACKETS_EVENT
+ *
  * This event is used by the Controller to indicate to the Host how many HCI
  * Data Packets have been completed (transmitted or flushed) for each
  * Connection_Handle since the previous Number Of Completed Packets event was
@@ -149,14 +154,15 @@ tBleStatus hci_hardware_error_event( uint8_t Hardware_Code );
  *
  * @param Number_of_Handles The number of Connection_Handles and
  *        Num_HCI_Data_Packets parameters pairs contained in this event
- * @param Handle_Packets_Pair_Entry See @ref Handle_Packets_Pair_Entry_t
- * @return Value indicating success or error code.
+ * @param Handle_Packets_Pair_Entry See Handle_Packets_Pair_Entry_t.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_number_of_completed_packets_event( uint8_t Number_of_Handles,
                                                   const Handle_Packets_Pair_Entry_t* Handle_Packets_Pair_Entry );
 
 /**
  * @brief HCI_DATA_BUFFER_OVERFLOW_EVENT
+ *
  * This event is used to indicate that the Controller's data buffers have been
  * overflowed. This can occur if the Host has sent more packets than allowed.
  *
@@ -165,12 +171,13 @@ tBleStatus hci_number_of_completed_packets_event( uint8_t Number_of_Handles,
  *        - 0x00: Synchronous Data packet buffers
  *        - 0x01: ACL Data packet buffers
  *        - 0x02: ISO Data packet buffers
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_data_buffer_overflow_event( uint8_t Link_Type );
 
 /**
  * @brief HCI_ENCRYPTION_KEY_REFRESH_COMPLETE_EVENT
+ *
  * This event is used to indicate to the Host that the encryption key was
  * refreshed on the given Connection_Handle. The Controller sends this event
  * when the encryption key has been refreshed due to encryption being started
@@ -180,13 +187,14 @@ tBleStatus hci_data_buffer_overflow_event( uint8_t Link_Type );
  * @param Connection_Handle Connection handle for which the event applies.
  *        Values:
  *        - 0x0000 ... 0x0EFF
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_encryption_key_refresh_complete_event( uint8_t Status,
                                                       uint16_t Connection_Handle );
 
 /**
  * @brief HCI_AUTHENTICATED_PAYLOAD_TIMEOUT_EXPIRED_EVENT
+ *
  * This event is used to indicate that a packet containing a valid MIC on the
  * Connection_Handle was not received within the LE Authenticated Payload
  * Timeout.
@@ -195,7 +203,7 @@ tBleStatus hci_encryption_key_refresh_complete_event( uint8_t Status,
  * @param Connection_Handle Handle of the connection where this event occurred.
  *        Values:
  *        - 0x0000 ... 0x0EFF
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_authenticated_payload_timeout_expired_event( uint16_t Connection_Handle );
 
@@ -203,6 +211,7 @@ tBleStatus hci_authenticated_payload_timeout_expired_event( uint16_t Connection_
 
 /**
  * @brief HCI_LE_CONNECTION_COMPLETE_EVENT
+ *
  * This event indicates to both of the Hosts forming the connection that a new
  * connection has been created. Upon the creation of the connection a
  * Connection_Handle shall be assigned by the Controller, and passed to the
@@ -229,6 +238,7 @@ tBleStatus hci_authenticated_payload_timeout_expired_event( uint16_t Connection_
  *        - 0x01: Random Device Address
  * @param Peer_Address Public Device Address or Random Device Address of the
  *        peer device
+ *        Size: 6 bytes.
  * @param Conn_Interval Connection interval used on this connection.
  *        Time = N * 1.25 ms.
  *        Values:
@@ -254,7 +264,7 @@ tBleStatus hci_authenticated_payload_timeout_expired_event( uint16_t Connection_
  *        - 0x05: 50 ppm
  *        - 0x06: 30 ppm
  *        - 0x07: 20 ppm
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_connection_complete_event( uint8_t Status,
                                              uint16_t Connection_Handle,
@@ -268,25 +278,27 @@ tBleStatus hci_le_connection_complete_event( uint8_t Status,
 
 /**
  * @brief HCI_LE_ADVERTISING_REPORT_EVENT
+ *
  * This event indicates that a device or multiple devices have responded to an
  * active scan or received some information during a passive scan. The
  * Controller may queue these advertising reports and send information from
  * multiple devices in one LE Advertising Report event.
  * See Core Specification [Vol 4, Part E, 7.7.65.2].
- * Note: in the current BLE stack version, only one report is sent per event
+ * Note: In the current BLE stack version, only one report is sent per event
  * (Num_Reports = 1).
  *
  * @param Num_Reports Number of responses in this event.
  *        Values:
  *        - 0x01
- * @param Advertising_Report See @ref Advertising_Report_t
- * @return Value indicating success or error code.
+ * @param Advertising_Report See Advertising_Report_t.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_advertising_report_event( uint8_t Num_Reports,
                                             const Advertising_Report_t* Advertising_Report );
 
 /**
  * @brief HCI_LE_CONNECTION_UPDATE_COMPLETE_EVENT
+ *
  * This event is used to indicate that the Controller process to update the
  * connection has completed.
  * See Core Specification [Vol 4, Part E, 7.7.65.3].
@@ -309,7 +321,7 @@ tBleStatus hci_le_advertising_report_event( uint8_t Num_Reports,
  *        Time = N * 10 ms.
  *        Values:
  *        - 0x000A (100 ms)  ... 0x0C80 (32000 ms)
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_connection_update_complete_event( uint8_t Status,
                                                     uint16_t Connection_Handle,
@@ -319,6 +331,7 @@ tBleStatus hci_le_connection_update_complete_event( uint8_t Status,
 
 /**
  * @brief HCI_LE_READ_REMOTE_FEATURES_PAGE_0_COMPLETE_EVENT
+ *
  * This event is used to indicate the completion of the process of the
  * Controller obtaining page 0 of the features used on the connection and the
  * features supported by the remote BLE device specified by the
@@ -331,7 +344,8 @@ tBleStatus hci_le_connection_update_complete_event( uint8_t Status,
  *        - 0x0000 ... 0x0EFF
  * @param LE_Features Bit Mask List of page 0 of the supported LE features. See
  *        Core Specification [Vol 6, Part B, 4.6].
- * @return Value indicating success or error code.
+ *        Size: 8 bytes.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_read_remote_features_page_0_complete_event( uint8_t Status,
                                                               uint16_t Connection_Handle,
@@ -339,6 +353,7 @@ tBleStatus hci_le_read_remote_features_page_0_complete_event( uint8_t Status,
 
 /**
  * @brief HCI_LE_LONG_TERM_KEY_REQUEST_EVENT
+ *
  * This event indicates that the Central is attempting to encrypt or re-encrypt
  * the link and is requesting the Long Term Key from the Host.
  * See Core Specification [Vol 6, Part B, 5.1.3] and [Vol 4, Part E, 7.7.65.5].
@@ -347,8 +362,9 @@ tBleStatus hci_le_read_remote_features_page_0_complete_event( uint8_t Status,
  *        Values:
  *        - 0x0000 ... 0x0EFF
  * @param Random_Number 64-bit random number
+ *        Size: 8 bytes.
  * @param Encrypted_Diversifier 16-bit encrypted diversifier
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_long_term_key_request_event( uint16_t Connection_Handle,
                                                const uint8_t* Random_Number,
@@ -356,6 +372,7 @@ tBleStatus hci_le_long_term_key_request_event( uint16_t Connection_Handle,
 
 /**
  * @brief HCI_LE_REMOTE_CONNECTION_PARAMETER_REQUEST_EVENT
+ *
  * This event indicates to the Central's Host or the Peripheral's Host that the
  * remote device is requesting a change in the connection parameters using the
  * Connection Update procedure. The Host replies either with the
@@ -384,7 +401,7 @@ tBleStatus hci_le_long_term_key_request_event( uint16_t Connection_Handle,
  *        Time = N * 10 ms.
  *        Values:
  *        - 0x000A (100 ms)  ... 0x0C80 (32000 ms)
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_remote_connection_parameter_request_event( uint16_t Connection_Handle,
                                                              uint16_t Interval_Min,
@@ -394,6 +411,7 @@ tBleStatus hci_le_remote_connection_parameter_request_event( uint16_t Connection
 
 /**
  * @brief HCI_LE_DATA_LENGTH_CHANGE_EVENT
+ *
  * This event notifies the Host of a change to either the maximum Payload
  * length or the maximum transmission time of packets in either direction. The
  * values reported are the maximum that will actually be used on the connection
@@ -425,7 +443,7 @@ tBleStatus hci_le_remote_connection_parameter_request_event( uint16_t Connection
  *        (connEffectiveMaxRxTime).
  *        Values:
  *        - 0x0148 ... 0x4290
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_data_length_change_event( uint16_t Connection_Handle,
                                             uint16_t MaxTxOctets,
@@ -435,31 +453,36 @@ tBleStatus hci_le_data_length_change_event( uint16_t Connection_Handle,
 
 /**
  * @brief HCI_LE_READ_LOCAL_P256_PUBLIC_KEY_COMPLETE_EVENT
+ *
  * This event is generated when local P-256 key generation is complete.
  * See Core Specification [Vol 4, Part E, 7.7.65.8].
  *
  * @param Status Status error code.
- * @param Local_P256_Public_Key Local P-256 public key.
- * @return Value indicating success or error code.
+ * @param Local_P256_Public_Key Local P-256 public key (X and Y coordinates).
+ *        Size: 64 bytes.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_read_local_p256_public_key_complete_event( uint8_t Status,
                                                              const uint8_t* Local_P256_Public_Key );
 
 /**
  * @brief HCI_LE_GENERATE_DHKEY_COMPLETE_EVENT
+ *
  * This event indicates that LE Diffie Hellman key generation has been
  * completed by the Controller.
  * See Core Specification [Vol 4, Part E, 7.7.65.9].
  *
  * @param Status Status error code.
  * @param DHKey Diffie Hellman Key
- * @return Value indicating success or error code.
+ *        Size: 32 bytes.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_generate_dhkey_complete_event( uint8_t Status,
                                                  const uint8_t* DHKey );
 
 /**
  * @brief HCI_LE_ENHANCED_CONNECTION_COMPLETE_EVENT
+ *
  * This event indicates to both of the Hosts forming the connection that a new
  * connection has been created. Upon the creation of the connection a
  * Connection_Handle shall be assigned by the Controller, and passed to the
@@ -494,15 +517,18 @@ tBleStatus hci_le_generate_dhkey_complete_event( uint8_t Status,
  * @param Peer_Address Public Device Address, Random Device Address, Public
  *        Identity Address or Random (static) Identity Address of the device to
  *        be connected.
+ *        Size: 6 bytes.
  * @param Local_Resolvable_Private_Address Resolvable Private Address being
  *        used by the local device for this connection.
  *        This is only valid when the Own_Address_Type is set to 0x02 or 0x03.
  *        For other Own_Address_Type values, the Controller shall return all
  *        zeros.
+ *        Size: 6 bytes.
  * @param Peer_Resolvable_Private_Address Resolvable Private Address being used
  *        by the peer device for this connection.
  *        This is only valid for Peer_Address_Type 0x02 and 0x03. For other
  *        Peer_Address_Type values, the Controller shall return all zeros.
+ *        Size: 6 bytes.
  * @param Conn_Interval Connection interval used on this connection.
  *        Time = N * 1.25 ms.
  *        Values:
@@ -528,7 +554,7 @@ tBleStatus hci_le_generate_dhkey_complete_event( uint8_t Status,
  *        - 0x05: 50 ppm
  *        - 0x06: 30 ppm
  *        - 0x07: 20 ppm
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_enhanced_connection_complete_event( uint8_t Status,
                                                       uint16_t Connection_Handle,
@@ -544,6 +570,7 @@ tBleStatus hci_le_enhanced_connection_complete_event( uint8_t Status,
 
 /**
  * @brief HCI_LE_DIRECTED_ADVERTISING_REPORT_EVENT
+ *
  * This event indicates that directed advertisements have been received where
  * the advertiser is using a resolvable private address for the InitA field in
  * the ADV_DIRECT_IND PDU and the Scanning_Filter_Policy is equal to 0x02 or
@@ -556,14 +583,15 @@ tBleStatus hci_le_enhanced_connection_complete_event( uint8_t Status,
  * @param Num_Reports Number of responses in this event.
  *        Values:
  *        - 0x01
- * @param Direct_Advertising_Report See @ref Direct_Advertising_Report_t
- * @return Value indicating success or error code.
+ * @param Direct_Advertising_Report See Direct_Advertising_Report_t.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_directed_advertising_report_event( uint8_t Num_Reports,
                                                      const Direct_Advertising_Report_t* Direct_Advertising_Report );
 
 /**
  * @brief HCI_LE_PHY_UPDATE_COMPLETE_EVENT
+ *
  * This event is used to indicate that the Controller has changed the
  * transmitter PHY or receiver PHY in use.
  * If the Controller changes the transmitter PHY, the receiver PHY, or both
@@ -586,7 +614,7 @@ tBleStatus hci_le_directed_advertising_report_event( uint8_t Num_Reports,
  *        - 0x01: The receiver PHY for the connection is LE 1M
  *        - 0x02: The receiver PHY for the connection is LE 2M
  *        - 0x03: The receiver PHY for the connection is LE Coded
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_phy_update_complete_event( uint8_t Status,
                                              uint16_t Connection_Handle,
@@ -595,6 +623,7 @@ tBleStatus hci_le_phy_update_complete_event( uint8_t Status,
 
 /**
  * @brief HCI_LE_EXTENDED_ADVERTISING_REPORT_EVENT
+ *
  * This event indicates that a BLE device has responded to an active scan or
  * has broadcast advertisements that were received during a passive scan.
  * See Core Specification [Vol 4, Part E, 7.7.65.13].
@@ -623,6 +652,7 @@ tBleStatus hci_le_phy_update_complete_event( uint8_t Status,
  * @param Address Public Device Address, Random Device Address, Public Identity
  *        Address, or Random (static) Identity Address of the advertising
  *        device.
+ *        Size: 6 bytes.
  * @param Primary_PHY Primary advertising PHY.
  *        Values:
  *        - 0x01: Advertiser PHY is LE 1M
@@ -674,10 +704,11 @@ tBleStatus hci_le_phy_update_complete_event( uint8_t Status,
  * @param Direct_Address Public Device Address, Random Device Address, Public
  *        Identity Address, or Random (static) Identity Address of the target
  *        device.
+ *        Size: 6 bytes.
  * @param Data_Length Length of Data
  * @param Data Octets of advertising or scan response data formatted as defined
  *        in Core Specification [Vol 3, Part C, 11].
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_extended_advertising_report_event( uint8_t Num_Reports,
                                                      uint16_t Event_Type,
@@ -696,6 +727,7 @@ tBleStatus hci_le_extended_advertising_report_event( uint8_t Num_Reports,
 
 /**
  * @brief HCI_LE_PERIODIC_ADVERTISING_SYNC_ESTABLISHED_EVENT
+ *
  * This event indicates that the Controller has received the first periodic
  * advertising packet from an advertiser after the
  * HCI_LE_Periodic_Advertising_Create_Sync command has been sent to the
@@ -723,6 +755,7 @@ tBleStatus hci_le_extended_advertising_report_event( uint8_t Num_Reports,
  * @param Advertiser_Address Public Device Address, Random Device Address,
  *        Public Identity Address, or Random (static) Identity Address of the
  *        advertiser.
+ *        Size: 6 bytes.
  * @param Advertiser_PHY Advertiser PHY.
  *        Values:
  *        - 0x01: Advertiser PHY is LE 1M
@@ -742,7 +775,7 @@ tBleStatus hci_le_extended_advertising_report_event( uint8_t Num_Reports,
  *        - 0x05: 50 ppm
  *        - 0x06: 30 ppm
  *        - 0x07: 20 ppm
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_periodic_advertising_sync_established_event( uint8_t Status,
                                                                uint16_t Sync_Handle,
@@ -755,6 +788,7 @@ tBleStatus hci_le_periodic_advertising_sync_established_event( uint8_t Status,
 
 /**
  * @brief HCI_LE_PERIODIC_ADVERTISING_REPORT_EVENT
+ *
  * This event indicates that the Controller has received a periodic
  * advertisement.
  * See Core Specification [Vol 4, Part E, 7.7.65.15].
@@ -787,7 +821,7 @@ tBleStatus hci_le_periodic_advertising_sync_established_event( uint8_t Status,
  * @param Data_Length Length of Data
  * @param Data Octets of advertising or scan response data formatted as defined
  *        in Core Specification [Vol 3, Part C, 11].
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_periodic_advertising_report_event( uint16_t Sync_Handle,
                                                      uint8_t TX_Power,
@@ -799,6 +833,7 @@ tBleStatus hci_le_periodic_advertising_report_event( uint16_t Sync_Handle,
 
 /**
  * @brief HCI_LE_PERIODIC_ADVERTISING_SYNC_LOST_EVENT
+ *
  * This event indicates that the Controller has not received a Periodic
  * Advertising packet from the train identified by Sync_Handle within the
  * timeout period.
@@ -807,22 +842,24 @@ tBleStatus hci_le_periodic_advertising_report_event( uint16_t Sync_Handle,
  * @param Sync_Handle Handle identifying the periodic advertising train.
  *        Values:
  *        - 0x0000 ... 0x0EFF
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_periodic_advertising_sync_lost_event( uint16_t Sync_Handle );
 
 /**
  * @brief HCI_LE_SCAN_TIMEOUT_EVENT
+ *
  * This event indicates that scanning has ended because the duration has
  * expired.
  * See Core Specification [Vol 4, Part E, 7.7.65.17].
  *
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_scan_timeout_event( void );
 
 /**
  * @brief HCI_LE_ADVERTISING_SET_TERMINATED_EVENT
+ *
  * This event indicates that the Controller has terminated advertising in the
  * advertising sets specified by the Advertising_Handle parameter.
  * See Core Specification [Vol 4, Part E, 7.7.65.18].
@@ -838,7 +875,7 @@ tBleStatus hci_le_scan_timeout_event( void );
  *        events transmitted by the Controller.
  *        Values:
  *        - 0x00 ... 0xFF
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_advertising_set_terminated_event( uint8_t Status,
                                                     uint8_t Advertising_Handle,
@@ -847,6 +884,7 @@ tBleStatus hci_le_advertising_set_terminated_event( uint8_t Status,
 
 /**
  * @brief HCI_LE_SCAN_REQUEST_RECEIVED_EVENT
+ *
  * This event indicates that a SCAN_REQ PDU or an AUX_SCAN_REQ PDU has been
  * received by the advertiser. The request contains a device address from a
  * scanner that is allowed by the advertising filter policy. The advertising
@@ -867,7 +905,8 @@ tBleStatus hci_le_advertising_set_terminated_event( uint8_t Status,
  * @param Scanner_Address Public Device Address, Random Device Address, Public
  *        Identity Address, or Random (static) Identity Address of the scanner
  *        device.
- * @return Value indicating success or error code.
+ *        Size: 6 bytes.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_scan_request_received_event( uint8_t Advertising_Handle,
                                                uint8_t Scanner_Address_Type,
@@ -875,6 +914,7 @@ tBleStatus hci_le_scan_request_received_event( uint8_t Advertising_Handle,
 
 /**
  * @brief HCI_LE_CHANNEL_SELECTION_ALGORITHM_EVENT
+ *
  * This event indicates which channel selection algorithm is used on a data
  * physical channel connection.
  * See Core Specification [Vol 4, Part E, 7.7.65.20].
@@ -886,13 +926,14 @@ tBleStatus hci_le_scan_request_received_event( uint8_t Advertising_Handle,
  *        Values:
  *        - 0x00: Algorithm #1 is used
  *        - 0x01: Algorithm #2 is used
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_channel_selection_algorithm_event( uint16_t Connection_Handle,
                                                      uint8_t Channel_Selection_Algorithm );
 
 /**
  * @brief HCI_LE_CONNECTIONLESS_IQ_REPORT_EVENT
+ *
  * This event is used by the Controller to report IQ information from the
  * Constant Tone Extension of a received advertising packet forming part of the
  * periodic advertising train identified by Sync_Handle and to report IQ
@@ -931,8 +972,8 @@ tBleStatus hci_le_channel_selection_algorithm_event( uint16_t Connection_Handle,
  *        - 0xFF: Insufficient resources to sample
  * @param Periodic_Event_Counter Value of paEventCounter for the reported
  *        packet.
- * @param IQ_Sample See @ref IQ_Sample_t
- * @return Value indicating success or error code.
+ * @param IQ_Sample See IQ_Sample_t.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_connectionless_iq_report_event( uint16_t Sync_Handle,
                                                   uint8_t Channel_Index,
@@ -947,6 +988,7 @@ tBleStatus hci_le_connectionless_iq_report_event( uint16_t Sync_Handle,
 
 /**
  * @brief HCI_LE_CONNECTION_IQ_REPORT_EVENT
+ *
  * This event is used by the Controller to report the IQ samples from the
  * Constant Tone Extension of a received packet.
  * See Core Specification [Vol 4, Part E, 7.7.65.22].
@@ -986,8 +1028,8 @@ tBleStatus hci_le_connectionless_iq_report_event( uint16_t Sync_Handle,
  *        - 0xFF: Insufficient resources to sample
  * @param Connection_Event_Counter Value of paEventCounter for the reported
  *        packet.
- * @param IQ_Sample See @ref IQ_Sample_t
- * @return Value indicating success or error code.
+ * @param IQ_Sample See IQ_Sample_t.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_connection_iq_report_event( uint16_t Connection_Handle,
                                               uint8_t RX_PHY,
@@ -1003,6 +1045,7 @@ tBleStatus hci_le_connection_iq_report_event( uint16_t Connection_Handle,
 
 /**
  * @brief HCI_LE_CTE_REQUEST_FAILED_EVENT
+ *
  * This event is used by the Controller to report an issue following a request
  * to a peer device to reply with a packet containing an LL_CTE_RSP PDU and a
  * Constant Tone Extension. It shall be generated if the packet containing the
@@ -1016,13 +1059,14 @@ tBleStatus hci_le_connection_iq_report_event( uint16_t Connection_Handle,
  * @param Connection_Handle Handle of the connection where this event occurred.
  *        Values:
  *        - 0x0000 ... 0x0EFF
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_cte_request_failed_event( uint8_t Status,
                                             uint16_t Connection_Handle );
 
 /**
  * @brief HCI_LE_PERIODIC_ADVERTISING_SYNC_TRANSFER_RECEIVED_EVENT
+ *
  * This event is used by the Controller to report that it has received periodic
  * advertising synchronization information from the device referred to by the
  * Connection_Handle parameter and either successfully synchronized to the
@@ -1055,6 +1099,7 @@ tBleStatus hci_le_cte_request_failed_event( uint8_t Status,
  * @param Advertiser_Address Public Device Address, Random Device Address,
  *        Public Identity Address, or Random (static) Identity Address of the
  *        advertiser.
+ *        Size: 6 bytes.
  * @param Advertiser_PHY Advertiser PHY.
  *        Values:
  *        - 0x01: Advertiser PHY is LE 1M
@@ -1074,7 +1119,7 @@ tBleStatus hci_le_cte_request_failed_event( uint8_t Status,
  *        - 0x05: 50 ppm
  *        - 0x06: 30 ppm
  *        - 0x07: 20 ppm
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_periodic_advertising_sync_transfer_received_event( uint8_t Status,
                                                                      uint16_t Connection_Handle,
@@ -1089,6 +1134,7 @@ tBleStatus hci_le_periodic_advertising_sync_transfer_received_event( uint8_t Sta
 
 /**
  * @brief HCI_LE_CIS_ESTABLISHED_EVENT
+ *
  * This event indicates that a CIS has been established, was considered lost
  * before being established, or, on the Central, was rejected by the
  * Peripheral. It is generated by the Controller in the Central and Peripheral.
@@ -1161,7 +1207,7 @@ tBleStatus hci_le_periodic_advertising_sync_transfer_received_event( uint8_t Sta
  *        Time = N * 1.25 ms.
  *        Values:
  *        - 0x0004 (5.00 ms)  ... 0x0C80 (4000.00 ms)
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_cis_established_event( uint8_t Status,
                                          uint16_t Connection_Handle,
@@ -1182,6 +1228,7 @@ tBleStatus hci_le_cis_established_event( uint8_t Status,
 
 /**
  * @brief HCI_LE_CIS_REQUEST_EVENT
+ *
  * This event indicates that a Controller has received a request to establish a
  * CIS. If the Controller receives such a request while the HCI_LE_CIS_Request
  * event is masked away, it shall reject it. Otherwise the Controller shall
@@ -1201,7 +1248,7 @@ tBleStatus hci_le_cis_established_event( uint8_t Status,
  * @param CIS_ID CIS identifier.
  *        Values:
  *        - 0x00 ... 0xEF
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_cis_request_event( uint16_t ACL_Connection_Handle,
                                      uint16_t CIS_Connection_Handle,
@@ -1210,6 +1257,7 @@ tBleStatus hci_le_cis_request_event( uint16_t ACL_Connection_Handle,
 
 /**
  * @brief HCI_LE_CREATE_BIG_COMPLETE_EVENT
+ *
  * This event indicates that the HCI_LE_Create_BIG command has completed.
  * See Core Specification [Vol 4, Part E, 7.7.65.27].
  *
@@ -1252,8 +1300,8 @@ tBleStatus hci_le_cis_request_event( uint16_t ACL_Connection_Handle,
  * @param Num_BIS Total number of BISes in the BIG.
  *        Values:
  *        - 1 ... 31
- * @param Connection_Handle See @ref Connection_Handle_t
- * @return Value indicating success or error code.
+ * @param Connection_Handle See Connection_Handle_t.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_create_big_complete_event( uint8_t Status,
                                              uint8_t BIG_Handle,
@@ -1271,6 +1319,7 @@ tBleStatus hci_le_create_big_complete_event( uint8_t Status,
 
 /**
  * @brief HCI_LE_TERMINATE_BIG_COMPLETE_EVENT
+ *
  * This event indicates that the transmission of all the BISes in the BIG are
  * terminated.
  * See Core Specification [Vol 4, Part E, 7.7.65.28].
@@ -1279,13 +1328,14 @@ tBleStatus hci_le_create_big_complete_event( uint8_t Status,
  *        Values:
  *        - 0x00 ... 0xEF
  * @param Reason See "Status error codes" section.
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_terminate_big_complete_event( uint8_t BIG_Handle,
                                                 uint8_t Reason );
 
 /**
  * @brief HCI_LE_BIG_SYNC_ESTABLISHED_EVENT
+ *
  * This event indicates that the HCI_LE_BIG_Create_Sync command has completed.
  * See Core Specification [Vol 4, Part E, 7.7.65.29].
  *
@@ -1319,8 +1369,8 @@ tBleStatus hci_le_terminate_big_complete_event( uint8_t BIG_Handle,
  * @param Num_BIS Total number of BISes in the BIG.
  *        Values:
  *        - 1 ... 31
- * @param Connection_Handle See @ref Connection_Handle_t
- * @return Value indicating success or error code.
+ * @param Connection_Handle See Connection_Handle_t.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_big_sync_established_event( uint8_t Status,
                                               uint8_t BIG_Handle,
@@ -1336,6 +1386,7 @@ tBleStatus hci_le_big_sync_established_event( uint8_t Status,
 
 /**
  * @brief HCI_LE_BIG_SYNC_LOST_EVENT
+ *
  * This event indicates that the Controller has not received any PDUs on a BIG
  * within the timeout period BIG_Sync_Timeout or the BIG has been terminated by
  * the remote device.
@@ -1345,13 +1396,14 @@ tBleStatus hci_le_big_sync_established_event( uint8_t Status,
  *        Values:
  *        - 0x00 ... 0xEF
  * @param Reason See "Status error codes" section.
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_big_sync_lost_event( uint8_t BIG_Handle,
                                        uint8_t Reason );
 
 /**
  * @brief HCI_LE_REQUEST_PEER_SCA_COMPLETE_EVENT
+ *
  * This event indicates that the HCI_LE_Request_Peer_SCA command has been
  * completed.
  * See Core Specification [Vol 4, Part E, 7.7.65.31].
@@ -1370,7 +1422,7 @@ tBleStatus hci_le_big_sync_lost_event( uint8_t BIG_Handle,
  *        - 0x05: 31 ppm to 50 ppm
  *        - 0x06: 21 ppm to 30 ppm
  *        - 0x07: 0 ppm to 20 ppm
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_request_peer_sca_complete_event( uint8_t Status,
                                                    uint16_t Connection_Handle,
@@ -1378,6 +1430,7 @@ tBleStatus hci_le_request_peer_sca_complete_event( uint8_t Status,
 
 /**
  * @brief HCI_LE_PATH_LOSS_THRESHOLD_EVENT
+ *
  * This event is used to report a path loss threshold crossing on the ACL
  * connection identified by the Connection_Handle parameter.
  * See Core Specification [Vol 4, Part E, 7.7.65.32].
@@ -1396,7 +1449,7 @@ tBleStatus hci_le_request_peer_sca_complete_event( uint8_t Status,
  *        - 0x00: Entered low zone
  *        - 0x01: Entered middle zone
  *        - 0x02: Entered high zone
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_path_loss_threshold_event( uint16_t Connection_Handle,
                                              uint8_t Current_Path_Loss,
@@ -1404,6 +1457,7 @@ tBleStatus hci_le_path_loss_threshold_event( uint16_t Connection_Handle,
 
 /**
  * @brief HCI_LE_TRANSMIT_POWER_REPORTING_EVENT
+ *
  * This event is used to report the transmit power level on the ACL connection
  * identified by the Connection_Handle parameter.
  * See Core Specification [Vol 4, Part E, 7.7.65.33].
@@ -1442,7 +1496,7 @@ tBleStatus hci_le_path_loss_threshold_event( uint16_t Connection_Handle,
  *        Values:
  *        - 127: Change is not available or is out of range
  *        - -127 ... 126
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_transmit_power_reporting_event( uint8_t Status,
                                                   uint16_t Connection_Handle,
@@ -1454,6 +1508,7 @@ tBleStatus hci_le_transmit_power_reporting_event( uint8_t Status,
 
 /**
  * @brief HCI_LE_BIGINFO_ADVERTISING_REPORT_EVENT
+ *
  * This event indicates that the Controller has received an Advertising PDU
  * that contained a BIGInfo field. If the Controller also generates an
  * HCI_LE_Periodic_Advertising_Report event, the
@@ -1505,7 +1560,7 @@ tBleStatus hci_le_transmit_power_reporting_event( uint8_t Status,
  *        Values:
  *        - 0x00: Unencrypted
  *        - 0x01: Encrypted
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_biginfo_advertising_report_event( uint16_t Sync_Handle,
                                                     uint8_t Num_BIS,
@@ -1523,6 +1578,7 @@ tBleStatus hci_le_biginfo_advertising_report_event( uint16_t Sync_Handle,
 
 /**
  * @brief HCI_LE_SUBRATE_CHANGE_EVENT
+ *
  * This event is used to indicate that a Connection Subrate Update procedure
  * has completed and some parameters of the specified connection have changed.
  * See Core Specification [Vol 4, Part E, 7.7.65.35].
@@ -1550,7 +1606,7 @@ tBleStatus hci_le_biginfo_advertising_report_event( uint16_t Sync_Handle,
  *        Time = N * 10 ms.
  *        Values:
  *        - 0x000A (100 ms)  ... 0x0C80 (32000 ms)
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_subrate_change_event( uint8_t Status,
                                         uint16_t Connection_Handle,
@@ -1561,6 +1617,7 @@ tBleStatus hci_le_subrate_change_event( uint8_t Status,
 
 /**
  * @brief HCI_LE_PERIODIC_ADVERTISING_SYNC_ESTABLISHED_V2_EVENT
+ *
  * This event indicates that the Controller has received the first periodic
  * advertising packet from an advertiser after the
  * HCI_LE_Periodic_Advertising_Create_Sync command has been sent to the
@@ -1588,6 +1645,7 @@ tBleStatus hci_le_subrate_change_event( uint8_t Status,
  * @param Advertiser_Address Public Device Address, Random Device Address,
  *        Public Identity Address, or Random (static) Identity Address of the
  *        advertiser.
+ *        Size: 6 bytes.
  * @param Advertiser_PHY Advertiser PHY.
  *        Values:
  *        - 0x01: Advertiser PHY is LE 1M
@@ -1626,7 +1684,7 @@ tBleStatus hci_le_subrate_change_event( uint8_t Status,
  *        Values:
  *        - 0x00 (0.000 ms) : No response slots
  *        - 0x02 (0.250 ms)  ... 0xFF (31.875 ms)
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_periodic_advertising_sync_established_v2_event( uint8_t Status,
                                                                   uint16_t Sync_Handle,
@@ -1643,6 +1701,7 @@ tBleStatus hci_le_periodic_advertising_sync_established_v2_event( uint8_t Status
 
 /**
  * @brief HCI_LE_PERIODIC_ADVERTISING_REPORT_V2_EVENT
+ *
  * This event indicates that the Controller has received a periodic
  * advertisement or has failed to receive an AUX_SYNC_SUBEVENT_IND PDU. The
  * Sync_Handle parameter identifies the periodic advertising train that the
@@ -1683,7 +1742,7 @@ tBleStatus hci_le_periodic_advertising_sync_established_v2_event( uint8_t Status
  * @param Data_Length Length of Data
  * @param Data Octets of advertising or scan response data formatted as defined
  *        in Core Specification [Vol 3, Part C, 11].
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_periodic_advertising_report_v2_event( uint16_t Sync_Handle,
                                                         uint8_t Tx_Power,
@@ -1697,6 +1756,7 @@ tBleStatus hci_le_periodic_advertising_report_v2_event( uint16_t Sync_Handle,
 
 /**
  * @brief HCI_LE_PERIODIC_ADVERTISING_SYNC_TRANSFER_RECEIVED_V2_EVENT
+ *
  * This event is used by the Controller to report that it has received periodic
  * advertising synchronization information from the device referred to by the
  * Connection_Handle parameter and either successfully synchronized to the
@@ -1729,6 +1789,7 @@ tBleStatus hci_le_periodic_advertising_report_v2_event( uint16_t Sync_Handle,
  * @param Advertiser_Address Public Device Address, Random Device Address,
  *        Public Identity Address, or Random (static) Identity Address of the
  *        advertiser.
+ *        Size: 6 bytes.
  * @param Advertiser_PHY Advertiser PHY.
  *        Values:
  *        - 0x01: Advertiser PHY is LE 1M
@@ -1763,7 +1824,7 @@ tBleStatus hci_le_periodic_advertising_report_v2_event( uint16_t Sync_Handle,
  *        Time = N * 0.125 ms.
  *        Values:
  *        - 0x02 (0.250 ms)  ... 0xFF (31.875 ms)
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_periodic_advertising_sync_transfer_received_v2_event( uint8_t Status,
                                                                         uint16_t Connection_Handle,
@@ -1782,6 +1843,7 @@ tBleStatus hci_le_periodic_advertising_sync_transfer_received_v2_event( uint8_t 
 
 /**
  * @brief HCI_LE_PERIODIC_ADVERTISING_SUBEVENT_DATA_REQUEST_EVENT
+ *
  * This event is used to allow the Controller to indicate that it is ready to
  * transmit one or more subevents and is requesting the advertising data for
  * these subevents. The Subevent_Data_Count parameter shall be less than or
@@ -1801,7 +1863,7 @@ tBleStatus hci_le_periodic_advertising_sync_transfer_received_v2_event( uint8_t 
  *        for.
  *        Values:
  *        - 0x01 ... 0x80
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_periodic_advertising_subevent_data_request_event( uint8_t Advertising_Handle,
                                                                     uint8_t Subevent_Start,
@@ -1809,6 +1871,7 @@ tBleStatus hci_le_periodic_advertising_subevent_data_request_event( uint8_t Adve
 
 /**
  * @brief HCI_LE_PERIODIC_ADVERTISING_RESPONSE_REPORT_EVENT
+ *
  * This event indicates that one or more BLE devices have responded to a
  * periodic advertising subevent during a PAwR train. The Controller may queue
  * these advertising reports and send information from multiple devices in one
@@ -1833,7 +1896,8 @@ tBleStatus hci_le_periodic_advertising_subevent_data_request_event( uint8_t Adve
  *        Data_Status (1 byte), Data_Length (1 byte), Data ('Data_Length'
  *        bytes). All fields are repeated 'Num_Responses' times. Note: the
  *        indicated size is the maximum size.
- * @return Value indicating success or error code.
+ *        Size: 250 bytes.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_periodic_advertising_response_report_event( uint8_t Advertising_Handle,
                                                               uint8_t Subevent,
@@ -1843,6 +1907,7 @@ tBleStatus hci_le_periodic_advertising_response_report_event( uint8_t Advertisin
 
 /**
  * @brief HCI_LE_ENHANCED_CONNECTION_COMPLETE_V2_EVENT
+ *
  * This event indicates to both of the Hosts forming the connection that a new
  * connection has been created. Upon the creation of the connection a
  * Connection_Handle shall be assigned by the Controller, and passed to the
@@ -1870,15 +1935,18 @@ tBleStatus hci_le_periodic_advertising_response_report_event( uint8_t Advertisin
  * @param Peer_Address Public Device Address, Random Device Address, Public
  *        Identity Address or Random (static) Identity Address of the device to
  *        be connected.
+ *        Size: 6 bytes.
  * @param Local_Resolvable_Private_Address Resolvable Private Address being
  *        used by the local device for this connection.
  *        This is only valid when the Own_Address_Type is set to 0x02 or 0x03.
  *        For other Own_Address_Type values, the Controller shall return all
  *        zeros.
+ *        Size: 6 bytes.
  * @param Peer_Resolvable_Private_Address Resolvable Private Address being used
  *        by the peer device for this connection.
  *        This is only valid for Peer_Address_Type 0x02 and 0x03. For other
  *        Peer_Address_Type values, the Controller shall return all zeros.
+ *        Size: 6 bytes.
  * @param Conn_Interval Connection interval used on this connection.
  *        Time = N * 1.25 ms.
  *        Values:
@@ -1912,7 +1980,7 @@ tBleStatus hci_le_periodic_advertising_response_report_event( uint8_t Advertisin
  *        Values:
  *        - 0xFFFF: No Sync Handle
  *        - 0x0000 ... 0x0EFF
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_enhanced_connection_complete_v2_event( uint8_t Status,
                                                          uint16_t Connection_Handle,
@@ -1930,6 +1998,7 @@ tBleStatus hci_le_enhanced_connection_complete_v2_event( uint8_t Status,
 
 /**
  * @brief HCI_LE_CIS_ESTABLISHED_V2_EVENT
+ *
  * This event indicates that a CIS has been established, was considered lost
  * before being established, or - on the Central - was rejected by the
  * Peripheral.
@@ -2025,7 +2094,7 @@ tBleStatus hci_le_enhanced_connection_complete_v2_event( uint8_t Status,
  *        Values:
  *        - 0x00: Unframed
  *        - 0x01: Framed
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_cis_established_v2_event( uint8_t Status,
                                             uint16_t Connection_Handle,
@@ -2052,6 +2121,7 @@ tBleStatus hci_le_cis_established_v2_event( uint8_t Status,
 
 /**
  * @brief HCI_LE_READ_ALL_REMOTE_FEATURES_COMPLETE_EVENT
+ *
  * This event is used to indicate the completion of the process of the
  * Controller obtaining the features supported by the remote BLE device
  * specified by the Connection_Handle event parameter.
@@ -2065,14 +2135,15 @@ tBleStatus hci_le_cis_established_v2_event( uint8_t Status,
  *        device's supported LE features that contains at least one bit set to
  *        1.
  *        Values:
- *        - 0x01 ... 0x0A
+ *        - 0x00 ... 0x0A
  * @param Max_Valid_Page The number of the highest-numbered page of LE_Features
  *        that contains valid data.
  *        Values:
- *        - 0x01 ... 0x0A
+ *        - 0x00 ... 0x0A
  * @param LE_Features Bit Mask List of the supported LE features. See Core
  *        Specification [Vol 6, Part B, 4.6].
- * @return Value indicating success or error code.
+ *        Size: 248 bytes.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_read_all_remote_features_complete_event( uint8_t Status,
                                                            uint16_t Connection_Handle,
@@ -2082,6 +2153,7 @@ tBleStatus hci_le_read_all_remote_features_complete_event( uint8_t Status,
 
 /**
  * @brief HCI_LE_CS_READ_REMOTE_SUPPORTED_CAPABILITIES_COMPLETE_EVENT
+ *
  * This event is generated when a locally initiated CS Capabilities Exchange
  * procedure has completed or when the local Controller has received an
  * LL_CS_CAPABILITIES_REQ from the remote Controller.
@@ -2102,20 +2174,18 @@ tBleStatus hci_le_read_all_remote_features_complete_event( uint8_t Status,
  *          procedures and for an indefinite number of CS procedures until
  *          termination
  *        - 0x0001 ... 0xFFFF
- * @param Num_Antennas_Supported Number of antennas supported.
+ * @param Num_Antennae_Supported Number of antennas supported.
  *        Values:
  *        - 0x01 ... 0x04
  * @param Max_Antenna_Paths_Supported Maximum number of antenna paths
  *        supported.
  *        Values:
  *        - 0x01 ... 0x04
- * @param Roles_Supported Indicates the CS roles that are supported by the
- *        remote Controller.
+ * @param Roles_Supported Indicates the CS roles that are supported.
  *        Flags:
  *        - 0x01: Initiator
  *        - 0x02: Reflector
- * @param Optional_Modes_Supported Indicates the optional CS modes that are
- *        supported by the remote Controller.
+ * @param Modes_Supported Indicates the optional CS modes that are supported.
  *        Flags:
  *        - 0x01: Mode-3
  * @param RTT_Capability Indicates (with following parameters) the time-of-
@@ -2132,10 +2202,10 @@ tBleStatus hci_le_read_all_remote_features_complete_event( uint8_t Status,
  *          flight precision requirement. If the RTT_Sounding_N field is set to
  *          0, then the bit shall be ignored.
  *        - 0x04: If set to 1, then the value reflected in the
- *          RTT_Random_Payload_N field refers to the 10 ns time-of-flight
- *          precision requirement. Otherwise, the RTT_Random_Payload_N field
+ *          RTT_Random_Sequence_N field refers to the 10 ns time-of-flight
+ *          precision requirement. Otherwise, the RTT_Random_Sequence_N field
  *          refers to the 150 ns time-of-flight precision requirement. If the
- *          RTT_Random_Payload_N field is set to 0, then the bit shall be
+ *          RTT_Random_Sequence_N field is set to 0, then the bit shall be
  *          ignored.
  * @param RTT_AA_Only_N Number of CS_SYNC exchanges needed to satisfy the
  *        precision requirements.
@@ -2147,10 +2217,10 @@ tBleStatus hci_le_read_all_remote_features_complete_event( uint8_t Status,
  *        Values:
  *        - 0x00: RTT Sounding not supported
  *        - 0x01 ... 0xFF
- * @param RTT_Random_Payload_N Number of CS_SYNC exchanges needed to satisfy
+ * @param RTT_Random_Sequence_N Number of CS_SYNC exchanges needed to satisfy
  *        the time-of-flight precision requirements.
  *        Values:
- *        - 0x00: RTT Random Payload not supported
+ *        - 0x00: RTT Random Sequence not supported
  *        - 0x01 ... 0xFF
  * @param NADM_Sounding_Capability Indicates (with next parameter) the support
  *        by the remote Controller for reporting Normalized Attack Detector
@@ -2173,7 +2243,7 @@ tBleStatus hci_le_read_all_remote_features_complete_event( uint8_t Status,
  *        - 0x02: LE 2M PHY
  *        - 0x04: LE 2M 2BT PHY
  * @param Subfeatures_Supported Indicates which optional subfeatures are
- *        supported by the remote Controller.
+ *        supported.
  *        Flags:
  *        - 0x0002: CS with a Frequency Actuation Error of zero relative to
  *          mode-0 transmissions in the reflector role
@@ -2230,20 +2300,20 @@ tBleStatus hci_le_read_all_remote_features_complete_event( uint8_t Status,
  *        - 0x04: 24 dB supported
  *        - 0x08: 27 dB supported
  *        - 0x10: 30 dB supported
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_cs_read_remote_supported_capabilities_complete_event( uint8_t Status,
                                                                         uint16_t Connection_Handle,
                                                                         uint8_t Num_Config_Supported,
                                                                         uint16_t Max_Consecutive_Procedures_Supported,
-                                                                        uint8_t Num_Antennas_Supported,
+                                                                        uint8_t Num_Antennae_Supported,
                                                                         uint8_t Max_Antenna_Paths_Supported,
                                                                         uint8_t Roles_Supported,
-                                                                        uint8_t Optional_Modes_Supported,
+                                                                        uint8_t Modes_Supported,
                                                                         uint8_t RTT_Capability,
                                                                         uint8_t RTT_AA_Only_N,
                                                                         uint8_t RTT_Sounding_N,
-                                                                        uint8_t RTT_Random_Payload_N,
+                                                                        uint8_t RTT_Random_Sequence_N,
                                                                         uint16_t NADM_Sounding_Capability,
                                                                         uint16_t NADM_Random_Capability,
                                                                         uint8_t CS_SYNC_PHYs_Supported,
@@ -2257,6 +2327,7 @@ tBleStatus hci_le_cs_read_remote_supported_capabilities_complete_event( uint8_t 
 
 /**
  * @brief HCI_LE_CS_READ_REMOTE_FAE_TABLE_COMPLETE_EVENT
+ *
  * This event is generated when a locally initiated CS Mode 0 Frequency
  * Actuation Error Table Update procedure has completed.
  * See Core Specification [Vol 4, Part E, 7.7.65.40].
@@ -2267,8 +2338,9 @@ tBleStatus hci_le_cs_read_remote_supported_capabilities_complete_event( uint8_t 
  *        - 0x0000 ... 0x0EFF
  * @param Remote_FAE_Table Per-channel mode-0 Frequency Actuation Error table
  *        of the remote Controller as described in Core Specification [Vol 6,
- *        Part B, 2.4.2.53].
- * @return Value indicating success or error code.
+ *        Part B, 2.4.2.52].
+ *        Size: 72 bytes.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_cs_read_remote_fae_table_complete_event( uint8_t Status,
                                                            uint16_t Connection_Handle,
@@ -2276,6 +2348,7 @@ tBleStatus hci_le_cs_read_remote_fae_table_complete_event( uint8_t Status,
 
 /**
  * @brief HCI_LE_CS_SECURITY_ENABLE_COMPLETE_EVENT
+ *
  * This event is generated when a locally initiated CS Security Start procedure
  * has completed or when the local Controller has responded to a CS security
  * request from the remote Controller.
@@ -2285,13 +2358,14 @@ tBleStatus hci_le_cs_read_remote_fae_table_complete_event( uint8_t Status,
  * @param Connection_Handle Connection handle for which the event applies.
  *        Values:
  *        - 0x0000 ... 0x0EFF
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_cs_security_enable_complete_event( uint8_t Status,
                                                      uint16_t Connection_Handle );
 
 /**
  * @brief HCI_LE_CS_CONFIG_COMPLETE_EVENT
+ *
  * This event is generated when a locally initiated Channel Sounding
  * Configuration procedure has completed or when the local Controller has
  * responded to a CS configuration request from the remote Controller for the
@@ -2328,11 +2402,11 @@ tBleStatus hci_le_cs_security_enable_complete_event( uint8_t Status,
  * @param Min_Main_Mode_Steps Minimum number of CS main mode steps to be
  *        executed before a submode step is executed.
  *        Values:
- *        - 0x02 ... 0xFF
+ *        - 0x01 ... 0xFF
  * @param Max_Main_Mode_Steps Maximum number of CS main mode steps to be
  *        executed before a submode step is executed.
  *        Values:
- *        - 0x02 ... 0xFF
+ *        - 0x01 ... 0xFF
  * @param Main_Mode_Repetition The number of main mode steps taken from the end
  *        of the last CS subevent to be repeated at the beginning of the
  *        current CS subevent directly after the last mode-0 step of that
@@ -2371,6 +2445,7 @@ tBleStatus hci_le_cs_security_enable_complete_event( uint8_t Status,
  *        Channels n = 0, 1, 23, 24, 25, 77, and 78 shall be ignored and shall
  *        be set to zero. At least 15 channels shall be enabled.
  *        The most significant bit (bit 79) is reserved for future use.
+ *        Size: 10 bytes.
  * @param Channel_Map_Repetition The number of times the map represented by the
  *        Channel_Map field is to be cycled through for non-mode-0 steps within
  *        a CS procedure.
@@ -2390,9 +2465,10 @@ tBleStatus hci_le_cs_security_enable_complete_event( uint8_t Status,
  *        sequence.
  *        Values:
  *        - 0x02 ... 0x08
- * @param Reserved Reserved, shall be set to 0.
- *        Values:
- *        - 0x00
+ * @param CS_Enhancements Indicates which CS enhancements to be used during the
+ *        CS procedure
+ *        Flags:
+ *        - 0x01: IPT is enabled in the CS reflector
  * @param T_IP1_Time Interlude time in microseconds between the RTT packets.
  *        Values:
  *        - 10
@@ -2431,7 +2507,7 @@ tBleStatus hci_le_cs_security_enable_complete_event( uint8_t Status,
  *        - 10
  *        - 20
  *        - 40
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_cs_config_complete_event( uint8_t Status,
                                             uint16_t Connection_Handle,
@@ -2451,7 +2527,7 @@ tBleStatus hci_le_cs_config_complete_event( uint8_t Status,
                                             uint8_t Channel_Selection_Type,
                                             uint8_t Ch3c_Shape,
                                             uint8_t Ch3c_Jump,
-                                            uint8_t Reserved,
+                                            uint8_t CS_Enhancements,
                                             uint8_t T_IP1_Time,
                                             uint8_t T_IP2_Time,
                                             uint8_t T_FCS_Time,
@@ -2459,6 +2535,7 @@ tBleStatus hci_le_cs_config_complete_event( uint8_t Status,
 
 /**
  * @brief HCI_LE_CS_PROCEDURE_ENABLE_COMPLETE_EVENT
+ *
  * This event is generated when the local or remote Controller has scheduled a
  * new CS procedure measurement or disabled an ongoing CS procedure measurement
  * as a result of an HCI_LE_CS_Procedure_Enable command. When a new CS
@@ -2515,7 +2592,7 @@ tBleStatus hci_le_cs_config_complete_event( uint8_t Status,
  *        Time = N * 0.625 ms.
  *        Values:
  *        - 0x0001 (0.625 ms)  ... 0xFFFF (40959.375 ms)
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_cs_procedure_enable_complete_event( uint8_t Status,
                                                       uint16_t Connection_Handle,
@@ -2533,6 +2610,7 @@ tBleStatus hci_le_cs_procedure_enable_complete_event( uint8_t Status,
 
 /**
  * @brief HCI_LE_CS_SUBEVENT_RESULT_EVENT
+ *
  * This event is generated when the local Controller has results to report for
  * a CS subevent during the CS procedure. Depending on the number of CS steps
  * in the CS subevent, the Controller may choose to report complete or partial
@@ -2606,7 +2684,8 @@ tBleStatus hci_le_cs_procedure_enable_complete_event( uint8_t Status,
  *        ('Step_Data_Length' bytes). All fields are repeated
  *        'Num_Steps_Reported' times. Note: the indicated size is the maximum
  *        size.
- * @return Value indicating success or error code.
+ *        Size: 239 bytes.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_cs_subevent_result_event( uint16_t Connection_Handle,
                                             uint8_t Config_ID,
@@ -2623,6 +2702,7 @@ tBleStatus hci_le_cs_subevent_result_event( uint16_t Connection_Handle,
 
 /**
  * @brief HCI_LE_CS_SUBEVENT_RESULT_CONTINUE_EVENT
+ *
  * This event is generated after the local Controller has completed a new CS
  * subevent measurement and has already sent an HCI_LE_CS_Subevent_Result event
  * for the specified CS subevent.
@@ -2678,7 +2758,8 @@ tBleStatus hci_le_cs_subevent_result_event( uint16_t Connection_Handle,
  *        ('Step_Data_Length' bytes). All fields are repeated
  *        'Num_Steps_Reported' times. Note: the indicated size is the maximum
  *        size.
- * @return Value indicating success or error code.
+ *        Size: 246 bytes.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_cs_subevent_result_continue_event( uint16_t Connection_Handle,
                                                      uint8_t Config_ID,
@@ -2691,17 +2772,19 @@ tBleStatus hci_le_cs_subevent_result_continue_event( uint16_t Connection_Handle,
 
 /**
  * @brief HCI_LE_CS_TEST_END_COMPLETE_EVENT
+ *
  * This event is generated when the local Controller has stopped an ongoing CS
  * test as a result of the HCI_LE_CS_TEST_END command.
  * See Core Specification [Vol 4, Part E, 7.7.65.46].
  *
  * @param Status Status error code.
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_cs_test_end_complete_event( uint8_t Status );
 
 /**
  * @brief HCI_LE_MONITORED_ADVERTISERS_REPORT_EVENT
+ *
  * This event indicates that an advertiser on the Monitored Advertisers List
  * has met an RSSI threshold condition established by the
  * HCI_LE_ENABLE_MONITORING_ADVERTISERS command.
@@ -2718,12 +2801,13 @@ tBleStatus hci_le_cs_test_end_complete_event( uint8_t Status );
  * @param Address Public Device Address, Random Device Address, Public Identity
  *        Address, or Random (static) Identity Address of the device being
  *        monitored.
+ *        Size: 6 bytes.
  * @param Condition RSSI threshold condition.
  *        Values:
  *        - 0x00: Device RSSI below the low RSSI threshold for longer than the
  *          timeout period
  *        - 0x01: Device RSSI greater than or equal to the high RSSI threshold
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_monitored_advertisers_report_event( uint8_t Address_Type,
                                                       const uint8_t* Address,
@@ -2731,6 +2815,7 @@ tBleStatus hci_le_monitored_advertisers_report_event( uint8_t Address_Type,
 
 /**
  * @brief HCI_LE_FRAME_SPACE_UPDATE_COMPLETE_EVENT
+ *
  * This event is used to indicate that the Frame Space Update procedure has
  * completed and, if initiated autonomously by the local Controller or the peer
  * device, that at least one frame space value has changed.
@@ -2762,7 +2847,7 @@ tBleStatus hci_le_monitored_advertisers_report_event( uint8_t Address_Type,
  *        - 0x0004: T_MCES
  *        - 0x0008: T_IFS_CIS
  *        - 0x0010: T_MSS_CIS
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus hci_le_frame_space_update_complete_event( uint8_t Status,
                                                      uint16_t Connection_Handle,
@@ -2775,6 +2860,7 @@ tBleStatus hci_le_frame_space_update_complete_event( uint8_t Status,
 
 /**
  * @brief ACI_WARNING_EVENT
+ *
  * This event is generated to report warning information.
  *
  * @param Warning_Type Warning type
@@ -2786,9 +2872,10 @@ tBleStatus hci_le_frame_space_update_complete_event( uint8_t Status,
  *        - 0x05: COC already assigned DCID
  *        - 0x06: SMP unexpected LTK request
  *        - 0x07: GATT bearer not allocated
- * @param Data_Length Length of Data in octets
+ *        - 0x08: GATT database saving issue
+ * @param Data_Length Length of Data in octets.
  * @param Data Debug information.
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_warning_event( uint8_t Warning_Type,
                               uint8_t Data_Length,
@@ -2798,15 +2885,17 @@ tBleStatus aci_warning_event( uint8_t Warning_Type,
 
 /**
  * @brief ACI_GAP_LIMITED_DISCOVERABLE_EVENT
+ *
  * This event is generated by the Controller when the limited discoverable mode
  * ends due to timeout. The timeout is 180 seconds.
  *
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_limited_discoverable_event( void );
 
 /**
  * @brief ACI_GAP_PAIRING_COMPLETE_EVENT
+ *
  * This event is generated when the pairing process has completed successfully
  * or a pairing procedure timeout has occurred or the pairing has failed. This
  * is to notify the application that we have paired with a remote device so
@@ -2839,7 +2928,7 @@ tBleStatus aci_gap_limited_discoverable_event( void );
  *        - 0x0C: Numeric Comparison Failed
  *        - 0x0F: Key Rejected
  *        - 0x10: Busy
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_pairing_complete_event( uint16_t Connection_Handle,
                                            uint8_t Status,
@@ -2847,6 +2936,7 @@ tBleStatus aci_gap_pairing_complete_event( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_GAP_PASS_KEY_REQ_EVENT
+ *
  * This event is generated by the Security manager to the application when a
  * passkey is required for pairing. When this event is received, the
  * application has to respond with the ACI_GAP_PASS_KEY_RESP command.
@@ -2861,13 +2951,14 @@ tBleStatus aci_gap_pairing_complete_event( uint16_t Connection_Handle,
  *        - 0x02: IO_CAP_KEYBOARD_ONLY
  *        - 0x03: IO_CAP_NO_INPUT_NO_OUTPUT
  *        - 0x04: IO_CAP_KEYBOARD_DISPLAY
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_pass_key_req_event( uint16_t Connection_Handle,
                                        uint8_t IO_Capability );
 
 /**
  * @brief ACI_GAP_AUTHORIZATION_REQ_EVENT
+ *
  * This event is generated by the Security manager to the application when the
  * application has set that authorization is required for reading/writing of
  * attributes. This event will be generated as soon as the pairing is complete.
@@ -2877,12 +2968,13 @@ tBleStatus aci_gap_pass_key_req_event( uint16_t Connection_Handle,
  * @param Connection_Handle Handle of the connection where this event occurred.
  *        Values:
  *        - 0x0000 ... 0x0EFF
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_authorization_req_event( uint16_t Connection_Handle );
 
 /**
  * @brief ACI_GAP_BOND_LOST_EVENT
+ *
  * This event is generated when a pairing request is issued in response to a
  * Peripheral Security Request from a Central which has previously bonded with
  * the Peripheral. When this event is received, the upper layer has to issue
@@ -2892,12 +2984,13 @@ tBleStatus aci_gap_authorization_req_event( uint16_t Connection_Handle );
  * @param Connection_Handle Handle of the connection where this event occurred.
  *        Values:
  *        - 0x0000 ... 0x0EFF
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_bond_lost_event( uint16_t Connection_Handle );
 
 /**
  * @brief ACI_GAP_PROC_COMPLETE_EVENT
+ *
  * This event is sent by the GAP to the upper layers when a procedure
  * previously started has been terminated by the upper layer or has completed
  * for any other reason
@@ -2911,9 +3004,9 @@ tBleStatus aci_gap_bond_lost_event( uint16_t Connection_Handle );
  *        - 0x40: GAP_DIRECT_CONNECTION_ESTABLISHMENT_PROC
  *        - 0xB0: GAP_GENERIC_SCAN_PROC
  * @param Status Status error code.
- * @param Data_Length Length of Data in octets
+ * @param Data_Length Length of Data in octets.
  * @param Data Procedure Specific Data.
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_proc_complete_event( uint8_t Procedure_Code,
                                         uint8_t Status,
@@ -2922,6 +3015,7 @@ tBleStatus aci_gap_proc_complete_event( uint8_t Procedure_Code,
 
 /**
  * @brief ACI_GAP_ADDR_NOT_RESOLVED_EVENT
+ *
  * This event is sent only by a privacy enabled peripheral with a non-empty
  * bonded device list. The event is sent to the application when the peripheral
  * is unsuccessful in resolving the resolvable address of the peer device after
@@ -2930,46 +3024,49 @@ tBleStatus aci_gap_proc_complete_event( uint8_t Procedure_Code,
  * @param Connection_Handle Handle of the connection where this event occurred.
  *        Values:
  *        - 0x0000 ... 0x0EFF
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_addr_not_resolved_event( uint16_t Connection_Handle );
 
 /**
  * @brief ACI_GAP_NUMERIC_COMPARISON_VALUE_EVENT
+ *
  * This event is sent only during SC Pairing, when Numeric Comparison
  * Association model is selected, in order to show the Numeric Value generated,
- * and to ask for Confirmation to the User. When this event is received, the
- * application has to respond with the
+ * and to ask for confirmation to the user. When this event is received, the
+ * application shall respond with the
  * ACI_GAP_NUMERIC_COMPARISON_VALUE_CONFIRM_YESNO command.
  *
  * @param Connection_Handle Handle of the connection where this event occurred.
  *        Values:
  *        - 0x0000 ... 0x0EFF
  * @param Numeric_Value Generated numeric value.
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_numeric_comparison_value_event( uint16_t Connection_Handle,
                                                    uint32_t Numeric_Value );
 
 /**
  * @brief ACI_GAP_KEYPRESS_NOTIFICATION_EVENT
+ *
  * This event is sent only during SC Pairing, when Keypress Notifications are
- * supported, in order to show the input type signaled by the peer device,
+ * supported, in order to display the input type signaled by the peer device,
  * having Keyboard only I/O capabilities. When this event is received, no
- * action is required to the User.
+ * action is required from the user.
  *
  * @param Connection_Handle Handle of the connection where this event occurred.
  *        Values:
  *        - 0x0000 ... 0x0EFF
  * @param Notification_Type Type of Keypress input notified/signaled by peer
  *        device (having Keyboard only I/O capabilities.
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_keypress_notification_event( uint16_t Connection_Handle,
                                                 uint8_t Notification_Type );
 
 /**
  * @brief ACI_GAP_PAIRING_REQUEST_EVENT
+ *
  * This event is sent only when SMP mode bit 3 is configured to 1. With this
  * configuration, it is generated in two cases:
  * - in Peripheral case, when a Pairing Request is received;
@@ -2988,7 +3085,7 @@ tBleStatus aci_gap_keypress_notification_event( uint16_t Connection_Handle,
  * @param Auth_Req AuthReq field from Pairing Request (see Core Specification
  *        [Vol 3, Part H, 3.5.1]) or Security Request (see Core Specification
  *        [Vol 3, Part H, 3.6.7]).
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gap_pairing_request_event( uint16_t Connection_Handle,
                                           uint8_t Bonded,
@@ -2998,6 +3095,7 @@ tBleStatus aci_gap_pairing_request_event( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_GATT_ATTRIBUTE_MODIFIED_EVENT
+ *
  * This event is generated to the application by the GATT server when a client
  * modifies any attribute on the server, as consequence of one of the following
  * GATT procedures:
@@ -3011,16 +3109,16 @@ tBleStatus aci_gap_pairing_request_event( uint16_t Connection_Handle,
  *        Values:
  *        - 0x0000 ... 0x0EFF: Unenhanced ATT bearer (the parameter is the
  *          connection handle)
- *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB-byte of the
+ *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB byte of the
  *          parameter is the connection-oriented channel index)
  * @param Attr_Handle Handle of the attribute that was modified.
  * @param Offset Bits 14-0: offset from which the write has been performed by
  *        the peer device. Bit 15 is used as flag: when set to 1 it indicates
  *        that more data are to come (fragmented event in case of long
  *        attribute data).
- * @param Attr_Data_Length Length of Attr_Data in octets
+ * @param Attr_Data_Length Length of Attr_Data in octets.
  * @param Attr_Data The modified value
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gatt_attribute_modified_event( uint16_t Connection_Handle,
                                               uint16_t Attr_Handle,
@@ -3030,6 +3128,7 @@ tBleStatus aci_gatt_attribute_modified_event( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_GATT_PROC_TIMEOUT_EVENT
+ *
  * This event is generated by the client/server to the application on a GATT
  * timeout (30 seconds). This is a critical event that should not happen during
  * normal operating conditions. It is an indication of either a major
@@ -3044,14 +3143,15 @@ tBleStatus aci_gatt_attribute_modified_event( uint16_t Connection_Handle,
  *        Values:
  *        - 0x0000 ... 0x0EFF: Unenhanced ATT bearer (the parameter is the
  *          connection handle)
- *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB-byte of the
+ *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB byte of the
  *          parameter is the connection-oriented channel index)
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gatt_proc_timeout_event( uint16_t Connection_Handle );
 
 /**
  * @brief ACI_ATT_EXCHANGE_MTU_RESP_EVENT
+ *
  * This event is generated in response to an Exchange MTU request. See
  * ACI_GATT_EXCHANGE_CONFIG.
  *
@@ -3059,13 +3159,14 @@ tBleStatus aci_gatt_proc_timeout_event( uint16_t Connection_Handle );
  *        Values:
  *        - 0x0000 ... 0x0EFF
  * @param Server_RX_MTU Attribute server receive MTU size
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_att_exchange_mtu_resp_event( uint16_t Connection_Handle,
                                             uint16_t Server_RX_MTU );
 
 /**
  * @brief ACI_ATT_FIND_INFO_RESP_EVENT
+ *
  * This event is generated in response to a Find Information Request. See
  * ACI_ATT_FIND_INFO_REQ and Find Information Response in Core Specification.
  * This event is also generated in response to ACI_GATT_DISC_ALL_CHAR_DESC
@@ -3075,14 +3176,14 @@ tBleStatus aci_att_exchange_mtu_resp_event( uint16_t Connection_Handle,
  *        Values:
  *        - 0x0000 ... 0x0EFF: Unenhanced ATT bearer (the parameter is the
  *          connection handle)
- *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB-byte of the
+ *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB byte of the
  *          parameter is the connection-oriented channel index)
  * @param Format Format of the handle-UUID pairs
- * @param Event_Data_Length Length of Handle_UUID_Pair in octets
+ * @param Event_Data_Length Length of Handle_UUID_Pair in octets.
  * @param Handle_UUID_Pair A sequence of handle-uuid pairs. if format=1, each
  *        pair is:[2 octets for handle, 2 octets for UUIDs], if format=2, each
  *        pair is:[2 octets for handle, 16 octets for UUIDs]
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_att_find_info_resp_event( uint16_t Connection_Handle,
                                          uint8_t Format,
@@ -3091,6 +3192,7 @@ tBleStatus aci_att_find_info_resp_event( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_ATT_FIND_BY_TYPE_VALUE_RESP_EVENT
+ *
  * This event is generated in response to a ACI_ATT_FIND_BY_TYPE_VALUE_REQ
  *
  * @param Connection_Handle Specifies the ATT bearer for which the event
@@ -3098,11 +3200,11 @@ tBleStatus aci_att_find_info_resp_event( uint16_t Connection_Handle,
  *        Values:
  *        - 0x0000 ... 0x0EFF: Unenhanced ATT bearer (the parameter is the
  *          connection handle)
- *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB-byte of the
+ *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB byte of the
  *          parameter is the connection-oriented channel index)
  * @param Num_of_Handle_Pair Number of attribute, group handle pairs
- * @param Attribute_Group_Handle_Pair See @ref Attribute_Group_Handle_Pair_t
- * @return Value indicating success or error code.
+ * @param Attribute_Group_Handle_Pair See Attribute_Group_Handle_Pair_t.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_att_find_by_type_value_resp_event( uint16_t Connection_Handle,
                                                   uint8_t Num_of_Handle_Pair,
@@ -3110,6 +3212,7 @@ tBleStatus aci_att_find_by_type_value_resp_event( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_ATT_READ_BY_TYPE_RESP_EVENT
+ *
  * This event is generated in response to a ACI_ATT_READ_BY_TYPE_REQ. See
  * ACI_GATT_FIND_INCLUDED_SERVICES and ACI_GATT_DISC_ALL_CHAR_DESC.
  *
@@ -3118,15 +3221,15 @@ tBleStatus aci_att_find_by_type_value_resp_event( uint16_t Connection_Handle,
  *        Values:
  *        - 0x0000 ... 0x0EFF: Unenhanced ATT bearer (the parameter is the
  *          connection handle)
- *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB-byte of the
+ *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB byte of the
  *          parameter is the connection-oriented channel index)
  * @param Handle_Value_Pair_Length The size of each attribute handle-value pair
- * @param Data_Length Length of Handle_Value_Pair_Data in octets
+ * @param Data_Length Length of Handle_Value_Pair_Data in octets.
  * @param Handle_Value_Pair_Data Attribute Data List as defined in Core
  *        Specification. A sequence of handle-value pairs: [2 octets for
  *        Attribute Handle, (Handle_Value_Pair_Length - 2 octets) for Attribute
  *        Value]
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_att_read_by_type_resp_event( uint16_t Connection_Handle,
                                             uint8_t Handle_Value_Pair_Length,
@@ -3135,6 +3238,7 @@ tBleStatus aci_att_read_by_type_resp_event( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_ATT_READ_RESP_EVENT
+ *
  * This event is generated in response to a Read Request. See
  * ACI_GATT_READ_CHAR_VALUE.
  *
@@ -3143,11 +3247,11 @@ tBleStatus aci_att_read_by_type_resp_event( uint16_t Connection_Handle,
  *        Values:
  *        - 0x0000 ... 0x0EFF: Unenhanced ATT bearer (the parameter is the
  *          connection handle)
- *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB-byte of the
+ *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB byte of the
  *          parameter is the connection-oriented channel index)
  * @param Event_Data_Length Length of following data
  * @param Attribute_Value The value of the attribute.
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_att_read_resp_event( uint16_t Connection_Handle,
                                     uint8_t Event_Data_Length,
@@ -3155,6 +3259,7 @@ tBleStatus aci_att_read_resp_event( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_ATT_READ_BLOB_RESP_EVENT
+ *
  * This event can be generated during a read long characteristic value
  * procedure. See ACI_GATT_READ_LONG_CHAR_VALUE.
  *
@@ -3163,11 +3268,11 @@ tBleStatus aci_att_read_resp_event( uint16_t Connection_Handle,
  *        Values:
  *        - 0x0000 ... 0x0EFF: Unenhanced ATT bearer (the parameter is the
  *          connection handle)
- *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB-byte of the
+ *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB byte of the
  *          parameter is the connection-oriented channel index)
  * @param Event_Data_Length Length of following data
  * @param Attribute_Value Part of the attribute value.
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_att_read_blob_resp_event( uint16_t Connection_Handle,
                                          uint8_t Event_Data_Length,
@@ -3175,6 +3280,7 @@ tBleStatus aci_att_read_blob_resp_event( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_ATT_READ_MULTIPLE_RESP_EVENT
+ *
  * This event is generated in response to a Read Multiple Characteristic Values
  * Request or a Read Multiple Variable Length Characteristic Values Request.
  *
@@ -3183,13 +3289,13 @@ tBleStatus aci_att_read_blob_resp_event( uint16_t Connection_Handle,
  *        Values:
  *        - 0x0000 ... 0x0EFF: Unenhanced ATT bearer (the parameter is the
  *          connection handle)
- *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB-byte of the
+ *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB byte of the
  *          parameter is the connection-oriented channel index)
  * @param Event_Data_Length Length of following data
  * @param Set_Of_Values A set of two or more values.
  *        A concatenation of attribute values for each of the attribute handles
  *        in the request in the order that they were requested.
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_att_read_multiple_resp_event( uint16_t Connection_Handle,
                                              uint8_t Event_Data_Length,
@@ -3197,6 +3303,7 @@ tBleStatus aci_att_read_multiple_resp_event( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_ATT_READ_BY_GROUP_TYPE_RESP_EVENT
+ *
  * This event is generated in response to a Read By Group Type Request. See
  * ACI_GATT_DISC_ALL_PRIMARY_SERVICES.
  *
@@ -3205,15 +3312,15 @@ tBleStatus aci_att_read_multiple_resp_event( uint16_t Connection_Handle,
  *        Values:
  *        - 0x0000 ... 0x0EFF: Unenhanced ATT bearer (the parameter is the
  *          connection handle)
- *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB-byte of the
+ *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB byte of the
  *          parameter is the connection-oriented channel index)
  * @param Attribute_Data_Length The size of each attribute data
- * @param Data_Length Length of Attribute_Data_List in octets
+ * @param Data_Length Length of Attribute_Data_List in octets.
  * @param Attribute_Data_List Attribute Data List as defined in Core
  *        Specification. A sequence of attribute handle, end group handle,
  *        attribute value tuples: [2 octets for Attribute Handle, 2 octets End
  *        Group Handle, (Attribute_Data_Length - 4 octets) for Attribute Value]
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_att_read_by_group_type_resp_event( uint16_t Connection_Handle,
                                                   uint8_t Attribute_Data_Length,
@@ -3222,6 +3329,7 @@ tBleStatus aci_att_read_by_group_type_resp_event( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_ATT_PREPARE_WRITE_RESP_EVENT
+ *
  * This event is generated in response to a ACI_ATT_PREPARE_WRITE_REQ.
  *
  * @param Connection_Handle Specifies the ATT bearer for which the event
@@ -3229,13 +3337,13 @@ tBleStatus aci_att_read_by_group_type_resp_event( uint16_t Connection_Handle,
  *        Values:
  *        - 0x0000 ... 0x0EFF: Unenhanced ATT bearer (the parameter is the
  *          connection handle)
- *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB-byte of the
+ *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB byte of the
  *          parameter is the connection-oriented channel index)
  * @param Attribute_Handle The handle of the attribute to be written
  * @param Offset The offset of the first octet to be written.
- * @param Part_Attribute_Value_Length Length of Part_Attribute_Value in octets
+ * @param Part_Attribute_Value_Length Length of Part_Attribute_Value in octets.
  * @param Part_Attribute_Value The value of the attribute to be written
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_att_prepare_write_resp_event( uint16_t Connection_Handle,
                                              uint16_t Attribute_Handle,
@@ -3245,6 +3353,7 @@ tBleStatus aci_att_prepare_write_resp_event( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_ATT_EXEC_WRITE_RESP_EVENT
+ *
  * This event is generated in response to an Execute Write Request.
  *
  * @param Connection_Handle Specifies the ATT bearer for which the event
@@ -3252,14 +3361,15 @@ tBleStatus aci_att_prepare_write_resp_event( uint16_t Connection_Handle,
  *        Values:
  *        - 0x0000 ... 0x0EFF: Unenhanced ATT bearer (the parameter is the
  *          connection handle)
- *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB-byte of the
+ *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB byte of the
  *          parameter is the connection-oriented channel index)
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_att_exec_write_resp_event( uint16_t Connection_Handle );
 
 /**
  * @brief ACI_GATT_INDICATION_EVENT
+ *
  * This event is generated when an indication is received from the server.
  *
  * @param Connection_Handle Specifies the ATT bearer for which the event
@@ -3267,12 +3377,12 @@ tBleStatus aci_att_exec_write_resp_event( uint16_t Connection_Handle );
  *        Values:
  *        - 0x0000 ... 0x0EFF: Unenhanced ATT bearer (the parameter is the
  *          connection handle)
- *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB-byte of the
+ *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB byte of the
  *          parameter is the connection-oriented channel index)
  * @param Attribute_Handle The handle of the attribute
- * @param Attribute_Value_Length Length of Attribute_Value in octets
- * @param Attribute_Value The current value of the attribute
- * @return Value indicating success or error code.
+ * @param Attribute_Value_Length Length of Attribute_Value in octets.
+ * @param Attribute_Value The current value of the attribute.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gatt_indication_event( uint16_t Connection_Handle,
                                       uint16_t Attribute_Handle,
@@ -3281,6 +3391,7 @@ tBleStatus aci_gatt_indication_event( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_GATT_NOTIFICATION_EVENT
+ *
  * This event is generated when a notification is received from the server.
  *
  * @param Connection_Handle Specifies the ATT bearer for which the event
@@ -3288,12 +3399,12 @@ tBleStatus aci_gatt_indication_event( uint16_t Connection_Handle,
  *        Values:
  *        - 0x0000 ... 0x0EFF: Unenhanced ATT bearer (the parameter is the
  *          connection handle)
- *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB-byte of the
+ *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB byte of the
  *          parameter is the connection-oriented channel index)
  * @param Attribute_Handle The handle of the attribute
- * @param Attribute_Value_Length Length of Attribute_Value in octets
- * @param Attribute_Value The current value of the attribute
- * @return Value indicating success or error code.
+ * @param Attribute_Value_Length Length of Attribute_Value in octets.
+ * @param Attribute_Value The current value of the attribute.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gatt_notification_event( uint16_t Connection_Handle,
                                         uint16_t Attribute_Handle,
@@ -3302,6 +3413,7 @@ tBleStatus aci_gatt_notification_event( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_GATT_PROC_COMPLETE_EVENT
+ *
  * This event is generated when a GATT client procedure completes either with
  * error or successfully.
  *
@@ -3310,17 +3422,18 @@ tBleStatus aci_gatt_notification_event( uint16_t Connection_Handle,
  *        Values:
  *        - 0x0000 ... 0x0EFF: Unenhanced ATT bearer (the parameter is the
  *          connection handle)
- *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB-byte of the
+ *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB byte of the
  *          parameter is the connection-oriented channel index)
  * @param Error_Code Indicates whether the procedure completed with an error or
  *        was successful (see "Status error codes" section)
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gatt_proc_complete_event( uint16_t Connection_Handle,
                                          uint8_t Error_Code );
 
 /**
  * @brief ACI_GATT_ERROR_RESP_EVENT
+ *
  * This event is generated when an Error Response is received from the server.
  * The error response can be given by the server at the end of one of the GATT
  * discovery procedures. This does not mean that the procedure ended with an
@@ -3331,7 +3444,7 @@ tBleStatus aci_gatt_proc_complete_event( uint16_t Connection_Handle,
  *        Values:
  *        - 0x0000 ... 0x0EFF: Unenhanced ATT bearer (the parameter is the
  *          connection handle)
- *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB-byte of the
+ *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB byte of the
  *          parameter is the connection-oriented channel index)
  * @param Req_Opcode The request that generated this error response
  * @param Attribute_Handle The attribute handle that generated this error
@@ -3358,7 +3471,7 @@ tBleStatus aci_gatt_proc_complete_event( uint16_t Connection_Handle,
  *        - 0x11: Insufficient resources
  *        - 0x12: Database Out Of Sync
  *        - 0x13: Value Not Allowed
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gatt_error_resp_event( uint16_t Connection_Handle,
                                       uint8_t Req_Opcode,
@@ -3367,6 +3480,7 @@ tBleStatus aci_gatt_error_resp_event( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_GATT_DISC_READ_CHAR_BY_UUID_RESP_EVENT
+ *
  * This event can be generated during a "Discover Characteristics By UUID"
  * procedure or a "Read using Characteristic UUID" procedure.
  * The attribute value will be a service declaration as defined in Core
@@ -3379,16 +3493,16 @@ tBleStatus aci_gatt_error_resp_event( uint16_t Connection_Handle,
  *        Values:
  *        - 0x0000 ... 0x0EFF: Unenhanced ATT bearer (the parameter is the
  *          connection handle)
- *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB-byte of the
+ *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB byte of the
  *          parameter is the connection-oriented channel index)
  * @param Attribute_Handle The handle of the attribute
- * @param Attribute_Value_Length Length of Attribute_Value in octets
+ * @param Attribute_Value_Length Length of Attribute_Value in octets.
  * @param Attribute_Value The attribute value will be a service declaration as
  *        defined in Core Specification [Vol 3, Part G, 3.3.1], when a
  *        "Discover Characteristics By UUID" has been started.
  *        It will be the value of the Characteristic if a "Read using
  *        Characteristic UUID" has been performed.
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gatt_disc_read_char_by_uuid_resp_event( uint16_t Connection_Handle,
                                                        uint16_t Attribute_Handle,
@@ -3397,29 +3511,32 @@ tBleStatus aci_gatt_disc_read_char_by_uuid_resp_event( uint16_t Connection_Handl
 
 /**
  * @brief ACI_GATT_WRITE_PERMIT_REQ_EVENT
+ *
  * This event is sent to the application when a write request or write command
  * is received by the server from the client, but only if the event bit for
  * this event generation is set when the characteristic was added.
  * When this event is received, the application has to check whether the value
  * being requested for write can be allowed to be written and respond with the
  * command ACI_GATT_PERMIT_WRITE. Based on the response from the application,
- * the attribute value will be modified by the stack. If the write is rejected
- * by the application, then the value of the attribute will not be modified. In
- * case of a write request, an error response is sent to the client, with the
- * error code as specified by the application. In case of write commands, no
- * response is sent to the client.
+ * the attribute value will be modified by the BLE stack. If the write is
+ * rejected by the application, then the value of the attribute will not be
+ * modified. In case of a write request, an error response is sent to the
+ * client, with the error code as specified by the application. In case of
+ * write commands, no response is sent to the client.
+ * Note: The data passed in this event is incomplete if the length of the
+ * written attribute value exceeds 248 bytes.
  *
  * @param Connection_Handle Specifies the ATT bearer for which the event
  *        applies.
  *        Values:
  *        - 0x0000 ... 0x0EFF: Unenhanced ATT bearer (the parameter is the
  *          connection handle)
- *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB-byte of the
+ *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB byte of the
  *          parameter is the connection-oriented channel index)
  * @param Attribute_Handle The handle of the attribute
  * @param Data_Length Length of Data field
  * @param Data The data that the client has requested to write
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gatt_write_permit_req_event( uint16_t Connection_Handle,
                                             uint16_t Attribute_Handle,
@@ -3428,24 +3545,25 @@ tBleStatus aci_gatt_write_permit_req_event( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_GATT_READ_PERMIT_REQ_EVENT
+ *
  * This event is given to the application when a read request or read blob
  * request is received by the server from the client. This event will be given
  * to the application only if the event bit for this event generation is set
  * when the characteristic was added.
  * On receiving this event, the application can update the value of the handle
  * if it desires and when done, it must send the ACI_GATT_PERMIT_READ command
- * to indicate to the stack that it can send the response to the client.
+ * to indicate to the BLE stack that it can send the response to the client.
  *
  * @param Connection_Handle Specifies the ATT bearer for which the event
  *        applies.
  *        Values:
  *        - 0x0000 ... 0x0EFF: Unenhanced ATT bearer (the parameter is the
  *          connection handle)
- *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB-byte of the
+ *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB byte of the
  *          parameter is the connection-oriented channel index)
  * @param Attribute_Handle The handle of the attribute
  * @param Offset Contains the offset from which the read has been requested
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gatt_read_permit_req_event( uint16_t Connection_Handle,
                                            uint16_t Attribute_Handle,
@@ -3453,13 +3571,14 @@ tBleStatus aci_gatt_read_permit_req_event( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_GATT_READ_MULTI_PERMIT_REQ_EVENT
+ *
  * This event is given to the application when a read multiple request or read
  * by type request is received by the server from the client. This event will
  * be given to the application only if the event bit for this event generation
  * is set when the characteristic was added.
  * On receiving this event, the application can update the values of the
  * handles if it desires and when done, it must send the ACI_GATT_PERMIT_READ
- * command to indicate to the stack that it can send the response to the
+ * command to indicate to the BLE stack that it can send the response to the
  * client.
  *
  * @param Connection_Handle Specifies the ATT bearer for which the event
@@ -3467,11 +3586,11 @@ tBleStatus aci_gatt_read_permit_req_event( uint16_t Connection_Handle,
  *        Values:
  *        - 0x0000 ... 0x0EFF: Unenhanced ATT bearer (the parameter is the
  *          connection handle)
- *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB-byte of the
+ *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB byte of the
  *          parameter is the connection-oriented channel index)
  * @param Number_of_Handles Number of attribute handles contained in this event
- * @param Handle_Item See @ref Handle_Item_t
- * @return Value indicating success or error code.
+ * @param Handle_Item See Handle_Item_t.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gatt_read_multi_permit_req_event( uint16_t Connection_Handle,
                                                  uint8_t Number_of_Handles,
@@ -3479,6 +3598,7 @@ tBleStatus aci_gatt_read_multi_permit_req_event( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_GATT_TX_POOL_AVAILABLE_EVENT
+ *
  * Each time one of the following GATT commands raises the error code
  * BLE_STATUS_INSUFFICIENT_RESOURCES, the ACI_GATT_TX_POOL_AVAILABLE_EVENT
  * event is generated as soon as there is at least one buffer (with a size of
@@ -3490,13 +3610,14 @@ tBleStatus aci_gatt_read_multi_permit_req_event( uint16_t Connection_Handle,
  *
  * @param Connection_Handle Not used.
  * @param Available_Buffers Number of buffers available.
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gatt_tx_pool_available_event( uint16_t Connection_Handle,
                                              uint16_t Available_Buffers );
 
 /**
  * @brief ACI_GATT_SERVER_CONFIRMATION_EVENT
+ *
  * This event is generated when the client has sent the confirmation to a
  * previously sent indication.
  *
@@ -3505,14 +3626,15 @@ tBleStatus aci_gatt_tx_pool_available_event( uint16_t Connection_Handle,
  *        Values:
  *        - 0x0000 ... 0x0EFF: Unenhanced ATT bearer (the parameter is the
  *          connection handle)
- *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB-byte of the
+ *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB byte of the
  *          parameter is the connection-oriented channel index)
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gatt_server_confirmation_event( uint16_t Connection_Handle );
 
 /**
  * @brief ACI_GATT_PREPARE_WRITE_PERMIT_REQ_EVENT
+ *
  * This event is given to the application when a prepare write request is
  * received by the server from the client. This event will be given to the
  * application only if the event bit for this event generation is set when the
@@ -3520,23 +3642,25 @@ tBleStatus aci_gatt_server_confirmation_event( uint16_t Connection_Handle );
  * When this event is received, the application has to check whether the value
  * being requested for write can be allowed to be written and respond with the
  * command ACI_GATT_PERMIT_WRITE. Based on the response from the application,
- * the attribute value will be modified by the stack.
+ * the attribute value will be modified by the BLE stack.
  * If the write is rejected by the application, then the value of the attribute
  * will not be modified and an error response will be sent to the client, with
  * the error code as specified by the application.
+ * Note: The data passed in this event is incomplete if the length of the
+ * written attribute value exceeds 246 bytes.
  *
  * @param Connection_Handle Specifies the ATT bearer for which the event
  *        applies.
  *        Values:
  *        - 0x0000 ... 0x0EFF: Unenhanced ATT bearer (the parameter is the
  *          connection handle)
- *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB-byte of the
+ *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB byte of the
  *          parameter is the connection-oriented channel index)
  * @param Attribute_Handle The handle of the attribute
  * @param Offset The offset from which the prepare write has been requested
  * @param Data_Length Length of Data field
  * @param Data The data that the client has requested to write
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gatt_prepare_write_permit_req_event( uint16_t Connection_Handle,
                                                     uint16_t Attribute_Handle,
@@ -3546,6 +3670,7 @@ tBleStatus aci_gatt_prepare_write_permit_req_event( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_GATT_EATT_BEARER_EVENT
+ *
  * This event informs the application of a change in status of the Enhanced ATT
  * bearer handled by the specified L2CAP channel.
  *
@@ -3562,7 +3687,7 @@ tBleStatus aci_gatt_prepare_write_permit_req_event( uint16_t Connection_Handle,
  * @param MTU ATT_MTU value used on the bearer.
  *        Values:
  *        - 64 ... 246
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gatt_eatt_bearer_event( uint16_t Connection_Handle,
                                        uint8_t Channel_Index,
@@ -3571,6 +3696,7 @@ tBleStatus aci_gatt_eatt_bearer_event( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_GATT_MULT_NOTIFICATION_EVENT
+ *
  * This event is generated when a Multiple Handle Value notification is
  * received from the server.
  *
@@ -3579,7 +3705,7 @@ tBleStatus aci_gatt_eatt_bearer_event( uint16_t Connection_Handle,
  *        Values:
  *        - 0x0000 ... 0x0EFF: Unenhanced ATT bearer (the parameter is the
  *          connection handle)
- *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB-byte of the
+ *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB byte of the
  *          parameter is the connection-oriented channel index)
  * @param Offset Bits 14-0: offset in octets from which Attribute_Value data
  *        starts. Bit 15 is used as flag: when set to 1 it indicates that more
@@ -3587,7 +3713,7 @@ tBleStatus aci_gatt_eatt_bearer_event( uint16_t Connection_Handle,
  * @param Data_Length Length of Data in bytes
  * @param Data List of "Handle Length Value" tuples as defined in Core
  *        Specification
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gatt_mult_notification_event( uint16_t Connection_Handle,
                                              uint16_t Offset,
@@ -3596,24 +3722,44 @@ tBleStatus aci_gatt_mult_notification_event( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_GATT_NOTIFICATION_COMPLETE_EVENT
+ *
  * This event is generated on server side after the transmission of all
  * notifications linked with a local update of a characteristic value (if it is
  * enabled at the creation of the characteristic with
  * GATT_NOTIFY_NOTIFICATION_COMPLETION mask and if the characteristic supports
  * notifications).
  *
- * @param Attr_Handle Handle of the updated characteristic value
- * @return Value indicating success or error code.
+ * @param Attr_Handle Handle of the updated characteristic value.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gatt_notification_complete_event( uint16_t Attr_Handle );
 
 /**
+ * @brief ACI_GATT_NOTIFICATION_LL_ACK_EVENT
+ *
+ * This event is generated on the server side when an ATT notification has been
+ * acknowledged by the peer device at Link Layer level, provided that this
+ * event was enabled using ACI_GATT_SET_EVENT_MASK. If multiple clients are
+ * connected, an update of the characteristic value generates one event for
+ * each notified client.
+ *
+ * @param Connection_Handle Connection handle for which the event applies.
+ *        Values:
+ *        - 0x0000 ... 0x0EFF
+ * @param Attr_Handle Handle of the updated characteristic value.
+ * @return Value indicating success or an error.
+ */
+tBleStatus aci_gatt_notification_ll_ack_event( uint16_t Connection_Handle,
+                                               uint16_t Attr_Handle );
+
+/**
  * @brief ACI_GATT_READ_EXT_EVENT
+ *
  * When it is enabled with ACI_GATT_SET_EVENT_MASK, this event is generated
  * instead of ACI_ATT_READ_RESP_EVENT / ACI_ATT_READ_BLOB_RESP_EVENT /
  * ACI_ATT_READ_MULTIPLE_RESP_EVENT.
  * This event should be used instead of those events when ATT_MTU >
- * (BLE_EVT_MAX_PARAM_LEN - 4) i.e. ATT_MTU > 251 for BLE_EVT_MAX_PARAM_LEN
+ * (BLE_EVT_MAX_PARAM_LEN - 4), i.e. ATT_MTU > 251 for BLE_EVT_MAX_PARAM_LEN
  * default value.
  *
  * @param Connection_Handle Specifies the ATT bearer for which the event
@@ -3621,14 +3767,14 @@ tBleStatus aci_gatt_notification_complete_event( uint16_t Attr_Handle );
  *        Values:
  *        - 0x0000 ... 0x0EFF: Unenhanced ATT bearer (the parameter is the
  *          connection handle)
- *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB-byte of the
+ *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB byte of the
  *          parameter is the connection-oriented channel index)
  * @param Offset Bits 14-0: offset in octets from which Attribute_Value data
  *        starts. Bit 15 is used as flag: when set to 1 it indicates that more
  *        data are to come (fragmented event in case of long attribute data).
  * @param Event_Data_Length Length of following data
  * @param Attribute_Value The value of the attribute(s).
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gatt_read_ext_event( uint16_t Connection_Handle,
                                     uint16_t Offset,
@@ -3637,11 +3783,12 @@ tBleStatus aci_gatt_read_ext_event( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_GATT_INDICATION_EXT_EVENT
+ *
  * When it is enabled with ACI_GATT_SET_EVENT_MASK and when an indication is
  * received from the server, this event is generated instead of
  * ACI_GATT_INDICATION_EVENT.
  * This event should be used instead of ACI_GATT_INDICATION_EVENT when ATT_MTU
- * > (BLE_EVT_MAX_PARAM_LEN - 4) i.e. ATT_MTU > 251 for BLE_EVT_MAX_PARAM_LEN
+ * > (BLE_EVT_MAX_PARAM_LEN - 4), i.e. ATT_MTU > 251 for BLE_EVT_MAX_PARAM_LEN
  * default value.
  *
  * @param Connection_Handle Specifies the ATT bearer for which the event
@@ -3649,15 +3796,15 @@ tBleStatus aci_gatt_read_ext_event( uint16_t Connection_Handle,
  *        Values:
  *        - 0x0000 ... 0x0EFF: Unenhanced ATT bearer (the parameter is the
  *          connection handle)
- *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB-byte of the
+ *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB byte of the
  *          parameter is the connection-oriented channel index)
  * @param Attribute_Handle The handle of the attribute
  * @param Offset Bits 14-0: offset in octets from which Attribute_Value data
  *        starts. Bit 15 is used as flag: when set to 1 it indicates that more
  *        data are to come (fragmented event in case of long attribute data).
- * @param Attribute_Value_Length Length of Attribute_Value in octets
- * @param Attribute_Value The current value of the attribute
- * @return Value indicating success or error code.
+ * @param Attribute_Value_Length Length of Attribute_Value in octets.
+ * @param Attribute_Value The current value of the attribute.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gatt_indication_ext_event( uint16_t Connection_Handle,
                                           uint16_t Attribute_Handle,
@@ -3667,11 +3814,12 @@ tBleStatus aci_gatt_indication_ext_event( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_GATT_NOTIFICATION_EXT_EVENT
+ *
  * When it is enabled with ACI_GATT_SET_EVENT_MASK and when a notification is
  * received from the server, this event is generated instead of
  * ACI_GATT_NOTIFICATION_EVENT.
  * This event should be used instead of ACI_GATT_NOTIFICATION_EVENT when
- * ATT_MTU > (BLE_EVT_MAX_PARAM_LEN - 4) i.e. ATT_MTU > 251 for
+ * ATT_MTU > (BLE_EVT_MAX_PARAM_LEN - 4), i.e. ATT_MTU > 251 for
  * BLE_EVT_MAX_PARAM_LEN default value.
  *
  * @param Connection_Handle Specifies the ATT bearer for which the event
@@ -3679,15 +3827,15 @@ tBleStatus aci_gatt_indication_ext_event( uint16_t Connection_Handle,
  *        Values:
  *        - 0x0000 ... 0x0EFF: Unenhanced ATT bearer (the parameter is the
  *          connection handle)
- *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB-byte of the
+ *        - 0xEA00 ... 0xEA3F: Enhanced ATT bearer (the LSB byte of the
  *          parameter is the connection-oriented channel index)
  * @param Attribute_Handle The handle of the attribute
  * @param Offset Bits 14-0: offset in octets from which Attribute_Value data
  *        starts. Bit 15 is used as flag: when set to 1 it indicates that more
  *        data are to come (fragmented event in case of long attribute data).
- * @param Attribute_Value_Length Length of Attribute_Value in octets
- * @param Attribute_Value The current value of the attribute
- * @return Value indicating success or error code.
+ * @param Attribute_Value_Length Length of Attribute_Value in octets.
+ * @param Attribute_Value The current value of the attribute.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_gatt_notification_ext_event( uint16_t Connection_Handle,
                                             uint16_t Attribute_Handle,
@@ -3699,6 +3847,7 @@ tBleStatus aci_gatt_notification_ext_event( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_L2CAP_CONNECTION_UPDATE_RESP_EVENT
+ *
  * This event is generated when the Central responds to the connection update
  * request packet with a connection update response packet.
  *
@@ -3709,13 +3858,14 @@ tBleStatus aci_gatt_notification_ext_event( uint16_t Connection_Handle,
  *        Values:
  *        - 0x0000: Connection Parameters accepted
  *        - 0x0001: Connection Parameters rejected
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_l2cap_connection_update_resp_event( uint16_t Connection_Handle,
                                                    uint16_t Result );
 
 /**
  * @brief ACI_L2CAP_PROC_TIMEOUT_EVENT
+ *
  * This event is generated when the Central does not respond to the connection
  * update request packet with a connection update response packet or a command
  * reject packet within 30 seconds.
@@ -3726,8 +3876,8 @@ tBleStatus aci_l2cap_connection_update_resp_event( uint16_t Connection_Handle,
  * @param Data_Length Length of following data
  *        Values:
  *        - 0x00
- * @param Data Not used
- * @return Value indicating success or error code.
+ * @param Data Not used.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_l2cap_proc_timeout_event( uint16_t Connection_Handle,
                                          uint8_t Data_Length,
@@ -3735,6 +3885,7 @@ tBleStatus aci_l2cap_proc_timeout_event( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_L2CAP_CONNECTION_UPDATE_REQ_EVENT
+ *
  * The event is given by the L2CAP layer when a connection update request is
  * received from the Peripheral. The upper layer which receives this event has
  * to respond by sending a ACI_L2CAP_CONNECTION_PARAMETER_UPDATE_RESP command.
@@ -3758,7 +3909,7 @@ tBleStatus aci_l2cap_proc_timeout_event( uint16_t Connection_Handle,
  *        - 0x0000 ... 0x01F3
  * @param Timeout_Multiplier Defines connection timeout parameter in the
  *        following manner: Timeout Multiplier * 10ms.
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_l2cap_connection_update_req_event( uint16_t Connection_Handle,
                                                   uint8_t Identifier,
@@ -3770,6 +3921,7 @@ tBleStatus aci_l2cap_connection_update_req_event( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_L2CAP_COMMAND_REJECT_EVENT
+ *
  * This event is generated upon receipt of a valid L2CAP Command Reject packet
  * (e.g. when the Central responds to the Connection Update Request packet with
  * a L2CAP Command Reject packet).
@@ -3786,7 +3938,7 @@ tBleStatus aci_l2cap_connection_update_req_event( uint16_t Connection_Handle,
  * @param Data_Length Length of following data
  * @param Data Data field associated with Reason (see Core Specification [Vol
  *        3, Part A, 4.1])
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_l2cap_command_reject_event( uint16_t Connection_Handle,
                                            uint8_t Identifier,
@@ -3796,6 +3948,7 @@ tBleStatus aci_l2cap_command_reject_event( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_L2CAP_COC_CONNECT_EVENT
+ *
  * This event is generated when receiving a valid Credit Based Connection
  * Request packet.
  * See Core Specification [Vol 3, Part A].
@@ -3824,7 +3977,7 @@ tBleStatus aci_l2cap_command_reject_event( uint16_t Connection_Handle,
  *        enhanced credit based connection-oriented channels.
  *        Values:
  *        - 0 ... 5
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_l2cap_coc_connect_event( uint16_t Connection_Handle,
                                         uint16_t SPSM,
@@ -3835,6 +3988,7 @@ tBleStatus aci_l2cap_coc_connect_event( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_L2CAP_COC_CONNECT_CONFIRM_EVENT
+ *
  * This event is generated when receiving a valid Credit Based Connection
  * Response packet.
  * See Core Specification [Vol 3, Part A].
@@ -3867,7 +4021,7 @@ tBleStatus aci_l2cap_coc_connect_event( uint16_t Connection_Handle,
  *        - 0 ... 5
  * @param Channel_Index_List List of channel indexes for which the primitive
  *        applies.
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_l2cap_coc_connect_confirm_event( uint16_t Connection_Handle,
                                                 uint16_t MTU,
@@ -3879,6 +4033,7 @@ tBleStatus aci_l2cap_coc_connect_confirm_event( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_L2CAP_COC_RECONF_EVENT
+ *
  * This event is generated when receiving a valid Credit Based Reconfigure
  * Request packet.
  * See Core Specification [Vol 3, Part A].
@@ -3900,7 +4055,7 @@ tBleStatus aci_l2cap_coc_connect_confirm_event( uint16_t Connection_Handle,
  *        - 1 ... 5
  * @param Channel_Index_List List of channel indexes for which the primitive
  *        applies.
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_l2cap_coc_reconf_event( uint16_t Connection_Handle,
                                        uint16_t MTU,
@@ -3910,6 +4065,7 @@ tBleStatus aci_l2cap_coc_reconf_event( uint16_t Connection_Handle,
 
 /**
  * @brief ACI_L2CAP_COC_RECONF_CONFIRM_EVENT
+ *
  * This event is generated when receiving a valid Credit Based Reconfigure
  * Response packet.
  * See Core Specification [Vol 3, Part A].
@@ -3922,25 +4078,27 @@ tBleStatus aci_l2cap_coc_reconf_event( uint16_t Connection_Handle,
  *        Values:
  *        - 0xFFFF: Invalid response
  *        - 0x0000 ... 0x0004
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_l2cap_coc_reconf_confirm_event( uint16_t Connection_Handle,
                                                uint16_t Result );
 
 /**
  * @brief ACI_L2CAP_COC_DISCONNECT_EVENT
+ *
  * This event is generated when a connection-oriented channel is disconnected
  * following an L2CAP channel termination procedure.
  * See Core Specification [Vol 3, Part A].
  *
  * @param Channel_Index Index of the connection-oriented channel for which the
  *        primitive applies.
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_l2cap_coc_disconnect_event( uint8_t Channel_Index );
 
 /**
  * @brief ACI_L2CAP_COC_FLOW_CONTROL_EVENT
+ *
  * This event is generated when receiving a valid Flow Control Credit signaling
  * packet.
  * See Core Specification [Vol 3, Part A].
@@ -3952,17 +4110,18 @@ tBleStatus aci_l2cap_coc_disconnect_event( uint8_t Channel_Index );
  *        device sending the Flow Control Credit packet.
  *        Values:
  *        - 1 ... 65535
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_l2cap_coc_flow_control_event( uint8_t Channel_Index,
                                              uint16_t Credits );
 
 /**
  * @brief ACI_L2CAP_COC_RX_DATA_EVENT
+ *
  * This event is generated when receiving a valid K-frame packet on a
  * connection-oriented channel.
  * See Core Specification [Vol 3, Part A].
- * Note: for the first K-frame of the SDU, the Information data contains the
+ * Note: For the first K-frame of the SDU, the Information data contains the
  * L2CAP SDU Length coded on two octets followed by the K-frame information
  * payload. For the next K-frames of the SDU, the Information data only
  * contains the K-frame information payload.
@@ -3971,7 +4130,7 @@ tBleStatus aci_l2cap_coc_flow_control_event( uint8_t Channel_Index,
  *        primitive applies.
  * @param Length Length of Data (in octets)
  * @param Data Information data
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_l2cap_coc_rx_data_event( uint8_t Channel_Index,
                                         uint16_t Length,
@@ -3979,12 +4138,13 @@ tBleStatus aci_l2cap_coc_rx_data_event( uint8_t Channel_Index,
 
 /**
  * @brief ACI_L2CAP_COC_TX_POOL_AVAILABLE_EVENT
+ *
  * Each time ACI_L2CAP_COC_TX_DATA raises the error code
  * BLE_STATUS_INSUFFICIENT_RESOURCES, the ACI_L2CAP_COC_TX_POOL_AVAILABLE_EVENT
  * event is generated as soon as there is a free buffer available for sending
  * K-frames.
  *
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_l2cap_coc_tx_pool_available_event( void );
 
@@ -3992,6 +4152,7 @@ tBleStatus aci_l2cap_coc_tx_pool_available_event( void );
 
 /**
  * @brief ACI_HAL_END_OF_RADIO_ACTIVITY_EVENT
+ *
  * This event is generated when the device completes a radio activity and
  * provides information when a new radio activity will be performed.
  * Information provided includes type of radio activity and absolute time in
@@ -4047,7 +4208,7 @@ tBleStatus aci_l2cap_coc_tx_pool_available_event( void );
  *        Values:
  *        - 0xFF: Idle
  *        - 0x00 ... 0x07
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_hal_end_of_radio_activity_event( uint8_t Last_State,
                                                 uint8_t Next_State,
@@ -4057,6 +4218,7 @@ tBleStatus aci_hal_end_of_radio_activity_event( uint8_t Last_State,
 
 /**
  * @brief ACI_HAL_SYNC_EVENT
+ *
  * This event is generated after the execution of CIG or BIG is completed on
  * hardware. The command ACI_HAL_SET_SYNC_EVENT_CONFIG must be used to
  * configure the generation of this event.
@@ -4068,7 +4230,7 @@ tBleStatus aci_hal_end_of_radio_activity_event( uint8_t Last_State,
  * @param Time_Stamp Timestamp of the calibration signal
  * @param Next_Sdu_Delivery_Timeout Timestamp before which the SDU must be
  *        provided to the LL for being handled in the next ISO event
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_hal_sync_event( uint8_t Group_Id,
                                uint32_t Next_Anchor_Point,

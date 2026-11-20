@@ -3,7 +3,7 @@
  * @heading Calendar
  * @brief ZCL Calendar cluster header
  * ZCL 8 Section 10.9
- * @copyright Copyright [2009 - 2024] Exegin Technologies Limited. All rights reserved.
+ * @copyright Copyright [2009 - 2026] Exegin Technologies Limited. All rights reserved.
  */
 
 /*--------------------------------------------------------------------------
@@ -15,6 +15,12 @@
 # define ZCL_CALENDAR_H
 
 #include "zcl/zcl.h"
+
+/*lint -save -e621 "Identifier clash within 31 chars. For readability,
+ * we need to exceed the 31 character limit before uniqueness, and
+ * extend the limit to 63 charcters.
+ * [MISRA Rule 5.1 (REQUIRED), MISRA Rule 5.2 (REQUIRED),
+ * MISRA Rule 5.4 (REQUIRED), MISRA Rule 5.5 (REQUIRED)]" */
 
 /*---------------------------------------------------------------
  * Definitions
@@ -113,7 +119,8 @@ struct ZbZclCalServerPublishCalendarT {
 };
 
 #define ZCL_CAL_PUBLISH_DAY_PROFILE_MIN_SIZE            17U
-#define ZCL_CAL_PUBLISH_DAY_PROFILE_NUM_ENTRIES_MAX     ((ZCL_PAYLOAD_UNFRAG_SAFE_SIZE - ZCL_CAL_PUBLISH_DAY_PROFILE_MIN_SIZE) / 3U)
+#define ZCL_CAL_PUBLISH_DAY_PROFILE_NUM_ENTRIES_MAX     \
+    ((ZCL_PAYLOAD_UNFRAG_SAFE_SIZE - ZCL_CAL_PUBLISH_DAY_PROFILE_MIN_SIZE) / 3U)
 
 /** Day Schedule Entries structure */
 struct ZbZclCalendarDayScheduleT {
@@ -133,7 +140,8 @@ struct ZbZclCalServerPublishDayProfileT {
     uint8_t command_index; /**< Command Index */
     uint8_t num_commands; /**< Total Number of Commands */
     enum ZbZclCalTypeT calendar_type; /**< Calendar Type */
-    struct ZbZclCalendarDayScheduleT entry_list[ZCL_CAL_PUBLISH_DAY_PROFILE_NUM_ENTRIES_MAX]; /**< Day Schedule Entries */
+    struct ZbZclCalendarDayScheduleT entry_list[ZCL_CAL_PUBLISH_DAY_PROFILE_NUM_ENTRIES_MAX];
+    /**< Day Schedule Entries */
     uint8_t num_entries; /**< Number of Day Schedule Entries - maximum is 12, since ZCL_PAYLOAD_UNFRAG_SAFE_SIZE = 54 */
     bool to_bomd; /**< If true, the timeout for this command is extended since it's
      * being sent to a BOMD (in One-Way Mirror). */
@@ -159,12 +167,15 @@ struct ZbZclCalServerPublishWeekProfileT {
 };
 
 #define ZCL_CAL_PUBLISH_SEASONS_MIN_SIZE                14U
-#define ZCL_CAL_PUBLISH_SEASONS_NUM_ENTRIES_MAX         ((ZCL_PAYLOAD_UNFRAG_SAFE_SIZE - ZCL_CAL_PUBLISH_SEASONS_MIN_SIZE) / 5U)
+#define ZCL_CAL_PUBLISH_SEASONS_NUM_ENTRIES_MAX         \
+    ((ZCL_PAYLOAD_UNFRAG_SAFE_SIZE - ZCL_CAL_PUBLISH_SEASONS_MIN_SIZE) / 5U)
 
 /** Season Entry structure */
 struct ZbZclCalendarSeasonT {
-    uint32_t start_date; /* ZCL date format */
+    struct ZbZclDateT start_date;
+    /**< Season start date in ZCL date format. */
     uint8_t week_id;
+    /**< Week ID Ref */
 };
 
 /** Publish Seasons command structure */
@@ -181,11 +192,13 @@ struct ZbZclCalPublishSeasonsT {
 };
 
 #define ZCL_CAL_PUBLISH_SPECIAL_DAYS_MIN_SIZE           20U
-#define ZCL_CAL_PUBLISH_SPECIAL_DAYS_NUM_ENTRIES_MAX    ((ZCL_PAYLOAD_UNFRAG_SAFE_SIZE - ZCL_CAL_PUBLISH_SPECIAL_DAYS_MIN_SIZE) / 5U)
+#define ZCL_CAL_PUBLISH_SPECIAL_DAYS_NUM_ENTRIES_MAX    \
+    ((ZCL_PAYLOAD_UNFRAG_SAFE_SIZE - ZCL_CAL_PUBLISH_SPECIAL_DAYS_MIN_SIZE) / 5U)
 
 /** Season Entry structure */
 struct ZbZclCalendarSpecialDayT {
-    uint32_t specialDayDate; /* ZCL date format */
+    struct ZbZclDateT special_day_date;
+    /**< Special day date in ZCL date format. */
     uint8_t day_id;
 };
 
@@ -334,12 +347,12 @@ struct ZbZclClusterT * ZbZclCalServerAlloc(struct ZigBeeT *zb, uint8_t endpoint,
 /**
  * Send a Publish Calendar as a response
  * @param cluster Cluster instance from which to send this command
- * @param dstInfo Destination address for response
+ * @param dst Destination address for response
  * @param info Publish Calendar command structure
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
 enum ZclStatusCodeT ZbZclCalServerPublishCalendarRsp(struct ZbZclClusterT *cluster,
-    struct ZbZclAddrInfoT *dstInfo, struct ZbZclCalServerPublishCalendarT *info);
+    struct ZbZclAddrInfoT *dst, struct ZbZclCalServerPublishCalendarT *info);
 
 /**
  * Send a Publish Calendar as an unsolicited command
@@ -360,7 +373,7 @@ enum ZclStatusCodeT ZbZclCalServerPublishCalendarUnsolic(struct ZbZclClusterT *c
 /**
  * Send a Publish Day Profile as a response
  * @param cluster Cluster instance from which to send this command
- * @param dstInfo Destination address for response
+ * @param dst Destination address for response
  * @param info Publish Day Profile command structure
  * @param callback Callback function for an APSDE-DATA.confirm
  * @param arg Pointer to application data that will later be provided back
@@ -368,7 +381,7 @@ enum ZclStatusCodeT ZbZclCalServerPublishCalendarUnsolic(struct ZbZclClusterT *c
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
 enum ZclStatusCodeT ZbZclCalServerPublishDayProfileRsp(struct ZbZclClusterT *cluster,
-    struct ZbZclAddrInfoT *dstInfo, struct ZbZclCalServerPublishDayProfileT *info,
+    struct ZbZclAddrInfoT *dst, struct ZbZclCalServerPublishDayProfileT *info,
     void (*callback)(struct ZbApsdeDataConfT *conf, void *arg), void *arg);
 
 /**
@@ -395,7 +408,7 @@ enum ZclStatusCodeT ZbZclCalServerPublishDayProfileUnsolic(struct ZbZclClusterT 
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
 enum ZclStatusCodeT ZbZclCalServerPublishWeekProfileRsp(struct ZbZclClusterT *cluster,
-    struct ZbZclAddrInfoT *dstInfo, struct ZbZclCalServerPublishWeekProfileT *info);
+    struct ZbZclAddrInfoT *dst, struct ZbZclCalServerPublishWeekProfileT *info);
 
 /**
  * Send a Publish Week Profile as an unsolicited command
@@ -421,7 +434,7 @@ enum ZclStatusCodeT ZbZclCalServerPublishWeekProfileUnsolic(struct ZbZclClusterT
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
 enum ZclStatusCodeT ZbZclCalServerPublishSeasonsRsp(struct ZbZclClusterT *cluster,
-    struct ZbZclAddrInfoT *dstInfo, struct ZbZclCalPublishSeasonsT *info);
+    struct ZbZclAddrInfoT *dst, struct ZbZclCalPublishSeasonsT *info);
 
 /**
  * Send a Publish Seasons as an unsolicited command
@@ -442,7 +455,7 @@ enum ZclStatusCodeT ZbZclCalServerPublishSeasonsUnsolic(struct ZbZclClusterT *cl
 /**
  * Send a Publish Special Days as a response
  * @param cluster Cluster instance from which to send this command
- * @param dstInfo Destination address for response
+ * @param dst Destination address for response
  * @param info Publish Special Days command structure
  * @param callback Callback function for an APSDE-DATA.confirm
  * @param arg Pointer to application data that will later be provided back
@@ -450,7 +463,7 @@ enum ZclStatusCodeT ZbZclCalServerPublishSeasonsUnsolic(struct ZbZclClusterT *cl
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
 enum ZclStatusCodeT ZbZclCalServerPublishSpecialDaysRsp(struct ZbZclClusterT *cluster,
-    struct ZbZclAddrInfoT *dstInfo, struct ZbZclCalPublishSpecialDaysT *info,
+    struct ZbZclAddrInfoT *dst, struct ZbZclCalPublishSpecialDaysT *info,
     void (*callback)(struct ZbApsdeDataConfT *conf, void *arg), void *arg);
 
 /**
@@ -477,7 +490,7 @@ enum ZclStatusCodeT ZbZclCalServerPublishSpecialDaysUnsolic(struct ZbZclClusterT
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
 enum ZclStatusCodeT ZbZclCalServerSendCancelCalendarRsp(struct ZbZclClusterT *cluster,
-    struct ZbZclAddrInfoT *dstInfo, struct ZbZclCalCancelCalendarT *info);
+    struct ZbZclAddrInfoT *dst, struct ZbZclCalCancelCalendarT *info);
 
 /**
  * Send a Cancel Calendar as an unsolicited command
@@ -635,7 +648,8 @@ bool ZbZclCalParsePublishDayProfile(const uint8_t *buf, unsigned int len, struct
  * @param rsp Publish Week Profile command structure
  * @return True on success, false otherwise
  */
-bool ZbZclCalParsePublishWeekProfile(const uint8_t *buf, unsigned int len, struct ZbZclCalServerPublishWeekProfileT *rsp);
+bool ZbZclCalParsePublishWeekProfile(const uint8_t *buf, unsigned int len,
+    struct ZbZclCalServerPublishWeekProfileT *rsp);
 
 /**
  * Parse a Publish Seasons command
@@ -685,5 +699,7 @@ bool ZbZclCalParseCancelCalendar(const uint8_t *buf, unsigned int len, struct Zb
 struct ZbZclClusterT * ZbZclCalendarMirrorAlloc(struct ZigBeeT *zb, uint8_t endpoint,
     struct ZbZclClusterT *calendar_server, struct ZbZclClusterT *meter_mirror,
     struct ZbZclClusterT *meter_client);
+
+/*lint -restore */
 
 #endif

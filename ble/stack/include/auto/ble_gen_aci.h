@@ -23,6 +23,7 @@
 
 /**
  * @brief ACI_RESET
+ *
  * This command resets the BLE stack (Host and LE Controller).
  *
  * @param Mode ACI reset mode.
@@ -42,16 +43,22 @@
  *          mode)
  *        - 0x00000100: Appearance is writable
  *        - 0x00000200: Support of Enhanced ATT
- * @return Value indicating success or error code.
+ *        - 0x00010000: Support of Connected Isochronous Stream
+ *        - 0x00020000: Support of Broadcast Isochronous Stream
+ *        - 0x00040000: Support of Periodic Advertising with Responses
+ *        - 0x00080000: Support of Channel Sounding
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_reset( uint8_t Mode,
                       uint32_t Options );
 
 /**
  * @brief ACI_GET_INFORMATION
+ *
  * This command reads the local ACI information.
  *
  * @param[out] Version BLE stack version.
+ *        Size: 2 32-bit words.
  * @param[out] Options Current BLE stack options (a bit set to 1 means that the
  *        corresponding optional feature is activated).
  *        Flags:
@@ -65,8 +72,13 @@ tBleStatus aci_reset( uint8_t Mode,
  *          mode)
  *        - 0x00000100: Appearance is writable
  *        - 0x00000200: Support of Enhanced ATT
+ *        - 0x00010000: Support of Connected Isochronous Stream
+ *        - 0x00020000: Support of Broadcast Isochronous Stream
+ *        - 0x00040000: Support of Periodic Advertising with Responses
+ *        - 0x00080000: Support of Channel Sounding
  * @param[out] Debug_Info BLE stack debug information.
- * @return Value indicating success or error code.
+ *        Size: 3 32-bit words.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_get_information( uint32_t* Version,
                                 uint32_t* Options,
@@ -74,6 +86,7 @@ tBleStatus aci_get_information( uint32_t* Version,
 
 /**
  * @brief ACI_WRITE_CONFIG_DATA
+ *
  * This command writes a value to the configuration data structure. It is
  * useful to setup directly some parameters for the BLE stack.
  * Refer to Annex for details on the different parameters that can be
@@ -100,11 +113,11 @@ tBleStatus aci_get_information( uint32_t* Version,
  *          LL RSSI golden range; 2 bytes
  *        - 0xC4: CONFIG_DATA_LL_RX_ACL_CTRL_OFFSET;
  *          LL RX ACL control; 2 bytes
- *        - 0xC5: CONFIG_DATA_LL_ISO_SCHED_MODE_OFFSET;
- *          LL isochronous scheduling mode; 1 byte
+ *        - 0xC5: CONFIG_DATA_LL_OPTION_FLAGS_OFFSET;
+ *          LL option flags; 1 byte
  * @param Length Length of data to be written
  * @param Value Data to be written
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_write_config_data( uint8_t Offset,
                                   uint8_t Length,
@@ -112,6 +125,7 @@ tBleStatus aci_write_config_data( uint8_t Offset,
 
 /**
  * @brief ACI_READ_CONFIG_DATA
+ *
  * This command requests the value in the configuration data structure. The
  * number of read bytes changes for different Offset.
  *
@@ -129,9 +143,9 @@ tBleStatus aci_write_config_data( uint8_t Offset,
  *        - 0xC2: CONFIG_DATA_LL_RSSI_GOLDEN_RANGE_OFFSET;
  *          LL RSSI golden range (two 8-bit signed values in dBm - byte #0 is
  *          the lower value, byte #1 is the upper value); 2 bytes
- * @param[out] Data_Length Length of Data in octets
+ * @param[out] Data_Length Length of Data in octets.
  * @param[out] Data Data field associated with Offset parameter
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_read_config_data( uint8_t Offset,
                                  uint8_t* Data_Length,

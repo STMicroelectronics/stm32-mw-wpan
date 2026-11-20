@@ -53,6 +53,21 @@ tBleStatus CSIP_SET_MEMBER_RegisterServiceInstance(uint8_t Instance_ID, CSIS_Ser
   */
 tBleStatus CSIP_RemoveServiceRecord(uint8_t Peer_Address_Type, const uint8_t Peer_Address[6]);
 
+/**
+  * @brief  Read the Coordinated Set Name characteristic on a linked Set Member
+  *
+  *         The linkup for the target ConnHandle must already be complete and the Coordinated
+  *         Set Name characteristic must have been discovered during linkup.
+  *         The result is delivered asynchronously via CSIP_COO_SET_NAME_NOTIFIED_EVT.
+  *
+  * @param  ConnHandle: connection handle of the linked Set Member
+  * @retval BLE_STATUS_SUCCESS if the ATT read was submitted
+  * @retval HCI_UNSUPPORTED_FEATURE_OR_PARAMETER_VALUE_ERR_CODE if the characteristic was
+  *         not discovered (peer does not expose Coordinated Set Name)
+  * @retval BLE_STATUS_INVALID_OPERATION if no linked instance is found or linkup is not complete
+  */
+tBleStatus CSIP_COO_Read_Coordinated_Set_Name(uint16_t ConnHandle);
+
 #ifdef __cplusplus
 }
 #endif

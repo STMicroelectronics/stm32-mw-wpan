@@ -233,7 +233,8 @@ tBleStatus CAP_UpdatePACRecord(uint16_t Handle,BAP_AudioPACRecord_t *pRecord);
 /**
   * @brief  Read the PAC Sink Records of the remote CAP Acceptor/Commander in Unicast Server or Scan Delegator role
   * @note   Once operation is complete, the CAP_READ_REM_SNK_PAC_RECORDS_COMPLETE_EVT event is notified to upper layer.
-  *         When a record is read, the value is notified to upper layer over the CAP_REM_ACC_SNK_PAC_RECORD_INFO_EVT event.
+  *         The Data packet containing on or more PAC Records is reported to upper layer over one or mutliple
+  *         CAP_REM_ACC_SNK_PAC_RECORDS_DATA_EVT event notifications.
   * @param  ConnHandle: connection handle
   * @retval status of the operation
   */
@@ -242,7 +243,8 @@ tBleStatus CAP_ReadRemoteSnkPACRecords(uint16_t ConnHandle);
 /**
   * @brief  Read the PAC Source Records of the remote CAP Acceptor/Commander in Unicast Server or Scan Delegator role
   * @note   Once operation is complete, the CAP_READ_REM_SRC_PAC_RECORDS_COMPLETE_EVT event is notified to upper layer.
-  *         When a record is read, the value is notified to upper layer over the CAP_REM_ACC_SRC_PAC_RECORD_INFO_EVT event.
+  *         The Data packet containing on or more PAC Records is reported to upper layer over one or mutliple
+  *         CAP_REM_ACC_SRC_PAC_RECORDS_DATA_EVT event notifications.
   * @param  ConnHandle: connection handle
   * @retval status of the operation
   */
@@ -792,6 +794,13 @@ tBleStatus CAP_RegisterMediaPlayerInstance(uint8_t ContentControlID);
 tBleStatus CAP_RegisterCoordinatedSetMember(uint8_t Instance_ID);
 
 /**
+  * @brief  Unregister the Coordinated Set Member from the CAP
+  * @note   Supported only if CAP Acceptor role is initialized.
+  * @retval status of the unregistration
+  */
+tBleStatus CAP_UnregisterCoordinatedSetMember(void);
+
+/**
   * @brief  Start procedure to change the volume level on the Acceptors of the Coordinated Set acting in the VCP Volume
   *         Renderer role.
   * @note   A Commander acting in the VCP Volume Controller role uses this procedure changes the volume
@@ -908,6 +917,18 @@ tBleStatus CAP_CSIP_UpdateSIRK(uint8_t Instance_ID, uint8_t *SIRK, uint8_t SIRK_
   * @retval status of the update
   */
 tBleStatus CAP_CSIP_UpdateSize(uint8_t Instance_ID, uint8_t Size);
+
+/**
+  * @brief  Update the Coordinated Set Name in the instance of CSIS of the Coordinated Set Member
+  * @note   Supported only if CAP Acceptor role & Set Member are initialized.
+  * @note   Supported only if the Coordinated Set Name characteristic was registered (with a non-empty name)
+  *         and is notifiable.
+  * @param  Instance_ID: Coordinated Set Identification Instance of the Set Member
+  * @param  Name : pointer on the new UTF-8 Coordinated Set Name value
+  * @param  NameLen : length in bytes of the new Coordinated Set Name (0 to CSIS_COORDINATED_SET_NAME_MAX_LEN)
+  * @retval status of the update
+  */
+tBleStatus CAP_CSIP_UpdateName(uint8_t Instance_ID, uint8_t *Name, uint8_t NameLen);
 
 /**
   * @brief  Start the Lock Request Procedure with one Coordinated Set.

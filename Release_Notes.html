@@ -30,7 +30,8 @@
 <h1 id="purpose">Purpose</h1>
 <p>Wireless Personal Area Network Middleware supporting:</p>
 <ul>
-<li><p>Bluetooth Low Energy (Qualified against Bluetooth® Core 6.2)</p></li>
+<li><p>Bluetooth Low Energy (Bluetooth stack updated in alignment with the Bluetooth Core Specification v6.3)</p></li>
+<li><p>Bluetooth Low Energy Audio Framework qualified with TCRL pkg104 (Q395759)</p></li>
 <li><p>Zigbee stack Revision 23 (R23) and Revision 22 (R22), Zigbee Clusters ZCL 8.0</p></li>
 <li><p>OpenThread: compliant Thread 1.1, 1.2, 1.3 and 1.4  </p></li>
 <li><p>Mac 802.15.4: compliant Zigbee IEEE 802.15.4 MAC Test Plan V 2.0</p></li>
@@ -75,7 +76,6 @@
 <li>Monitoring Advertisers</li>
 <li>LL Extended Feature Set</li>
 </ul>
-<p>The maximum number of connections is limited to 20 (when using <code>_20_links_</code> variants otherwise default maximum number of connections is 8).</p>
 <p>The list of BLE commands is documented in the following file: <a href="ble/stack/doc/STM32WBA_BLE_Wireless_Interface.html">STM32WBA_BLE_Wireless_Interface.html</a></p>
 <p>The BLE Stack user manual is available at following location: <a href="ble/stack/doc/STM32WBA_BLE_Stack_User_Manual.html">STM32WBA_BLE_Stack_User_Manual.html</a></p>
 <p>Bluetooth® Low Energy Host Stack libraries are available in the STM32WBA package depending on the integration mode selected by the application:</p>
@@ -88,7 +88,7 @@
 <li><em>stm32wba_ble_stack_full.a</em> replaces the former <em>stm32wba_ble_stack_basic.a</em>, <em>stm32wba_ble_stack_basic_plus.a</em> and <em>stm32wba_ble_stack_po.a</em> variants.</li>
 <li><em>stm32wba_ble_stack_llo.a</em> remains the dedicated Link-Layer-Only library.</li>
 </ul>
-<p>Link Layer libraries now follow the unified naming convention <code>LinkLayer_&lt;Techno&gt;_&lt;HW_IP_version&gt;.a</code>:</p>
+<p>Link Layer libraries follow the unified naming convention <code>LinkLayer_&lt;Techno&gt;_&lt;HW_IP_version&gt;.a</code>:</p>
 <ul>
 <li><code>BLE_Full</code>, <code>BLE_Basic</code>, <code>BLE_Basic_Plus</code> and <code>BLE_Peripheral_Only</code> identify the BLE controller feature set.</li>
 <li><code>802_15_4</code> identifies the unified 802.15.4 library shared by MAC, Zigbee and Thread.</li>
@@ -98,7 +98,7 @@
 <li><code>_V3_0_</code> targets STM32WBA5 and STM32WBA6 devices, while <code>_V3_0p_</code> targets STM32WBA25 devices.</li>
 </ul>
 <p>When migrating an existing project, update both the selected BLE Host stack library name and all legacy <code>WBAx_LinkLayer_*</code> references in project settings, build scripts and documentation.</p>
-<p>Correspondence between legacy names and current names:</p>
+<p>Correspondence between legacy names (v1.9.0 and before) and current names:</p>
 <p>BLE Host stack libraries:</p>
 <table>
 <thead>
@@ -245,6 +245,29 @@
 </tr>
 </tbody>
 </table>
+<p>Starting from <strong>CubeFW STM32WBA V1.11.0</strong>, Link Layer and Concurrent Modes libraries split:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Legacy name</th>
+<th>Current name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>LinkLayer_802_15_4_Vx.a</code></td>
+<td><code>Mac15_4.a</code> + <code>LinkLayer_802_15_4_Vx.a</code></td>
+</tr>
+<tr class="even">
+<td><code>LinkLayer Concurrent lib</code></td>
+<td><code>Mac15_4_Concurrent_BLE_xxx.a</code> + <code>LinkLayer_BLE_xxx_802_15_4_Vx.a</code></td>
+</tr>
+</tbody>
+</table>
 <p>The <strong>BLE audio</strong> feature introduces the following libraries:</p>
 <ul>
 <li><em>ble_audio.a</em>: Generic Audio Framework.</li>
@@ -346,7 +369,180 @@
 <div class="col-sm-12 col-lg-8">
 <h1 id="update-history">Update History</h1>
 <div class="collapse">
-<input type="checkbox" id="collapse-section13" checked aria-hidden="true"> <label for="collapse-section13" aria-hidden="false">V2.10.0 / 02-June-2026</label>
+<input type="checkbox" id="collapse-section14" checked aria-hidden="true"> <label for="collapse-section13" aria-hidden="false">V2.11.0 / 26-Oct-2026</label>
+<div>
+<h2 id="api-changes">API Changes</h2>
+<ul>
+<li>Link Layer:
+<ul>
+<li>Renaming of ll_sys_get_concurrent_state_machines_num function to ll_intf_get_concurrent_state_machines_num</li>
+<li>Removal of LINKLAYER_PLAT_DelayUs(uint32_t delay) porting interface from linklayer_plat.c/.h files.</li>
+<li>Removal of Link layer libraries for 20 links (i.e. <code>LinkLayer_BLE_Basic_20_links_V3_0.a</code>, <code>LinkLayer_BLE_Basic_20_links_V3_0p.a</code> and <code>LinkLayer_BLE_Basic_Plus_20_links_V3_0.a</code>)</li>
+<li>Library split (Customers linking these libs must update):
+<ul>
+<li><code>LinkLayer_802_15_4_Vx.a</code> → <code>Mac15_4.a</code> + <code>LinkLayer_802_15_4_Vx.a</code></li>
+<li>Concurrent lib split into <code>Mac15_4_Concurrent_BLE_xxx.a</code> + <code>LinkLayer_BLE_xxx_802_15_4_Vx.a</code></li>
+<li>New porting layers mac_radio_port.c (Zigbee) and thread_radio_port.c (Thread).</li>
+</ul></li>
+<li>Removal of dependencies related to ’PHY_40nm_*’ preprocessor definitions in WPAN projects.</li>
+</ul></li>
+<li>BLE:
+<ul>
+<li>Update of BleStack_Init parameters for the Link Layer RAM dynamic allocation (for more info please check the STM32WBA_BLE_Stack_User_Manual):
+<ul>
+<li>ll_sm_num : Maximum number of simultaneous state machines that the Link Layer supports.</li>
+<li>ll_buffer : Start address of the allocated RAM buffer for the BLE Link Layer. It must be a 32-bit aligned RAM area.</li>
+<li>ll_buffer_size : Size of the allocated RAM buffer for BLE Link Layer.</li>
+<li>options : Bitmap of the features that needs to be used.</li>
+</ul></li>
+<li>Replacement of some deprecated commands as detailed in the table below:</li>
+</ul></li>
+</ul>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Deprecated command</th>
+<th>Replacement command</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ACI_ATT_FIND_INFO_REQ</td>
+<td>ACI_GATT_DISC_ALL_CHAR_DESC</td>
+</tr>
+<tr class="even">
+<td>ACI_ATT_FIND_BY_TYPE_VALUE_REQ</td>
+<td>ACI_GATT_DISC_PRIMARY_SERVICE_BY_UUID</td>
+</tr>
+<tr class="odd">
+<td>ACI_ATT_READ_BY_TYPE_REQ</td>
+<td>ACI_GATT_FIND_INCLUDED_SERVICES, ACI_GATT_DISC_ALL_CHAR_OF_SERVICE, ACI_GATT_DISC_CHAR_BY_UUID, or ACI_GATT_READ_USING_CHAR_UUID</td>
+</tr>
+<tr class="even">
+<td>ACI_ATT_READ_BY_GROUP_TYPE_REQ</td>
+<td>ACI_GATT_DISC_ALL_PRIMARY_SERVICES</td>
+</tr>
+<tr class="odd">
+<td>ACI_ATT_PREPARE_WRITE_REQ</td>
+<td>ACI_GATT_WRITE_LONG_CHAR_VALUE or ACI_GATT_WRITE_CHAR_RELIABLE</td>
+</tr>
+</tbody>
+</table>
+<h2 id="changes-and-fixes">Changes and Fixes</h2>
+<ul>
+<li>Link Layer:
+<ul>
+<li>Changes:
+<ul>
+<li>SWCU1-3320 &amp; SWCU1-3112 : Improve the link layer RAM footprint by dynamically allocating link layer RAM according to the requirements.</li>
+<li>SWCU1-8261 : Library split: <code>LinkLayer_802_15_4_Vx.a</code> → <code>Mac15_4.a</code> + <code>LinkLayer_802_15_4_Vx.a</code>; concurrent lib split into <code>Mac15_4_Concurrent_BLE_xxx.a</code> + <code>LinkLayer_BLE_xxx_802_15_4_Vx.a</code>; new porting layers mac_radio_port.c (Zigbee) and thread_radio_port.c (Thread). Customers linking these libs must update.</li>
+<li>SWCU1-23934 : Unify naming conventions for APIs of the ST RAL layer</li>
+<li>SWCU1-24507 : Update the Link Layer to TCRL Pkg 104</li>
+<li>SWCU1-8846 : Improve the link layer initialization process to remove the need for the LINKLAYER_PLAT_DelayUs porting interface.</li>
+<li>SWCU1-24665 : Add LL Extended Feature Set and Monitoring Advertisers on STM32WBA5 and STM32WBA6 devices</li>
+<li>SWCU1-25085 : Add Randomized Resolvable Private Address feature</li>
+<li>SWCU1-25026 : Enhance Link Layer Peripheral Latency behavior when the peripheral must transmit ACL data.</li>
+<li>SWCU1-25104 : Remove application dependencies of PHY_40nm_*** macros.</li>
+<li>SWCU1-8900 : Add an optional PAwR power-saving mode that reduces radio reception time by ending response waits earlier.</li>
+<li>SWCU1-24696 : Add APIs to retrieve the last connection event’s counter, timing information for connection events and the controller current sleep timer value</li>
+<li>SWCU1-23816 : Add an optional mechanism to reduce the auxiliary offset for AUX_ADV_IND packets (Not compatible with Isochronous Channels usage)</li>
+<li>SWCU1-23628 : Improve stack initialization behavior when RCC is reset.</li>
+<li>SWCU1-9027 : Enhance the profiling timing framework</li>
+</ul></li>
+<li>Issues fixed:
+<ul>
+<li>SWCU1-24451 : Free the connection context allocated for the connectable advertising event once advertising is disabled.</li>
+<li>SWCU1-24481 : Fix the issue where HCI_LE_READ_ALL_REMOTE_FEATURES could not be sent twice on the central side</li>
+<li>SWCU1-24280 : Set the default BD address to 0x000000000000.</li>
+<li>SWCU1-24719 : Trigger the data length update procedure once the default values are updated through the LE Write Suggested Default Data Length command.</li>
+<li>SWCU1-23943 : Support of temperature based calibration in 802.15.4 applications.</li>
+</ul></li>
+</ul></li>
+<li>BLE:
+<ul>
+<li>Changes:
+<ul>
+<li>SWCU1-24869 : The application now calculates BLE host GATT database sizing from host-stack macros and CubeMX-generated code. The BLE_DEFAULT_NUM_GATT_SERVICES, BLE_DEFAULT_NUM_GATT_ATTRIBUTES, and BLE_DEFAULT_ATT_VALUE_ARRAY_SIZE values remain adjustable with the User Sections.</li>
+<li>SWCU1-25105 : Attribute_Val_Length and Attribute_Val of ACI_GATT_PERMIT_WRITE command are no longer used by the BLE stack.</li>
+<li>SWCU1-25034 : The ACI_GATT_STORE_DB command now returns an error if the size of the GATT database exceeds the local memory capacity required to perform the storage operation.</li>
+<li>SWCU1-24456 : The mtu parameter of the BLE_MBLOCKS_CALC macro is now defined as the maximum of ATT MTU, SMP MTU, and COC MPS, rather than ATT MTU only. Consequently, if connection-oriented channels (CoC) are not used, max_coc_mps should be set to its minimum value during BLE stack initialization.</li>
+<li>SWCU1-24471 : A new event (ACI_GATT_NOTIFICATION_LL_ACK_EVENT) is now generated on the server side when an ATT notification has been acknowledged by the peer device at Link Layer level.</li>
+</ul></li>
+</ul></li>
+<li>BLE Audio:
+<ul>
+<li>Changes:
+<ul>
+<li>SWCU1-24333 : Add the BAP_PACS_CLT_TOTAL_BUFFER_SIZE macro and AudioCapCltConfig structure for configuring the PAC characteristic client buffer.</li>
+<li>SWCU1-24334 : Change of the names of CAP Remote PAC Records events and new associated BAP_PACRecordsData_t structure</li>
+<li>SWCU1-24440 : Introduce new mode for Codec Manager clock corrector allowing to compensate drift over a long period based on hardware timestamping</li>
+<li>SWCU1-24697 : Audio Stream cleaning during all Termination process with unconditioned hci_le_remove_cig call</li>
+<li>SWCU1-25474 : Rename Codec Manager API to remplace AUDIO prefix with the CODEC prefix.</li>
+<li>SWCU1-7577 : Audio IP supports ACI_GATT_READ_EXT_EVENT and ACI_GATT_NOTIFICATION_EXT_VSEVT_CODE events from Ble Host Stack layer</li>
+<li>SWCU1-7652 : ACI_GATT_READ_MULTI_PERMIT_REQ_EVENT event handling is improved in the Audio IP</li>
+<li>SWCU1-25581 : CSIP/CSIS have been updated to support Spec 1.11. New char is added - CSIP Set Name - with its Init, read and update Function. This is compatible with previous Spec 1.0 and optional.</li>
+<li>SWCU1-25581 : New functions &amp; events added to handle CSIP Set Name : CSIP_COO_Read_Coordinated_Set_Name, CAP_CSIP_UpdateName, CSIP_COO_SET_NAME_NOTIFIED_EVT</li>
+</ul></li>
+<li>Issues fixed:
+<ul>
+<li>SWCU1-24694 : Fix Audio IP Mono Channel Allocation to be supported as intended</li>
+<li>SWCU1-24695 : Fix Audio IP Set members Discovery with Resolvable Private Address</li>
+<li>SWCU1-7102 : Fix Audio IP on a ATT read Response with a length bigger than (ATT_MTU - 1)</li>
+<li>SWCU1-7604 : Fix Audio IP to handle correctly a received ATT notification for an ASE characteristic length greater than (ATT_MTU - 3)</li>
+<li>SWCU1-25582 : Fix Audio IP to to register only one member with CAP_RegisterCoordinatedSetMember and add CAP_UnregisterCoordinatedSetMember to be able to change it.</li>
+<li>SWCU1-24754 : Fix Codec Manager that shifted latency on the second peripheral</li>
+<li>SWCU1-24821 : Fix Codec Manager incorrect clock-corrector behavior when the first CIS disconnects while the second stays connected.</li>
+</ul></li>
+</ul></li>
+<li>802.15.4 General:
+<ul>
+<li>Issues fixed:
+<ul>
+<li>SWCU1-23943: Support of temperature based calibration in 802.15.4 applications.</li>
+</ul></li>
+</ul></li>
+<li>Zigbee:
+<ul>
+<li>Changes:
+<ul>
+<li>SWCU1-24785 : Improve the integration of Zigbee Direct BLE services by refactoring the BLE service files to align with the Zigbee Direct specification and streamlining the BLE interface to simplify porting, increase flexibility, and improve maintainability while preserving CubeMX compliance.</li>
+</ul></li>
+<li>Issues fixed:
+<ul>
+<li>SWCU1-8334 : Fix Zigbee persistence not restoring the configured attribute reporting delay: after reset or reconnection, reporting now resumes with the saved report time instead of the default value.</li>
+<li>SWCU1-25631 : Fixes inside the Zigbee stack and the link layer, enabling long-term tests to complete without memory exhaustion errors.</li>
+</ul></li>
+</ul></li>
+<li>Thread:
+<ul>
+<li>Changes:
+<ul>
+<li>SWCU1-6297: Integrate Platform Security Architecture (PSA) APIs based on Openthread stack commit SHA-1: b81da07ace250b7d3800928848feaa1fb126fa43</li>
+</ul></li>
+</ul></li>
+<li>BLE Zigbee:
+<ul>
+<li>Changes:
+<ul>
+<li>SWCU1-24785 : Improve the integration of Zigbee Direct BLE services by refactoring the BLE service files to align with the Zigbee Direct specification and streamlining the BLE interface to simplify porting, increase flexibility, and improve maintainability while preserving CubeMX compliance.</li>
+</ul></li>
+</ul></li>
+<li><strong>Known limitations</strong>:
+<ul>
+<li>BLE Audio:
+<ul>
+<li>Framed mode is not supported (44.1 KHz).</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section13" aria-hidden="true"> <label for="collapse-section13" aria-hidden="false">V2.10.0 / 02-June-2026</label>
 <div>
 <h2 id="main-changes">Main Changes</h2>
 <ul>

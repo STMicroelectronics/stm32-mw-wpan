@@ -4,7 +4,7 @@
  * @brief ZCL Security IAS Zone cluster header
  * ZCL 7 section 8.2
  * ZCL 8 section 8.2
- * @copyright Copyright [2009 - 2024] Exegin Technologies Limited. All rights reserved.
+ * @copyright Copyright [2009 - 2025] Exegin Technologies Limited. All rights reserved.
  */
 
 #ifndef ZCL_IAS_ZONE_H

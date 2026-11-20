@@ -129,6 +129,13 @@ public:
      * Clears the Mode2Key on destruction.
      */
     ~Mac(void) { ClearMode2Key(); }
+    /**
+     * Initializes the `Mac`.
+     *
+     * This method MUST be called after OpenThread `Instance` is fully initialized (from `Instance::AfterInit()`) and
+     * only after `KeyManager` is also fully initialized.
+     */
+    void Init(void);
 
     /**
      * Starts an IEEE 802.15.4 Active Scan.

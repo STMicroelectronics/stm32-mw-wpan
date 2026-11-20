@@ -8,9 +8,6 @@
 <!--
  /* Font Definitions */
  @font-face
-	{font-family:Wingdings;
-	panose-1:5 0 0 0 0 0 0 0 0 0;}
-@font-face
 	{font-family:"MS Mincho";
 	panose-1:2 2 6 9 4 2 5 8 3 4;}
 @font-face
@@ -20,10 +17,6 @@
 	{font-family:Calibri;
 	panose-1:2 15 5 2 2 2 4 3 2 4;}
 @font-face
-	{font-family:Aptos;}
-@font-face
-	{font-family:"Yu Mincho";}
-@font-face
 	{font-family:Cambria;
 	panose-1:2 4 5 3 5 4 6 3 2 4;}
 @font-face
@@ -32,8 +25,6 @@
 @font-face
 	{font-family:Consolas;
 	panose-1:2 11 6 9 2 2 4 3 2 4;}
-@font-face
-	{font-family:"\@Yu Mincho";}
 @font-face
 	{font-family:"\@MS Mincho";
 	panose-1:2 2 6 9 4 2 5 8 3 4;}
@@ -345,7 +336,8 @@ p.MsoTof, li.MsoTof, div.MsoTof
 span.MsoFootnoteReference
 	{vertical-align:super;}
 p.MsoTitle, li.MsoTitle, div.MsoTitle
-	{margin:0cm;
+	{mso-style-link:"Title Char";
+	margin:0cm;
 	text-align:right;
 	font-size:20.0pt;
 	font-family:"Arial",sans-serif;
@@ -1537,8 +1529,7 @@ span.ui-provider
 .MsoPapDefault
 	{margin-bottom:10.0pt;
 	line-height:115%;}
- /* Page Definitions */
- @page WordSection1
+@page WordSection1
 	{size:21.0cm 841.95pt;
 	margin:72.0pt 72.0pt 72.0pt 72.0pt;}
 div.WordSection1
@@ -1644,9 +1635,7 @@ Footprint; Update BLE stack initialization section.</p>
 
 <p class=MsoNormal><a name="_Hlk202263818"><span style='color:windowtext'>Rev
 1.15 (26 June 2025): Add Host FIFO events information; Update BLE Stack </span></a><span
-style='color:windowtext'>initialization</span><span style='color:windowtext'>
-and </span><span style='color:windowtext'>BLE Stack </span><span
-style='color:windowtext'>process sections.</span></p>
+style='color:windowtext'>initialization and BLE Stack process sections.</span></p>
 
 <p class=MsoNormal><span style='color:windowtext'>Rev 1.16 (28 August 2025):
 Update BLE stack initialization section;</span> Update BLE Stack and Link Layer
@@ -1655,175 +1644,199 @@ Footprint; Update library variants; Update BLE platform Timer functions.</p>
 <p class=MsoNormal>Rev 1.17 (29 September 2025): Update library variants;
 Update Application compilation options section. </p>
 
-<p class=MsoNormal><span style='color:black'>Rev 1.18 (10 December 2025): Update
-library variants section; Update Application compilation options section;
-Update Asynchronous events and data reception section.</span></p>
+<p class=MsoNormal>Rev 1.18 (10 December 2025): Update library variants
+section; Update Application compilation options section; Update Asynchronous
+events and data reception section.</p>
 
 <p class=MsoNormal><span style='color:windowtext'>Rev 1.19 (9 April 2026):
 Update the table of supported features per variant; Add a new section for the
 BLE stack link-time optimization; Update BLE Stack and Link Layer Footprint.</span></p>
 
-<p class=MsoNormal><span style='color:windowtext'>Rev 1.20 (27 April 2026): Update
-the Library variants, the Application compilation options, BLE stack porting
-and the Timer functions sections to be aligned with the reduction of the Ble
-stack libs.</span></p>
+<p class=MsoNormal><span style='color:windowtext'>Rev 1.20 (27 April 2026):
+Update the Library variants, the Application compilation options, BLE stack
+porting and the Timer functions sections to be aligned with the reduction of
+the Ble stack libs.</span></p>
 
-<p class=MsoNormal><span style='color:windowtext'>Rev 1.21 (13 Mai 2026): Update
-the library variants table and notes.</span></p>
+<p class=MsoNormal><span style='color:windowtext'>Rev 1.21 (13 Mai 2026):
+Update the library variants table and notes.</span></p>
+
+<p class=MsoNormal><span style='color:windowtext'>Rev 1.22 (1 June 2026):
+Update BLE Stack initialization section.</span></p>
+
+<p class=MsoNormal><span style='color:windowtext'>Rev 1.23 (6 July 2026):
+Update Library variant and BLE Stack initialization sections with new Link
+Layer RAM allocation parameters.</span></p>
+
+<p class=MsoNormal><span style='color:windowtext'>Rev 1.24 (7 September 2026):
+Update the table of supported features per variant; Update the Link Layer
+Footprint.</span></p>
+
+<p class=MsoNormal><span style='color:windowtext'>Rev 1.25 (20 October 2026):
+Update the BLE stack initialization section to include the LL RAM allocation
+policy.</span></p>
 
 <p class=MsoNormal>&nbsp;</p>
 
-<p class=MsoTocHeading><span lang=FR>Contents</span></p>
+<p class=MsoNormal>&nbsp;</p>
 
-<p class=MsoToc1><a href="#_Toc226643899"><i>List of tables</i><span
-style='color:black;display:none'>. </span><span
-style='color:black;display:none'>1</span></a></p>
+<p class=MsoNormal>&nbsp;</p>
 
-<p class=MsoToc1><a href="#_Toc226643900"><i>List of figures</i><span
-style='color:black;display:none'>. </span><span
-style='color:black;display:none'>1</span></a></p>
+<p class=MsoTocHeading>Contents</p>
+
+<p class=MsoToc1><a href="#_Toc226643899"><i>List of tables</i><i><span
+style='color:black;display:none'>. 1</span></i></a></p>
+
+<p class=MsoToc1><a href="#_Toc226643900"><i>List of figures</i><i><span
+style='color:black;display:none'>. 1</span></i></a></p>
 
 <p class=MsoToc1><a href="#_Toc226643901"><i>1</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></i><i>About this document</i><span style='color:black;display:none'> </span><span style='color:black;display:none'>1</span></a></p>
+</span>About this document</i><i><span style='color:black;display:none'> 1</span></i></a></p>
 
 <p class=MsoToc2><a href="#_Toc226643902"><i>1.1</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></i><i>Purpose</i><span style='color:black;display:none'>  </span><span style='color:black;display:none'>1</span></a></p>
+</span>Purpose</i><i><span style='color:black;display:none'>&nbsp; 1</span></i></a></p>
 
 <p class=MsoToc2><a href="#_Toc226643903"><i>1.2</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></i><i>Scope</i><span style='color:black;display:none'>  </span><span style='color:black;display:none'>1</span></a></p>
+</span>Scope</i><i><span style='color:black;display:none'>&nbsp; 1</span></i></a></p>
 
 <p class=MsoToc2><a href="#_Toc226643904"><i>1.3</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></i><i>Acronym definitions</i><span style='color:black;display:none'>  </span><span style='color:black;display:none'>1</span></a></p>
+</span>Acronym definitions</i><i><span style='color:black;display:none'>&nbsp;
+1</span></i></a></p>
 
 <p class=MsoToc2><a href="#_Toc226643905"><i>1.4</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></i><i>References</i><span style='color:black;display:none'>  </span><span style='color:black;display:none'>1</span></a></p>
+</span>References</i><i><span style='color:black;display:none'>&nbsp; 1</span></i></a></p>
 
 <p class=MsoToc1><a href="#_Toc226643906"><i>2</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></i><i>BLE stack overview</i><span style='color:black;display:none'>.. </span><span style='color:black;display:none'>1</span></a></p>
+</span>BLE stack overview</i><i><span style='color:black;display:none'>.. 1</span></i></a></p>
 
 <p class=MsoToc2><a href="#_Toc226643907"><i>2.1</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></i><i>Release contents</i><span style='color:black;display:none'>  </span><span style='color:black;display:none'>1</span></a></p>
+</span>Release contents</i><i><span style='color:black;display:none'>&nbsp; 1</span></i></a></p>
 
 <p class=MsoToc3><a href="#_Toc226643908"><i>2.1.1</i><i><span
 style='font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></i><i>Folder structure</i><span style='color:black;display:none'>. </span><span style='color:black;display:none'>1</span></a></p>
+</span>Folder structure</i><i><span style='color:black;display:none'>. 1</span></i></a></p>
 
 <p class=MsoToc3><a href="#_Toc226643909"><i>2.1.2</i><i><span
 style='font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></i><i>Library variants</i><span style='color:black;display:none'>. </span><span style='color:black;display:none'>1</span></a></p>
+</span>Library variants</i><i><span style='color:black;display:none'>. 1</span></i></a></p>
 
 <p class=MsoToc2><a href="#_Toc226643910"><i>2.2</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></i><i>Real-Time environment</i><span style='color:black;display:none'> </span><span style='color:black;display:none'>1</span></a></p>
+</span>Real-Time environment</i><i><span style='color:black;display:none'> 1</span></i></a></p>
 
 <p class=MsoToc2><a href="#_Toc226643911"><i>2.3</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></i><i>Library dependencies</i><span style='color:black;display:none'>  </span><span style='color:black;display:none'>1</span></a></p>
+</span>Library dependencies</i><i><span style='color:black;display:none'>&nbsp;
+1</span></i></a></p>
 
 <p class=MsoToc2><a href="#_Toc226643912"><i>2.4</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></i><i>Library compilation options</i><span style='color:black;
-display:none'>  </span><span
-style='color:black;display:none'>1</span></a></p>
+</span>Library compilation options</i><i><span style='color:black;display:none'>&nbsp;
+1</span></i></a></p>
 
 <p class=MsoToc2><a href="#_Toc226643913"><i>2.5</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></i><i>Application compilation options</i><span style='color:black;
-display:none'>  </span><span
-style='color:black;display:none'>1</span></a></p>
+</span>Application compilation options</i><i><span style='color:black;
+display:none'>&nbsp; 1</span></i></a></p>
 
 <p class=MsoToc1><a href="#_Toc226643914"><i>3</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></i><i>BLE stack user interface</i><span style='color:black;display:
-none'>. </span><span
-style='color:black;display:none'>1</span></a></p>
+</span>BLE stack user interface</i><i><span style='color:black;display:none'>.
+1</span></i></a></p>
 
 <p class=MsoToc2><a href="#_Toc226643915"><i>3.1</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></i><i>BLE stack initialization</i><span style='color:black;display:
-none'>  </span><span
-style='color:black;display:none'>1</span></a></p>
+</span>BLE stack initialization</i><i><span style='color:black;display:none'>&nbsp;
+1</span></i></a></p>
+
+<p class=MsoToc3><a href="#_Toc226643932"><i>3.1.1</i><i><span
+style='font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>BLE Host stack memory allocation</i><i><span style='color:black;
+display:none'>&nbsp; 1</span></i></a></p>
+
+<p class=MsoToc3><a href="#_Toc226643933"><i>3.1.2</i><i><span
+style='font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>BLE Link Layer memory allocation</i><i><span style='color:black;
+display:none'>&nbsp; 1</span></i></a></p>
 
 <p class=MsoToc2><a href="#_Toc226643916"><i>3.2</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></i><i>BLE stack process</i><span style='color:black;display:none'>  </span><span style='color:black;display:none'>1</span></a></p>
+</span>BLE stack process</i><i><span style='color:black;display:none'>&nbsp; 1</span></i></a></p>
 
 <p class=MsoToc2><a href="#_Toc226643917"><i>3.3</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></i><i>BLE stack ACI/HCI interface</i><span style='color:black;
-display:none'>  </span><span
-style='color:black;display:none'>1</span></a></p>
+</span>BLE stack ACI/HCI interface</i><i><span style='color:black;display:none'>&nbsp;
+1</span></i></a></p>
 
-<p class=MsoToc3><a href="#_Toc226643918"><i>3.3.1</i><i><span
-style='font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></i><i>Transparent Mode</i><span style='color:black;display:none'>. </span><span style='color:black;display:none'>1</span></a></p>
+<p class=MsoToc3><a href="#_Toc226643918"><i><span lang=FR>3.3.1</span></i><i><span
+lang=FR style='font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></i><i><span lang=FR>Transparent Mode</span></i><i><span lang=FR
+style='color:black;display:none'>. 1</span></i></a></p>
 
-<p class=MsoToc3><a href="#_Toc226643919"><i>3.3.2</i><i><span
-style='font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></i><i>Direct Mode</i><span style='color:black;display:none'>. </span><span style='color:black;display:none'>1</span></a></p>
+<p class=MsoToc3><a href="#_Toc226643919"><i><span lang=FR>3.3.2</span></i><i><span
+lang=FR style='font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></i><i><span lang=FR>Direct Mode</span></i><i><span lang=FR
+style='color:black;display:none'>. 1</span></i></a></p>
 
-<p class=MsoToc4><a href="#_Toc226643920"><i>3.3.2.1</i><i><span
-style='font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></i><i>BLE stack wrapper</i><span style='color:black;display:none'> </span><span style='color:black;display:none'>1</span></a></p>
+<p class=MsoToc4><a href="#_Toc226643920"><i><span lang=FR>3.3.2.1</span></i><i><span
+lang=FR style='font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></i><i><span lang=FR>BLE stack wrapper</span></i><i><span lang=FR
+style='color:black;display:none'> 1</span></i></a></p>
 
 <p class=MsoToc4><a href="#_Toc226643921"><i>3.3.2.2</i><i><span
 style='font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></i><i>Commands and data sending</i><span style='color:black;display:
-none'>. </span><span
-style='color:black;display:none'>1</span></a></p>
+</span>Commands and data sending</i><i><span style='color:black;display:none'>.
+1</span></i></a></p>
 
 <p class=MsoToc4><a href="#_Toc226643922"><i>3.3.2.3</i><i><span
 style='font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></i><i>Asynchronous events and data reception</i><span style='color:
-black;display:none'>. </span><span
-style='color:black;display:none'>1</span></a></p>
+</span>Asynchronous events and data reception</i><i><span style='color:black;
+display:none'>. 1</span></i></a></p>
 
 <p class=MsoToc1><a href="#_Toc226643923"><i>4</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></i><i>BLE stack porting</i><span style='color:black;display:none'>. </span><span style='color:black;display:none'>1</span></a></p>
+</span>BLE stack porting</i><i><span style='color:black;display:none'>. 1</span></i></a></p>
 
 <p class=MsoToc2><a href="#_Toc226643924"><i>4.1</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></i><i>BLE platform initialization</i><span style='color:black;
-display:none'>  </span><span
-style='color:black;display:none'>1</span></a></p>
+</span>BLE platform initialization</i><i><span style='color:black;display:none'>&nbsp;
+1</span></i></a></p>
 
 <p class=MsoToc2><a href="#_Toc226643925"><i>4.2</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></i><i>BLE platform functions</i><span style='color:black;display:none'>  </span><span style='color:black;display:none'>1</span></a></p>
+</span>BLE platform functions</i><i><span style='color:black;display:none'>&nbsp;
+1</span></i></a></p>
 
 <p class=MsoToc3><a href="#_Toc226643926"><i>4.2.1</i><i><span
 style='font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></i><i>NVM function</i><span style='color:black;display:none'>. </span><span style='color:black;display:none'>1</span></a></p>
+</span>NVM function</i><i><span style='color:black;display:none'>. 1</span></i></a></p>
 
 <p class=MsoToc3><a href="#_Toc226643927"><i>4.2.2</i><i><span
 style='font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></i><i>Timer functions</i><span style='color:black;display:none'>. </span><span style='color:black;display:none'>1</span></a></p>
+</span>Timer functions</i><i><span style='color:black;display:none'>. 1</span></i></a></p>
 
 <p class=MsoToc3><a href="#_Toc226643928"><i>4.2.3</i><i><span
 style='font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></i><i>AES functions</i><span style='color:black;display:none'>. </span><span style='color:black;display:none'>1</span></a></p>
+</span>AES functions</i><i><span style='color:black;display:none'>. 1</span></i></a></p>
 
 <p class=MsoToc3><a href="#_Toc226643929"><i>4.2.4</i><i><span
 style='font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></i><i>PKA functions</i><span style='color:black;display:none'>. </span><span style='color:black;display:none'>1</span></a></p>
+</span>PKA functions</i><i><span style='color:black;display:none'>. 1</span></i></a></p>
 
 <p class=MsoToc3><a href="#_Toc226643930"><i>4.2.5</i><i><span
 style='font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></i><i>RNG functions</i><span style='color:black;display:none'>. </span><span style='color:black;display:none'>1</span></a></p>
+</span>RNG functions</i><i><span style='color:black;display:none'>. 1</span></i></a></p>
 
 <p class=MsoToc2><a href="#_Toc226643931"><i>4.3</i><i><span style='font-family:
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span></i><i>BLE stack link-time optimization</i><span style='color:black;
-display:none'>  </span><span
-style='color:black;display:none'>1</span></a></p>
+</span>BLE stack link-time optimization</i><i><span style='color:black;
+display:none'>&nbsp; 1</span></i></a></p>
 
 <p class=MsoNormal>&nbsp;</p>
 
@@ -1837,7 +1850,7 @@ of tables</span></h1>
 style='color:black;display:none'>&nbsp; 1</span></i></a></p>
 
 <p class=MsoTof><a href="#_Toc147487326"><i>Table 2: Supported features of each
-BLE </i>predefined configurations </a></p>
+BLE predefined configurations </i></a></p>
 
 <p class=MsoTof><a href="#_Toc147487327"><i>Table 3: BleStack_Init function</i><i><span
 style='color:black;display:none'>&nbsp; 1</span></i></a></p>
@@ -1845,44 +1858,50 @@ style='color:black;display:none'>&nbsp; 1</span></i></a></p>
 <p class=MsoTof><a href="#_Toc147487328"><i>Table 4: BleStack_Init function's
 parameters</i><i><span style='color:black;display:none'>&nbsp; 1</span></i></a></p>
 
-<p class=MsoTof><a href="#table5"><i>Table 5:  BLE Host Stack dynamic RAM
-configuration</i></a></p>
+<p class=MsoTof><a href="#table5"><i>Table 5:&nbsp; BLE Host Stack dynamic RAM configuration</i></a></p>
 
-<p class=MsoTof><a href="#_Toc147487329"><i>Table 6: BleStack_Process function&nbsp;</i></a></p>
+<p class=MsoTof><a href="#table6"><i>Table 6: Dynamic RAM optimization through
+SM configuration</i></a></p>
 
-<p class=MsoTof><a href="#_Toc147487330"><i>Table 7: BleStack_Request function</i><i><span
+<p class=MsoTof><a href="#table7"><i>Table 7: Dynamic RAM optimization through
+supported features configuration</i></a></p>
+
+<p class=MsoTof><a href="#_Toc147487329"><i>Table 8: BleStack_Process
+function&nbsp;</i></a></p>
+
+<p class=MsoTof><a href="#_Toc147487330"><i>Table 9: BleStack_Request function</i><i><span
 style='color:black;display:none'>&nbsp; 1</span></i></a></p>
 
-<p class=MsoTof><a href="#_Toc147487331"><i>Table 8: BLECB_Indication function</i><i><span
+<p class=MsoTof><a href="#_Toc147487331"><i>Table 10: BLECB_Indication function</i><i><span
 style='color:black;display:none'>&nbsp; 1</span></i></a></p>
 
-<p class=MsoTof><a href="#_Toc147487332"><i>Table 9: BLEPLAT_Init function</i><i><span
+<p class=MsoTof><a href="#_Toc147487332"><i>Table 11: BLEPLAT_Init function</i><i><span
 style='color:black;display:none'>&nbsp; 1</span></i></a></p>
 
-<p class=MsoTof><a href="#_Toc147487333"><i>Table 10: BLEPLAT functions'
+<p class=MsoTof><a href="#_Toc147487333"><i>Table 12: BLEPLAT functions'
 returns</i><i><span style='color:black;display:none'>&nbsp; 1</span></i></a></p>
 
-<p class=MsoTof><a href="#_Toc147487334"><i>Table 11: BLEPLAT NVM functions</i><i><span
+<p class=MsoTof><a href="#_Toc147487334"><i>Table 13: BLEPLAT NVM functions</i><i><span
 style='color:black;display:none'>&nbsp; 1</span></i></a></p>
 
-<p class=MsoTof><a href="#_Toc147487335"><i>Table 12: BLEPLAT Timer functions</i><i><span
+<p class=MsoTof><a href="#_Toc147487335"><i>Table 14: BLEPLAT Timer functions</i><i><span
 style='color:black;display:none'>&nbsp; 1</span></i></a></p>
 
-<p class=MsoTof><a href="#_Toc147487336"><i>Table 13: BLEPLAT AES functions</i><i><span
+<p class=MsoTof><a href="#_Toc147487336"><i>Table 15: BLEPLAT AES functions</i><i><span
 style='color:black;display:none'>&nbsp; 1</span></i></a></p>
 
-<p class=MsoTof><a href="#_Toc147487337"><i>Table 14: BLEPLAT PKA functions</i><i><span
+<p class=MsoTof><a href="#_Toc147487337"><i>Table 16: BLEPLAT PKA functions</i><i><span
 style='color:black;display:none'>&nbsp; 1</span></i></a></p>
 
-<p class=MsoTof><a href="#_Toc147487338"><i>Table 15: BLEPLAT RNG function</i><i><span
+<p class=MsoTof><a href="#_Toc147487338"><i>Table 17: BLEPLAT RNG function</i><i><span
 style='color:black;display:none'>&nbsp; 1</span></i></a></p>
 
 <h1><a name="_Toc163814794"></a><a name="_Toc147487399"></a><a
 name="_Toc226643900"></a><a name="_Toc125725155"></a><span style='color:black'>List
 of figures</span></h1>
 
-<p class=MsoTof><a href="#_Toc147487365"><i>Figure 1: BLE Stack folder
-structure</i><i><span style='color:black;display:none'>. 1</span></i></a></p>
+<p class=MsoTof><a href="#_Toc147487365"><i>Figure 1: BLE Stack folder structure</i><i><span
+style='color:black;display:none'>. 1</span></i></a></p>
 
 <p class=MsoTof><a href="#_Toc147487366"><i>Figure 2: BLE stack variants</i><i><span
 style='color:black;display:none'>. 1</span></i></a></p>
@@ -2133,7 +2152,7 @@ compatible with any Link Layer library variant.<br>
 This variant doesn’t contain the BLE Host.</span></p>
 
 <p class=MsoListParagraph style='margin-left:54.0pt;text-indent:-18.0pt'><span
-style='color:windowtext'>These 2 BLE stack variants can be used in several
+style='color:windowtext'>These 2 BLE stacks variants can be used in several
 predefined configurations. Each configuration consists of a combination of one
 BLE stack library variant</span></p>
 
@@ -2147,8 +2166,8 @@ compilation options</i></a><span style='color:windowtext'>).</span></p>
 is supported by each stack configuration.</p>
 
 <p class=MsoNormal>The table below details the supported <span
-style='color:windowtext'>features and memory footprint </span>of each predefined
-configuration:</p>
+style='color:windowtext'>features and memory footprint </span>of each
+predefined configuration:</p>
 
 <p class=MsoNormal>&nbsp;</p>
 
@@ -2169,46 +2188,41 @@ name="_Hlk147481314"></a>&nbsp;</p>
   none;padding:0cm 5.4pt 0cm 5.4pt;height:45.0pt'>
   <p class=MsoNormal align=center style='margin-top:12.0pt;text-align:center'><b><span
   style='font-size:14.0pt;color:windowtext'>Full</span></b></p>
-  <p class=MsoNormal style='margin-top:12.0pt'><b><span style='color:windowtext'>Host
-  Stack + LE Controller <br>
-  <br>
-  </span></b></p>
+  <p class=MsoNormal style='margin-top:12.0pt;margin-right:0cm;margin-bottom:
+  12.0pt;margin-left:0cm'><b><span style='color:windowtext'>Host Stack + LE
+  Controller </span></b></p>
   </td>
   <td width=210 style='width:157.4pt;border:solid windowtext 1.0pt;border-left:
   none;padding:0cm 0cm 0cm 0cm;height:45.0pt'>
   <p class=MsoNormal align=center style='margin-top:12.0pt;text-align:center'><b><span
   style='font-size:14.0pt;color:windowtext'>Basic Plus</span></b></p>
-  <p class=MsoNormal align=center style='margin-top:12.0pt;text-align:center'><b><span
-  style='color:windowtext'>Host Stack + LE Controller<br>
-  <br>
-  </span></b></p>
+  <p class=MsoNormal align=center style='margin-top:12.0pt;margin-right:0cm;
+  margin-bottom:12.0pt;margin-left:0cm;text-align:center'><b><span
+  style='color:windowtext'>Host Stack + LE Controller</span></b></p>
   </td>
   <td width=234 style='width:175.7pt;border:solid windowtext 1.0pt;border-left:
   none;padding:0cm 0cm 0cm 0cm;height:45.0pt'>
   <p class=MsoNormal align=center style='margin-top:12.0pt;text-align:center'><b><span
   style='font-size:14.0pt;color:windowtext'>Basic Features </span></b></p>
-  <p class=MsoNormal align=center style='margin-top:12.0pt;text-align:center'><b><span
-  style='color:windowtext'>Host Stack + LE Controller<br>
-  <br>
-  </span></b></p>
+  <p class=MsoNormal align=center style='margin-top:12.0pt;margin-right:0cm;
+  margin-bottom:12.0pt;margin-left:0cm;text-align:center'><b><span
+  style='color:windowtext'>Host Stack + LE Controller</span></b></p>
   </td>
   <td width=245 style='width:183.85pt;border:solid windowtext 1.0pt;border-left:
   none;padding:0cm 0cm 0cm 0cm;height:45.0pt'>
   <p class=MsoNormal align=center style='margin-top:12.0pt;text-align:center'><b><span
   style='font-size:14.0pt;color:windowtext'>Peripheral Only</span></b></p>
-  <p class=MsoNormal align=center style='margin-top:12.0pt;text-align:center'><b><span
-  style='color:windowtext'>Host Stack + LE Controller<br>
-  <br>
-  </span></b></p>
+  <p class=MsoNormal align=center style='margin-top:12.0pt;margin-right:0cm;
+  margin-bottom:12.0pt;margin-left:0cm;text-align:center'><b><span
+  style='color:windowtext'>Host Stack + LE Controller</span></b></p>
   </td>
   <td width=189 style='width:141.85pt;border:solid windowtext 1.0pt;border-left:
   none;padding:0cm 0cm 0cm 0cm;height:45.0pt'>
   <p class=MsoNormal align=center style='margin-top:12.0pt;text-align:center'><b><span
   style='font-size:14.0pt;color:windowtext'>Link Layer Only</span></b></p>
-  <p class=MsoNormal align=center style='margin-top:12.0pt;text-align:center'><b><span
-  style='color:windowtext'>LE Controller Only<br>
-  <br>
-  </span></b></p>
+  <p class=MsoNormal align=center style='margin-top:12.0pt;margin-right:0cm;
+  margin-bottom:12.0pt;margin-left:0cm;text-align:center'><b><span
+  style='color:windowtext'>LE Controller Only</span></b></p>
   </td>
  </tr>
  <tr style='height:45.0pt'>
@@ -2288,16 +2302,14 @@ name="_Hlk147481314"></a>&nbsp;</p>
  <tr style='height:15.0pt'>
   <td width=305 nowrap style='width:229.1pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal><b><span style='color:windowtext'>BLE link layer library variant
-  <sup>(4)</sup></span></b></p>
+  <p class=MsoNormal><b><span style='color:windowtext'>BLE link layer library
+  variant <sup>(4)</sup></span></b></p>
   </td>
   <td width=204 nowrap valign=top style='width:153.25pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><i><span
-  style='color:windowtext'>LinkLayer_BLE_Full <br>
-  <br>
-  </span></i></p>
+  <p class=MsoNormal align=center style='margin-bottom:12.0pt;text-align:center'><i><span
+  style='color:windowtext'>LinkLayer_BLE_Full </span></i></p>
   </td>
   <td width=210 valign=top style='width:157.4pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
@@ -2364,7 +2376,7 @@ name="_Hlk147481314"></a>&nbsp;</p>
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:windowtext'>Up to 20 KB</span></p>
+  style='color:windowtext'>Up to 17 KB</span></p>
   </td>
  </tr>
  <tr style='height:15.0pt'>
@@ -2377,35 +2389,35 @@ name="_Hlk147481314"></a>&nbsp;</p>
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:windowtext'>243 KB </span><span style='font-size:9.0pt;
+  style='color:windowtext'>252 KB </span><span style='font-size:9.0pt;
   color:windowtext'>(for WBA5x and WBA6x)</span><span style='color:windowtext'><br>
-  189KB </span><span style='font-size:9.0pt;color:windowtext'>(for WBA2x)</span><span
-  style='color:windowtext'>  </span></p>
+  194KB </span><span style='font-size:9.0pt;color:windowtext'>(for WBA2x)</span><span
+  style='color:windowtext'>&nbsp; </span></p>
   </td>
   <td width=210 valign=top style='width:157.4pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:windowtext'>132 KB</span></p>
+  style='color:windowtext'>138 KB</span></p>
   </td>
   <td width=234 valign=top style='width:175.7pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:windowtext'>95 KB</span></p>
+  style='color:windowtext'>97 KB</span></p>
   </td>
   <td width=245 valign=top style='width:183.85pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:windowtext'>75 KB</span></p>
+  style='color:windowtext'>78 KB</span></p>
   </td>
   <td width=189 valign=top style='width:141.85pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'><span
   style='color:windowtext'>Refer to the FLASH footprint of the Link Layer
-  variant used</span></p>
+  configuration used</span></p>
   </td>
  </tr>
  <tr style='height:15.0pt'>
@@ -2455,34 +2467,32 @@ name="_Hlk147481314"></a>&nbsp;</p>
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:windowtext'>26 KB</span></p>
+  style='color:windowtext'>11KB + Dynamic RAM<b><sup>(2)</sup></b></span></p>
   </td>
   <td width=210 style='width:157.4pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:windowtext'>18 KB (for 8 connections)<br>
-  27 KB (for 20 connections)</span></p>
+  style='color:windowtext'>10KB + Dynamic RAM<b><sup>(2)</sup></b></span></p>
   </td>
   <td width=234 style='width:175.7pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:windowtext'>15 KB (for 8 connections)<br>
-  23 KB (for 20 connections)</span></p>
+  style='color:windowtext'>8,4KB + Dynamic RAM<b><sup>(2)</sup></b></span></p>
   </td>
   <td width=245 style='width:183.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:windowtext'>14 KB</span></p>
+  style='color:windowtext'>8KB + Dynamic RAM<b><sup>(2)</sup></b></span></p>
   </td>
   <td width=189 style='width:141.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.0pt'>
   <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:windowtext'>Refer to the RAM footprint of the Link Layer variant
-  used</span></p>
+  style='color:windowtext'>Refer to the RAM footprint of the Link Layer
+  configuration used</span></p>
   </td>
  </tr>
  <tr style='height:15.0pt'>
@@ -3117,7 +3127,7 @@ name="_Hlk147481314"></a>&nbsp;</p>
  <tr style='height:15.0pt'>
   <td width=305 nowrap style='width:229.1pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal><b><span style='color:windowtext'>LL Extended Feature Set<sup>(9)</sup></span></b></p>
+  <p class=MsoNormal><b><span style='color:windowtext'>LL Extended Feature Set</span></b></p>
   </td>
   <td width=204 nowrap valign=top style='width:153.25pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
@@ -3148,7 +3158,7 @@ name="_Hlk147481314"></a>&nbsp;</p>
  <tr style='height:15.0pt'>
   <td width=305 nowrap style='width:229.1pt;border:solid windowtext 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal><b><span style='color:windowtext'>Monitoring Advertisers<sup>(9)</sup></span></b></p>
+  <p class=MsoNormal><b><span style='color:windowtext'>Monitoring Advertisers</span></b></p>
   </td>
   <td width=204 nowrap valign=top style='width:153.25pt;border-top:none;
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
@@ -3374,31 +3384,30 @@ name="_Hlk147481314"></a>&nbsp;</p>
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
   <p class=MsoNormal><b>Number of supported links</b></p>
   </td>
-  <td width=204 nowrap style='width:153.25pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  <td width=204 nowrap valign=top style='width:153.25pt;border-top:none;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'>Up to 8</p>
+  <p class=MsoNormal align=center style='text-align:center'>Up to 20 </p>
   </td>
-  <td width=210 style='width:157.4pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  <td width=210 valign=top style='width:157.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'>Up to 20 <sup>(2)</sup></p>
+  <p class=MsoNormal align=center style='text-align:center'>Up to 20 </p>
   </td>
-  <td width=234 style='width:175.7pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  <td width=234 valign=top style='width:175.7pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'>Up to 20 <sup>(2)</sup></p>
+  <p class=MsoNormal align=center style='text-align:center'>Up to 20 </p>
   </td>
-  <td width=245 style='width:183.85pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  <td width=245 valign=top style='width:183.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'>Up to 8</p>
+  <p class=MsoNormal align=center style='text-align:center'>Up to 20 </p>
   </td>
-  <td width=189 style='width:141.85pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  <td width=189 valign=top style='width:141.85pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   padding:0cm 0cm 0cm 0cm;height:15.0pt'>
-  <p class=MsoNormal align=center style='text-align:center'><span
-  style='color:windowtext'>Up to 20 <sup>(2)</sup></span></p>
+  <p class=MsoNormal align=center style='text-align:center'>Up to 20 </p>
   </td>
  </tr>
 </table>
@@ -3409,19 +3418,21 @@ name="_Hlk147481314"></a>&nbsp;</p>
 2: Supported features of each BLE predefined configuration</a></p>
 
 <p class=MsoNormal><i>(1): These values were computed with STM32CubeWBA
-Firmware </i><i><span style='color:windowtext'>Package v1.10.0 using </span>Keil®
+Firmware </i><i><span style='color:windowtext'>Package v1.11.0 using </span>Keil®
 environment.</i></p>
 
-<p class=MsoNormal><i>(2): It might be limited to 8 or 20 links depending on
-the Link Layer library used (libraries with 20_links_lib suffix for 20 links)</i></p>
+<p class=MsoNormal><i>(2): The Link Layer Dynamic RAM depends on the
+application needs (number of state machines, features to use).</i></p>
 
 <p class=MsoNormal><i>(3): In addition to the BLE Stack library RAM, the BLE
 Stack requires RAM memory from the application (see </i><a href="#_Toc125725170"><i>section
 3.1</i></a><i>)</i></p>
 
 <p class=MsoNormal><i><span style='color:windowtext'>(4): Each STM32WBA series
-has its own Link Layer libraries (LinkLayer_XXX_<b>V3_0 </b>for WBA5 and WBA6
-devices and LinkLayer_XXX_<b>V3_0p</b> for WBA25 devices).</span></i></p>
+has its own Link Layer libraries (LinkLayer_XXX_<b>V3_0 </b>for </span></i>STM32WBA5x
+<i><span style='color:windowtext'>and </span></i>STM32WBA6x <i><span
+style='color:windowtext'>devices and LinkLayer_XXX_<b>V3_0p</b> for </span>STM32WBA2x
+</i><i><span style='color:windowtext'>devices).</span></i></p>
 
 <p class=MsoNormal><i><span style='color:windowtext'>(5): Supports LE Data
 Packet Length Extension and LE Channel Selection Algorithm #2.</span></i></p>
@@ -3433,19 +3444,18 @@ Layer Extended Filter Policies.</span></i></p>
 <p class=MsoNormal><i><span style='color:windowtext'>(7): Supports Periodic
 Advertising ADI.</span></i></p>
 
-<p class=MsoNormal><i><span style='color:black'>(8): Not supported on
-STM32WBA2x series.</span></i></p>
+<p class=MsoNormal><i>(8): Not supported on STM32WBA2x series.</i></p>
 
-<p class=MsoNormal><i><span style='color:black'>(9): </span></i><i><span
-style='color:windowtext'>Supported only on STM32WBA2x series.</span></i></p>
+<p class=MsoNormal><i>(9): </i><i><span style='color:windowtext'>Supported only
+on STM32WBA2x series.</span></i></p>
 
-<p class=MsoNormal><i><span style='color:windowtext'>(10): Packet Traffic Arbitration:
-not a BLE standard feature.</span></i></p>
+<p class=MsoNormal><i><span style='color:windowtext'>(10): Packet Traffic
+Arbitration: not a BLE standard feature.</span></i></p>
 
 <p class=MsoNormal><i><span style='color:windowtext'>(11): As detailed in table
 5 below.</span></i></p>
 
-<p class=MsoNormal><i><span style='color:black'>&nbsp;</span></i></p>
+<p class=MsoNormal><i>&nbsp;</i></p>
 
 <p class=MsoNormal><i><span style='color:red'>&nbsp;</span></i></p>
 
@@ -3484,8 +3494,8 @@ with the following libraries):</p>
 
 <p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'>-<span
 style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</span>STM32WBAxx Link Layer libraries (refer to <a href="#table2"><i>Table 2 BLE
-predefined configurations</i></a> for Link Layer library configuration
+</span>STM32WBAxx Link Layer libraries (refer to <a href="#table2"><i>Table 2
+BLE predefined configurations</i></a> for Link Layer library configuration
 dependency).</p>
 
 <p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'>-<span
@@ -3675,9 +3685,9 @@ function</p>
 
 <p class=MsoNormal>BleStack_Init: The BLE Stack initialization routine. This
 function is used to define the memory and configure the BLE Stack.<br>
-<a name="_Hlk202263842"><span style='color:windowtext'>Those parameters are not
-applicable for “Link Layer Only” variants, except for “options” and “debug”
-parameters.</span></a><br>
+<span style='color:windowtext'>Those parameters are not applicable for “Link
+Layer Only” variants, except for “ll_sm_num”, “ll_buffer”, “ll_buffer_size”,
+“options” and “debug” parameters.</span><br>
 All BleStack_init_t parameters are described below:</p>
 
 <p class=MsoNormal>&nbsp;</p>
@@ -3687,26 +3697,26 @@ All BleStack_init_t parameters are described below:</p>
 <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=1037
  style='width:777.75pt;border-collapse:collapse'>
  <tr style='height:7.65pt'>
-  <td width=208 valign=top style='width:155.9pt;border:solid black 1.0pt;
+  <td width=228 valign=top style='width:171.3pt;border:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:7.65pt'>
   <p class=MsoNormal align=center style='text-align:center'><b>BleStack_init_t
   parameters</b></p>
   </td>
-  <td width=465 valign=top style='width:348.8pt;border:solid black 1.0pt;
+  <td width=459 valign=top style='width:344.15pt;border:solid black 1.0pt;
   border-left:none;padding:0cm 5.4pt 0cm 5.4pt;height:7.65pt'>
   <p class=MsoNormal align=center style='text-align:center'><b>Definition</b></p>
   </td>
-  <td width=364 valign=top style='width:273.05pt;border:solid black 1.0pt;
+  <td width=350 valign=top style='width:262.3pt;border:solid black 1.0pt;
   border-left:none;padding:0cm 5.4pt 0cm 5.4pt;height:7.65pt'>
   <p class=MsoNormal align=center style='margin-left:18.0pt;text-align:center'><b>Value</b></p>
   </td>
  </tr>
  <tr style='height:7.65pt'>
-  <td width=208 valign=top style='width:155.9pt;border:solid black 1.0pt;
+  <td width=228 valign=top style='width:171.3pt;border:solid black 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:7.65pt'>
   <p class=MsoNormal>uint16_t<b> numAttrRecord </b></p>
   </td>
-  <td width=465 valign=top style='width:348.8pt;border-top:none;border-left:
+  <td width=459 valign=top style='width:344.15pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:7.65pt'>
   <p class=MsoNormal>Maximum number of attribute records related to all the
@@ -3714,7 +3724,7 @@ All BleStack_init_t parameters are described below:</p>
   GATT database, for the specific BLE user application.</p>
   <p class=MsoNormal>&nbsp;</p>
   </td>
-  <td width=364 valign=top style='width:273.05pt;border-top:none;border-left:
+  <td width=350 valign=top style='width:262.3pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:7.65pt'>
   <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'>Value =
@@ -3730,11 +3740,11 @@ All BleStack_init_t parameters are described below:</p>
   </td>
  </tr>
  <tr style='height:7.65pt'>
-  <td width=208 valign=top style='width:155.9pt;border:solid black 1.0pt;
+  <td width=228 valign=top style='width:171.3pt;border:solid black 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:7.65pt'>
   <p class=MsoNormal>uint16_t<b> numAttrServ</b></p>
   </td>
-  <td width=465 valign=top style='width:348.8pt;border-top:none;border-left:
+  <td width=459 valign=top style='width:344.15pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:7.65pt'>
   <p class=MsoNormal>Defines the maximum number of services that can be stored
@@ -3742,7 +3752,7 @@ All BleStack_init_t parameters are described below:</p>
   added at initialization so this parameter must be the number of user services
   increased by two.</p>
   </td>
-  <td width=364 valign=top style='width:273.05pt;border-top:none;border-left:
+  <td width=350 valign=top style='width:262.3pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:7.65pt'>
   <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'>Value =
@@ -3756,11 +3766,11 @@ All BleStack_init_t parameters are described below:</p>
   </td>
  </tr>
  <tr style='height:7.65pt'>
-  <td width=208 valign=top style='width:155.9pt;border:solid black 1.0pt;
+  <td width=228 valign=top style='width:171.3pt;border:solid black 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:7.65pt'>
   <p class=MsoNormal>uint16_t<b> attrValueArrSize</b></p>
   </td>
-  <td width=465 valign=top style='width:348.8pt;border-top:none;border-left:
+  <td width=459 valign=top style='width:344.15pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:7.65pt'>
   <p class=MsoNormal>Size of the storage area for the attribute values </p>
@@ -3820,7 +3830,7 @@ All BleStack_init_t parameters are described below:</p>
   line-height:115%;font-family:"Times New Roman",serif'>&nbsp;&nbsp; </span>2
   bytes if the characteristic has extended properties </p>
   </td>
-  <td width=364 valign=top style='width:273.05pt;border-top:none;border-left:
+  <td width=350 valign=top style='width:262.3pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:7.65pt'>
   <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'>Depends on the
@@ -3828,35 +3838,35 @@ All BleStack_init_t parameters are described below:</p>
   </td>
  </tr>
  <tr style='height:7.65pt'>
-  <td width=208 valign=top style='width:155.9pt;border:solid black 1.0pt;
+  <td width=228 valign=top style='width:171.3pt;border:solid black 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:7.65pt'>
   <p class=MsoNormal>uint8_t<b> numOfLinks</b></p>
   </td>
-  <td width=465 valign=top style='width:348.8pt;border-top:none;border-left:
+  <td width=459 valign=top style='width:344.15pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:7.65pt'>
   <p class=MsoNormal>Maximum number of simultaneous connections that the device
   supports.</p>
   </td>
-  <td width=364 valign=top style='width:273.05pt;border-top:none;border-left:
+  <td width=350 valign=top style='width:262.3pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:7.65pt'>
   <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'>Min value: 1</p>
-  <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'>Max value: 20
-  (or 8 depending on the LL library used)</p>
+  <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'>Max value: <b>ll_sm_num</b></p>
   </td>
  </tr>
  <tr style='height:7.65pt'>
-  <td width=208 valign=top style='width:155.9pt;border:solid black 1.0pt;
+  <td width=228 valign=top style='width:171.3pt;border:solid black 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:7.65pt'>
   <p class=MsoNormal>uint8_t<b> prWriteListSize</b></p>
   </td>
-  <td width=465 valign=top style='width:348.8pt;border-top:none;border-left:
+  <td width=459 valign=top style='width:344.15pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:7.65pt'>
-  <p class=MsoNormal>Maximum number of supported “prepare ATT write request”.</p>
+  <p class=MsoNormal>Number of memory blocks needed for the maximum number of
+  supported “prepare ATT write request”.</p>
   </td>
-  <td width=364 valign=top style='width:273.05pt;border-top:none;border-left:
+  <td width=350 valign=top style='width:262.3pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:7.65pt'>
   <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'>Value defined
@@ -3872,43 +3882,47 @@ All BleStack_init_t parameters are described below:</p>
   </td>
  </tr>
  <tr style='height:7.65pt'>
-  <td width=208 valign=top style='width:155.9pt;border:solid black 1.0pt;
+  <td width=228 valign=top style='width:171.3pt;border:solid black 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:7.65pt'>
   <p class=MsoNormal>uint8_t<b> mblockCount</b></p>
   </td>
-  <td width=465 valign=top style='width:348.8pt;border-top:none;border-left:
+  <td width=459 valign=top style='width:344.15pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:7.65pt'>
   <p class=MsoNormal>Number of allocated memory blocks for the BLE stack.</p>
   </td>
-  <td width=364 valign=top style='width:273.05pt;border-top:none;border-left:
+  <td width=350 valign=top style='width:262.3pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:7.65pt'>
   <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'>Value defined
   by the macro: </p>
   <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'><b>BLE_MBLOCKS_CALC
-  (PREP_WRITE_LIST_SIZE, MAX_ATT_MTU, NUM_LINKS) + MBLOCK_COUNT_MARGIN)</b></p>
-  <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'>&nbsp;</p>
-  <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'>With:<br>
-  - PREP_WRITE_LIST_SIZE defined by the parameter <b>prWriteListSize</b>.<br>
-  - <b>MAX_ATT_MTU</b> defined by the <b>attMtu</b> parameter</p>
+  </b><b><span style='color:windowtext'>(PREP_WRITE_LIST_SIZE, MAX_MTU,
+  NUM_LINKS) + MBLOCK_COUNT_MARGIN)</span></b></p>
+  <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'><span
+  style='color:windowtext'>&nbsp;</span></p>
+  <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'><span
+  style='color:windowtext'>With:<br>
+  - <b>PREP_WRITE_LIST_SIZE</b> defined by the parameter <b>prWriteListSize</b>.<br>
+  - <b>MAX_MTU</b> defined by <b>max(attMTU, max_coc_mps, SM_MTU)</b>, with <b>SM_MTU</b>
+  = 65. </span></p>
   <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'>- <b>NUM_LINKS</b>
   defined by the <b>numOfLinks</b> parameter<br>
   - <b>MBLOCK_COUNT_MARGIN</b> the memory margin to take.</p>
   </td>
  </tr>
  <tr style='height:50.4pt'>
-  <td width=208 valign=top style='width:155.9pt;border:solid black 1.0pt;
+  <td width=228 valign=top style='width:171.3pt;border:solid black 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:50.4pt'>
   <p class=MsoNormal>uint8_t <b>max_add_eatt_bearers</b></p>
   </td>
-  <td width=465 valign=top style='width:348.8pt;border-top:none;border-left:
+  <td width=459 valign=top style='width:344.15pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:50.4pt'>
   <p class=MsoNormal>Maximum number of bearers that can be created for Enhanced
   ATT in addition to the number of links.</p>
   </td>
-  <td width=364 valign=top style='width:273.05pt;border-top:none;border-left:
+  <td width=350 valign=top style='width:262.3pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:50.4pt'>
   <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'>Min value: 0</p>
@@ -3916,18 +3930,18 @@ All BleStack_init_t parameters are described below:</p>
   </td>
  </tr>
  <tr style='height:7.65pt'>
-  <td width=208 valign=top style='width:155.9pt;border:solid black 1.0pt;
+  <td width=228 valign=top style='width:171.3pt;border:solid black 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:7.65pt'>
   <p class=MsoNormal>uint16_t<b> attMtu</b></p>
   </td>
-  <td width=465 valign=top style='width:348.8pt;border-top:none;border-left:
+  <td width=459 valign=top style='width:344.15pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:7.65pt'>
   <p class=MsoNormal>Maximum ATT MTU size supported. </p>
   <p class=MsoNormal>&nbsp;</p>
   <p class=MsoNormal>&nbsp;</p>
   </td>
-  <td width=364 valign=top style='width:273.05pt;border-top:none;border-left:
+  <td width=350 valign=top style='width:262.3pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:7.65pt'>
   <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'>Min value: 23</p>
@@ -3935,17 +3949,17 @@ All BleStack_init_t parameters are described below:</p>
   </td>
  </tr>
  <tr style='height:104.4pt'>
-  <td width=208 valign=top style='width:155.9pt;border:solid black 1.0pt;
+  <td width=228 valign=top style='width:171.3pt;border:solid black 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:104.4pt'>
   <p class=MsoNormal><span lang=FR>uint16_t<b> max_coc_mps</b></span></p>
   </td>
-  <td width=465 valign=top style='width:348.8pt;border-top:none;border-left:
+  <td width=459 valign=top style='width:344.15pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:104.4pt'>
   <p class=MsoNormal>Maximum value of the connection-oriented channel Maximum
   Payload Size.</p>
   </td>
-  <td width=364 valign=top style='width:273.05pt;border-top:none;border-left:
+  <td width=350 valign=top style='width:262.3pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:104.4pt'>
   <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'>Min value: 23</p>
@@ -3954,16 +3968,16 @@ All BleStack_init_t parameters are described below:</p>
   </td>
  </tr>
  <tr style='height:92.9pt'>
-  <td width=208 valign=top style='width:155.9pt;border:solid black 1.0pt;
+  <td width=228 valign=top style='width:171.3pt;border:solid black 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:92.9pt'>
   <p class=MsoNormal><span lang=FR>uint8_t<b> max_coc_nbr</b></span></p>
   </td>
-  <td width=465 valign=top style='width:348.8pt;border-top:none;border-left:
+  <td width=459 valign=top style='width:344.15pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:92.9pt'>
   <p class=MsoNormal>Maximum number of connection-oriented channels.</p>
   </td>
-  <td width=364 valign=top style='width:273.05pt;border-top:none;border-left:
+  <td width=350 valign=top style='width:262.3pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:92.9pt'>
   <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'>Min value: 0</p>
@@ -3972,17 +3986,17 @@ All BleStack_init_t parameters are described below:</p>
   </td>
  </tr>
  <tr style='height:104.9pt'>
-  <td width=208 valign=top style='width:155.9pt;border:solid black 1.0pt;
+  <td width=228 valign=top style='width:171.3pt;border:solid black 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:104.9pt'>
   <p class=MsoNormal><span lang=FR>uint8_t<b> max_coc_initiator_nbr</b></span></p>
   </td>
-  <td width=465 valign=top style='width:348.8pt;border-top:none;border-left:
+  <td width=459 valign=top style='width:344.15pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:104.9pt'>
   <p class=MsoNormal>Maximum number of connection-oriented channels in
   initiator mode.</p>
   </td>
-  <td width=364 valign=top style='width:273.05pt;border-top:none;border-left:
+  <td width=350 valign=top style='width:262.3pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:104.9pt'>
   <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'>Min value: 0</p>
@@ -3992,33 +4006,33 @@ All BleStack_init_t parameters are described below:</p>
   </td>
  </tr>
  <tr style='height:52.2pt'>
-  <td width=208 valign=top style='width:155.9pt;border:solid black 1.0pt;
+  <td width=228 valign=top style='width:171.3pt;border:solid black 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:52.2pt'>
   <p class=MsoNormal>uint8_t* <b>bleStartRamAddress</b></p>
   </td>
-  <td width=465 valign=top style='width:348.8pt;border-top:none;border-left:
+  <td width=459 valign=top style='width:344.15pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:52.2pt'>
   <p class=MsoNormal>Start address of the RAM buffer allocated for BLE stack
   library. It must be a 32bit aligned RAM area.</p>
   </td>
-  <td width=364 valign=top style='width:273.05pt;border-top:none;border-left:
+  <td width=350 valign=top style='width:262.3pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:52.2pt'>
   <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'>&nbsp;</p>
   </td>
  </tr>
  <tr style='height:121.15pt'>
-  <td width=208 valign=top style='width:155.9pt;border:solid black 1.0pt;
+  <td width=228 valign=top style='width:171.3pt;border:solid black 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:121.15pt'>
   <p class=MsoNormal>uint32_t<b> total_buffer_size</b></p>
   </td>
-  <td width=465 valign=top style='width:348.8pt;border-top:none;border-left:
+  <td width=459 valign=top style='width:344.15pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:121.15pt'>
   <p class=MsoNormal>Size of the RAM buffer allocated for BLE stack library.</p>
   </td>
-  <td width=364 valign=top style='width:273.05pt;border-top:none;border-left:
+  <td width=350 valign=top style='width:262.3pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:121.15pt'>
   <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'>Value defined
@@ -4036,33 +4050,33 @@ All BleStack_init_t parameters are described below:</p>
   </td>
  </tr>
  <tr style='height:52.2pt'>
-  <td width=208 valign=top style='width:155.9pt;border:solid black 1.0pt;
+  <td width=228 valign=top style='width:171.3pt;border:solid black 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:52.2pt'>
   <p class=MsoNormal>uint8_t*<b> bleStartRamAddress_GATT</b></p>
   </td>
-  <td width=465 valign=top style='width:348.8pt;border-top:none;border-left:
+  <td width=459 valign=top style='width:344.15pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:52.2pt'>
   <p class=MsoNormal>Start address of the RAM buffer allocated for GATT
   database. It must be a 32bit aligned RAM area.</p>
   </td>
-  <td width=364 valign=top style='width:273.05pt;border-top:none;border-left:
+  <td width=350 valign=top style='width:262.3pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:52.2pt'>
   <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'>&nbsp;</p>
   </td>
  </tr>
  <tr style='height:182.0pt'>
-  <td width=208 valign=top style='width:155.9pt;border:solid black 1.0pt;
+  <td width=228 valign=top style='width:171.3pt;border:solid black 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:182.0pt'>
   <p class=MsoNormal>uint32_t<b> total_buffer_size_GATT</b></p>
   </td>
-  <td width=465 valign=top style='width:348.8pt;border-top:none;border-left:
+  <td width=459 valign=top style='width:344.15pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:182.0pt'>
   <p class=MsoNormal>Size of the RAM buffer allocated for GATT database.</p>
   </td>
-  <td width=364 valign=top style='width:273.05pt;border-top:none;border-left:
+  <td width=350 valign=top style='width:262.3pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:182.0pt'>
   <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'>Value defined
@@ -4080,17 +4094,17 @@ All BleStack_init_t parameters are described below:</p>
   </td>
  </tr>
  <tr style='height:43.2pt'>
-  <td width=208 valign=top style='width:155.9pt;border:solid black 1.0pt;
+  <td width=228 valign=top style='width:171.3pt;border:solid black 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:43.2pt'>
   <p class=MsoNormal><span style='color:windowtext'>uint8_t* <b>gatt_long_write_buffer</b></span></p>
   </td>
-  <td width=465 valign=top style='width:348.8pt;border-top:none;border-left:
+  <td width=459 valign=top style='width:344.15pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:43.2pt'>
   <p class=MsoNormal><span style='color:windowtext'>Address of the RAM buffer
   allocated for GATT long write procedures. </span></p>
   </td>
-  <td width=364 valign=top style='width:273.05pt;border-top:none;border-left:
+  <td width=350 valign=top style='width:262.3pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:43.2pt'>
   <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'><span
@@ -4103,18 +4117,18 @@ All BleStack_init_t parameters are described below:</p>
   </td>
  </tr>
  <tr style='height:43.2pt'>
-  <td width=208 valign=top style='width:155.9pt;border:solid black 1.0pt;
+  <td width=228 valign=top style='width:171.3pt;border:solid black 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:43.2pt'>
   <p class=MsoNormal><span style='color:windowtext'>uint8_t* <b>extra_data_buffer</b></span></p>
   </td>
-  <td width=465 valign=top style='width:348.8pt;border-top:none;border-left:
+  <td width=459 valign=top style='width:344.15pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:43.2pt'>
   <p class=MsoNormal><span style='color:windowtext'>Address of the RAM buffer
   allocated for the extension of Host commands. This buffer is referred to as
   the &quot;extra data&quot; buffer in the BLE Wireless Interface document. </span></p>
   </td>
-  <td width=364 valign=top style='width:273.05pt;border-top:none;border-left:
+  <td width=350 valign=top style='width:262.3pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:43.2pt'>
   <p class=MsoNormal>- If ACI_GATT_WRITE_WITHOUT_RESP_EXT /
@@ -4126,17 +4140,17 @@ All BleStack_init_t parameters are described below:</p>
   </td>
  </tr>
  <tr style='height:43.2pt'>
-  <td width=208 valign=top style='width:155.9pt;border:solid black 1.0pt;
+  <td width=228 valign=top style='width:171.3pt;border:solid black 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:43.2pt'>
   <p class=MsoNormal><span style='color:windowtext'>uint32_t <b>extra_data_buffer_size</b></span></p>
   </td>
-  <td width=465 valign=top style='width:348.8pt;border-top:none;border-left:
+  <td width=459 valign=top style='width:344.15pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:43.2pt'>
   <p class=MsoNormal><span style='color:windowtext'>Size of the RAM buffer
   allocated for the extension of Host commands.</span></p>
   </td>
-  <td width=364 valign=top style='width:273.05pt;border-top:none;border-left:
+  <td width=350 valign=top style='width:262.3pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:43.2pt'>
   <p class=MsoNormal>- If the “extra_data_buffer” is unused, the size can be
@@ -4144,34 +4158,34 @@ All BleStack_init_t parameters are described below:</p>
   </td>
  </tr>
  <tr style='height:43.2pt'>
-  <td width=208 valign=top style='width:155.9pt;border:solid black 1.0pt;
+  <td width=228 valign=top style='width:171.3pt;border:solid black 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:43.2pt'>
   <p class=MsoNormal><span lang=FR style='color:windowtext'>uint16_t* <b>host_event_fifo_buffer</b></span></p>
   </td>
-  <td width=465 valign=top style='width:348.8pt;border-top:none;border-left:
+  <td width=459 valign=top style='width:344.15pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:43.2pt'>
   <p class=MsoNormal><span style='color:windowtext'>Address of the Host events
   FIFO buffer.</span></p>
   </td>
-  <td width=364 valign=top style='width:273.05pt;border-top:none;border-left:
+  <td width=350 valign=top style='width:262.3pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:43.2pt'>
   <p class=MsoNormal>&nbsp;</p>
   </td>
  </tr>
  <tr style='height:43.2pt'>
-  <td width=208 valign=top style='width:155.9pt;border:solid black 1.0pt;
+  <td width=228 valign=top style='width:171.3pt;border:solid black 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:43.2pt'>
   <p class=MsoNormal><span style='color:windowtext'>uint16_t <b>host_event_fifo_buffer_size</b></span></p>
   </td>
-  <td width=465 valign=top style='width:348.8pt;border-top:none;border-left:
+  <td width=459 valign=top style='width:344.15pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:43.2pt'>
   <p class=MsoNormal><span style='color:windowtext'>Size of the Host events
   FIFO buffer (in 16-bit words).</span></p>
   </td>
-  <td width=364 valign=top style='width:273.05pt;border-top:none;border-left:
+  <td width=350 valign=top style='width:262.3pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:43.2pt'>
   <p class=MsoNormal>Min value advised: 512<br>
@@ -4179,33 +4193,33 @@ All BleStack_init_t parameters are described below:</p>
   </td>
  </tr>
  <tr style='height:43.2pt'>
-  <td width=208 valign=top style='width:155.9pt;border:solid black 1.0pt;
+  <td width=228 valign=top style='width:171.3pt;border:solid black 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:43.2pt'>
   <p class=MsoNormal><span lang=FR>uint64_t* <b>nvm_cache_buffer</b></span></p>
   </td>
-  <td width=465 valign=top style='width:348.8pt;border-top:none;border-left:
+  <td width=459 valign=top style='width:344.15pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:43.2pt'>
   <p class=MsoNormal>Start address of the RAM buffer allocated for BLE NVM
   cache.</p>
   </td>
-  <td width=364 valign=top style='width:273.05pt;border-top:none;border-left:
+  <td width=350 valign=top style='width:262.3pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:43.2pt'>
   <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'>&nbsp;</p>
   </td>
  </tr>
  <tr style='height:43.2pt'>
-  <td width=208 valign=top style='width:155.9pt;border:solid black 1.0pt;
+  <td width=228 valign=top style='width:171.3pt;border:solid black 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:43.2pt'>
-  <p class=MsoNormal><span lang=FR>uint16_t  <b>nvm_cache_size</b></span></p>
+  <p class=MsoNormal><span lang=FR>uint16_t&nbsp; <b>nvm_cache_size</b></span></p>
   </td>
-  <td width=465 valign=top style='width:348.8pt;border-top:none;border-left:
+  <td width=459 valign=top style='width:344.15pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:43.2pt'>
   <p class=MsoNormal>Size of actual data in BLE NVM cache (in 64-bit words).</p>
   </td>
-  <td width=364 valign=top style='width:273.05pt;border-top:none;border-left:
+  <td width=350 valign=top style='width:262.3pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:43.2pt'>
   <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'>Min value: 0</p>
@@ -4214,34 +4228,107 @@ All BleStack_init_t parameters are described below:</p>
   </td>
  </tr>
  <tr style='height:43.2pt'>
-  <td width=208 valign=top style='width:155.9pt;border:solid black 1.0pt;
+  <td width=228 valign=top style='width:171.3pt;border:solid black 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:43.2pt'>
-  <p class=MsoNormal><span lang=FR>uint16_t  <b>nvm_cache_max_size</b></span></p>
+  <p class=MsoNormal><span lang=FR>uint16_t&nbsp; <b>nvm_cache_max_size</b></span></p>
   </td>
-  <td width=465 valign=top style='width:348.8pt;border-top:none;border-left:
+  <td width=459 valign=top style='width:344.15pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:43.2pt'>
   <p class=MsoNormal>Maximum size of BLE NVM cache (in 64-bit words).</p>
   </td>
-  <td width=364 valign=top style='width:273.05pt;border-top:none;border-left:
+  <td width=350 valign=top style='width:262.3pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:43.2pt'>
   <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'>Min value: 1</p>
   <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'>Max value: 1024</p>
   </td>
  </tr>
- <tr style='height:142.7pt'>
-  <td width=208 valign=top style='width:155.9pt;border:solid black 1.0pt;
-  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:142.7pt'>
-  <p class=MsoNormal>uint16_t<b> options</b></p>
+ <tr style='height:43.2pt'>
+  <td width=228 valign=top style='width:171.3pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:43.2pt'>
+  <p class=MsoNormal><span lang=FR>uint8_t <b>ll_sm_num</b></span></p>
   </td>
-  <td width=465 valign=top style='width:348.8pt;border-top:none;border-left:
+  <td width=459 valign=top style='width:344.15pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:43.2pt'>
+  <p class=MsoNormal>Maximum number of simultaneous state machines that the
+  Link Layer supports.<br>
+  The required number of link layer state machines is:</p>
+  <ul style='margin-top:0cm' type=disc>
+   <li class=MsoNormal>one per Extended Advertising Set</li>
+   <li class=MsoNormal>one for Periodic Advertising Sync</li>
+   <li class=MsoNormal>one per ACL connection</li>
+   <li class=MsoNormal>one per Broadcast Isochronous Group</li>
+   <li class=MsoNormal>one per Connected Isochronous Stream</li>
+  </ul>
+  <p class=MsoNormal>No state machine required for Scanning.&nbsp;</p>
+  </td>
+  <td width=350 valign=top style='width:262.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:43.2pt'>
+  <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'>Min value: 1</p>
+  <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'>Max value: 20</p>
+  </td>
+ </tr>
+ <tr style='height:43.2pt'>
+  <td width=228 valign=top style='width:171.3pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:43.2pt'>
+  <p class=MsoNormal><span lang=FR>uint8_t* <b>ll_buffer</b></span></p>
+  </td>
+  <td width=459 valign=top style='width:344.15pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:43.2pt'>
+  <p class=MsoNormal>Start address of the allocated RAM buffer for the BLE Link
+  Layer.<br>
+  It must be a 32bit aligned RAM area.</p>
+  </td>
+  <td width=350 valign=top style='width:262.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:43.2pt'>
+  <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'>&nbsp;</p>
+  </td>
+ </tr>
+ <tr style='height:43.2pt'>
+  <td width=228 valign=top style='width:171.3pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:43.2pt'>
+  <p class=MsoNormal><span lang=FR>uint16_t <b>ll_buffer_size</b></span></p>
+  </td>
+  <td width=459 valign=top style='width:344.15pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:43.2pt'>
+  <p class=MsoNormal>Size of the allocated RAM buffer for BLE Link Layer (could
+  be filled with BLE_LL_BUFFER_SIZE return value)</p>
+  </td>
+  <td width=350 valign=top style='width:262.3pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:43.2pt'>
+  <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'>Value defined
+  by the macro:</p>
+  <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'><b>BLE_LL_BUFFER_SIZE(n_sm,
+  options, coex)</b><br>
+  <br>
+  with </p>
+  <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'>- <b>n_sm</b>:
+  defined by the parameter <b>ll_sm_num</b></p>
+  <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'>- <b>options</b>:
+  defined by the parameter <b>options</b></p>
+  <p class=MsoNormal style='margin-bottom:0cm;line-height:115%'><b>- coex</b>:
+  defined if the coexistence mode is used.</p>
+  </td>
+ </tr>
+ <tr style='height:142.7pt'>
+  <td width=228 valign=top style='width:171.3pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:142.7pt'>
+  <p class=MsoNormal>uint32_t<b> options</b></p>
+  </td>
+  <td width=459 valign=top style='width:344.15pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:142.7pt'>
   <p class=MsoNormal>Options flags. Bitmap of the <b><i>“BLE_OPTIONS_...”</i></b>
   definitions:</p>
-  <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=0
-   style='border-collapse:collapse'>
+  <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=425
+   style='width:318.95pt;border-collapse:collapse'>
    <tr>
     <td width=96 style='width:72.35pt;border:solid windowtext 1.0pt;padding:
     0cm 5.4pt 0cm 5.4pt'>
@@ -4422,6 +4509,78 @@ All BleStack_init_t parameters are described below:</p>
    <tr>
     <td width=96 style='width:72.35pt;border:solid windowtext 1.0pt;border-top:
     none;padding:0cm 5.4pt 0cm 5.4pt'>
+    <p class=MsoNormal><span style='font-size:10.5pt;color:#58585A'>16</span></p>
+    </td>
+    <td width=168 style='width:126.0pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    padding:0cm 5.4pt 0cm 5.4pt'>
+    <p class=MsoNormal><span style='font-size:10.5pt;color:#58585A'>Connected
+    Isochronous Stream feature is used</span></p>
+    </td>
+    <td width=161 style='width:120.6pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    padding:0cm 5.4pt 0cm 5.4pt'>
+    <p class=MsoNormal><span style='font-size:10.5pt;color:#58585A'>Connected
+    Isochronous Stream feature is not used</span></p>
+    </td>
+   </tr>
+   <tr>
+    <td width=96 style='width:72.35pt;border:solid windowtext 1.0pt;border-top:
+    none;padding:0cm 5.4pt 0cm 5.4pt'>
+    <p class=MsoNormal><span style='font-size:10.5pt;color:#58585A'>17</span></p>
+    </td>
+    <td width=168 style='width:126.0pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    padding:0cm 5.4pt 0cm 5.4pt'>
+    <p class=MsoNormal><span style='font-size:10.5pt;color:#58585A'>Broadcast
+    Isochronous Stream feature is used</span></p>
+    </td>
+    <td width=161 style='width:120.6pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    padding:0cm 5.4pt 0cm 5.4pt'>
+    <p class=MsoNormal><span style='font-size:10.5pt;color:#58585A'>Broadcast
+    Isochronous Stream feature is not used</span></p>
+    </td>
+   </tr>
+   <tr>
+    <td width=96 style='width:72.35pt;border:solid windowtext 1.0pt;border-top:
+    none;padding:0cm 5.4pt 0cm 5.4pt'>
+    <p class=MsoNormal><span style='font-size:10.5pt;color:#58585A'>18</span></p>
+    </td>
+    <td width=168 style='width:126.0pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    padding:0cm 5.4pt 0cm 5.4pt'>
+    <p class=MsoNormal><span style='font-size:10.5pt;color:#58585A'>Periodic
+    Advertising with Response feature is used</span></p>
+    </td>
+    <td width=161 style='width:120.6pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    padding:0cm 5.4pt 0cm 5.4pt'>
+    <p class=MsoNormal><span style='font-size:10.5pt;color:#58585A'>Periodic
+    Advertising with Response feature is not used</span></p>
+    </td>
+   </tr>
+   <tr>
+    <td width=96 style='width:72.35pt;border:solid windowtext 1.0pt;border-top:
+    none;padding:0cm 5.4pt 0cm 5.4pt'>
+    <p class=MsoNormal><span style='font-size:10.5pt;color:#58585A'>19</span></p>
+    </td>
+    <td width=168 style='width:126.0pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    padding:0cm 5.4pt 0cm 5.4pt'>
+    <p class=MsoNormal><span style='font-size:10.5pt;color:#58585A'>Channel
+    Sounding feature is used</span></p>
+    </td>
+    <td width=161 style='width:120.6pt;border-top:none;border-left:none;
+    border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+    padding:0cm 5.4pt 0cm 5.4pt'>
+    <p class=MsoNormal><span style='font-size:10.5pt;color:#58585A'>Channel
+    Sounding feature is not used</span></p>
+    </td>
+   </tr>
+   <tr>
+    <td width=96 style='width:72.35pt;border:solid windowtext 1.0pt;border-top:
+    none;padding:0cm 5.4pt 0cm 5.4pt'>
     <p class=MsoNormal><span style='font-size:10.5pt;color:#58585A'>others</span></p>
     </td>
     <td width=329 colspan=2 style='width:246.6pt;border-top:none;border-left:
@@ -4432,31 +4591,35 @@ All BleStack_init_t parameters are described below:</p>
    </tr>
   </table>
   </td>
-  <td width=364 valign=top style='width:273.05pt;border-top:none;border-left:
+  <td width=350 valign=top style='width:262.3pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:142.7pt'>
-  <p class=MsoNormal>BLE_OPTIONS_LL_ONLY<sup>(1)</sup> = 0x0001U,</p>
-  <p class=MsoNormal>BLE_OPTIONS_NO_SVC_CHANGE_DESC = 0x0002U,</p>
-  <p class=MsoNormal>BLE_OPTIONS_DEV_NAME_READ_ONLY = 0x0004U,</p>
-  <p class=MsoNormal>BLE_OPTIONS_EXTENDED_ADV = 0x0008U,</p>
-  <p class=MsoNormal>BLE_OPTIONS_REDUCED_DB_IN_NVM = 0x0020U,</p>
-  <p class=MsoNormal>BLE_OPTIONS_GATT_CACHING = 0x0040U,</p>
-  <p class=MsoNormal>BLE_OPTIONS_POWER_CLASS_1 = 0x0080U,</p>
-  <p class=MsoNormal>BLE_OPTIONS_APPEARANCE_WRITABLE = 0x0100U</p>
-  <p class=MsoNormal>BLE_OPTIONS_ENHANCED_ATT = 0x0200U</p>
+  <p class=MsoNormal>BLE_OPTIONS_LL_ONLY<sup>(1)</sup> = 0x00000001UL,</p>
+  <p class=MsoNormal>BLE_OPTIONS_NO_SVC_CHANGE_DESC = 0x00000002UL,</p>
+  <p class=MsoNormal>BLE_OPTIONS_DEV_NAME_READ_ONLY = 0x00000004UL,</p>
+  <p class=MsoNormal>BLE_OPTIONS_EXTENDED_ADV = 0x00000008UL,</p>
+  <p class=MsoNormal>BLE_OPTIONS_REDUCED_DB_IN_NVM = 0x00000020UL,</p>
+  <p class=MsoNormal>BLE_OPTIONS_GATT_CACHING = 0x00000040UL,</p>
+  <p class=MsoNormal>BLE_OPTIONS_POWER_CLASS_1 = 0x00000080UL,</p>
+  <p class=MsoNormal>BLE_OPTIONS_APPEARANCE_WRITABLE = 0x00000100UL,</p>
+  <p class=MsoNormal>BLE_OPTIONS_ENHANCED_ATT = 0x00000200UL,<br>
+  BLE_OPTIONS_CIS = 0x00010000UL,</p>
+  <p class=MsoNormal>BLE_OPTIONS_BIS = 0x00020000UL,</p>
+  <p class=MsoNormal>BLE_OPTIONS_PAWR = 0x00040000UL,</p>
+  <p class=MsoNormal>BLE_OPTIONS_CHAN_SOUNDING = 0x00080000UL,</p>
   </td>
  </tr>
  <tr style='height:20.1pt'>
-  <td width=208 valign=top style='width:155.9pt;border:solid black 1.0pt;
+  <td width=228 valign=top style='width:171.3pt;border:solid black 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:20.1pt'>
   <p class=MsoNormal>uint32_t<b> debug</b></p>
   </td>
-  <td width=465 valign=top style='width:348.8pt;border-top:none;border-left:
+  <td width=459 valign=top style='width:344.15pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:20.1pt'>
   <p class=MsoNormal>Debug flags</p>
   </td>
-  <td width=364 valign=top style='width:273.05pt;border-top:none;border-left:
+  <td width=350 valign=top style='width:262.3pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
   padding:0cm 5.4pt 0cm 5.4pt;height:20.1pt'>
   <p class=MsoNormal style='page-break-after:avoid'>BLE_DEBUG_RAND_ADDR_INIT =
@@ -4479,19 +4642,21 @@ mode.</i></p>
 
 <p class=MsoNormal><i>&nbsp;</i></p>
 
+<h4>&nbsp;&nbsp;3.1.1 BLE Host stack memory allocation</h4>
+
 <p class=MsoNormal>&nbsp;</p>
 
 <p class=MsoNormal>The BLE Host Stack RAM memory must be allocated by the
 application. This RAM memory is composed of:</p>
 
 <p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'>-<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>the
-BLE stack and ACL buffers RAM (defined by the <b>bleStartRamAddress </b>and<b>
+style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>the BLE stack and ACL buffers RAM (defined by the <b>bleStartRamAddress </b>and<b>
 total_buffer_size </b>parameters)</p>
 
 <p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'>-<span
-style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>the
-GATT database RAM (defined by the <b>bleStartRamAddress_GATT </b>and<b>
+style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>the GATT database RAM (defined by the <b>bleStartRamAddress_GATT </b>and<b>
 total_buffer_size_GATT </b>parameters)</p>
 
 <p class=MsoNormal>The size of this memory depends on several parameters, such as
@@ -4499,18 +4664,19 @@ the maximum number of links, the maximum ATT MTU size, the maximum number of
 services, etc. </p>
 
 <p class=MsoNormal>These RAM sizes can be computed using the
-BLE_TOTAL_BUFFER_SIZE and BLE_TOTAL_BUFFER_SIZE_GATT macros from ble_bufsize.h.</p>
+BLE_TOTAL_BUFFER_SIZE and BLE_TOTAL_BUFFER_SIZE_GATT macros from
+“ble_bufsize.h”.</p>
 
 <p class=MsoNormal>Here is an example of the RAM impact depending on the
 maximum number of connections, services and attributes:</p>
 
 <div align=center>
 
-<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
- style='border-collapse:collapse;border:none'>
+<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse'>
  <tr>
   <td valign=top style='border:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal><b>&nbsp;</b></p>
+  <p class=MsoNormal style='line-height:115%'><b>&nbsp;</b></p>
   </td>
   <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
   padding:0cm 5.4pt 0cm 5.4pt'>
@@ -4730,6 +4896,32 @@ font-family:Consolas;color:red'> </span></p>
 
 <p class=MsoNormal style='margin-top:0cm;margin-right:255.75pt;margin-bottom:
 0cm;margin-left:0cm;line-height:14.25pt;background:#1E1E1E'><span
+style='font-size:10.5pt;font-family:Consolas;color:#9CDCFE'>pInitParams</span><span
+style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>.</span><span
+style='font-size:10.5pt;font-family:Consolas;color:#9CDCFE'>ll_sm_num&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</span><span style='font-size:10.5pt;
+font-family:Consolas;color:#D4D4D4'>= CFG_BLE_NUM_SM;</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:255.75pt;margin-bottom:
+0cm;margin-left:0cm;line-height:14.25pt;background:#1E1E1E'><span
+style='font-size:10.5pt;font-family:Consolas;color:#9CDCFE'>pInitParams</span><span
+style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>.</span><span
+style='font-size:10.5pt;font-family:Consolas;color:#9CDCFE'>ll_buffer</span><span
+style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'> &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= (</span><span
+style='font-size:10.5pt;font-family:Consolas;color:#569CD6'>uint8_t</span><span
+style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>*)linklayer_buffer;</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:255.75pt;margin-bottom:
+0cm;margin-left:0cm;line-height:14.25pt;background:#1E1E1E'><span
+style='font-size:10.5pt;font-family:Consolas;color:#9CDCFE'>pInitParams</span><span
+style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>.</span><span
+style='font-size:10.5pt;font-family:Consolas;color:#9CDCFE'>ll_buffer_size&nbsp;&nbsp;&nbsp;
+&nbsp;</span><span style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>&nbsp;
+&nbsp; &nbsp;= CFG_BLE_LL_DYN_ALLOC_SIZE;</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:255.75pt;margin-bottom:
+0cm;margin-left:0cm;line-height:14.25pt;background:#1E1E1E'><span
 style='font-size:10.5pt;font-family:Consolas;color:#9CDCFE'>pInitParams.options</span><span
 style='font-size:10.5pt;font-family:Consolas;color:white'> &nbsp; &nbsp; &nbsp;
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span style='font-size:10.5pt;
@@ -4821,6 +5013,234 @@ style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>&nbsp;</span></p>
 
 <p class=MsoNormal>&nbsp;</p>
 
+<h4>3.1.2 BLE Link Layer memory allocation </h4>
+
+<p class=MsoNormal><span style='color:windowtext'>The Link Layer RAM buffer is
+provided by the application and sized according to the Link Layer
+configuration. Its required size is calculated using the <b>BLE_LL_BUFFER_SIZE</b>(n_sm,
+options, coex) macro from “ble_bufsize.h”, where:</span></p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal style='color:windowtext'><b><i>n_sm</i></b><i> :</i> is
+     the maximum number of simultaneous Link Layer state machines.</li>
+ <li class=MsoNormal style='color:windowtext'><b><i>options</i></b> : is the
+     Link Layer feature configuration, selected by combining the option flags
+     shown in the table above. These include<b>
+     BLE_OPTIONS_EXTENDED_ADV,&nbsp;BLE_OPTIONS_CIS</b>,&nbsp;<b>BLE_OPTIONS_BIS</b>
+     and <b>BLE_OPTIONS_PAWR<br>
+     </b>which specify the RAM allocation required for the selected Link Layer
+     features<b><i> (</i></b><i><a href="#table7">see table 7</a><b>)</b></i></li>
+ <li class=MsoNormal style='color:windowtext'><b><i>coex</i></b><i> :</i>
+     indicates whether coexistence mode (BLE and 802.15.4) is used or not.</li>
+</ul>
+
+<p class=MsoNormal><span style='color:windowtext'>The application can reduce
+Link Layer RAM usage by adjusting both the number of state machines and the
+enabled features to its actual requirements. </span></p>
+
+<p class=MsoNormal><span style='color:windowtext'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='color:windowtext'>Example: </span></p>
+
+<p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'><span
+style='color:windowtext'>-</span><span style='font-size:7.0pt;font-family:"Times New Roman",serif;
+color:windowtext'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+style='color:windowtext'>For an application requiring only five state machines
+instead of the maximum of 20, the RAM saving in the full configuration is shown
+below:</span></p>
+
+<p class=MsoListParagraph style='margin-left:36.0pt'><span style='color:windowtext'>&nbsp;</span></p>
+
+<div align=center>
+
+<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse'>
+ <tr>
+  <td valign=top style='border:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><b><span style='color:windowtext'>Full configuration</span></b></p>
+  </td>
+  <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><b><span style='color:windowtext'>RAM per state machine</span></b></p>
+  </td>
+  <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><b><span style='color:windowtext'>Total dynamic RAM for 5
+  state machines</span></b></p>
+  </td>
+  <td valign=top style='border:solid windowtext 1.0pt;border-left:none;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><b><span style='color:windowtext'>Total Dynamic RAM for 20
+  state machines</span></b></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='border:solid windowtext 1.0pt;border-top:none;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><b><span style='color:windowtext'>WBA5x/WBA6x</span></b></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='color:windowtext'>928 bytes</span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='color:windowtext'>14,940 bytes</span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='color:windowtext'>28,980&nbsp;bytes</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td valign=top style='border:solid windowtext 1.0pt;border-top:none;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><b><span style='color:windowtext'>WBA2x</span></b></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='color:windowtext'>984 bytes</span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='color:windowtext'>11,340 bytes</span></p>
+  </td>
+  <td valign=top style='border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;
+  border-right:solid windowtext 1.0pt;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='color:windowtext'>26,220 bytes</span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p class=MsoCaption align=center style='text-align:center'><a name=table6>Table
+6</a>: Dynamic RAM optimization through SM configuration</p>
+
+<p class=MsoCaption align=center style='text-align:center'>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:36.0pt;text-indent:-18.0pt'><span
+style='color:windowtext'>-</span><span style='font-size:7.0pt;font-family:"Times New Roman",serif;
+color:windowtext'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+style='color:windowtext'>RAM usage can also be reduced by allocating the memory
+for only the features the application needs. The following table lists the
+option flags and associated RAM costs:</span></p>
+
+<div align=center>
+
+<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=1039
+ style='width:779.0pt;border-collapse:collapse'>
+ <tr style='height:27.75pt'>
+  <td width=322 valign=top style='width:241.35pt;border:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:27.75pt'>
+  <p class=MsoNormal align=center style='text-align:center'><b><span
+  style='color:windowtext'>FEATURE</span></b></p>
+  </td>
+  <td width=490 valign=top style='width:367.45pt;border:solid windowtext 1.0pt;
+  border-left:none;padding:0cm 5.4pt 0cm 5.4pt;height:27.75pt'>
+  <p class=MsoNormal align=center style='text-align:center'><b><span
+  style='color:windowtext'>OPTION FLAG</span></b></p>
+  </td>
+  <td width=227 valign=top style='width:170.2pt;border:solid windowtext 1.0pt;
+  border-left:none;padding:0cm 5.4pt 0cm 5.4pt;height:27.75pt'>
+  <p class=MsoNormal align=center style='text-align:center'><b><span
+  style='color:windowtext'>RAM Usage (Bytes)</span></b></p>
+  </td>
+ </tr>
+ <tr style='height:29.2pt'>
+  <td width=322 valign=top style='width:241.35pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:29.2pt'>
+  <p class=MsoNormal><b><span style='color:windowtext'>Extended Adv/Scanning</span></b></p>
+  </td>
+  <td width=490 valign=top style='width:367.45pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:29.2pt'>
+  <p class=MsoNormal><span style='color:windowtext'>BLE_OPTIONS_EXTENDED_ADV</span></p>
+  </td>
+  <td width=227 valign=top style='width:170.2pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:29.2pt'>
+  <p class=MsoNormal><span style='color:windowtext'>Up to 1700</span></p>
+  </td>
+ </tr>
+ <tr style='height:29.2pt'>
+  <td width=322 valign=top style='width:241.35pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:29.2pt'>
+  <p class=MsoNormal><b><span style='color:windowtext'>Isochronous common</span></b></p>
+  </td>
+  <td width=490 valign=top style='width:367.45pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:29.2pt'>
+  <p class=MsoNormal><span lang=FR style='color:windowtext'>BLE_OPTIONS_BIS |
+  BLE_OPTIONS_CIS</span></p>
+  </td>
+  <td width=227 valign=top style='width:170.2pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:29.2pt'>
+  <p class=MsoNormal><span style='color:windowtext'>5400</span></p>
+  </td>
+ </tr>
+ <tr style='height:29.2pt'>
+  <td width=322 valign=top style='width:241.35pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:29.2pt'>
+  <p class=MsoNormal><b><span style='color:windowtext'>BIS</span></b></p>
+  </td>
+  <td width=490 valign=top style='width:367.45pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:29.2pt'>
+  <p class=MsoNormal><span style='color:windowtext'>BLE_OPTIONS_BIS</span></p>
+  </td>
+  <td width=227 valign=top style='width:170.2pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:29.2pt'>
+  <p class=MsoNormal><span style='color:windowtext'>1500</span></p>
+  </td>
+ </tr>
+ <tr style='height:29.2pt'>
+  <td width=322 valign=top style='width:241.35pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:29.2pt'>
+  <p class=MsoNormal><b><span style='color:windowtext'>CIS</span></b></p>
+  </td>
+  <td width=490 valign=top style='width:367.45pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:29.2pt'>
+  <p class=MsoNormal><span style='color:windowtext'>BLE_OPTIONS_CIS</span></p>
+  </td>
+  <td width=227 valign=top style='width:170.2pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:29.2pt'>
+  <p class=MsoNormal><span style='color:windowtext'>100</span></p>
+  </td>
+ </tr>
+ <tr style='height:29.2pt'>
+  <td width=322 valign=top style='width:241.35pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:29.2pt'>
+  <p class=MsoNormal><b><span style='color:windowtext'>Periodic Advertising
+  with Response</span></b></p>
+  </td>
+  <td width=490 valign=top style='width:367.45pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:29.2pt'>
+  <p class=MsoNormal><span style='color:windowtext'>BLE_OPTIONS_PAWR</span></p>
+  </td>
+  <td width=227 valign=top style='width:170.2pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt;height:29.2pt'>
+  <p class=MsoNormal><span style='color:windowtext'>2500</span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p class=MsoCaption align=center style='text-align:center'><a name=table7>Table
+7</a>: Dynamic RAM optimization through supported features configuration</p>
+
+<p class=MsoNormal><span style='color:windowtext'>&nbsp;</span></p>
+
+<h4><i>Note: </i><i><span style='font-weight:normal'>For more information on
+the RAM footprints, refer to “ble_bufsize.h”.</span></i></h4>
+
 <h2><a name="_Toc226643916"></a><a name="_Toc147487415"></a><a
 name="_Toc191997888"></a><a name="_Toc163814810"></a><a name="_Toc125725171"></a>3.2<span
 style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -4877,7 +5297,7 @@ dedicated processes.</p>
 </div>
 
 <p class=MsoCaption align=center style='text-align:center'><a
-name="_Toc147487329"></a><a name="_Toc125724453"></a>Table 6: BleStack_Process
+name="_Toc147487329"></a><a name="_Toc125724453"></a>Table 8: BleStack_Process
 function</p>
 
 <p class=MsoNormal>The <b>BleStack_Process</b> function shall be called in the
@@ -4989,7 +5409,7 @@ bytes) of the response event is given by the function’s return value.</p>
  <tr>
   <td width=149 valign=top style='width:112.1pt;border:solid black 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal><b><i>BleStack_Request</i></b></p>
+  <p class=MsoNormal style='line-height:115%'><b><i>BleStack_Request</i></b></p>
   </td>
   <td width=329 valign=top style='width:246.7pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
@@ -5013,7 +5433,7 @@ bytes) of the response event is given by the function’s return value.</p>
 </div>
 
 <p class=MsoCaption align=center style='text-align:center'><a
-name="_Toc147487330"></a><a name="_Toc125724454"></a>Table 7: BleStack_Request
+name="_Toc147487330"></a><a name="_Toc125724454"></a>Table 9: BleStack_Request
 function</p>
 
 <p class=MsoNormal>Example:</p>
@@ -5044,9 +5464,8 @@ lang=FR style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>};</span></p
 
 <p class=MsoNormal style='margin-top:0cm;margin-right:255.75pt;margin-bottom:
 0cm;margin-left:0cm;line-height:14.25pt;background:#1E1E1E;text-autospace:ideograph-other'><span
-style='font-size:10.5pt;font-family:Consolas;color:#6A9955'>/* BLE Stack
-executes Reset command, the Command Complete Event is returned in reset_cmd
-array, </span></p>
+style='font-size:10.5pt;font-family:Consolas;color:#6A9955'>/* BLE Stack executes
+Reset command, the Command Complete Event is returned in reset_cmd array, </span></p>
 
 <p class=MsoNormal style='margin-top:0cm;margin-right:255.75pt;margin-bottom:
 0cm;margin-left:0cm;line-height:14.25pt;background:#1E1E1E;text-autospace:ideograph-other'><span
@@ -5080,9 +5499,9 @@ style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>];</span></p>
 callback.</p>
 
 <p class=MsoNormal><a name="_Hlk202264506"><span style='color:windowtext'>The
-value returned by the BLECB_Indication callback shall indicate whether the
-event has been processed by the application or not. In case the unprocessed
-event is stored in the Host or the LL event FIFO, it will later be sent to the
+value returned by the BLECB_Indication callback shall indicate whether the event
+has been processed by the application or not. In case the unprocessed event is
+stored in the Host or the LL event FIFO, it will later be sent to the
 application again. Otherwise, it will be discarded.</span></a></p>
 
 <p class=MsoNormal>This function is called by the BLE Stack with the following
@@ -5112,7 +5531,7 @@ parameters:</p>
  <tr>
   <td width=149 valign=top style='width:112.1pt;border:solid black 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal><b><i>BLECB_Indication</i></b></p>
+  <p class=MsoNormal style='line-height:115%'><b><i>BLECB_Indication</i></b></p>
   </td>
   <td width=438 valign=top style='width:328.7pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
@@ -5122,8 +5541,8 @@ parameters:</p>
   <p class=MsoNormal style='margin-bottom:10.0pt;line-height:115%'>- uint16_t<b>
   length</b>: The length of the data buffer</p>
   <p class=MsoNormal style='margin-bottom:10.0pt;line-height:115%'>- const
-  uint8_t* <b>ext_data</b>: The extended data buffer. This buffer is used only
-  for ISO data and ACL data events</p>
+  uint8_t* <b>ext_data</b>: The extended data buffer. This buffer is used only for
+  ISO data and ACL data events</p>
   <p class=MsoNormal style='margin-bottom:10.0pt;line-height:115%'>- uint16_t <b>ext_length</b>:
   The length of the extended data buffer</p>
   </td>
@@ -5145,7 +5564,7 @@ parameters:</p>
 </div>
 
 <p class=MsoCaption align=center style='text-align:center'><a
-name="_Toc147487331"></a><a name="_Toc125724455"></a>Table 8: BLECB_Indication
+name="_Toc147487331"></a><a name="_Toc125724455"></a>Table 10: BLECB_Indication
 function</p>
 
 <p class=MsoNormal>Example:</p>
@@ -5205,8 +5624,8 @@ style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>{</span></p>
 <p class=MsoNormal style='margin-top:0cm;margin-right:255.75pt;margin-bottom:
 0cm;margin-left:0cm;line-height:14.25pt;background:#1E1E1E'><span
 style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>&nbsp; &nbsp; </span><span
-style='font-size:10.5pt;font-family:Consolas;color:#6A9955'>// Check the
-subevent_code and the parameter length</span></p>
+style='font-size:10.5pt;font-family:Consolas;color:#6A9955'>// Check the subevent_code
+and the parameter length</span></p>
 
 <p class=MsoNormal style='margin-top:0cm;margin-right:255.75pt;margin-bottom:
 0cm;margin-left:0cm;line-height:14.25pt;background:#1E1E1E'><span
@@ -5433,8 +5852,8 @@ style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>}</span></p>
 
 <p class=MsoNormal><a name="_Toc125725176">&nbsp;</a></p>
 
-<h3><a name="_3.3.2___1"></a>&nbsp;<a name="_Toc226643919"></a><a
-name="_Toc191997891">3.3.2</a><span style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<h3><a name="_3.3.2___1"></a>&nbsp;<a name="_Toc191997891"></a><a
+name="_Toc226643919"></a>3.3.2<span style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>Direct Mode</h3>
 
 <p class=MsoNormal><br>
@@ -5445,8 +5864,8 @@ in transparent mode, the ACI/HCI commands/events can be used through dedicated
 functions. Those functions are listed and detailed in the document
 STM32WBA_BLE_Wireless_Interface.html.</p>
 
-<p class=MsoNormal>To use the direct mode, the BLE wrapper shall be compiled,
-that means “ble_wrap.c” needs to be included (see <a href="#_3.3.2.1__"><i>section
+<p class=MsoNormal>To use the direct mode, the BLE wrapper shall be compiled, that
+means “ble_wrap.c” needs to be included (see <a href="#_3.3.2.1__"><i>section
 3.3.2.1</i></a>).</p>
 
 <p class=MsoNormal>&nbsp;</p>
@@ -5463,8 +5882,8 @@ and post processing for each BLE command.</p>
 file and defines each pre-processing and post-processing macro.</p>
 
 <p class=MsoNormal>Each wrapper macro can be defined at the application level
-to execute dedicated code. By default, all specific macros are defined to the
-generic macros: “<span style='font-size:10.5pt;font-family:Consolas;color:#569CD6'>BLE_WRAP_PREPROC</span>”
+to execute dedicated code. By default, all specific macros are defined to the generic
+macros: “<span style='font-size:10.5pt;font-family:Consolas;color:#569CD6'>BLE_WRAP_PREPROC</span>”
 and “<span style='font-size:10.5pt;font-family:Consolas;color:#569CD6'>BLE_WRAP_POSTPROC</span>”.</p>
 
 <p class=MsoNormal>The “<span style='font-size:10.5pt;font-family:Consolas;
@@ -5517,8 +5936,8 @@ style='font-size:10.5pt;font-family:Consolas;color:#569CD6'>BLE_WRAP_POSTPROC(
 #1F1F1F'><span style='font-size:10.5pt;font-family:Consolas;color:#6A9955'>&nbsp;</span></p>
 
 <p class=MsoNormal style='margin-bottom:0cm;line-height:14.25pt;background:
-#1F1F1F'><span style='font-size:10.5pt;font-family:Consolas;color:#6A9955'>/*
-HCI_DISCONNECT pre-processing macro */</span></p>
+#1F1F1F'><span style='font-size:10.5pt;font-family:Consolas;color:#6A9955'>/* HCI_DISCONNECT
+pre-processing macro */</span></p>
 
 <p class=MsoNormal style='margin-bottom:0cm;line-height:14.25pt;background:
 #1F1F1F'><span style='font-size:10.5pt;font-family:Consolas;color:#C586C0'>#ifndef</span><span
@@ -5659,8 +6078,8 @@ BLE_WRAP_HCI_DISCONNECT_POSTPROC user_disconnect_postproc()</span></p>
 #1F1F1F'>&nbsp;</p>
 
 <p class=MsoNormal style='margin-bottom:0cm;line-height:14.25pt;background:
-#1F1F1F'><span style='font-size:10.5pt;font-family:Consolas;color:#6A9955'>/*
-User can define the generic macros to call their own functions */</span></p>
+#1F1F1F'><span style='font-size:10.5pt;font-family:Consolas;color:#6A9955'>/* User
+can define the generic macros to call their own functions */</span></p>
 
 <p class=MsoNormal style='margin-bottom:0cm;line-height:14.25pt;background:
 #1F1F1F'><span style='font-size:10.5pt;font-family:Consolas;color:#C586C0'>#define
@@ -5802,12 +6221,12 @@ style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>,</span></p>
 0cm;margin-left:0cm;line-height:14.25pt;background:#1E1E1E'><span
 style='font-size:10.5pt;font-family:Consolas;color:#D4D4D4'>&nbsp; &nbsp;
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span style='font-size:10.5pt;
-font-family:Consolas;color:#569CD6'>uint8_t</span><span style='font-size:10.5pt;
-font-family:Consolas;color:#D4D4D4'> </span><span style='font-size:10.5pt;
-font-family:Consolas;color:#9CDCFE'>Reason</span><span style='font-size:10.5pt;
-font-family:Consolas;color:#D4D4D4'>)</span></p>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; </span><span style='font-size:10.5pt;font-family:
+Consolas;color:#569CD6'>uint8_t</span><span style='font-size:10.5pt;font-family:
+Consolas;color:#D4D4D4'> </span><span style='font-size:10.5pt;font-family:Consolas;
+color:#9CDCFE'>Reason</span><span style='font-size:10.5pt;font-family:Consolas;
+color:#D4D4D4'>)</span></p>
 
 <p class=MsoNormal style='margin-top:0cm;margin-right:255.75pt;margin-bottom:
 0cm;margin-left:0cm;line-height:14.25pt;background:#1E1E1E'><span
@@ -5842,8 +6261,8 @@ data doesn’t support unaligned access. In these cases, it is advised to use the
 &quot;mem_intf.h&quot; from link layer libraries) instead of <i>memcpy/memset/memcmp</i>
 functions when accessing those data.</p>
 
-<h1><a name="_Toc147487420"></a><a name="_Toc226643923"></a><a
-name="_Toc163814816">4</a><span style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<h1><a name="_Toc163814816"></a><a name="_Toc147487420"></a><a
+name="_Toc226643923"></a>4<span style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>BLE stack porting</h1>
 
 <p class=MsoNormal>The BLE stack uses some generic HW features but lets the
@@ -5931,7 +6350,7 @@ font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&
 </div>
 
 <p class=MsoCaption align=center style='text-align:center'><a
-name="_Toc147487332"></a><a name="_Toc125724456"></a>Table 9: BLEPLAT_Init
+name="_Toc147487332"></a><a name="_Toc125724456"></a>Table 11: BLEPLAT_Init
 function</p>
 
 <p class=MsoNormal style='margin-bottom:10.0pt;line-height:115%'>This function
@@ -6066,12 +6485,12 @@ values:</p>
 </div>
 
 <p class=MsoCaption align=center style='text-align:center'><a
-name="_Toc147487333"></a><a name="_Toc125724457"></a>Table 10: BLEPLAT functions'
-returns</p>
+name="_Toc147487333"></a><a name="_Toc125724457"></a>Table 12: BLEPLAT
+functions' returns</p>
 
-<p class=MsoCaption><span style='font-weight:normal'>Note: BLE platform
-functions do not have severe timing constraints. In fact, the BLE host stack
-only deals with timeouts of several seconds.</span></p>
+<p class=MsoCaption><span style='font-weight:normal'>Note: BLE platform functions
+do not have severe timing constraints. In fact, the BLE host stack only deals
+with timeouts of several seconds.</span></p>
 
 <h3><a name="_Toc147487423"></a><a name="_Toc226643926"></a><a
 name="_Toc163814819"></a><a name="_Toc125725179"></a>4.2.1<span
@@ -6137,7 +6556,7 @@ that needs to be written in NVM.</p>
 </div>
 
 <p class=MsoCaption align=center style='text-align:center'><a
-name="_Toc147487334"></a><a name="_Toc125724458"></a>Table 11: BLEPLAT NVM
+name="_Toc147487334"></a><a name="_Toc125724458"></a>Table 13: BLEPLAT NVM
 functions</p>
 
 <h3><a name="_Toc147487424"></a><a name="_Toc226643927"></a><a
@@ -6239,7 +6658,7 @@ recommended to be able to count up to 24 hours.</p>
 </div>
 
 <p class=MsoCaption align=center style='text-align:center'><a
-name="_Toc147487335"></a><a name="_Toc125724459"></a>Table 12: BLEPLAT Timer
+name="_Toc147487335"></a><a name="_Toc125724459"></a>Table 14: BLEPLAT Timer
 functions</p>
 
 <p class=MsoNormal>The number of timers required by the BLE stack depends on
@@ -6249,10 +6668,14 @@ the variants used. </p>
 needed per <i>predefined configuration</i>:</p>
 
 <p class=MsoNormal>- For the Full and Basic Plus, Basic predefined
-configurations:                                <i>Maximum Number of timers = (6
-x numOfLinks) + 5</i></p>
+configurations:&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<i>Maximum Number of timers = (6 x numOfLinks) + 5</i></p>
 
-<p class=MsoNormal>- For the Peripheral Only predefined configuration:                                                   <i>Maximum
+<p class=MsoNormal>- For the Peripheral Only predefined
+configuration:&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i>Maximum
 Number of timers = (4 x numOfLinks) + 4</i></p>
 
 <p class=MsoNormal><a name="_Hlk207812983">Implementation of the BLEPLAT_Timer
@@ -6365,8 +6788,8 @@ compute CMAC which is needed by BLE security manager.</p>
   <td width=226 valign=top style='width:169.2pt;border:solid black 1.0pt;
   border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal style='margin-bottom:10.0pt;line-height:115%'><b><i>BLEPLAT_AesCmacSetKey:</i></b></p>
-  <p class=MsoNormal style='margin-bottom:10.0pt;line-height:115%'>Set the
-  128-bit key to be used for CMAC computation</p>
+  <p class=MsoNormal style='margin-bottom:10.0pt;line-height:115%'>Set the 128-bit
+  key to be used for CMAC computation</p>
   </td>
   <td width=404 valign=top style='width:303.05pt;border-top:none;border-left:
   none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
@@ -6415,7 +6838,7 @@ compute CMAC which is needed by BLE security manager.</p>
 </div>
 
 <p class=MsoCaption align=center style='text-align:center'><a
-name="_Toc147487336"></a><a name="_Toc125724460"></a>Table 13: BLEPLAT AES
+name="_Toc147487336"></a><a name="_Toc125724460"></a>Table 15: BLEPLAT AES
 functions</p>
 
 <h3><a name="_Toc147487426"></a><a name="_Toc226643929"></a><a
@@ -6563,8 +6986,7 @@ key used for BLE secure connections. </p>
 </div>
 
 <p class=MsoCaption align=center style='text-align:center'><a
-name="_Toc147487337"></a><a name="_Toc125724461"></a>Table 14: BLEPLAT PKA
-functions</p>
+name="_Toc147487337"></a><a name="_Toc125724461"></a>Table 16: BLEPLAT PKA functions</p>
 
 <h3><a name="_Toc147487427"></a><a name="_Toc226643930"></a><a
 name="_Toc163814823"></a><a name="_Toc125725183"></a>4.2.5<span
@@ -6620,7 +7042,7 @@ style='font-size:7.0pt;font-family:"Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&n
 </div>
 
 <p class=MsoCaption align=center style='text-align:center'><a
-name="_Toc147487338"></a><a name="_Toc125724462"></a>Table 15: BLEPLAT RNG
+name="_Toc147487338"></a><a name="_Toc125724462"></a>Table 17: BLEPLAT RNG
 function</p>
 
 <span style='font-size:11.0pt;line-height:115%;font-family:"Arial",sans-serif;
@@ -6636,8 +7058,8 @@ class=Dxentry>&nbsp;</span></p>
 "Times New Roman",serif'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </span>BLE stack link-time optimization</h2>
 
-<p class=MsoNormal><span style='color:windowtext'>If certain features of the
-BLE stack are not used, the code memory footprint can be optimized using the
+<p class=MsoNormal><span style='color:windowtext'>If certain features of the BLE
+stack are not used, the code memory footprint can be optimized using the
 “ble_wrap.c” file.</span></p>
 
 <p class=MsoNormal><span style='color:windowtext'>The features concerned are:</span></p>
@@ -6655,9 +7077,9 @@ BLE stack are not used, the code memory footprint can be optimized using the
      Advertising feature</li>
 </ul>
 
-<p class=MsoNormal><span style='color:windowtext'>To reduce the code size,
-simply define a macro BLE_FEATURE_xxx_UNUSED, with xxx being the feature name,
-in the file that includes the “ble_wrap.c” file.</span></p>
+<p class=MsoNormal><span style='color:windowtext'>To reduce the code size, simply
+define a macro BLE_FEATURE_xxx_UNUSED, with xxx being the feature name, in the
+file that includes the “ble_wrap.c” file.</span></p>
 
 <p class=MsoNormal><span style='color:windowtext'>Example:</span></p>
 
@@ -6690,17 +7112,17 @@ style='font-size:10.5pt;font-family:Consolas;color:#569CD6'>&nbsp;&nbsp;&nbsp;&n
 <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=629
  style='width:471.75pt;border-collapse:collapse'>
  <tr style='page-break-inside:avoid'>
-  <td width=0 valign=top style='width:0cm;padding:0cm 5.4pt 0cm 5.4pt'></td>
+  <td width=0 valign=top style='width:.3pt;padding:0cm 5.4pt 0cm 5.4pt'></td>
  </tr>
  <tr style='page-break-inside:avoid'>
-  <td width=0 valign=top style='width:0cm;padding:0cm 5.4pt 0cm 5.4pt'></td>
+  <td width=0 valign=top style='width:.3pt;padding:0cm 5.4pt 0cm 5.4pt'></td>
  </tr>
  <tr style='page-break-inside:avoid'>
-  <td width=0 valign=top style='width:0cm;padding:0cm 5.4pt 0cm 5.4pt'>
+  <td width=0 valign=top style='width:.3pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><span class=Dxentry><span style='font-size:9.0pt'>ARM CC
   compiler and Keil µvision are registered trademarks owned by ARM </span></span></p>
-  <p class=MsoNormal><span class=Dxentry><span style='font-size:9.0pt'>IAR
-  C/C++ compiler is a registered trademark owned by IAR Systems</span></span></p>
+  <p class=MsoNormal><span class=Dxentry><span style='font-size:9.0pt'>IAR C/C++
+  compiler is a registered trademark owned by IAR Systems</span></span></p>
   <p class=MsoNormal align=center style='text-align:center'><span
   style='font-size:10.0pt'>&nbsp;</span></p>
   <p class=MsoNormal align=center style='text-align:center'><b><span
@@ -6708,7 +7130,7 @@ style='font-size:10.5pt;font-family:Consolas;color:#569CD6'>&nbsp;&nbsp;&nbsp;&n
   </td>
  </tr>
  <tr style='page-break-inside:avoid'>
-  <td width=0 valign=top style='width:0cm;padding:0cm 5.4pt 0cm 5.4pt'>
+  <td width=0 valign=top style='width:.3pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><span class=Dxentry><span style='font-size:9.0pt'>Information
   in this document is provided solely in connection with ST products.
   STMicroelectronics NV and its subsidiaries (&quot;ST&quot;) reserve the right
@@ -6718,13 +7140,13 @@ style='font-size:10.5pt;font-family:Consolas;color:#569CD6'>&nbsp;&nbsp;&nbsp;&n
   </td>
  </tr>
  <tr style='page-break-inside:avoid'>
-  <td width=0 valign=top style='width:0cm;padding:0cm 5.4pt 0cm 5.4pt'>
+  <td width=0 valign=top style='width:.3pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><span class=Dxentry><span style='font-size:9.0pt'>All ST
   products are sold pursuant to ST’s terms and conditions of sale. </span></span></p>
   </td>
  </tr>
  <tr style='page-break-inside:avoid'>
-  <td width=0 valign=top style='width:0cm;padding:0cm 5.4pt 0cm 5.4pt'>
+  <td width=0 valign=top style='width:.3pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><span class=Dxentry><span style='font-size:9.0pt'>Purchasers
   are solely responsible for the choice, selection and use of the ST products
   and services described herein, and ST assumes no liability whatsoever
@@ -6733,19 +7155,19 @@ style='font-size:10.5pt;font-family:Consolas;color:#569CD6'>&nbsp;&nbsp;&nbsp;&n
   </td>
  </tr>
  <tr style='page-break-inside:avoid'>
-  <td width=0 valign=top style='width:0cm;padding:0cm 5.4pt 0cm 5.4pt'>
+  <td width=0 valign=top style='width:.3pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><span class=Dxentry><span style='font-size:9.0pt'>No
   license, express or implied, by estoppel or otherwise, to any intellectual
   property rights is granted under this document. If any part of this document
-  refers to any third party products or services it shall not be deemed a
-  license grant by ST for the use of such third party products or services, or
-  any intellectual property contained therein or considered as a warranty
-  covering the use in any manner whatsoever of such third party products or
-  services or any intellectual property contained therein. </span></span></p>
+  refers to any third party products or services it shall not be deemed a license
+  grant by ST for the use of such third party products or services, or any
+  intellectual property contained therein or considered as a warranty covering
+  the use in any manner whatsoever of such third party products or services or
+  any intellectual property contained therein. </span></span></p>
   </td>
  </tr>
  <tr style='page-break-inside:avoid'>
-  <td width=0 valign=top style='width:0cm;padding:0cm 5.4pt 0cm 5.4pt'>
+  <td width=0 valign=top style='width:.3pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><b><span style='font-size:10.0pt'>UNLESS OTHERWISE SET
   FORTH IN ST’S TERMS AND CONDITIONS OF SALE ST DISCLAIMS ANY EXPRESS OR
   IMPLIED WARRANTY WITH RESPECT TO THE USE AND/OR SALE OF ST PRODUCTS INCLUDING
@@ -6756,7 +7178,7 @@ style='font-size:10.5pt;font-family:Consolas;color:#569CD6'>&nbsp;&nbsp;&nbsp;&n
   </td>
  </tr>
  <tr style='page-break-inside:avoid'>
-  <td width=0 valign=top style='width:0cm;padding:0cm 5.4pt 0cm 5.4pt'>
+  <td width=0 valign=top style='width:.3pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><b><span style='font-size:10.0pt'>ST PRODUCTS ARE NOT
   DESIGNED OR AUTHORIZED FOR USE IN: (A) SAFETY CRITICAL APPLICATIONS SUCH AS
   LIFE SUPPORTING, ACTIVE IMPLANTED DEVICES OR SYSTEMS WITH PRODUCT FUNCTIONAL
@@ -6772,7 +7194,7 @@ style='font-size:10.5pt;font-family:Consolas;color:#569CD6'>&nbsp;&nbsp;&nbsp;&n
   </td>
  </tr>
  <tr style='page-break-inside:avoid'>
-  <td width=0 valign=top style='width:0cm;padding:0cm 5.4pt 0cm 5.4pt'>
+  <td width=0 valign=top style='width:.3pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal><span class=Dxentry><span style='font-size:9.0pt'>Resale
   of ST products with provisions different from the statements and/or technical
   features set forth in this document shall immediately void any warranty
@@ -6781,7 +7203,7 @@ style='font-size:10.5pt;font-family:Consolas;color:#569CD6'>&nbsp;&nbsp;&nbsp;&n
   </td>
  </tr>
  <tr style='page-break-inside:avoid'>
-  <td width=0 valign=top style='width:0cm;padding:0cm 5.4pt 0cm 5.4pt'>
+  <td width=0 valign=top style='width:.3pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal align=center style='text-align:center'><span
   style='font-size:10.0pt'>&nbsp;</span></p>
   <p class=MsoNormal align=center style='text-align:center'><span
@@ -6790,14 +7212,14 @@ style='font-size:10.5pt;font-family:Consolas;color:#569CD6'>&nbsp;&nbsp;&nbsp;&n
   </td>
  </tr>
  <tr style='page-break-inside:avoid'>
-  <td width=0 valign=top style='width:0cm;padding:0cm 5.4pt 0cm 5.4pt'>
+  <td width=0 valign=top style='width:.3pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal align=center style='text-align:center'><span
   class=Dxentry><span style='font-size:9.0pt'>Information in this document
   supersedes and replaces all information previously supplied. </span></span></p>
   </td>
  </tr>
  <tr style='page-break-inside:avoid'>
-  <td width=0 valign=top style='width:0cm;padding:0cm 5.4pt 0cm 5.4pt'>
+  <td width=0 valign=top style='width:.3pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal align=center style='text-align:center'><span
   class=Dxentry><span style='font-size:9.0pt'>The ST logo is a registered
   trademark of STMicroelectronics. All other names are the property of their
@@ -6805,31 +7227,30 @@ style='font-size:10.5pt;font-family:Consolas;color:#569CD6'>&nbsp;&nbsp;&nbsp;&n
   </td>
  </tr>
  <tr style='page-break-inside:avoid'>
-  <td width=0 valign=top style='width:0cm;padding:0cm 5.4pt 0cm 5.4pt'>
+  <td width=0 valign=top style='width:.3pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal align=center style='text-align:center'><span
   class=Dxentry><span style='font-size:9.0pt'>© 2026 STMicroelectronics - All
   rights reserved </span></span></p>
   </td>
  </tr>
  <tr style='page-break-inside:avoid'>
-  <td width=0 valign=top style='width:0cm;padding:0cm 5.4pt 0cm 5.4pt'>
+  <td width=0 valign=top style='width:.3pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal align=center style='text-align:center'><span
   class=Dxentry><span style='font-size:9.0pt'>STMicroelectronics group of
   companies </span></span></p>
   </td>
  </tr>
  <tr style='page-break-inside:avoid'>
-  <td width=0 valign=top style='width:0cm;padding:0cm 5.4pt 0cm 5.4pt'>
+  <td width=0 valign=top style='width:.3pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal align=center style='text-align:center'><span
   class=Dxentry><span style='font-size:9.0pt'>Australia - Belgium - Brazil -
   Canada - China - Czech Republic - Finland - France - Germany - Hong Kong -
-  India - Israel - Italy - Japan - Malaysia - Malta - Morocco - Philippines -
-  Singapore - Spain - Sweden - Switzerland - United Kingdom - United States of
-  America </span></span></p>
+  India - Israel - Italy - Japan - Malaysia - Malta - Morocco - Philippines - Singapore
+  - Spain - Sweden - Switzerland - United Kingdom - United States of America </span></span></p>
   </td>
  </tr>
  <tr style='page-break-inside:avoid'>
-  <td width=0 valign=top style='width:0cm;padding:0cm 5.4pt 0cm 5.4pt'>
+  <td width=0 valign=top style='width:.3pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal align=center style='text-align:center'><span
   class=Dxentry><span style='font-size:9.0pt'>www.st.com </span></span></p>
   </td>

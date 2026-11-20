@@ -1,4 +1,4 @@
-/* Copyright [2009 - 2023] Exegin Technologies Limited. All rights reserved. */
+/* Copyright [2009 - 2026] Exegin Technologies Limited. All rights reserved. */
 
 /* API between MAC and NHLE */
 
@@ -24,6 +24,16 @@
 #endif
 
 struct WpanPublicT;
+
+/*----------------------------------------------------------------------------
+ * MCP_TLV_FOREACH replacement for MISRA
+ *----------------------------------------------------------------------------
+ */
+/* This function (which is mapped to MCP_TLV_GET) replaces MCP_TLV_FOREACH */
+extern struct mcp_tlv_hdr * __mcp_tlv_get(uint8_t *mcp_buf, uint16_t *mcp_idx, uint16_t mcp_len);
+
+/* MCP_TLV_GET effectively replaces the need for MCP_TLV_FOREACH. */
+#define MCP_TLV_GET(buf, index, maxlen)     __mcp_tlv_get(buf, index, maxlen)
 
 /*----------------------------------------------------------------------------
  * phy.h

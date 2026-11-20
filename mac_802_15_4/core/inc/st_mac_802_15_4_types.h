@@ -250,14 +250,18 @@ typedef struct {
  for a finite period of time or disabled */
 
 typedef struct {
-    /*! The requested operation can be deferred or not */
+    /*! The requested operation can be deferred or not.
+     * This field is relevant only in Beacon Enabled NW else it shall be ignored.
+     * Beacon Enabled NW is not supported, thus this field shall be ignored*/
     uint8_t defer_permit;
     /*!Configure the transceiver to Rx with ranging for a
     value of RANGING_ON or to not enable ranging for
     RANGING_OFF */
     uint8_t ranging_Rx_control;
     /*! Number of symbols measured before the receiver is to be enabled or
-    disabled */
+    disabled
+    * This field is relevant only in Beacon Enabled NW else it shall be ignored.
+    * Beacon Enabled NW is not supported, thus this field shall be ignored*/
     uint8_t a_Rx_on_time[3];
     /*! Number of symbols for which the receiver is to be enabled */
     uint8_t a_Rx_on_duration[3];

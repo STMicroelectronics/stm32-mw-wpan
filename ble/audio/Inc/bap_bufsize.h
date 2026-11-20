@@ -18,6 +18,12 @@
 #ifndef BAP_BUFSIZE_H__
 #define BAP_BUFSIZE_H__
 
+/* Includes ------------------------------------------------------------------*/
+#include "ble_audio_stack.h"
+
+
+/* Defines ---------------------------------------------------------------------*/
+
 /* #############################################################################
    #       Defines and MACRO used to allocate GATT Services, GATT Attributes   #
    #       and storage area for Attribute values for Basic Audio Profile       #
@@ -184,7 +190,7 @@
 /*
  * BAP_MEM_PER_ASE_SIZE_BYTES: memory size used per Audio Stream Endpoint
  */
-#define BAP_MEM_PER_ASE_SIZE_BYTES                      (96u)
+#define BAP_MEM_PER_ASE_SIZE_BYTES                      (100u)
 
 /*
  * BAP_ASCS_SRV_INST_MEM_PER_CONN_SIZE_BYTES: memory size used to allocate ASCS Server Context
@@ -297,8 +303,8 @@
  */
 #define BAP_MEM_BLOCKS_ASE_PER_CONN_SIZE_BYTES(max_num_snk_ase_per_link,max_num_src_ase_per_link,\
                                                max_codec_config_length_per_ase,max_metadata_length_per_ase) \
-          (DIVC(((BAP_MEM_PER_ASE_SIZE_BYTES + max_codec_config_length_per_ase + max_metadata_length_per_ase) \
-            *(max_num_snk_ase_per_link+max_num_src_ase_per_link)),4u) * 4u)
+          ALIGN_UP_WORD((BAP_MEM_PER_ASE_SIZE_BYTES + max_codec_config_length_per_ase + max_metadata_length_per_ase) \
+            *(max_num_snk_ase_per_link+max_num_src_ase_per_link))
 
 
 /*
@@ -330,9 +336,9 @@
 #define BAP_BASS_SRV_INST_MEM_PER_BSRC_INFO_SIZE_BYTES(max_num_bis_per_bsrc,max_codec_config_length_per_bsrc,\
                                                        max_metadata_length_per_bsrc,max_num_base_subgroups) \
         (BAP_SRV_GATT_CHAR_MEM_PER_BSRC_INFO_SIZE_BYTES + (BAP_BIS_INFO_MEM_PER_BIS_SIZE_BYTES * max_num_bis_per_bsrc) \
-        + ( BAP_MEM_PER_BSRC_STATE_SIZE_BYTES) \
-        + (DIVC(((((2u + 4u) * max_num_bis_per_bsrc) + max_codec_config_length_per_bsrc + max_metadata_length_per_bsrc + (max_num_bis_per_bsrc * max_codec_config_length_per_bsrc))),4u)*4u) \
-        + (DIVC(((max_metadata_length_per_bsrc + BAP_MEM_PER_BASE_SUBGROUP_SIZE_BYTES) * max_num_base_subgroups),4)*4u))
+        + (BAP_MEM_PER_BSRC_STATE_SIZE_BYTES) \
+        + (ALIGN_UP_WORD((((2u + 4u) * max_num_bis_per_bsrc) + max_codec_config_length_per_bsrc + max_metadata_length_per_bsrc + (max_num_bis_per_bsrc * max_codec_config_length_per_bsrc)))) \
+        + (ALIGN_UP_WORD((max_metadata_length_per_bsrc + BAP_MEM_PER_BASE_SUBGROUP_SIZE_BYTES) * max_num_base_subgroups)))
 
 
 /*
@@ -354,7 +360,7 @@
 #define BAP_ASCS_SRV_TOTAL_BUFFER_SIZE(num_ble_links,max_num_snk_ase_per_link,\
                                         max_num_src_ase_per_link,mem_block_ase_size_per_link) \
         (BAP_ASCS_SRV_MEM_CONTEXT_SIZE_BYTES + (mem_block_ase_size_per_link * num_ble_links) \
-        + (DIVC(((max_num_snk_ase_per_link+max_num_src_ase_per_link) * BAP_MEM_PER_ATT_HANDLE_SIZE_BYTES),4u) * 4u) \
+        + (ALIGN_UP_WORD((max_num_snk_ase_per_link+max_num_src_ase_per_link) * BAP_MEM_PER_ATT_HANDLE_SIZE_BYTES)) \
         + (BAP_ASCS_SRV_INST_MEM_PER_CONN_SIZE_BYTES * num_ble_links))
 
 /*
@@ -377,7 +383,7 @@
                                        max_num_src_ase_per_link,mem_block_ase_size_per_link) \
         (BAP_ASCS_CLT_MEM_CONTEXT_SIZE_BYTES + (mem_block_ase_size_per_link * num_ucl_links) \
         + ((max_num_snk_ase_per_link+max_num_src_ase_per_link) * num_ucl_links * BAP_MEM_PER_ATT_CHAR_SIZE_BYTES) \
-        + (DIVC(((BAP_ASCS_CLT_INST_MEM_PER_CONN_SIZE_BYTES + (max_num_snk_ase_per_link+max_num_src_ase_per_link)) * num_ucl_links),4u) * 4u))
+        + (ALIGN_UP_WORD((BAP_ASCS_CLT_INST_MEM_PER_CONN_SIZE_BYTES + (max_num_snk_ase_per_link+max_num_src_ase_per_link)) * num_ucl_links)))
 
 
 /*
@@ -393,7 +399,7 @@
  */
 #define BAP_PACS_SRV_TOTAL_BUFFER_SIZE(num_ble_links,max_num_snk_pac_records,max_num_src_pac_records) \
           ((BAP_PACS_SRV_INST_MEM_PER_CONN_SIZE_BYTES * num_ble_links) \
-           + (DIVC(((max_num_snk_pac_records+max_num_src_pac_records) * BAP_SRV_MEM_PER_PAC_RECORD_SIZE_BYTES),4u) * 4u) \
+           + (ALIGN_UP_WORD((max_num_snk_pac_records+max_num_src_pac_records) * BAP_SRV_MEM_PER_PAC_RECORD_SIZE_BYTES)) \
            + (num_ble_links * ( BAP_SRV_MEM_PER_PAC_RECORD_SIZE_BYTES * (2u + (max_num_snk_pac_records+max_num_src_pac_records) \
                                                        + (((max_num_snk_pac_records) > (0x00)) ? (1) : (0)) \
                                                        + (((max_num_src_pac_records) > (0x00)) ? (1) : (0))))))
@@ -401,8 +407,8 @@
 /*
  * BAP_PACS_CLT_TOTAL_BUFFER_SIZE: this macro returns the amount of memory, in bytes, needed for the storage of the
  * Published Audio Capabilities Client Context whose size depends on the number of supported Unicast Links, the
- * number of Broadcast Assistant Links, the number of supported PAC Records per connection, and the maximum number of
- * supported ble connections.
+ * number of Broadcast Assistant Links, the number of supported PAC Characteristics per connection, and the maximum
+ * number of supported ble connections.
  *
  * @param num_ble_links: Maximum number of supported Ble connection
  *
@@ -410,11 +416,12 @@
  *
  * @param num_ba_links: Maximum number of Broadcast Assistant Links
  *
- * @param num_pac_records_per_link: Maximum number of PAC Records per connection
+ * @param num_pac_characteristics_per_link: Maximum number of PAC Characteristics per connection
+ *
  */
-#define BAP_PACS_CLT_TOTAL_BUFFER_SIZE(num_ble_links,num_ucl_links,num_ba_links,num_pac_records_per_link) \
+#define BAP_PACS_CLT_TOTAL_BUFFER_SIZE(num_ble_links,num_ucl_links,num_ba_links,num_pac_characteristics_per_link) \
               (BAP_PACS_CLT_MEM_CONTEXT_SIZE_BYTES \
-              + (BAP_MEM_PER_ATT_CHAR_SIZE_BYTES * (MIN((num_ucl_links + num_ba_links),num_ble_links) *num_pac_records_per_link)) \
+              + (BAP_MEM_PER_ATT_CHAR_SIZE_BYTES * (MIN((num_ucl_links + num_ba_links),num_ble_links) * num_pac_characteristics_per_link)) \
               + (BAP_PACS_CLT_INST_MEM_PER_CONN_SIZE_BYTES * MIN((num_ucl_links + num_ba_links),num_ble_links)))
 
 /*
@@ -467,7 +474,7 @@
                                       max_codec_config_length_per_bsrc,max_metadata_length_per_bsrc, \
                                       max_num_base_subgroups) \
         (BAP_BASS_SRV_MEM_CONTEXT_SIZE_BYTES \
-          + (max_num_bsrc_info * BAP_BASS_SRV_INST_MEM_PER_BSRC_INFO_SIZE_BYTES(max_num_bis_per_bsrc,\
+          + (max_num_bsrc_info * BAP_BASS_SRV_INST_MEM_PER_BSRC_INFO_SIZE_BYTES(max_num_bis_per_bsrc, \
                                                                                 max_codec_config_length_per_bsrc, \
                                                                                 max_metadata_length_per_bsrc, \
                                                                                 max_num_base_subgroups)))
@@ -490,6 +497,69 @@
    ############################################################################ */
 
 /*
+ * BAP_ASCS_CLT_DB_BASE_SIZE_BYTES: fixed NVM size for the ASCS Base part 
+ * (does not include per-ASE data) in Audio Stream Control Service in Client Role.
+ */
+#define BAP_ASCS_CLT_DB_BASE_SIZE_BYTES                   (11u)
+
+/*
+ * BAP_ASCS_CLT_DB_PER_ASE_SIZE_BYTES: fixed NVM size per ASE in Audio Stream 
+ * Control Service in Client Role.
+ */
+#define BAP_ASCS_CLT_DB_PER_ASE_SIZE_BYTES                (30u)
+
+/*
+ * BAP_PACS_CLT_DB_BASE_SIZE_BYTES: fixed NVM size for the PACS Base part
+ * (does not include per-PAC Record data) in the Published Audio Capabilities Service
+  * in Client role.
+ */
+#define BAP_PACS_CLT_DB_BASE_SIZE_BYTES                   (46u)
+
+/*
+ * BAP_PACS_CLT_DB_PER_PAC_RECORD_SIZE_BYTES: fixed NVM size per PAC Record Characteric
+ * in Published Audio Capabilities Service in Client role.
+ */
+#define BAP_PACS_CLT_DB_PER_PAC_RECORD_CHAR_SIZE_BYTES    (6u)
+
+/*
+ * BAP_BASS_CLT_DB_BASE_SIZE_BYTES: fixed NVM size for the BASS Base part 
+ * in Broadcast Audio Scan Service in Client role.
+ */
+#define BAP_BASS_CLT_DB_BASE_SIZE_BYTES                   (11u)
+
+/*
+ * BAP_BASS_CLT_DB_SRC_INFO_PER_LINK_SIZE_BYTES: fixed NVM size per Broadcast Source 
+ * Information contexts per link stored in Broadcast Audio Scan Service in Client role.
+ */
+#define BAP_BASS_CLT_DB_SRC_INFO_PER_LINK_SIZE_BYTES      (6u)
+
+/*
+ * BAP_ASCS_SRV_DB_PER_ASE_SIZE_BYTES: fixed NVM size per ASE in Audio Stream 
+ * Control Service in Server Role.
+ */
+#define BAP_ASCS_SRV_DB_PER_ASE_SIZE_BYTES                (7u)
+
+/*
+ * BAP_ASCS_SRV_DB_BASE_CODEC_CONFIG_ASE_SIZE_BYTES: fixed NVM size for fixed Parameters
+ * of the Codec Config information part for an ASE ASE in the Audio Stream Control Service 
+ * in Server Role.
+ */
+#define BAP_ASCS_SRV_DB_BASE_CODEC_CONFIG_ASE_SIZE_BYTES  (23u)
+
+/*
+ * BAP_PACS_SRV_DB_BASE_SIZE_BYTES: fixed NVM size for the PACS Base part
+ * (does not include per-PAC Record data) in the Published Audio Capabilities Service
+  * in Server role.
+ */
+#define BAP_PACS_SRV_DB_BASE_SIZE_BYTES                   (36u)
+
+/*
+ * BAP_PACS_SRV_DB_PER_PAC_RECORD_SIZE_BYTES: fixed NVM size per PAC Record Characteric
+ * in Published Audio Capabilities Service in Server role.
+ */
+#define BAP_PACS_SRV_DB_PER_PAC_RECORD_SIZE_BYTES         (21u)
+
+/*
  * BAP_ASCS_CLT_DB_BUFFER_SIZE: this macro returns the amount of memory, in bytes, needed for the storage in
  * Non Volatile Memory of the Audio Stream Control Service in Client Role.
  *
@@ -504,8 +574,9 @@
  */
 #define BAP_ASCS_CLT_DB_BUFFER_SIZE(num_db_devices,max_num_snk_ase_per_link, \
                                        max_num_src_ase_per_link,max_codec_config_length_per_ase) \
-        (num_db_devices \
-         * (16u + (DIVC((12u + ((max_num_snk_ase_per_link + max_num_src_ase_per_link) * (30u + max_codec_config_length_per_ase))),4u) * 4u)))
+            BLE_AUDIO_DB_BUFFER_SIZE(num_db_devices, \
+                                    (BAP_ASCS_CLT_DB_BASE_SIZE_BYTES \
+                                    + ((max_num_snk_ase_per_link + max_num_src_ase_per_link) * (BAP_ASCS_CLT_DB_PER_ASE_SIZE_BYTES + max_codec_config_length_per_ase))))
 
 /*
  * BAP_PACS_CLT_DB_BUFFER_SIZE: this macro returns the amount of memory, in bytes, needed for the storage in
@@ -516,8 +587,8 @@
  * @param num_pac_records_per_link: Maximum number of PAC Records per connection
  */
 #define BAP_PACS_CLT_DB_BUFFER_SIZE(num_db_devices,num_pac_records_per_link) \
-        (num_db_devices \
-         * (16u + (DIVC((47u + (num_pac_records_per_link * 6u)),4u) * 4u)))
+            BLE_AUDIO_DB_BUFFER_SIZE(num_db_devices, \
+                                    (BAP_PACS_CLT_DB_BASE_SIZE_BYTES + (num_pac_records_per_link * BAP_PACS_CLT_DB_PER_PAC_RECORD_CHAR_SIZE_BYTES)))
 
 /*
  * BAP_BASS_CLT_DB_BUFFER_SIZE: this macro returns the amount of memory, in bytes, needed for the storage in
@@ -530,8 +601,8 @@
  *
  */
 #define BAP_BASS_CLT_DB_BUFFER_SIZE(num_db_devices,max_num_bsrc_info_per_link) \
-        (num_db_devices \
-         * (16u + (DIVC((12u + (max_num_bsrc_info_per_link * 6u)),4u) * 4u)))
+            BLE_AUDIO_DB_BUFFER_SIZE(num_db_devices, \
+                                    (BAP_BASS_CLT_DB_BASE_SIZE_BYTES + (max_num_bsrc_info_per_link * BAP_BASS_CLT_DB_SRC_INFO_PER_LINK_SIZE_BYTES)))
 
 /*
  * BAP_ASCS_SRV_DB_BUFFER_SIZE: this macro returns the amount of memory, in bytes, needed for the storage in
@@ -552,8 +623,8 @@
  */
 #define BAP_ASCS_SRV_DB_BUFFER_SIZE(num_db_devices,caching, max_num_snk_ase_per_link, \
                                        max_num_src_ase_per_link,max_codec_config_length_per_ase) \
-        (num_db_devices \
-         * (16u + (DIVC((((max_num_snk_ase_per_link + max_num_src_ase_per_link) * (7u + (((caching) == (0x01)) ? (23 + max_codec_config_length_per_ase) : (0))))),4u) * 4u)))
+            BLE_AUDIO_DB_BUFFER_SIZE(num_db_devices, \
+                                    (((max_num_snk_ase_per_link + max_num_src_ase_per_link) * (BAP_ASCS_SRV_DB_PER_ASE_SIZE_BYTES + (((caching) == (0x01)) ? (BAP_ASCS_SRV_DB_BASE_CODEC_CONFIG_ASE_SIZE_BYTES + max_codec_config_length_per_ase) : (0))))))
 
 /*
  * BAP_PACS_SRV_DB_BUFFER_SIZE: this macro returns the amount of memory, in bytes, needed for the storage in
@@ -566,6 +637,6 @@
  * @param max_num_src_pac_records: Maximum number of Source PAC records
  */
 #define BAP_PACS_SRV_DB_BUFFER_SIZE(num_db_devices,max_num_snk_pac_records,max_num_src_pac_records) \
-        (num_db_devices \
-         * (16u + (DIVC((36u + ((max_num_snk_pac_records + max_num_src_pac_records) * 21u)),4u) * 4u)))
+            BLE_AUDIO_DB_BUFFER_SIZE(num_db_devices, \
+                                    (BAP_PACS_SRV_DB_BASE_SIZE_BYTES + ((max_num_snk_pac_records + max_num_src_pac_records) * BAP_PACS_SRV_DB_PER_PAC_RECORD_SIZE_BYTES)))
 #endif /* BAP_BUFSIZE_H__ */

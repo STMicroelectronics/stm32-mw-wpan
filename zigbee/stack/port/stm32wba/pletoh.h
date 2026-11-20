@@ -1,12 +1,10 @@
-/* Copyright [2009 - 2022] Exegin Technologies Limited. All rights reserved. */
+/* Copyright [2009 - 2025] Exegin Technologies Limited. All rights reserved. */
 
 #ifndef PLETOH_H_
 #define PLETOH_H_
 
 #include <stdint.h>
 #include <stdbool.h>
-
-bool is_little_endian(void);
 
 /*----------------------------------------------------------------------------
  * Read Little Endian

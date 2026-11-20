@@ -14,7 +14,10 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-/*lint -e621 "Identifier clash [MISRA Rule 5.1 (REQUIRED), MISRA Rule 5.2 (REQUIRED),
+/*lint -save -e621 "Identifier clash within 31 chars. For readability,
+ * we need to exceed the 31 character limit before uniqueness, and
+ * extend the limit to 63 charcters.
+ * [MISRA Rule 5.1 (REQUIRED), MISRA Rule 5.2 (REQUIRED),
  * MISRA Rule 5.4 (REQUIRED), MISRA Rule 5.5 (REQUIRED)]" */
 
 /** Clear All Bindings Req EUI64 TLV minimum length
@@ -282,7 +285,7 @@ enum zb_tlv_type {
     ZB_TLV_NEXT_CHANNEL = 68U, /**< Next channel change TLV (ID 68 / 0x44) */
     ZB_TLV_PASSPHRASE_128 = 69U, /**< Symmetric passphrase TLV (ID 69 / 0x45) */
     ZB_TLV_ROUTER_INFO = 70U, /**< Router Information TLV (ID 70 / 0x46) */
-    ZB_TLV_FRAG_PARAM = 71U, /**< Fragmentation Parameters TLV (ID 71 / 0x47) */
+    ZB_TLV_FRAG_PARAM = 71U, /**< Fragmentation Parameters Global TLV (ID 71 / 0x47) */
     ZB_TLV_JOINER_ENCAPSULATION = 72U, /**< Joiner Encapsulation TLV (ID 72 / 0x48) */
     ZB_TLV_BEACON_APPENDIX_ENCAPSULATION = 73U, /**< Beacon Appendix Encapsulation TLV (ID 73 / 0x49) */
     /* discontinuity. */
@@ -401,5 +404,7 @@ bool zb_tlv_type_exists(uint8_t *buffer, unsigned int buffer_length, enum zb_tlv
  */
 int zb_tlv_encode(uint8_t *buffer, unsigned int buffer_length,
     const struct zb_tlv *tlv_array, const unsigned int tlv_count);
+
+/*lint -restore */
 
 #endif

@@ -3,7 +3,7 @@
  * @heading Energy Management
  * @brief ZCL Energy Management cluster header
  * SE 1.4 Section D.12
- * @copyright Copyright [2022 - 2023] Exegin Technologies Limited. All rights reserved.
+ * @copyright Copyright [2022 - 2025] Exegin Technologies Limited. All rights reserved.
  */
 
 #ifndef ZCL_ENERGY_MGMT_H
@@ -11,6 +11,10 @@
 
 #include "zcl/zcl.h"
 #include "zcl/se/zcl.drlc.h"
+
+/*lint -save -e621 "Identifier clash [MISRA Rule 5.1 (REQUIRED)],
+ * [MISRA Rule 5.2 (REQUIRED)], [MISRA Rule 5.4 (REQUIRED)],
+ * [MISRA Rule 5.5 (REQUIRED)]" */
 
 /** Energy Management Server Attribute IDs */
 enum ZbZclEnergyMgmtSvrAttrT {
@@ -99,8 +103,9 @@ struct ZbZclClusterT * ZbZclEnergyMgmtServerAlloc(struct ZigBeeT *zb, uint8_t en
  * @param arg
  * @return
  */
-enum ZclStatusCodeT ZbZclEnergyMgmtServerReportEvtStatus(struct ZbZclClusterT *cluster, struct ZbZclAddrInfoT *dst,
-    struct ZbZclDrlcStatusT *info, void (*callback)(struct ZbApsdeDataConfT *conf, void *arg), void *arg);
+enum ZclStatusCodeT ZbZclEnergyMgmtServerReportEvtStatus(struct ZbZclClusterT *cluster,
+    struct ZbZclAddrInfoT *dst, struct ZbZclDrlcStatusT *info,
+    void (*callback)(struct ZbApsdeDataConfT *conf, void *arg), void *arg);
 
 /*---------------------------------------------------------------
  * Client API
@@ -124,8 +129,10 @@ struct ZbZclClusterT * ZbZclEnergyMgmtClientAlloc(struct ZigBeeT *zb, uint8_t en
  * @param arg Pointer to application data that will included in the callback when invoked.
  * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
  */
-enum ZclStatusCodeT ZbZclEnergyMgmtClientManageEventReq(struct ZbZclClusterT *cluster, const struct ZbApsAddrT *dst,
-    struct ZbZclEnergyMgmtManageEventT *info,
+enum ZclStatusCodeT ZbZclEnergyMgmtClientManageEventReq(struct ZbZclClusterT *cluster,
+    const struct ZbApsAddrT *dst, struct ZbZclEnergyMgmtManageEventT *info,
     void (*callback)(struct ZbZclCommandRspT *rsp, void *arg), void *arg);
+
+/*lint -restore */
 
 #endif

@@ -3,7 +3,7 @@
  * @heading ZDO Layer
  * @brief Zigbee ZDO header file
  * @author Exegin Technologies Limited
- * @copyright Copyright [2009 - 2025] Exegin Technologies Limited. All rights reserved.
+ * @copyright Copyright [2009 - 2026] Exegin Technologies Limited. All rights reserved.
  *
  * This file provides the declaration of all the public API's and macros used by the ZDO layer.
  */
@@ -69,6 +69,10 @@ enum ZbZdoAddrReqTypeT {
 #define ZB_ZDP_SERVER_REVISION_SHIFT                9U
 #define ZB_ZDP_SERVER_REVISION_MASK                 (uint16_t)0xFE00U /* (0x007f << ZB_ZDP_SERVER_REVISION_SHIFT) */
 
+/* Extract the stack revision as a uint8_t from the server mask returned in ZDO Node_Desc_Rsp. */
+#define ZB_ZDP_GET_SERVER_STACK_REV(mask)           \
+    (uint8_t)(((uint16_t)(mask) & ZB_ZDP_SERVER_REVISION_MASK) >> ZB_ZDP_SERVER_REVISION_SHIFT)
+
 /* Power Descriptor Definitions. */
 #define ZB_ZDP_POWER_MODE_ON                        (uint8_t)0x00U
 #define ZB_ZDP_POWER_MODE_PERIODIC                  (uint8_t)0x01U
@@ -102,16 +106,16 @@ enum ZbZdoAddrReqTypeT {
 #define ZB_ZDP_NODE_OPT_TYPE_COORDINATOR            0x00U
 #define ZB_ZDP_NODE_OPT_TYPE_ROUTER                 0x01U
 #define ZB_ZDP_NODE_OPT_TYPE_END_DEVICE             0x02U
-#define ZB_ZDP_NODE_OPT_TYPE(_nodetype_)            (_nodetype_)
+#define ZB_ZDP_NODE_OPT_TYPE(type)                  (uint16_t)(type)
 
 #define ZB_ZDP_NODE_OPT_FRAGMENTATION_SUPPORTED     0x01U
-#define ZB_ZDP_NODE_OPT_FRAG(_frag_)                (_frag_ << ZB_ZDP_NODE_OPT_OFFSET_FRAG)
+#define ZB_ZDP_NODE_OPT_FRAG(frag)                  ((uint16_t)(frag) << ZB_ZDP_NODE_OPT_OFFSET_FRAG)
 
 #define ZB_ZDP_NODE_OPT_FREQBAND_868MHZ_BPSK        0x01U
 #define ZB_ZDP_NODE_OPT_FREQBAND_915MHZ_BPSK        0x04U
 #define ZB_ZDP_NODE_OPT_FREQBAND_2400MHZ            0x08U
 #define ZB_ZDP_NODE_OPT_FREQBAND_GB_SE_FSK_SUBGHZ   0x10U /* GB SE FSK 868 MHz and 915 MHz bands. */
-#define ZB_ZDP_NODE_OPT_BAND(_freqband_)            (((uint16_t)_freqband_) << ZB_ZDP_NODE_OPT_OFFSET_FREQBAND)
+#define ZB_ZDP_NODE_OPT_BAND(band)                  (((uint16_t)(band)) << ZB_ZDP_NODE_OPT_OFFSET_FREQBAND)
 
 /* struct ZbPowerDescriptorT Mask Flag - Section 2.3.2.4 */
 #define ZB_ZDP_POWER_MASK_MODE                      0x000fU
@@ -279,7 +283,7 @@ enum ZbZdoAddrReqTypeT {
 #define ZB_ZDO_MGMT_NWK_UPDATE_REQ                  0x0038U
 #define ZB_ZDO_MGMT_NWK_ENHANCED_UPDATE_REQ         0x0039U
 #define ZB_ZDO_MGMT_IEEE_JOINING_LIST_REQ           0x003aU
-#define ZB_ZDO_MGMT_UNSOLICITED_UPDATE_NOTIFY       0x003bU
+#define ZB_ZDO_MGMT_UNSOLICITED_ENH_UPDATE_NOTIFY   0x003bU
 #define ZB_ZDO_MGMT_BCN_SURVEY_REQ                  0x003cU
 #define ZB_ZDO_SEC_KEY_NEGO_REQ                     0x0040U
 #define ZB_ZDO_SEC_RETRIEVE_AUTH_TOKEN_REQ          0x0041U
@@ -374,12 +378,11 @@ struct ZbZdoBindingDescT {
 
 /** NWK_addr_req */
 struct ZbZdoNwkAddrReqT {
-    uint16_t dstNwkAddr; /**<  Destination network address, not in spec */ /* typically set to ZB_NWK_ADDR_BCAST_RXON (0xfffd) */
+    uint16_t dstNwkAddr;
+    /**<  Destination network address, not in spec */ /* typically set to ZB_NWK_ADDR_BCAST_RXON (0xfffd) */
     uint64_t extAddr; /**< IEEEAddr */
     enum ZbZdoAddrReqTypeT reqType; /**< RequestType */
     uint8_t startIndex; /**< StartIndex */
-    struct ZbApsRelayInfoT relayInfo;
-    /**< Contains information required to relay the APS packet. R23 addition. */
 };
 
 /** NWK_addr_rsp */
@@ -389,9 +392,8 @@ struct ZbZdoNwkAddrRspT {
     uint16_t nwkAddr; /**< NWKAddrRemoteDev */
     uint8_t deviceCount; /**< NumAssocDev */
     uint8_t startIndex; /**< StartIndex */
-    uint16_t deviceList[ZB_ZDO_ADDRRSP_DEVLIST_MAX]; /**< NWKAddrAssocDevList */
-    struct ZbApsRelayInfoT relayInfo;
-    /**< Contains information required to relay the APS packet. R23 addition. */
+    uint16_t deviceList[ZB_ZDO_ADDRRSP_DEVLIST_MAX];
+    /**< NWKAddrAssocDevList. ZB_ZDO_ENDPOINT_LIST_MAXSZ = 32 */
 };
 
 /** IEEE_addr_req */
@@ -400,8 +402,6 @@ struct ZbZdoIeeeAddrReqT {
     uint16_t nwkAddrOfInterest; /**< NWKAddrOfInterest */
     enum ZbZdoAddrReqTypeT reqType; /**< RequestType */
     uint8_t startIndex; /**< StartIndex */
-    struct ZbApsRelayInfoT relayInfo;
-    /**< Contains information required to relay the APS packet. R23 addition. */
 };
 
 /** IEEE_addr_rsp (Same as NWK_addr_rsp) */
@@ -423,8 +423,17 @@ struct ZbZdoNodeDescReqT {
     /**< Supported key negotiation method. */
     uint8_t suppPreSharedSecrets;
     /**< Supported Pre-Shared secrets. */
-    struct ZbApsRelayInfoT relayInfo;
-    /**< Contains information required to relay the APS packet. */
+
+    /*
+     * BDB 3.1 additions
+     */
+    bool apsSecured;
+    /**< If set to true, it indicates that the ZDO request shall be sent with APS
+     * encryption. As per BDB 3.1 specification 22-65816-018, section '7.3 Ensuring
+     * connectivity with the Trust Center', All communication with the Trust Center
+     * for ensuring connectivity SHALL use APS security. Devices communicating with
+     * legacy TCs may use node descriptor mechanisms to ensure connectivity but
+     * will not use APS security. */
 };
 
 /** Node_Desc_rsp */
@@ -443,16 +452,12 @@ struct ZbZdoNodeDescRspT {
     /**< Selected key negotiation method. */
     enum ZbSelPreSharedSecretT selPreSharedSecret;
     /**< Selected Pre-Shared secret. */
-    struct ZbApsRelayInfoT relayInfo;
-    /**< Contains information required to relay the APS packet. */
 };
 
 /** Power_Desc_req */
 struct ZbZdoPowerDescReqT {
     uint16_t dstNwkAddr; /**< Destination network address */
     uint16_t nwkAddrOfInterest; /**< NWKAddrOfInterest */
-    struct ZbApsRelayInfoT relayInfo;
-    /**< Contains information required to relay the APS packet. R23 addition. */
 };
 
 /** Power_Desc_rsp */
@@ -460,8 +465,6 @@ struct ZbZdoPowerDescRspT {
     enum ZbStatusCodeT status; /**< Status */
     uint16_t nwkAddr; /**< NWKAddrOfInterest */
     struct ZbPowerDescriptorT powerDesc; /**< PowerDescriptor */
-    struct ZbApsRelayInfoT relayInfo;
-    /**< Contains information required to relay the APS packet. R23 addition. */
 };
 
 /** Simple_Desc_req */
@@ -469,8 +472,6 @@ struct ZbZdoSimpleDescReqT {
     uint16_t dstNwkAddr; /**< Destination network address */
     uint16_t nwkAddrOfInterest; /**< NWKAddrOfInterest */
     uint8_t endpt; /**< Endpoint */
-    struct ZbApsRelayInfoT relayInfo;
-    /**< Contains information required to relay the APS packet. R23 addition. */
 };
 
 /** Simple_Desc_rsp */
@@ -478,16 +479,12 @@ struct ZbZdoSimpleDescRspT {
     enum ZbStatusCodeT status; /**< Status */
     uint16_t nwkAddr; /**< NWKAddrOfInterest */
     struct ZbSimpleDescriptorT simpleDesc; /**< SimpleDescriptor */
-    struct ZbApsRelayInfoT relayInfo;
-    /**< Contains information required to relay the APS packet. R23 addition. */
 };
 
 /** Active_EP_req */
 struct ZbZdoActiveEpReqT {
     uint16_t dstNwkAddr; /**< Destination network address */
     uint16_t nwkAddrOfInterest; /**< NWKAddrOfInterest */
-    struct ZbApsRelayInfoT relayInfo;
-    /**< Contains information required to relay the APS packet. R23 addition. */
 };
 
 /** Active_EP_rsp */
@@ -496,8 +493,6 @@ struct ZbZdoActiveEpRspT {
     uint16_t nwkAddr; /**< NWKAddrOfInterest */
     uint8_t activeEpCount; /**< ActiveEPCount */
     uint8_t activeEpList[ZB_ZDO_ENDPOINT_LIST_MAXSZ]; /**< ActiveEPList */
-    struct ZbApsRelayInfoT relayInfo;
-    /**< Contains information required to relay the APS packet. R23 addition. */
 };
 
 /** Match_Desc_req */
@@ -509,8 +504,6 @@ struct ZbZdoMatchDescReqT {
     uint16_t inClusterList[ZB_ZDO_CLUSTER_LIST_MAX_SZ]; /**< InClusterList */
     uint8_t numOutClusters; /**< NumOutClusters */
     uint16_t outClusterList[ZB_ZDO_CLUSTER_LIST_MAX_SZ]; /**< OutClusterList */
-    struct ZbApsRelayInfoT relayInfo;
-    /**< Contains information required to relay the APS packet. R23 addition. */
 };
 
 /** Match_Desc_rsp */
@@ -518,9 +511,7 @@ struct ZbZdoMatchDescRspT {
     enum ZbStatusCodeT status; /**< Status */
     uint16_t nwkAddr; /**< NWKAddrOfInterest */
     uint8_t matchLength; /**< MatchLength */
-    uint8_t matchList[ZB_ZDO_ENDPOINT_LIST_MAXSZ]; /**< MatchList */
-    struct ZbApsRelayInfoT relayInfo;
-    /**< Contains information required to relay the APS packet. R23 addition. */
+    uint8_t matchList[ZB_ZDO_ENDPOINT_LIST_MAXSZ]; /**< MatchList. ZB_ZDO_ENDPOINT_LIST_MAXSZ = 32. */
 };
 
 /** Device_annce (ZB_ZDO_DEVICE_ANNCE) */
@@ -542,10 +533,6 @@ struct ZbZdoBindReqT {
      * dst.panId not used, dst.nwkAddr is only for the group address,
      * and dst.endpoint only used if mode == ZB_APSDE_ADDRMODE_EXT */
     struct ZbApsAddrT dst; /**< DstAddrMode, DstAddress, DstEndp */
-    struct ZbApsRelayInfoT relayInfo;
-    /**< Contains information required to relay the APS packet.
-     * NOTE: Only required for Golden Unit behaviour and if stack was built with
-     * CONFIG_ZB_ENABLE_GU condition enabled, otherwise it's ignored. R23 addition. */
 };
 
 /** Bind_rsp */
@@ -597,7 +584,8 @@ struct ZbZdoMgmtBindRspT {
     uint8_t bindTblSz; /**< BindingTableEntries */ /* Total number */
     uint8_t startIndex; /**< StartIndex */ /* Starting index being reported here */
     uint8_t bindListSz; /**< BindingTableListCount */ /* Number reported here */
-    struct ZbZdoBindingDescT bindList[ZB_ZDO_BIND_LIST_MAX_SZ]; /**< BindingTableList */
+    struct ZbZdoBindingDescT bindList[ZB_ZDO_BIND_LIST_MAX_SZ];
+    /**< BindingTableList. ZB_ZDO_BIND_LIST_MAX_SZ = 4 */
 };
 
 /** ZDO Mgmt_Permit_Join_req */
@@ -619,12 +607,18 @@ struct ZbZdoPermitJoinRspT {
 
 /** Mgmt_Nwk_Update_req */
 struct ZbZdoNwkUpdateReqT {
-    uint16_t destAddr; /**< Destination address */
-    uint32_t channelMask; /**< ScanChannels */
-    uint8_t scanDuration; /**< ScanDuration */ /* or ZB_ZDP_NWK_UPDATE_CHANNEL_SWITCH, or ZB_ZDP_NWK_UPDATE_MANAGER_PARAMETERS */
-    uint8_t scanCount; /**< ScanCount */
-    uint8_t updateId; /**< nwkUpdateId */ /* only for ZB_ZDP_NWK_UPDATE_CHANNEL_SWITCH or ZB_ZDP_NWK_UPDATE_MANAGER_PARAMETERS */
-    uint16_t managerAddr; /**< nwkManagerAddr */ /* only for ZB_ZDP_NWK_UPDATE_MANAGER_PARAMETERS */
+    uint16_t destAddr;
+    /**< Destination address */
+    uint32_t channelMask;
+    /**< ScanChannels */
+    uint8_t scanDuration;
+    /**< ScanDuration or ZB_ZDP_NWK_UPDATE_CHANNEL_SWITCH, or ZB_ZDP_NWK_UPDATE_MANAGER_PARAMETERS */
+    uint8_t scanCount;
+    /**< ScanCount, range 0x00-0x01 */
+    uint8_t updateId;
+    /**< nwkUpdateId only for ZB_ZDP_NWK_UPDATE_CHANNEL_SWITCH or ZB_ZDP_NWK_UPDATE_MANAGER_PARAMETERS */
+    uint16_t managerAddr;
+    /**< nwkManagerAddr only for ZB_ZDP_NWK_UPDATE_MANAGER_PARAMETERS */
 };
 
 /** Mgmt_Nwk_Enhanced_Update_req */
@@ -660,26 +654,6 @@ struct ZbZdoLeaveReqT {
 /** Mgmt_Nwk_Leave_rsp */
 struct ZbZdoLeaveRspT {
     enum ZbStatusCodeT status; /**< Status */
-};
-
-#define ZDP_JOINING_LIST_MAX_LEN            9U
-
-/** Mgmt_Nwk_Ieee_Joining_List_req */
-struct ZbZdoNwkIeeeJoinListReqT {
-    uint16_t destAddr; /**< Destination address */
-    uint8_t startIndex; /**< StartIndex */
-};
-
-/** Mgmt_Nwk_Ieee_Joining_List_rsp */
-struct ZbZdoNwkIeeeJoinListRspT {
-    enum ZbStatusCodeT status; /**< Status */
-    uint16_t respAddr; /**< Response address */ /* not part of ZDP payload */
-    uint8_t updateId; /**< IeeeJoiningListUpdateID */
-    enum WpanJoinPolicyT joiningPolicy; /**< JoiningPolicy */
-    uint8_t ieeeJoiningListTotal; /**< IeeeJoiningListTotal */
-    uint8_t startIndex; /**< StartIndex */
-    uint8_t ieeeJoiningListCount; /**< IeeeJoiningCount */
-    uint64_t ieeeJoiningList[ZDP_JOINING_LIST_MAX_LEN]; /**< IeeeJoiningList */
 };
 
 /** Mgmt_Beacon_Survey_Req. R23 addition. */
@@ -839,8 +813,6 @@ struct ZbZdoSecKeyUpdateReqT {
     /**< Node of the device that the subsequent fragmentation parameters apply to. */
     uint16_t maxInputBufferSize;
     /**< Maximum Reassembled Input Buffer Size. */
-    struct ZbApsRelayInfoT relayInfo;
-    /**< Contains information required to relay the APS packet. */
 };
 
 /*
@@ -923,8 +895,6 @@ struct ZbZdoSecKeyUpdateIndT {
     /**< e.g. ZB_TLV_FRAG_PARAM_OPTS_APS_FRAG_SUPP ... */
     uint16_t maxInputBufferSize;
     /**< Maximum Reassembled Input Buffer Size. */
-    struct ZbApsRelayInfoT relayInfo;
-    /**< Contains required information to relay the APS packet. */
 };
 
 /* Security_Retrieve_Auth_Token_Req (R23) */
@@ -1287,39 +1257,6 @@ struct ZbZdoFilterT * ZbZdoNwkEnhUpdateNotifyFilterRegister(struct ZigBeeT *zb, 
  */
 enum ZbStatusCodeT ZB_WARN_UNUSED ZbZdoLeaveReq(struct ZigBeeT *zb, struct ZbZdoLeaveReqT *req,
     void (*callback)(struct ZbZdoLeaveRspT *rsp, void *cb_arg), void *arg);
-
-/**
- * Send an IEEE-Joining-List request.
- * @param zb Zigbee stack instance
- * @param IEEE-Joining-List.request Structure
- * @param callback Function to call on completion
- * @param arg Callback argument
- * @return ZCL_STATUS_SUCCESS if successful, or other ZclStatusCodeT value on error
- */
-enum ZbStatusCodeT ZB_WARN_UNUSED ZbZdoNwkIeeeJoinListReq(struct ZigBeeT *zb, struct ZbZdoNwkIeeeJoinListReqT *req,
-    void (*callback)(struct ZbZdoNwkIeeeJoinListRspT *rsp, void *cb_arg), void *arg);
-
-/**
- * Send an IEEE-Joining-List.response.
- * Used primarily by GB868 applications.
- * @param zb Zigbee stack instance
- * @param dstNwkAddr Destination network address
- * @param startIndex Start index
- * @param seqnum Sequence number
- * @param fromRequest Use start index from request
- * @return Number of entries sent in response
- */
-unsigned int ZbZdoNwkIeeeJoinListRsp(struct ZigBeeT *zb, uint16_t dstNwkAddr,
-    uint8_t startIndex, uint8_t seqnum, bool fromRequest);
-/* Helper to broadcast the entire list to the network */
-
-/**
- * Send an IEEE-Joining-List.response broadcast message for all entries in the IEEE Join List.
- * Used primarily by GB868 applications.
- * @param zb Zigbee stack instance
- * @return Returns number of entries sent
- */
-unsigned int ZbZdoNwkIeeeJoinListBcastAll(struct ZigBeeT *zb);
 
 /**
  * Send a ZDO Security Key Update Request. R23 addition.

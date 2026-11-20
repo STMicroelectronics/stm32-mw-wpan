@@ -259,6 +259,7 @@ inline void DestroyKey(KeyRef aKeyRef)
  */
 inline bool HasKey(KeyRef aKeyRef) { return otPlatCryptoHasKey(aKeyRef); }
 
+inline void ResetPersistentStorage() { IgnoreError(otPlatCryptoResetPersistentStorage()); }
 } // namespace Storage
 
 #endif // OPENTHREAD_CONFIG_PLATFORM_KEY_REFERENCES_ENABLE

@@ -828,4 +828,9 @@ exit:
 
 #endif // #if OPENTHREAD_FTD
 
+OT_TOOL_WEAK otError otPlatCryptoResetPersistentStorage(void)
+{
+  psa_its_reset_storage();
+  return PsaToOtError(PSA_SUCCESS);
+}
 #endif // #if OPENTHREAD_CONFIG_CRYPTO_LIB == OPENTHREAD_CONFIG_CRYPTO_LIB_PSA

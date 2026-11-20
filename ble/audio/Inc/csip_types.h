@@ -26,8 +26,12 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "ble_types.h"
+#include "ble_audio_stack.h"
+
 /* Defines -------------------------------------------------------------------*/
+
+/* Maximum length in bytes of the UTF-8 Coordinated Set Name Characteristic value */
+#define CSIS_COORDINATED_SET_NAME_MAX_LEN                               (128u)
 
 /* #############################################################################
    #       Defines and MACRO used to allocate GATT Services, GATT Attributes   #
@@ -49,7 +53,7 @@ extern "C" {
  *
  * @param num_csi_instances: Maximum number of supported Coordinated Set Identification Instances
  */
-#define CSIP_SET_MEMBER_NUM_GATT_ATTRIBUTES(num_csi_instances)          (11u * num_csi_instances)
+#define CSIP_SET_MEMBER_NUM_GATT_ATTRIBUTES(num_csi_instances)          (14u * num_csi_instances)
 
 /*
  * CSIP_SET_MEMBER_ATT_VALUE_ARRAY_SIZE: this macro returns the size of the storage area for Attribute values
@@ -60,7 +64,7 @@ extern "C" {
  * @param num_ble_links: Maximum number of simultaneous connections that the device will support.
  */
 #define CSIP_SET_MEMBER_ATT_VALUE_ARRAY_SIZE(num_csi_instances,num_ble_links) \
-                                                                        ((40u + (6u*num_ble_links)) * num_csi_instances)
+                                                                        ((40u + CSIS_COORDINATED_SET_NAME_MAX_LEN + (8u*num_ble_links)) * num_csi_instances)
 
 /* #############################################################################
    #       Defines and MACRO used to allocate memory resource of               #
@@ -78,19 +82,19 @@ extern "C" {
  * CSIP_SET_COORDINATOR_MEM_PER_INSTANCE_SIZE_BYTES: memory size used by CSIP Set Coordinator to allocate Coordinated
  *                                                   Set Identification Instance
  */
-#define CSIP_SET_COORDINATOR_MEM_CIS_INSTANCE_SIZE_BYTES        (60u)
+#define CSIP_SET_COORDINATOR_MEM_CIS_INSTANCE_SIZE_BYTES        ALIGN_UP_WORD(69u + CSIS_COORDINATED_SET_NAME_MAX_LEN)
 
 /*
  * CSIP_SET_MEMBER_MEM_PER_INSTANCE_SIZE_BYTES: memory size used by CSIP Set Member per Coordinated Set Identification
  *                                              Instances
  */
-#define CSIP_SET_MEMBER_MEM_PER_INSTANCE_SIZE_BYTES             (84u)
+#define CSIP_SET_MEMBER_MEM_PER_INSTANCE_SIZE_BYTES             ALIGN_UP_WORD(83u + CSIS_COORDINATED_SET_NAME_MAX_LEN)
 
 /*
  * CSIP_SERV_INST_MEM_PER_CONN_SIZE_BYTES: memory size used to allocate Service Context per Connection Instance
  *                                         per Coordinated Set Identification Instances
  */
-#define CSIP_SERV_INST_MEM_PER_CONN_SIZE_BYTES                  (16u)
+#define CSIP_SERV_INST_MEM_PER_CONN_SIZE_BYTES                  (20u)
 
 /*
  * CSIP_NVM_MGMT_PER_CONN_SIZE_BYTES: memory size used for Non-Volatile Memory Management and CSIS restoration
@@ -109,7 +113,7 @@ extern "C" {
 #define BLE_CSIP_SET_COORDINATOR_TOTAL_BUFFER_SIZE(num_ble_links) \
           ((CSIP_SET_COORDINATOR_MEM_PER_CONN_SIZE_BYTES * num_ble_links) + \
            (CSIP_SET_COORDINATOR_MEM_CIS_INSTANCE_SIZE_BYTES * num_ble_links) + \
-           (DIVC((2u * num_ble_links),4u) * 4u))
+           (ALIGN_UP_WORD(2u * num_ble_links)))
 
 /*
  * BLE_CSIP_SET_MEMBER_TOTAL_BUFFER_SIZE: this macro returns the amount of memory, in bytes,needed for
@@ -133,6 +137,18 @@ extern "C" {
    ############################################################################ */
 
 /*
+ * BLE_CSIP_SET_MEMBER_DB_CSIS_BASE_SIZE_BYTES: fixed NVM size per Coordinated Set Identification
+ * instance stored by Coordinated Set Identification Profile in Set Member role.
+ */
+#define BLE_CSIP_SET_MEMBER_DB_CSIS_BASE_SIZE_BYTES           (46u)
+
+/*
+ * BLE_CSIP_SET_COORDINATOR_DB_CSIS_BASE_SIZE_BYTES: fixed NVM size per device for the CSIS
+ * stored by Coordinated Set Identification Profile in Set Coordinator role.
+ */
+#define BLE_CSIP_SET_COORDINATOR_DB_CSIS_BASE_SIZE_BYTES      (78u + CSIS_COORDINATED_SET_NAME_MAX_LEN)
+
+/*
  * BLE_CSIP_SET_MEMBER_DB_BUFFER_SIZE: this macro returns the maximum amount of memory, in bytes, needed for the storage
  * in Non Volatile Memory of the Coordinated Set Identification Profile in Set Member role.
  *
@@ -141,8 +157,7 @@ extern "C" {
  * @param num_csi_instances: Maximum number of supported Coordinated Set Identification Instances
  */
 #define BLE_CSIP_SET_MEMBER_DB_BUFFER_SIZE(num_db_devices,num_csi_instances) \
-        (num_db_devices \
-         * (16u + (DIVC((num_csi_instances * 39u),4u) * 4u)))
+              BLE_AUDIO_DB_BUFFER_SIZE(num_db_devices,num_csi_instances * BLE_CSIP_SET_MEMBER_DB_CSIS_BASE_SIZE_BYTES)
 
 /*
  * BLE_CSIP_SET_COORDINATOR_DB_BUFFER_SIZE: this macro returns the maximum amount of memory, in bytes, needed for the
@@ -151,13 +166,13 @@ extern "C" {
  * @param num_db_devices: Maximum number of device to store in NVM
  */
 #define BLE_CSIP_SET_COORDINATOR_DB_BUFFER_SIZE(num_db_devices) \
-        (num_db_devices * 84u)
+      BLE_AUDIO_DB_BUFFER_SIZE(num_db_devices,BLE_CSIP_SET_COORDINATOR_DB_CSIS_BASE_SIZE_BYTES)
 
 /* Types ---------------------------------------------------------------------*/
 /* Types of mask for roles of the Coordinated Set Identification Profile */
 typedef uint8_t CSIP_Role_t;
 #define CSIP_ROLE_SET_MEMBER                    (0x01)
-#define CSIP_ROLE_SET_COORDINATOR	        (0x02)
+#define CSIP_ROLE_SET_COORDINATOR               (0x02)
 
 /* Types of mask for SIRK over OOB of the Coordinated Set Identification Profile */
 typedef uint8_t SIRK_OOB_t;
@@ -170,18 +185,19 @@ typedef uint8_t SIRK_Type_t;
 #define CSIP_SIRK_PLAINTEXT                     (0x01)
 
 typedef uint8_t CSIP_Error_t;
-#define ERROR_CSIP_LOCK_DENIED                  (0x80)
-#define ERROR_CSIP_LOCK_RELEASE_NOT_ALLOWED     (0x81)
-#define ERROR_CSIP_INVALID_LOCK_VALUE           (0x82)
-#define ERROR_CSIP_OOB_SIRK_ONLY                (0x83)
-#define ERROR_CSIP_LOCK_ALREADY_GRANTED         (0x84)
+#define ERROR_CSIP_LOCK_DENIED                     (0x80)
+#define ERROR_CSIP_LOCK_RELEASE_NOT_ALLOWED        (0x81)
+#define ERROR_CSIP_INVALID_LOCK_VALUE              (0x82)
+#define ERROR_CSIP_OOB_SIRK_ONLY                   (0x83)
+#define ERROR_CSIP_LOCK_ALREADY_GRANTED            (0x84)
+#define ERROR_CSIP_VALUE_CHANGED_DURING_READ_LONG  (0x85)
 
 typedef uint8_t Lock_Type_t;
 #define LOCK_VALUE_UNLOCKED                     (0x01)
 #define LOCK_VALUE_LOCKED                       (0x02)
 
 #define TIMEOUT_LOCK                            (30)
-#define TIMEOUT_DISCOVER_MEMBERS                (20)
+#define TIMEOUT_DISCOVER_MEMBERS                (10)
 
 typedef enum
 {
@@ -248,6 +264,9 @@ typedef enum
                                                          * if the Set Member's Set Size has changed.
                                                          * the Set Coordinator should execute the Set Member Discovery
                                                          */
+  CSIP_COO_SET_NAME_NOTIFIED_EVT,                       /* This event is reported to the Set Coordinator
+                                                         * if the Set Member's Coordinated Set Name has changed.
+                                                         */
   CSIP_MEM_LOCKED_EVT,                                  /* This event is reported once the CSIP Set Member is locked by
                                                          * the set Coordiantor
                                                          */
@@ -302,6 +321,10 @@ typedef struct
   uint8_t Rank;
   uint8_t SIRK_notifiable;
   uint8_t size_notifiable;
+  uint8_t *CoordinatedSetName;                                  /* Pointer on the UTF-8 Coordinated Set Name value
+                                                                 * (may be NULL when CoordinatedSetNameLen == 0) */
+  uint8_t CoordinatedSetNameLen;                                /* Length in bytes of the Coordinated Set Name value */
+  uint8_t name_notifiable;
 } CSIS_ServiceInit_t;
 
 typedef struct
@@ -323,6 +346,12 @@ typedef struct
 {
   uint8_t Size;
 } CSIP_Set_Size_Notif_Evt_Params_t;
+
+typedef struct
+{
+  uint8_t *pName;       /* Pointer on the UTF-8 Coordinated Set Name value */
+  uint8_t NameLen;      /* Length in bytes of the Coordinated Set Name value */
+} CSIP_Set_Name_Notif_Evt_Params_t;
 
 typedef struct
 {

@@ -38,7 +38,7 @@ tBleStatus HCI_WRITE_CONNECTION_ACCEPT_TIMEOUT( uint16_t Connection_Accept_Timeo
 
 tBleStatus HCI_READ_TRANSMIT_POWER_LEVEL( uint16_t Connection_Handle,
                                           uint8_t Type,
-                                          uint8_t* Transmit_Power_Level );
+                                          uint8_t* TX_Power_Level );
 
 tBleStatus HCI_SET_CONTROLLER_TO_HOST_FLOW_CONTROL( uint8_t Flow_Control_Enable );
 
@@ -47,7 +47,7 @@ tBleStatus HCI_HOST_BUFFER_SIZE( uint16_t Host_ACL_Data_Packet_Length,
                                  uint16_t Host_Total_Num_ACL_Data_Packets,
                                  uint16_t Host_Total_Num_Synchronous_Data_Packets );
 
-tBleStatus HCI_HOST_NUMBER_OF_COMPLETED_PACKETS( uint8_t Number_Of_Handles,
+tBleStatus HCI_HOST_NUMBER_OF_COMPLETED_PACKETS( uint8_t Num_Handles,
                                                  const Host_Nb_Of_Completed_Pkt_Pair_t* Host_Nb_Of_Completed_Pkt_Pair );
 
 tBleStatus HCI_READ_AFH_CHANNEL_ASSESSMENT_MODE( uint8_t* AFH_Channel_Assessment_Mode );
@@ -100,13 +100,13 @@ tBleStatus HCI_READ_LOCAL_SUPPORTED_CONTROLLER_DELAY( const uint8_t* Codec_ID,
                                                       uint8_t* Min_Controller_Delay,
                                                       uint8_t* Max_Controller_Delay );
 
-tBleStatus HCI_READ_RSSI( uint16_t Connection_Handle,
+tBleStatus HCI_READ_RSSI( uint16_t Handle,
                           uint8_t* RSSI );
 
 tBleStatus HCI_LE_SET_EVENT_MASK( const uint8_t* LE_Event_Mask );
 
-tBleStatus HCI_LE_READ_BUFFER_SIZE( uint16_t* HC_LE_ACL_Data_Packet_Length,
-                                    uint8_t* HC_Total_Num_LE_ACL_Data_Packets );
+tBleStatus HCI_LE_READ_BUFFER_SIZE( uint16_t* LE_ACL_Data_Packet_Length,
+                                    uint8_t* Total_Num_LE_ACL_Data_Packets );
 
 tBleStatus HCI_LE_READ_LOCAL_SUPPORTED_FEATURES_PAGE_0( uint8_t* LE_Features );
 
@@ -121,7 +121,7 @@ tBleStatus HCI_LE_SET_ADVERTISING_PARAMETERS( uint16_t Advertising_Interval_Min,
                                               uint8_t Advertising_Channel_Map,
                                               uint8_t Advertising_Filter_Policy );
 
-tBleStatus HCI_LE_READ_ADVERTISING_PHYSICAL_CHANNEL_TX_POWER( uint8_t* Transmit_Power_Level );
+tBleStatus HCI_LE_READ_ADVERTISING_PHYSICAL_CHANNEL_TX_POWER( uint8_t* TX_Power_Level );
 
 tBleStatus HCI_LE_SET_ADVERTISING_DATA( uint8_t Advertising_Data_Length,
                                         const uint8_t* Advertising_Data );
@@ -146,12 +146,12 @@ tBleStatus HCI_LE_CREATE_CONNECTION( uint16_t LE_Scan_Interval,
                                      uint8_t Peer_Address_Type,
                                      const uint8_t* Peer_Address,
                                      uint8_t Own_Address_Type,
-                                     uint16_t Conn_Interval_Min,
-                                     uint16_t Conn_Interval_Max,
-                                     uint16_t Conn_Latency,
+                                     uint16_t Connection_Interval_Min,
+                                     uint16_t Connection_Interval_Max,
+                                     uint16_t Max_Latency,
                                      uint16_t Supervision_Timeout,
-                                     uint16_t Minimum_CE_Length,
-                                     uint16_t Maximum_CE_Length );
+                                     uint16_t Min_CE_Length,
+                                     uint16_t Max_CE_Length );
 
 tBleStatus HCI_LE_CREATE_CONNECTION_CANCEL( void );
 
@@ -166,17 +166,17 @@ tBleStatus HCI_LE_REMOVE_DEVICE_FROM_FILTER_ACCEPT_LIST( uint8_t Address_Type,
                                                          const uint8_t* Address );
 
 tBleStatus HCI_LE_CONNECTION_UPDATE( uint16_t Connection_Handle,
-                                     uint16_t Conn_Interval_Min,
-                                     uint16_t Conn_Interval_Max,
-                                     uint16_t Conn_Latency,
+                                     uint16_t Connection_Interval_Min,
+                                     uint16_t Connection_Interval_Max,
+                                     uint16_t Max_Latency,
                                      uint16_t Supervision_Timeout,
-                                     uint16_t Minimum_CE_Length,
-                                     uint16_t Maximum_CE_Length );
+                                     uint16_t Min_CE_Length,
+                                     uint16_t Max_CE_Length );
 
-tBleStatus HCI_LE_SET_HOST_CHANNEL_CLASSIFICATION( const uint8_t* LE_Channel_Map );
+tBleStatus HCI_LE_SET_HOST_CHANNEL_CLASSIFICATION( const uint8_t* Channel_Map );
 
 tBleStatus HCI_LE_READ_CHANNEL_MAP( uint16_t Connection_Handle,
-                                    uint8_t* LE_Channel_Map );
+                                    uint8_t* Channel_Map );
 
 tBleStatus HCI_LE_READ_REMOTE_FEATURES_PAGE_0( uint16_t Connection_Handle );
 
@@ -198,13 +198,13 @@ tBleStatus HCI_LE_LONG_TERM_KEY_REQUEST_NEGATIVE_REPLY( uint16_t Connection_Hand
 
 tBleStatus HCI_LE_READ_SUPPORTED_STATES( uint8_t* LE_States );
 
-tBleStatus HCI_LE_RECEIVER_TEST( uint8_t RX_Frequency );
+tBleStatus HCI_LE_RECEIVER_TEST( uint8_t RX_Channel );
 
-tBleStatus HCI_LE_TRANSMITTER_TEST( uint8_t TX_Frequency,
-                                    uint8_t Length_Of_Test_Data,
+tBleStatus HCI_LE_TRANSMITTER_TEST( uint8_t TX_Channel,
+                                    uint8_t Test_Data_Length,
                                     uint8_t Packet_Payload );
 
-tBleStatus HCI_LE_TEST_END( uint16_t* Number_Of_Packets );
+tBleStatus HCI_LE_TEST_END( uint16_t* Num_Packets );
 
 tBleStatus HCI_LE_REMOTE_CONNECTION_PARAMETER_REQUEST_REPLY( uint16_t Connection_Handle,
                                                              uint16_t Interval_Min,
@@ -218,14 +218,14 @@ tBleStatus HCI_LE_REMOTE_CONNECTION_PARAMETER_REQUEST_NEGATIVE_REPLY( uint16_t C
                                                                       uint8_t Reason );
 
 tBleStatus HCI_LE_SET_DATA_LENGTH( uint16_t Connection_Handle,
-                                   uint16_t TxOctets,
-                                   uint16_t TxTime );
+                                   uint16_t TX_Octets,
+                                   uint16_t TX_Time );
 
-tBleStatus HCI_LE_READ_SUGGESTED_DEFAULT_DATA_LENGTH( uint16_t* SuggestedMaxTxOctets,
-                                                      uint16_t* SuggestedMaxTxTime );
+tBleStatus HCI_LE_READ_SUGGESTED_DEFAULT_DATA_LENGTH( uint16_t* Suggested_Max_TX_Octets,
+                                                      uint16_t* Suggested_Max_TX_Time );
 
-tBleStatus HCI_LE_WRITE_SUGGESTED_DEFAULT_DATA_LENGTH( uint16_t SuggestedMaxTxOctets,
-                                                       uint16_t SuggestedMaxTxTime );
+tBleStatus HCI_LE_WRITE_SUGGESTED_DEFAULT_DATA_LENGTH( uint16_t Suggested_Max_TX_Octets,
+                                                       uint16_t Suggested_Max_TX_Time );
 
 tBleStatus HCI_LE_READ_LOCAL_P256_PUBLIC_KEY( void );
 
@@ -255,31 +255,31 @@ tBleStatus HCI_LE_SET_ADDRESS_RESOLUTION_ENABLE( uint8_t Address_Resolution_Enab
 
 tBleStatus HCI_LE_SET_RESOLVABLE_PRIVATE_ADDRESS_TIMEOUT( uint16_t RPA_Timeout );
 
-tBleStatus HCI_LE_READ_MAXIMUM_DATA_LENGTH( uint16_t* supportedMaxTxOctets,
-                                            uint16_t* supportedMaxTxTime,
-                                            uint16_t* supportedMaxRxOctets,
-                                            uint16_t* supportedMaxRxTime );
+tBleStatus HCI_LE_READ_MAXIMUM_DATA_LENGTH( uint16_t* Supported_Max_TX_Octets,
+                                            uint16_t* Supported_Max_TX_Time,
+                                            uint16_t* Supported_Max_RX_Octets,
+                                            uint16_t* Supported_Max_RX_Time );
 
 tBleStatus HCI_LE_READ_PHY( uint16_t Connection_Handle,
                             uint8_t* TX_PHY,
                             uint8_t* RX_PHY );
 
-tBleStatus HCI_LE_SET_DEFAULT_PHY( uint8_t ALL_PHYS,
-                                   uint8_t TX_PHYS,
-                                   uint8_t RX_PHYS );
+tBleStatus HCI_LE_SET_DEFAULT_PHY( uint8_t All_PHYs,
+                                   uint8_t TX_PHYs,
+                                   uint8_t RX_PHYs );
 
 tBleStatus HCI_LE_SET_PHY( uint16_t Connection_Handle,
-                           uint8_t ALL_PHYS,
-                           uint8_t TX_PHYS,
-                           uint8_t RX_PHYS,
-                           uint16_t PHY_options );
+                           uint8_t All_PHYs,
+                           uint8_t TX_PHYs,
+                           uint8_t RX_PHYs,
+                           uint16_t PHY_Options );
 
-tBleStatus HCI_LE_RECEIVER_TEST_V2( uint8_t RX_Frequency,
+tBleStatus HCI_LE_RECEIVER_TEST_V2( uint8_t RX_Channel,
                                     uint8_t PHY,
                                     uint8_t Modulation_Index );
 
-tBleStatus HCI_LE_TRANSMITTER_TEST_V2( uint8_t TX_Frequency,
-                                       uint8_t Length_Of_Test_Data,
+tBleStatus HCI_LE_TRANSMITTER_TEST_V2( uint8_t TX_Channel,
+                                       uint8_t Test_Data_Length,
                                        uint8_t Packet_Payload,
                                        uint8_t PHY );
 
@@ -287,19 +287,19 @@ tBleStatus HCI_LE_SET_ADVERTISING_SET_RANDOM_ADDRESS( uint8_t Advertising_Handle
                                                       const uint8_t* Random_Address );
 
 tBleStatus HCI_LE_SET_EXTENDED_ADVERTISING_PARAMETERS( uint8_t Advertising_Handle,
-                                                       uint16_t Adv_Event_Properties,
-                                                       const uint8_t* Primary_Adv_Interval_Min,
-                                                       const uint8_t* Primary_Adv_Interval_Max,
-                                                       uint8_t Primary_Adv_Channel_Map,
+                                                       uint16_t Advertising_Event_Properties,
+                                                       const uint8_t* Primary_Advertising_Interval_Min,
+                                                       const uint8_t* Primary_Advertising_Interval_Max,
+                                                       uint8_t Primary_Advertising_Channel_Map,
                                                        uint8_t Own_Address_Type,
                                                        uint8_t Peer_Address_Type,
                                                        const uint8_t* Peer_Address,
-                                                       uint8_t Adv_Filter_Policy,
-                                                       uint8_t Adv_TX_Power,
-                                                       uint8_t Primary_Adv_PHY,
-                                                       uint8_t Secondary_Adv_Max_Skip,
-                                                       uint8_t Secondary_Adv_PHY,
-                                                       uint8_t Adv_SID,
+                                                       uint8_t Advertising_Filter_Policy,
+                                                       uint8_t Advertising_TX_Power,
+                                                       uint8_t Primary_Advertising_PHY,
+                                                       uint8_t Secondary_Advertising_Max_Skip,
+                                                       uint8_t Secondary_Advertising_PHY,
+                                                       uint8_t Advertising_SID,
                                                        uint8_t Scan_Req_Notification_Enable,
                                                        uint8_t* Selected_TX_Power );
 
@@ -328,9 +328,9 @@ tBleStatus HCI_LE_REMOVE_ADVERTISING_SET( uint8_t Advertising_Handle );
 tBleStatus HCI_LE_CLEAR_ADVERTISING_SETS( void );
 
 tBleStatus HCI_LE_SET_PERIODIC_ADVERTISING_PARAMETERS( uint8_t Advertising_Handle,
-                                                       uint16_t Periodic_Adv_Interval_Min,
-                                                       uint16_t Periodic_Adv_Interval_Max,
-                                                       uint16_t Periodic_Adv_Properties );
+                                                       uint16_t Periodic_Advertising_Interval_Min,
+                                                       uint16_t Periodic_Advertising_Interval_Max,
+                                                       uint16_t Periodic_Advertising_Properties );
 
 tBleStatus HCI_LE_SET_PERIODIC_ADVERTISING_DATA( uint8_t Advertising_Handle,
                                                  uint8_t Operation,
@@ -384,17 +384,17 @@ tBleStatus HCI_LE_READ_PERIODIC_ADVERTISER_LIST_SIZE( uint8_t* Periodic_Advertis
 tBleStatus HCI_LE_READ_TRANSMIT_POWER( uint8_t* Min_TX_Power,
                                        uint8_t* Max_TX_Power );
 
-tBleStatus HCI_LE_READ_RF_PATH_COMPENSATION( uint16_t* RF_TX_Path_Compensation,
-                                             uint16_t* RF_RX_Path_Compensation );
+tBleStatus HCI_LE_READ_RF_PATH_COMPENSATION( uint16_t* RF_TX_Path_Compensation_Value,
+                                             uint16_t* RF_RX_Path_Compensation_Value );
 
-tBleStatus HCI_LE_WRITE_RF_PATH_COMPENSATION( uint16_t RF_TX_Path_Compensation,
-                                              uint16_t RF_RX_Path_Compensation );
+tBleStatus HCI_LE_WRITE_RF_PATH_COMPENSATION( uint16_t RF_TX_Path_Compensation_Value,
+                                              uint16_t RF_RX_Path_Compensation_Value );
 
 tBleStatus HCI_LE_SET_PRIVACY_MODE( uint8_t Peer_Identity_Address_Type,
                                     const uint8_t* Peer_Identity_Address,
                                     uint8_t Privacy_Mode );
 
-tBleStatus HCI_LE_RECEIVER_TEST_V3( uint8_t RX_Frequency,
+tBleStatus HCI_LE_RECEIVER_TEST_V3( uint8_t RX_Channel,
                                     uint8_t PHY,
                                     uint8_t Modulation_Index,
                                     uint8_t Expected_CTE_Length,
@@ -403,8 +403,8 @@ tBleStatus HCI_LE_RECEIVER_TEST_V3( uint8_t RX_Frequency,
                                     uint8_t Switching_Pattern_Length,
                                     const uint8_t* Antenna_IDs );
 
-tBleStatus HCI_LE_TRANSMITTER_TEST_V3( uint8_t TX_Frequency,
-                                       uint8_t Length_Of_Test_Data,
+tBleStatus HCI_LE_TRANSMITTER_TEST_V3( uint8_t TX_Channel,
+                                       uint8_t Test_Data_Length,
                                        uint8_t Packet_Payload,
                                        uint8_t PHY,
                                        uint8_t CTE_Length,
@@ -633,8 +633,8 @@ tBleStatus HCI_LE_SET_TRANSMIT_POWER_REPORTING_ENABLE( uint16_t Connection_Handl
                                                        uint8_t Local_Enable,
                                                        uint8_t Remote_Enable );
 
-tBleStatus HCI_LE_TRANSMITTER_TEST_V4( uint8_t TX_Frequency,
-                                       uint8_t Length_Of_Test_Data,
+tBleStatus HCI_LE_TRANSMITTER_TEST_V4( uint8_t TX_Channel,
+                                       uint8_t Test_Data_Length,
                                        uint8_t Packet_Payload,
                                        uint8_t PHY,
                                        uint8_t CTE_Length,
@@ -660,26 +660,26 @@ tBleStatus HCI_LE_SUBRATE_REQUEST( uint16_t Connection_Handle,
                                    uint16_t Supervision_Timeout );
 
 tBleStatus HCI_LE_SET_EXTENDED_ADVERTISING_PARAMETERS_V2( uint8_t Advertising_Handle,
-                                                          uint16_t Adv_Event_Properties,
-                                                          const uint8_t* Primary_Adv_Interval_Min,
-                                                          const uint8_t* Primary_Adv_Interval_Max,
-                                                          uint8_t Primary_Adv_Channel_Map,
+                                                          uint16_t Advertising_Event_Properties,
+                                                          const uint8_t* Primary_Advertising_Interval_Min,
+                                                          const uint8_t* Primary_Advertising_Interval_Max,
+                                                          uint8_t Primary_Advertising_Channel_Map,
                                                           uint8_t Own_Address_Type,
                                                           uint8_t Peer_Address_Type,
                                                           const uint8_t* Peer_Address,
-                                                          uint8_t Adv_Filter_Policy,
-                                                          uint8_t Adv_TX_Power,
-                                                          uint8_t Primary_Adv_PHY,
-                                                          uint8_t Secondary_Adv_Max_Skip,
-                                                          uint8_t Secondary_Adv_PHY,
-                                                          uint8_t Adv_SID,
+                                                          uint8_t Advertising_Filter_Policy,
+                                                          uint8_t Advertising_TX_Power,
+                                                          uint8_t Primary_Advertising_PHY,
+                                                          uint8_t Secondary_Advertising_Max_Skip,
+                                                          uint8_t Secondary_Advertising_PHY,
+                                                          uint8_t Advertising_SID,
                                                           uint8_t Scan_Req_Notification_Enable,
-                                                          uint8_t Primary_Adv_PHY_Options,
-                                                          uint8_t Secondary_Adv_PHY_Options,
+                                                          uint8_t Primary_Advertising_PHY_Options,
+                                                          uint8_t Secondary_Advertising_PHY_Options,
                                                           uint8_t* Selected_TX_Power );
 
 tBleStatus HCI_LE_SET_PERIODIC_ADVERTISING_SUBEVENT_DATA( uint8_t Advertising_Handle,
-                                                          uint8_t Num_Subevents,
+                                                          uint8_t Num_Subevents_With_Data,
                                                           const uint8_t* Subevent_Param );
 
 tBleStatus HCI_LE_SET_PERIODIC_ADVERTISING_RESPONSE_DATA( uint16_t Sync_Handle,
@@ -692,7 +692,7 @@ tBleStatus HCI_LE_SET_PERIODIC_ADVERTISING_RESPONSE_DATA( uint16_t Sync_Handle,
 
 tBleStatus HCI_LE_SET_PERIODIC_SYNC_SUBEVENT( uint16_t Sync_Handle,
                                               uint16_t Periodic_Advertising_Properties,
-                                              uint8_t Num_Subevents,
+                                              uint8_t Num_Subevents_To_Sync,
                                               const uint8_t* Subevent );
 
 tBleStatus HCI_LE_EXTENDED_CREATE_CONNECTION_V2( uint8_t Advertising_Handle,
@@ -705,9 +705,9 @@ tBleStatus HCI_LE_EXTENDED_CREATE_CONNECTION_V2( uint8_t Advertising_Handle,
                                                  const Init_Param_Phy_t* Init_Param_Phy );
 
 tBleStatus HCI_LE_SET_PERIODIC_ADVERTISING_PARAMETERS_V2( uint8_t Advertising_Handle,
-                                                          uint16_t Periodic_Adv_Interval_Min,
-                                                          uint16_t Periodic_Adv_Interval_Max,
-                                                          uint16_t Periodic_Adv_Properties,
+                                                          uint16_t Periodic_Advertising_Interval_Min,
+                                                          uint16_t Periodic_Advertising_Interval_Max,
+                                                          uint16_t Periodic_Advertising_Properties,
                                                           uint8_t Num_Subevents,
                                                           uint8_t Subevent_Interval,
                                                           uint8_t Response_Slot_Delay,
@@ -722,14 +722,14 @@ tBleStatus HCI_LE_READ_ALL_REMOTE_FEATURES( uint16_t Connection_Handle,
 
 tBleStatus HCI_LE_CS_READ_LOCAL_SUPPORTED_CAPABILITIES( uint8_t* Num_Config_Supported,
                                                         uint16_t* Max_Consecutive_Procedures_Supported,
-                                                        uint8_t* Num_Antennas_Supported,
+                                                        uint8_t* Num_Antennae_Supported,
                                                         uint8_t* Max_Antenna_Paths_Supported,
                                                         uint8_t* Roles_Supported,
-                                                        uint8_t* Optional_Modes_Supported,
+                                                        uint8_t* Modes_Supported,
                                                         uint8_t* RTT_Capability,
                                                         uint8_t* RTT_AA_Only_N,
                                                         uint8_t* RTT_Sounding_N,
-                                                        uint8_t* RTT_Random_Payload_N,
+                                                        uint8_t* RTT_Random_Sequence_N,
                                                         uint16_t* NADM_Sounding_Capability,
                                                         uint16_t* NADM_Random_Capability,
                                                         uint8_t* CS_SYNC_PHYs_Supported,
@@ -746,14 +746,14 @@ tBleStatus HCI_LE_CS_READ_REMOTE_SUPPORTED_CAPABILITIES( uint16_t Connection_Han
 tBleStatus HCI_LE_CS_WRITE_CACHED_REMOTE_SUPPORTED_CAPABILITIES( uint16_t Connection_Handle,
                                                                  uint8_t Num_Config_Supported,
                                                                  uint16_t Max_Consecutive_Procedures_Supported,
-                                                                 uint8_t Num_Antennas_Supported,
+                                                                 uint8_t Num_Antennae_Supported,
                                                                  uint8_t Max_Antenna_Paths_Supported,
                                                                  uint8_t Roles_Supported,
                                                                  uint8_t Modes_Supported,
                                                                  uint8_t RTT_Capability,
                                                                  uint8_t RTT_AA_Only_N,
                                                                  uint8_t RTT_Sounding_N,
-                                                                 uint8_t RTT_Random_Payload_N,
+                                                                 uint8_t RTT_Random_Sequence_N,
                                                                  uint16_t NADM_Sounding_Capability,
                                                                  uint16_t NADM_Random_Capability,
                                                                  uint8_t CS_SYNC_PHYs_Supported,
@@ -794,7 +794,7 @@ tBleStatus HCI_LE_CS_CREATE_CONFIG( uint16_t Connection_Handle,
                                     uint8_t Channel_Selection_Type,
                                     uint8_t Ch3c_Shape,
                                     uint8_t Ch3c_Jump,
-                                    uint8_t Reserved );
+                                    uint8_t CS_Enhancements );
 
 tBleStatus HCI_LE_CS_REMOVE_CONFIG( uint16_t Connection_Handle,
                                     uint8_t Config_ID );
@@ -838,7 +838,7 @@ tBleStatus HCI_LE_CS_TEST( uint8_t Main_Mode_Type,
                            uint8_t T_PM_Time,
                            uint8_t T_SW_Time,
                            uint8_t Tone_Antenna_Config_Selection,
-                           uint8_t Reserved,
+                           uint8_t CS_Enhancements,
                            uint8_t SNR_Control_Initiator,
                            uint8_t SNR_Control_Reflector,
                            uint16_t DRBG_Nonce,
@@ -851,8 +851,8 @@ tBleStatus HCI_LE_CS_TEST_END( void );
 
 tBleStatus HCI_LE_ADD_DEVICE_TO_MONITORED_ADVERTISERS_LIST( uint8_t Address_Type,
                                                             const uint8_t* Address,
-                                                            uint8_t RSSI_Threshold_Low,
-                                                            uint8_t RSSI_Threshold_High,
+                                                            uint8_t RSSI_Low_Threshold,
+                                                            uint8_t RSSI_High_Threshold,
                                                             uint8_t Timeout );
 
 tBleStatus HCI_LE_REMOVE_DEVICE_FROM_MONITORED_ADVERTISERS_LIST( uint8_t Address_Type,
@@ -869,6 +869,9 @@ tBleStatus HCI_LE_FRAME_SPACE_UPDATE( uint16_t Connection_Handle,
                                       uint16_t Frame_Space_Max,
                                       uint8_t PHYS,
                                       uint16_t Spacing_Types );
+
+tBleStatus HCI_LE_SET_RESOLVABLE_PRIVATE_ADDRESS_TIMEOUT_V2( uint16_t RPA_Timeout_Min,
+                                                             uint16_t RPA_Timeout_Max );
 
 tBleStatus ACI_HAL_WRITE_CONFIG_DATA( uint8_t Offset,
                                       uint8_t Length,
@@ -1688,6 +1691,9 @@ tBleStatus ACI_GATT_MULT_NOTIFICATION_EVENT( uint16_t Connection_Handle,
                                              const uint8_t* Data );
 
 tBleStatus ACI_GATT_NOTIFICATION_COMPLETE_EVENT( uint16_t Attr_Handle );
+
+tBleStatus ACI_GATT_NOTIFICATION_LL_ACK_EVENT( uint16_t Connection_Handle,
+                                               uint16_t Attr_Handle );
 
 tBleStatus ACI_GATT_READ_EXT_EVENT( uint16_t Connection_Handle,
                                     uint16_t Offset,
