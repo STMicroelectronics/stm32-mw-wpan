@@ -5,7 +5,7 @@
  *****************************************************************************
  * @attention
  *
- * Copyright (c) 2018-2025 STMicroelectronics.
+ * Copyright (c) 2018-2026 STMicroelectronics.
  * All rights reserved.
  *
  * This software is licensed under terms that can be found in the LICENSE file
@@ -41,7 +41,7 @@ typedef __PACKED_STRUCT
    * Values:
    * - 0x0000 ... 0xFFFF
    */
-  uint16_t Host_Num_Of_Completed_Packets;
+  uint16_t Host_Num_Completed_Packets;
 } Host_Nb_Of_Completed_Pkt_Pair_t;
 
 /* Definition of Adv_Set_t */
@@ -470,7 +470,7 @@ typedef __PACKED_STRUCT
 {
   uint8_t Status;
   uint16_t Connection_Handle;
-  uint8_t Transmit_Power_Level;
+  uint8_t TX_Power_Level;
 } hci_read_transmit_power_level_rp0;
 
 typedef __PACKED_STRUCT
@@ -498,7 +498,7 @@ typedef __PACKED_STRUCT
 
 typedef __PACKED_STRUCT
 {
-  uint8_t Number_Of_Handles;
+  uint8_t Num_Handles;
   Host_Nb_Of_Completed_Pkt_Pair_t Host_Nb_Of_Completed_Pkt_Pair[(BLE_CMD_MAX_PARAM_LEN - 1)/sizeof(Host_Nb_Of_Completed_Pkt_Pair_t)];
 } hci_host_number_of_completed_packets_cp0;
 
@@ -537,13 +537,13 @@ typedef __PACKED_STRUCT
 
 typedef __PACKED_STRUCT
 {
-  uint16_t Connection_Handle;
+  uint16_t Handle;
 } hci_read_rssi_cp0;
 
 typedef __PACKED_STRUCT
 {
   uint8_t Status;
-  uint16_t Connection_Handle;
+  uint16_t Handle;
   uint8_t RSSI;
 } hci_read_rssi_rp0;
 
@@ -560,8 +560,8 @@ typedef __PACKED_STRUCT
 typedef __PACKED_STRUCT
 {
   uint8_t Status;
-  uint16_t HC_LE_ACL_Data_Packet_Length;
-  uint8_t HC_Total_Num_LE_ACL_Data_Packets;
+  uint16_t LE_ACL_Data_Packet_Length;
+  uint8_t Total_Num_LE_ACL_Data_Packets;
 } hci_le_read_buffer_size_rp0;
 
 typedef __PACKED_STRUCT
@@ -600,7 +600,7 @@ typedef __PACKED_STRUCT
 typedef __PACKED_STRUCT
 {
   uint8_t Status;
-  uint8_t Transmit_Power_Level;
+  uint8_t TX_Power_Level;
 } hci_le_read_advertising_physical_channel_tx_power_rp0;
 
 typedef __PACKED_STRUCT
@@ -668,12 +668,12 @@ typedef __PACKED_STRUCT
   uint8_t Peer_Address_Type;
   uint8_t Peer_Address[6];
   uint8_t Own_Address_Type;
-  uint16_t Conn_Interval_Min;
-  uint16_t Conn_Interval_Max;
-  uint16_t Conn_Latency;
+  uint16_t Connection_Interval_Min;
+  uint16_t Connection_Interval_Max;
+  uint16_t Max_Latency;
   uint16_t Supervision_Timeout;
-  uint16_t Minimum_CE_Length;
-  uint16_t Maximum_CE_Length;
+  uint16_t Min_CE_Length;
+  uint16_t Max_CE_Length;
 } hci_le_create_connection_cp0;
 
 typedef __PACKED_STRUCT
@@ -722,12 +722,12 @@ typedef __PACKED_STRUCT
 typedef __PACKED_STRUCT
 {
   uint16_t Connection_Handle;
-  uint16_t Conn_Interval_Min;
-  uint16_t Conn_Interval_Max;
-  uint16_t Conn_Latency;
+  uint16_t Connection_Interval_Min;
+  uint16_t Connection_Interval_Max;
+  uint16_t Max_Latency;
   uint16_t Supervision_Timeout;
-  uint16_t Minimum_CE_Length;
-  uint16_t Maximum_CE_Length;
+  uint16_t Min_CE_Length;
+  uint16_t Max_CE_Length;
 } hci_le_connection_update_cp0;
 
 typedef __PACKED_STRUCT
@@ -737,7 +737,7 @@ typedef __PACKED_STRUCT
 
 typedef __PACKED_STRUCT
 {
-  uint8_t LE_Channel_Map[5];
+  uint8_t Channel_Map[5];
 } hci_le_set_host_channel_classification_cp0;
 
 typedef __PACKED_STRUCT
@@ -754,7 +754,7 @@ typedef __PACKED_STRUCT
 {
   uint8_t Status;
   uint16_t Connection_Handle;
-  uint8_t LE_Channel_Map[5];
+  uint8_t Channel_Map[5];
 } hci_le_read_channel_map_rp0;
 
 typedef __PACKED_STRUCT
@@ -829,7 +829,7 @@ typedef __PACKED_STRUCT
 
 typedef __PACKED_STRUCT
 {
-  uint8_t RX_Frequency;
+  uint8_t RX_Channel;
 } hci_le_receiver_test_cp0;
 
 typedef __PACKED_STRUCT
@@ -839,8 +839,8 @@ typedef __PACKED_STRUCT
 
 typedef __PACKED_STRUCT
 {
-  uint8_t TX_Frequency;
-  uint8_t Length_Of_Test_Data;
+  uint8_t TX_Channel;
+  uint8_t Test_Data_Length;
   uint8_t Packet_Payload;
 } hci_le_transmitter_test_cp0;
 
@@ -852,14 +852,14 @@ typedef __PACKED_STRUCT
 typedef __PACKED_STRUCT
 {
   uint8_t Status;
-  uint16_t Number_Of_Packets;
+  uint16_t Num_Packets;
 } hci_le_test_end_rp0;
 
 typedef __PACKED_STRUCT
 {
   uint16_t Connection_Handle;
-  uint16_t TxOctets;
-  uint16_t TxTime;
+  uint16_t TX_Octets;
+  uint16_t TX_Time;
 } hci_le_set_data_length_cp0;
 
 typedef __PACKED_STRUCT
@@ -871,14 +871,14 @@ typedef __PACKED_STRUCT
 typedef __PACKED_STRUCT
 {
   uint8_t Status;
-  uint16_t SuggestedMaxTxOctets;
-  uint16_t SuggestedMaxTxTime;
+  uint16_t Suggested_Max_TX_Octets;
+  uint16_t Suggested_Max_TX_Time;
 } hci_le_read_suggested_default_data_length_rp0;
 
 typedef __PACKED_STRUCT
 {
-  uint16_t SuggestedMaxTxOctets;
-  uint16_t SuggestedMaxTxTime;
+  uint16_t Suggested_Max_TX_Octets;
+  uint16_t Suggested_Max_TX_Time;
 } hci_le_write_suggested_default_data_length_cp0;
 
 typedef __PACKED_STRUCT
@@ -983,10 +983,10 @@ typedef __PACKED_STRUCT
 typedef __PACKED_STRUCT
 {
   uint8_t Status;
-  uint16_t supportedMaxTxOctets;
-  uint16_t supportedMaxTxTime;
-  uint16_t supportedMaxRxOctets;
-  uint16_t supportedMaxRxTime;
+  uint16_t Supported_Max_TX_Octets;
+  uint16_t Supported_Max_TX_Time;
+  uint16_t Supported_Max_RX_Octets;
+  uint16_t Supported_Max_RX_Time;
 } hci_le_read_maximum_data_length_rp0;
 
 typedef __PACKED_STRUCT
@@ -1004,9 +1004,9 @@ typedef __PACKED_STRUCT
 
 typedef __PACKED_STRUCT
 {
-  uint8_t ALL_PHYS;
-  uint8_t TX_PHYS;
-  uint8_t RX_PHYS;
+  uint8_t All_PHYs;
+  uint8_t TX_PHYs;
+  uint8_t RX_PHYs;
 } hci_le_set_default_phy_cp0;
 
 typedef __PACKED_STRUCT
@@ -1017,10 +1017,10 @@ typedef __PACKED_STRUCT
 typedef __PACKED_STRUCT
 {
   uint16_t Connection_Handle;
-  uint8_t ALL_PHYS;
-  uint8_t TX_PHYS;
-  uint8_t RX_PHYS;
-  uint16_t PHY_options;
+  uint8_t All_PHYs;
+  uint8_t TX_PHYs;
+  uint8_t RX_PHYs;
+  uint16_t PHY_Options;
 } hci_le_set_phy_cp0;
 
 typedef __PACKED_STRUCT
@@ -1030,7 +1030,7 @@ typedef __PACKED_STRUCT
 
 typedef __PACKED_STRUCT
 {
-  uint8_t RX_Frequency;
+  uint8_t RX_Channel;
   uint8_t PHY;
   uint8_t Modulation_Index;
 } hci_le_receiver_test_v2_cp0;
@@ -1042,8 +1042,8 @@ typedef __PACKED_STRUCT
 
 typedef __PACKED_STRUCT
 {
-  uint8_t TX_Frequency;
-  uint8_t Length_Of_Test_Data;
+  uint8_t TX_Channel;
+  uint8_t Test_Data_Length;
   uint8_t Packet_Payload;
   uint8_t PHY;
 } hci_le_transmitter_test_v2_cp0;
@@ -1067,19 +1067,19 @@ typedef __PACKED_STRUCT
 typedef __PACKED_STRUCT
 {
   uint8_t Advertising_Handle;
-  uint16_t Adv_Event_Properties;
-  uint8_t Primary_Adv_Interval_Min[3];
-  uint8_t Primary_Adv_Interval_Max[3];
-  uint8_t Primary_Adv_Channel_Map;
+  uint16_t Advertising_Event_Properties;
+  uint8_t Primary_Advertising_Interval_Min[3];
+  uint8_t Primary_Advertising_Interval_Max[3];
+  uint8_t Primary_Advertising_Channel_Map;
   uint8_t Own_Address_Type;
   uint8_t Peer_Address_Type;
   uint8_t Peer_Address[6];
-  uint8_t Adv_Filter_Policy;
-  uint8_t Adv_TX_Power;
-  uint8_t Primary_Adv_PHY;
-  uint8_t Secondary_Adv_Max_Skip;
-  uint8_t Secondary_Adv_PHY;
-  uint8_t Adv_SID;
+  uint8_t Advertising_Filter_Policy;
+  uint8_t Advertising_TX_Power;
+  uint8_t Primary_Advertising_PHY;
+  uint8_t Secondary_Advertising_Max_Skip;
+  uint8_t Secondary_Advertising_PHY;
+  uint8_t Advertising_SID;
   uint8_t Scan_Req_Notification_Enable;
 } hci_le_set_extended_advertising_parameters_cp0;
 
@@ -1207,14 +1207,14 @@ typedef __PACKED_STRUCT
 typedef __PACKED_STRUCT
 {
   uint8_t Status;
-  uint16_t RF_TX_Path_Compensation;
-  uint16_t RF_RX_Path_Compensation;
+  uint16_t RF_TX_Path_Compensation_Value;
+  uint16_t RF_RX_Path_Compensation_Value;
 } hci_le_read_rf_path_compensation_rp0;
 
 typedef __PACKED_STRUCT
 {
-  uint16_t RF_TX_Path_Compensation;
-  uint16_t RF_RX_Path_Compensation;
+  uint16_t RF_TX_Path_Compensation_Value;
+  uint16_t RF_RX_Path_Compensation_Value;
 } hci_le_write_rf_path_compensation_cp0;
 
 typedef __PACKED_STRUCT
@@ -1971,28 +1971,28 @@ typedef __PACKED_STRUCT
   uint8_t Own_Address_Type;
   uint8_t Own_Address[6];
   uint8_t PA_Level;
-} aci_gap_additional_beacon_start_cp0;
+} aci_hal_additional_beacon_start_cp0;
 
 typedef __PACKED_STRUCT
 {
   uint8_t Status;
-} aci_gap_additional_beacon_start_rp0;
+} aci_hal_additional_beacon_start_rp0;
 
 typedef __PACKED_STRUCT
 {
   uint8_t Status;
-} aci_gap_additional_beacon_stop_rp0;
+} aci_hal_additional_beacon_stop_rp0;
 
 typedef __PACKED_STRUCT
 {
   uint8_t Adv_Data_Length;
   uint8_t Adv_Data[BLE_CMD_MAX_PARAM_LEN - 1];
-} aci_gap_additional_beacon_set_data_cp0;
+} aci_hal_additional_beacon_set_data_cp0;
 
 typedef __PACKED_STRUCT
 {
   uint8_t Status;
-} aci_gap_additional_beacon_set_data_rp0;
+} aci_hal_additional_beacon_set_data_rp0;
 
 typedef __PACKED_STRUCT
 {
@@ -2095,12 +2095,12 @@ typedef __PACKED_STRUCT
   uint8_t Scanning_Filter_Policy;
   uint8_t Scanning_PHYs;
   Scan_Param_Phy_t Scan_Param_Phy[2];
-} aci_gap_ext_start_scan_cp0;
+} aci_gap_start_scan_cp0;
 
 typedef __PACKED_STRUCT
 {
   uint8_t Status;
-} aci_gap_ext_start_scan_rp0;
+} aci_gap_start_scan_rp0;
 
 typedef __PACKED_STRUCT
 {
@@ -2536,19 +2536,6 @@ typedef __PACKED_STRUCT
 typedef __PACKED_STRUCT
 {
   uint16_t Connection_Handle;
-  uint16_t Attr_Handle;
-  uint8_t Attribute_Val_Length;
-  uint8_t Attribute_Val[BLE_CMD_MAX_PARAM_LEN - 5];
-} aci_gatt_signed_write_without_resp_cp0;
-
-typedef __PACKED_STRUCT
-{
-  uint8_t Status;
-} aci_gatt_signed_write_without_resp_rp0;
-
-typedef __PACKED_STRUCT
-{
-  uint16_t Connection_Handle;
 } aci_gatt_confirm_indication_cp0;
 
 typedef __PACKED_STRUCT
@@ -2625,6 +2612,22 @@ typedef __PACKED_STRUCT
   uint16_t Value_Length;
   uint8_t Value[(BLE_EVT_MAX_PARAM_LEN - 3) - 5];
 } aci_gatt_read_handle_value_rp0;
+
+typedef __PACKED_STRUCT
+{
+  uint16_t Connection_Handle;
+  uint16_t Attr_Handle;
+  uint16_t Offset;
+  uint16_t Value_Length_Requested;
+} aci_gatt_get_attribute_value_cp0;
+
+typedef __PACKED_STRUCT
+{
+  uint8_t Status;
+  uint16_t Length;
+  uint16_t Value_Length;
+  uint8_t Value[(BLE_EVT_MAX_PARAM_LEN - 3) - 5];
+} aci_gatt_get_attribute_value_rp0;
 
 typedef __PACKED_STRUCT
 {
@@ -3066,6 +3069,7 @@ typedef __PACKED_STRUCT
 typedef __PACKED_STRUCT
 {
   uint16_t Connection_Handle;
+  uint8_t IO_Capability;
 } aci_gap_pass_key_req_event_rp0;
 
 typedef __PACKED_STRUCT
@@ -3383,6 +3387,12 @@ typedef __PACKED_STRUCT
 {
   uint16_t Attr_Handle;
 } aci_gatt_notification_complete_event_rp0;
+
+typedef __PACKED_STRUCT
+{
+  uint16_t Connection_Handle;
+  uint16_t Attr_Handle;
+} aci_gatt_notification_ll_ack_event_rp0;
 
 typedef __PACKED_STRUCT
 {

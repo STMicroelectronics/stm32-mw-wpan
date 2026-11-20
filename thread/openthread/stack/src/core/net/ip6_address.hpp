@@ -31,19 +31,18 @@
  *   This file includes definitions for IPv6 addresses.
  */
 
-#ifndef IP6_ADDRESS_HPP_
-#define IP6_ADDRESS_HPP_
+#ifndef OT_CORE_NET_IP6_ADDRESS_HPP_
+#define OT_CORE_NET_IP6_ADDRESS_HPP_
 
 #include "openthread-core-config.h"
 
 #include <openthread/ip6.h>
 
 #include "common/as_core_type.hpp"
+#include "common/bit_utils.hpp"
 #include "common/clearable.hpp"
 #include "common/encoding.hpp"
 #include "common/equatable.hpp"
-#include "common/num_utils.hpp"
-#include "common/numeric_limits.hpp"
 #include "common/string.hpp"
 #include "mac/mac_types.hpp"
 
@@ -61,6 +60,8 @@ namespace Ip6 {
  *
  * @{
  */
+
+class Prefix;
 
 /**
  * Represents the Network Prefix of an IPv6 address (most significant 64 bits of the address).
@@ -80,6 +81,16 @@ public:
      * @retval kErrorFailed   Failed to generate random ULA Network Prefix.
      */
     Error GenerateRandomUla(void);
+
+    /**
+     * Sets the Network Prefix from a given `Prefix`.
+     *
+     * @param[in] aPrefix  The prefix to use to set the Network Prefix.
+     *
+     * @retval kErrorNone          Successfully set the Network Prefix from @p aPrefix.
+     * @retval kErrorInvalidArgs   The @p aPrefix length is not valid (must be `kLength`).
+     */
+    Error SetFrom(const Prefix &aPrefix);
 
 } OT_TOOL_PACKED_END;
 
@@ -258,17 +269,6 @@ public:
      * @returns The size (in bytes) of the prefix.
      */
     static uint8_t SizeForLength(uint8_t aLength) { return BytesForBitSize(aLength); }
-
-    /**
-     * Returns the number of IPv6 prefix bits that match.
-     *
-     * @param[in]  aPrefixA     A pointer to a byte array containing a first prefix.
-     * @param[in]  aPrefixB     A pointer to a byte array containing a second prefix.
-     * @param[in]  aMaxSize     Number of bytes of the two prefixes.
-     *
-     * @returns The number of prefix bits that match.
-     */
-    static uint8_t MatchLength(const uint8_t *aPrefixA, const uint8_t *aPrefixB, uint8_t aMaxSize);
 
     /**
      * Indicates whether or not a given prefix length is valid for use as a NAT64 prefix.
@@ -621,32 +621,6 @@ public:
     bool IsLinkLocalUnicastOrMulticast(void) const;
 
     /**
-     * Indicates whether or not the IPv6 address is a link-local all nodes multicast address (ff02::01).
-     *
-     * @retval TRUE   If the IPv6 address is a link-local all nodes multicast address.
-     * @retval FALSE  If the IPv6 address is not a link-local all nodes multicast address.
-     */
-    bool IsLinkLocalAllNodesMulticast(void) const;
-
-    /**
-     * Sets the IPv6 address to the link-local all nodes multicast address (ff02::01).
-     */
-    void SetToLinkLocalAllNodesMulticast(void);
-
-    /**
-     * Indicates whether or not the IPv6 address is a link-local all routers multicast address (ff02::02).
-     *
-     * @retval TRUE   If the IPv6 address is a link-local all routers multicast address.
-     * @retval FALSE  If the IPv6 address is not a link-local all routers multicast address.
-     */
-    bool IsLinkLocalAllRoutersMulticast(void) const;
-
-    /**
-     * Sets the IPv6 address to the link-local all routers multicast address (ff02::02).
-     */
-    void SetToLinkLocalAllRoutersMulticast(void);
-
-    /**
      * Indicates whether or not the IPv6 address is a realm-local multicast address.
      *
      * @retval TRUE   If the IPv6 address is a realm-local multicast address.
@@ -655,51 +629,47 @@ public:
     bool IsRealmLocalMulticast(void) const;
 
     /**
-     * Indicates whether or not the IPv6 address is a realm-local all nodes multicast address (ff03::01).
-     *
-     * @retval TRUE   If the IPv6 address is a realm-local all nodes multicast address.
-     * @retval FALSE  If the IPv6 address is not a realm-local all nodes multicast address.
-     */
-    bool IsRealmLocalAllNodesMulticast(void) const;
-
-    /**
-     * Sets the IPv6 address to the realm-local all nodes multicast address (ff03::01)
-     */
-    void SetToRealmLocalAllNodesMulticast(void);
-
-    /**
-     * Indicates whether or not the IPv6 address is a realm-local all routers multicast address (ff03::02).
-     *
-     * @retval TRUE   If the IPv6 address is a realm-local all routers multicast address.
-     * @retval FALSE  If the IPv6 address is not a realm-local all routers multicast address.
-     */
-    bool IsRealmLocalAllRoutersMulticast(void) const;
-
-    /**
-     * Sets the IPv6 address to the realm-local all routers multicast address (ff03::02).
-     */
-    void SetToRealmLocalAllRoutersMulticast(void);
-
-    /**
-     * Indicates whether or not the IPv6 address is a realm-local all MPL forwarders address (ff03::fc).
-     *
-     * @retval TRUE   If the IPv6 address is a realm-local all MPL forwarders address.
-     * @retval FALSE  If the IPv6 address is not a realm-local all MPL forwarders address.
-     */
-    bool IsRealmLocalAllMplForwarders(void) const;
-
-    /**
-     * Sets the the IPv6 address to the realm-local all MPL forwarders address (ff03::fc).
-     */
-    void SetToRealmLocalAllMplForwarders(void);
-
-    /**
      * Indicates whether or not the IPv6 address is multicast larger than realm local.
      *
      * @retval TRUE   If the IPv6 address is multicast larger than realm local.
      * @retval FALSE  If the IPv6 address is not multicast or the scope is not larger than realm local.
      */
     bool IsMulticastLargerThanRealmLocal(void) const;
+
+    /**
+     * Returns the link-local all nodes multicast address (ff02::01).
+     *
+     * @returns The link-local all nodes multicast address.
+     */
+    static const Address &GetLinkLocalAllNodesMulticast(void);
+
+    /**
+     * Returns the link-local all routers multicast address (ff02::02)
+     *
+     * @returns The link-local all routers multicast address.
+     */
+    static const Address &GetLinkLocalAllRoutersMulticast(void);
+
+    /**
+     * Returns the realm-local all nodes multicast address (ff03::01)
+     *
+     * @returns The realm-local all nodes multicast address.
+     */
+    static const Address &GetRealmLocalAllNodesMulticast(void);
+
+    /**
+     * Returns the realm-local all routers multicast address (ff03::02).
+     *
+     * @returns The realm-local all routers multicast address.
+     */
+    static const Address &GetRealmLocalAllRoutersMulticast(void);
+
+    /**
+     * Returns the realm-local all MPL forwarders address (ff03::fc).
+     *
+     * @returns The realm-local all MPL forwarders address.
+     */
+    static const Address &GetRealmLocalAllMplForwarders(void);
 
     /**
      * Sets the IPv6 address to a Routing Locator (RLOC) IPv6 address with a given Network Prefix and
@@ -951,12 +921,6 @@ private:
     void ToString(StringWriter &aWriter) const;
     void AppendHexWords(StringWriter &aWriter, uint8_t aLength) const;
 
-    static const Address &GetLinkLocalAllNodesMulticast(void);
-    static const Address &GetLinkLocalAllRoutersMulticast(void);
-    static const Address &GetRealmLocalAllNodesMulticast(void);
-    static const Address &GetRealmLocalAllRoutersMulticast(void);
-    static const Address &GetRealmLocalAllMplForwarders(void);
-
     static void CopyBits(uint8_t *aDst, const uint8_t *aSrc, uint8_t aNumBits);
 
     Error ParseFrom(const char *aString, char aTerminatorChar);
@@ -976,4 +940,4 @@ DefineCoreType(otIp6Address, Ip6::Address);
 
 } // namespace ot
 
-#endif // IP6_ADDRESS_HPP_
+#endif // OT_CORE_NET_IP6_ADDRESS_HPP_

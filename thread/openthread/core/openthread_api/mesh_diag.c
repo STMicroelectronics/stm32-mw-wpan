@@ -203,4 +203,42 @@ otError otMeshDiagQueryRouterNeighborTable(otInstance                           
   
   return rspData;
 }
+
+uint32_t otMeshDiagGetResponseTimeout(otInstance *aInstance)
+{
+  otError rspData;
+
+  Pre_OtCmdProcessing();
+  /* prepare buffer */
+  Thread_OT_Cmd_Request_t* p_ot_req = THREAD_Get_OTCmdPayloadBuffer();
+
+  p_ot_req->ID = MSG_M4TOM0_OT_MESH_DIAG_GET_RESPONSE_TIMEOUT;
+
+  p_ot_req->Size=0;
+  
+  Ot_Cmd_Transfer();
+  
+  p_ot_req = THREAD_Get_OTCmdRspPayloadBuffer();
+  rspData = (otError)p_ot_req->Data[0];
+  
+  Post_OtCmdProcessing();
+  
+  return rspData;
+}
+
+void otMeshDiagSetResponseTimeout(otInstance *aInstance, uint32_t aTimeout)
+{
+  Pre_OtCmdProcessing();
+  /* prepare buffer */
+  Thread_OT_Cmd_Request_t* p_ot_req = THREAD_Get_OTCmdPayloadBuffer();
+
+  p_ot_req->ID = MSG_M4TOM0_OT_MESH_DIAG_SET_RESPONSE_TIMEOUT;
+
+  p_ot_req->Size=1;
+  p_ot_req->Data[0] = aTimeout;
+
+  Ot_Cmd_Transfer();
+
+  Post_OtCmdProcessing();
+}
 #endif /* OPENTHREAD_CONFIG_MESH_DIAG_ENABLE && OPENTHREAD_FTD */

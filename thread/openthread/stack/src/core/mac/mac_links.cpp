@@ -195,9 +195,8 @@ const KeyMaterial *Links::GetCurrentMacKey(const Frame &aFrame) const
     }
 #endif
 
-    OT_UNUSED_VARIABLE(aFrame);
-
 exit:
+    OT_UNUSED_VARIABLE(aFrame);
     return key;
 }
 

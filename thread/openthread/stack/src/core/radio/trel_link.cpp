@@ -72,7 +72,7 @@ void Link::AfterInit(void) { mInterface.Init(); }
 
 void Link::Enable(void)
 {
-    mInterface.Enable();
+    mInterface.SetEnabled(true, Interface::kRequesterStack);
 
     if (mState == kStateDisabled)
     {
@@ -82,7 +82,7 @@ void Link::Enable(void)
 
 void Link::Disable(void)
 {
-    mInterface.Disable();
+    mInterface.SetEnabled(false, Interface::kRequesterStack);
 
     if (mState != kStateDisabled)
     {
@@ -347,6 +347,11 @@ void Link::ProcessReceivedPacket(Packet &aPacket, const Ip6::SockAddr &aSockAddr
     mRxPacketSenderAddr = aSockAddr;
     mRxPacketPeer       = Get<PeerTable>().FindMatching(aPacket.GetHeader().GetSource());
 
+    if (mRxPacketPeer != nullptr)
+    {
+        mRxPacketPeer->UpdateLastInteractionTime();
+    }
+
     if (type != Header::kTypeBroadcast)
     {
         VerifyOrExit(aPacket.GetHeader().GetDestination() == Get<Mac::Mac>().GetExtAddress());
@@ -505,23 +510,15 @@ void Link::HandleNotifierEvents(Events aEvents)
 
 const char *Link::StateToString(State aState)
 {
-    static const char *const kStateStrings[] = {
-        "Disabled", // (0) kStateDisabled
-        "Sleep",    // (1) kStateSleep
-        "Receive",  // (2) kStateReceive
-        "Transmit", // (3) kStateTransmit
-    };
+#define StateMapList(_)           \
+    _(kStateDisabled, "Disabled") \
+    _(kStateSleep, "Sleep")       \
+    _(kStateReceive, "Receive")   \
+    _(kStateTransmit, "Transmit")
 
-    struct EnumCheck
-    {
-        InitEnumValidatorCounter();
-        ValidateNextEnum(kStateDisabled);
-        ValidateNextEnum(kStateSleep);
-        ValidateNextEnum(kStateReceive);
-        ValidateNextEnum(kStateTransmit);
-    };
+    DefineEnumStringArray(StateMapList);
 
-    return kStateStrings[aState];
+    return kStrings[aState];
 }
 
 // LCOV_EXCL_STOP

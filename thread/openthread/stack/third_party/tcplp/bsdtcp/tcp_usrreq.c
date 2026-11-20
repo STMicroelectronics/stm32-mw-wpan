@@ -483,8 +483,8 @@ tcp_usrclosed(struct tcpcb *tp)
 		if (tp->t_state == TCPS_FIN_WAIT_2) {
 			int timeout;
 
-			timeout = (tcp_fast_finwait2_recycle) ?
-			    tcp_finwait2_timeout : TP_MAXIDLE(tp);
+			timeout = (int)((uint32_t)(tcp_fast_finwait2_recycle) ?
+			    (uint32_t)(tcp_finwait2_timeout) : TP_MAXIDLE(tp));
 			tcp_timer_activate(tp, TT_2MSL, timeout);
 		}
 	}

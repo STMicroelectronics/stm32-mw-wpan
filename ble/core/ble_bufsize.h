@@ -5,7 +5,7 @@
  *****************************************************************************
  * @attention
  *
- * Copyright (c) 2018-2025 STMicroelectronics.
+ * Copyright (c) 2018-2026 STMicroelectronics.
  * All rights reserved.
  *
  * This software is licensed under terms that can be found in the LICENSE file
@@ -30,9 +30,9 @@
 #define BLE_DEFAULT_MAX_ATT_SIZE            512
 
 /*
- * BLE_PREP_WRITE_X_ATT: compute how many Prepare Write Request are needed to
- * write a characteristic with size 'max_att' when the used ATT_MTU value is
- * equal to BLE_DEFAULT_ATT_MTU (23).
+ * BLE_PREP_WRITE_X_ATT: compute how many memory blocks are needed to store
+ * Prepare Write Request packets when writing a characteristic with size
+ * 'max_att' and the used ATT_MTU value is equal to BLE_DEFAULT_ATT_MTU (23).
  */
 #define BLE_PREP_WRITE_X_ATT(max_att) \
         (DIVC(max_att, BLE_DEFAULT_ATT_MTU - 5) * 2)
@@ -44,8 +44,8 @@
         BLE_PREP_WRITE_X_ATT(BLE_DEFAULT_MAX_ATT_SIZE)
 
 /*
- * BLE_MEM_BLOCK_X_MTU: compute how many memory blocks are needed to compose
- * an ATT packet with ATT_MTU=mtu.
+ * BLE_MEM_BLOCK_X_... compute how many memory blocks are needed to compose
+ * ACL packets, based on the MTU (mtu) and the number of links (n_link)
  */
 #define BLE_MEM_BLOCK_SIZE                   32
 
@@ -56,31 +56,21 @@
 #endif
 
 #define BLE_MEM_BLOCK_X_TX(mtu) \
-        (DIVC((mtu) + 4U, BLE_MEM_BLOCK_SIZE) + 1)
+        (DIVC((mtu) + 4, BLE_MEM_BLOCK_SIZE) + 1)
 
 #define BLE_MEM_BLOCK_X_RX(mtu, n_link) \
-        ((DIVC((mtu) + 4U, BLE_MEM_BLOCK_SIZE) + 2U) * (n_link) + 1)
-
-#define BLE_MEM_BLOCK_X_MTU(mtu, n_link) \
-        (BLE_MEM_BLOCK_X_TX(mtu) + BLE_MEM_BLOCK_X_PTX(n_link) + \
-         BLE_MEM_BLOCK_X_RX(mtu, n_link))
-
-/*
- * BLE_MBLOCKS_SECURE_CONNECTIONS: minimum number of blocks required for
- * secure connections
- */
-#define BLE_MBLOCKS_SECURE_CONNECTIONS        4
+        (((DIVC((mtu) + 4, BLE_MEM_BLOCK_SIZE) + 2) * (n_link)) + 1)
 
 /*
  * BLE_MBLOCKS_CALC: minimum number of buffers needed by the stack.
- * This is the minimum racomanded value and depends on:
+ * This is the minimum recommended value and depends on:
  *  - pw: size of Prepare Write List
- *  - mtu: ATT_MTU size
+ *  - mtu: maximum between ATT MTU, SMP MTU (65) and L2CAP COC MPS
  *  - n_link: maximum number of simultaneous connections
  */
 #define BLE_MBLOCKS_CALC(pw, mtu, n_link) \
-        ((pw) + MAX(BLE_MEM_BLOCK_X_MTU(mtu, n_link), \
-                    BLE_MBLOCKS_SECURE_CONNECTIONS))
+        ((pw) + BLE_MEM_BLOCK_X_TX(mtu) + BLE_MEM_BLOCK_X_PTX(n_link) + \
+         BLE_MEM_BLOCK_X_RX(mtu, n_link))
 
 /*
  * BLE_FIXED_BUFFER_SIZE_BYTES:
@@ -156,6 +146,47 @@
  */
 #define BLE_EXT_ADV_BUFFER_SIZE(set_nbr, data_len) \
         (2512 + ((892 + (DIVC(data_len, 207) * 244)) * (set_nbr)))
+
+/*
+ * BLE_DEFAULT_NUM_GATT_SERVICES: this macro returns the number of services
+ * created by the BLE stack after call to ACI_GATT_INIT and ACI_GAP_INIT.
+ */
+#define BLE_DEFAULT_NUM_GATT_SERVICES 2
+
+/*
+ * BLE_DEFAULT_NUM_GATT_ATTRIBUTES: this macro returns the number of attributes
+ * created by the BLE stack after call to ACI_GATT_INIT and ACI_GAP_INIT.
+ *
+ * @param options: option flags used at BLE stack initialization
+ *
+ * @param privacy_en: 1 if privacy is used; otherwise 0
+ */
+#define BLE_DEFAULT_NUM_GATT_ATTRIBUTES(options, privacy_en) \
+        ((((options) & BLE_OPTIONS_ENHANCED_ATT) ? \
+          (((options) & BLE_OPTIONS_NO_SVC_CHANGE_DESC) ? 4 : \
+           ((options) & BLE_OPTIONS_GATT_CACHING) ? 9 : 7) : \
+          (((options) & BLE_OPTIONS_NO_SVC_CHANGE_DESC) ? 0 : \
+           ((options) & BLE_OPTIONS_GATT_CACHING) ?  7 : 3)) + \
+         ((privacy_en) ? 8 : 6))
+
+/*
+ * BLE_DEFAULT_ATT_VALUE_ARRAY_SIZE : this macro returns the size of attribute
+ * values array used by the BLE stack after call to ACI_GATT_INIT and
+ * ACI_GAP_INIT.
+ *
+ * @param options: option flags used at BLE stack initialization
+ *
+ * @param n_link: Maximum number of simultaneous connections that the device
+ * supports. Valid values are from 1 to 8.
+ *
+ * @param dev_name_len: Length of the device name as passed to ACI_GAP_INIT
+ */
+#define BLE_DEFAULT_ATT_VALUE_ARRAY_SIZE(options, n_link, dev_name_len) \
+        ((((options) & BLE_OPTIONS_NO_SVC_CHANGE_DESC) ? \
+          (((options) & BLE_OPTIONS_ENHANCED_ATT) ? (11 + (n_link)) : 0) : \
+          (((options) & BLE_OPTIONS_GATT_CACHING) ? (41 + ((n_link) * 3)) : \
+           ((options) & BLE_OPTIONS_ENHANCED_ATT) ? (20 + ((n_link) * 3)) : \
+            (9 + ((n_link) * 2)))) + 31 + (dev_name_len))
 
 /*
  * BLE_TOTAL_BUFFER_SIZE_GATT: this macro returns the amount of memory,

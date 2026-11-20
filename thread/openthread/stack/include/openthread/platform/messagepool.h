@@ -35,9 +35,10 @@
 #ifndef OPENTHREAD_PLATFORM_MESSAGEPOOL_H_
 #define OPENTHREAD_PLATFORM_MESSAGEPOOL_H_
 
+#include <stddef.h>
 #include <stdint.h>
 
-#include <openthread/message.h>
+#include <openthread/instance.h>
 
 /**
  * @addtogroup plat-messagepool
@@ -104,6 +105,15 @@ void otPlatMessagePoolFree(otInstance *aInstance, otMessageBuffer *aBuffer);
  * @returns The number of buffers currently free and available to OpenThread.
  */
 uint16_t otPlatMessagePoolNumFreeBuffers(otInstance *aInstance);
+
+/**
+ * Deinitialize the platform implemented message pool.
+ *
+ * Is used when `OPENTHREAD_CONFIG_PLATFORM_MESSAGE_MANAGEMENT` is enabled.
+ *
+ * @param[in] aInstance  A pointer to the OpenThread instance.
+ */
+void otPlatMessagePoolDeinit(otInstance *aInstance);
 
 #ifdef __cplusplus
 } // extern "C"

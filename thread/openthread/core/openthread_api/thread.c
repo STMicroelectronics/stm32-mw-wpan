@@ -137,6 +137,7 @@ otError otThreadDiscover(otInstance *             aInstance,
   return rspData;
 }
 
+#if OPENTHREAD_CONFIG_JOINER_ADV_EXPERIMENTAL_ENABLE
 otError otThreadSetJoinerAdvertisement(otInstance *   aInstance,
                                        uint32_t       aOui,
                                        const uint8_t *aAdvData,
@@ -165,6 +166,7 @@ otError otThreadSetJoinerAdvertisement(otInstance *   aInstance,
   
   return rspData;
 }
+#endif
 
 bool otThreadIsDiscoverInProgress(otInstance *aInstance)
 {

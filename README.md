@@ -1,6 +1,6 @@
 # STM32 WPAN Middleware Library MCU Software Component
 
-![tag](https://img.shields.io/badge/tag-v1.24.0-brightgreen.svg)
+![tag](https://img.shields.io/badge/tag-v1.25.0-brightgreen.svg)
 
 ## Overview of the STM32Cube MCU offer on GitHub
 
@@ -23,7 +23,7 @@ This repository provides the STM32Cube **WPAN** Middleware Library, **common to 
 
 ## Release note
 
-Details about the content of this release are available in the release note [here](https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-mw-wpan/blob/main/Release_Notes.html).
+Details about the content of this release are available in the release note [here](https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32-mw-wpan/blob/release/v1.x.x/Release_Notes.html).
 
 ## Compatibility information
 

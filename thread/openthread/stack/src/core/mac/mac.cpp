@@ -93,8 +93,7 @@ Mac::Mac(Instance &aInstance)
     , mWakeupListenInterval(kDefaultWedListenInterval)
     , mWakeupListenDuration(kDefaultWedListenDuration)
 #endif
-    , mActiveScanHandler(nullptr) // Initialize `mActiveScanHandler` and `mEnergyScanHandler` union
-    , mScanHandlerContext(nullptr)
+    , mActiveScanCallback()
     , mLinks(aInstance)
     , mOperationTask(aInstance)
     , mTimer(aInstance)
@@ -141,15 +140,14 @@ void Mac::SetEnabled(bool aEnable)
     }
 }
 
-Error Mac::ActiveScan(uint32_t aScanChannels, uint16_t aScanDuration, ActiveScanHandler aHandler, void *aContext)
+Error Mac::ActiveScan(uint32_t aScanChannels, uint16_t aScanDuration, ScanResult::Handler aHandler, void *aContext)
 {
     Error error = kErrorNone;
 
     VerifyOrExit(IsEnabled(), error = kErrorInvalidState);
     VerifyOrExit(!IsActiveScanInProgress() && !IsEnergyScanInProgress(), error = kErrorBusy);
 
-    mActiveScanHandler  = aHandler;
-    mScanHandlerContext = aContext;
+    mActiveScanCallback.Set(aHandler, aContext);
 
     if (aScanDuration == 0)
     {
@@ -169,8 +167,7 @@ Error Mac::EnergyScan(uint32_t aScanChannels, uint16_t aScanDuration, EnergyScan
     VerifyOrExit(IsEnabled(), error = kErrorInvalidState);
     VerifyOrExit(!IsActiveScanInProgress() && !IsEnergyScanInProgress(), error = kErrorBusy);
 
-    mEnergyScanHandler  = aHandler;
-    mScanHandlerContext = aContext;
+    mEnergyScanCallback.Set(aHandler, aContext);
 
     Scan(kOperationEnergyScan, aScanChannels, aScanDuration);
 
@@ -225,57 +222,6 @@ bool Mac::IsInTransmitState(void) const
     return retval;
 }
 
-Error Mac::ConvertBeaconToActiveScanResult(const RxFrame *aBeaconFrame, ActiveScanResult &aResult)
-{
-    Error   error = kErrorNone;
-    Address address;
-#if OPENTHREAD_CONFIG_MAC_BEACON_PAYLOAD_PARSING_ENABLE
-    const BeaconPayload *beaconPayload = nullptr;
-    const Beacon        *beacon        = nullptr;
-    uint16_t             payloadLength;
-#endif
-
-    ClearAllBytes(aResult);
-
-    VerifyOrExit(aBeaconFrame != nullptr, error = kErrorInvalidArgs);
-
-    VerifyOrExit(aBeaconFrame->GetType() == Frame::kTypeBeacon, error = kErrorParse);
-    SuccessOrExit(error = aBeaconFrame->GetSrcAddr(address));
-    VerifyOrExit(address.IsExtended(), error = kErrorParse);
-    aResult.mExtAddress = address.GetExtended();
-
-    if (kErrorNone != aBeaconFrame->GetSrcPanId(aResult.mPanId))
-    {
-        IgnoreError(aBeaconFrame->GetDstPanId(aResult.mPanId));
-    }
-
-    aResult.mChannel = aBeaconFrame->GetChannel();
-    aResult.mRssi    = aBeaconFrame->GetRssi();
-    aResult.mLqi     = aBeaconFrame->GetLqi();
-
-#if OPENTHREAD_CONFIG_MAC_BEACON_PAYLOAD_PARSING_ENABLE
-    payloadLength = aBeaconFrame->GetPayloadLength();
-
-    beacon        = reinterpret_cast<const Beacon *>(aBeaconFrame->GetPayload());
-    beaconPayload = reinterpret_cast<const BeaconPayload *>(beacon->GetPayload());
-
-    if ((payloadLength >= (sizeof(*beacon) + sizeof(*beaconPayload))) && beacon->IsValid() && beaconPayload->IsValid())
-    {
-        aResult.mVersion    = beaconPayload->GetProtocolVersion();
-        aResult.mIsJoinable = beaconPayload->IsJoiningPermitted();
-        aResult.mIsNative   = beaconPayload->IsNative();
-        IgnoreError(AsCoreType(&aResult.mNetworkName).Set(beaconPayload->GetNetworkName()));
-        VerifyOrExit(IsValidUtf8String(aResult.mNetworkName.m8), error = kErrorParse);
-        aResult.mExtendedPanId = beaconPayload->GetExtendedPanId();
-    }
-#endif
-
-    LogBeacon("Received");
-
-exit:
-    return error;
-}
-
 Error Mac::UpdateScanChannel(void)
 {
     Error error;
@@ -293,10 +239,12 @@ void Mac::PerformActiveScan(void)
     if (UpdateScanChannel() == kErrorNone)
     {
         // If there are more channels to scan, send the beacon request.
+        mLinks.SetRxOnWhenIdle(true);
         BeginTransmit();
     }
     else
     {
+        mLinks.SetRxOnWhenIdle(mRxOnWhenIdle);
         mLinks.SetPanId(mPanId);
         FinishOperation();
         ReportActiveScanResult(nullptr);
@@ -306,18 +254,20 @@ void Mac::PerformActiveScan(void)
 
 void Mac::ReportActiveScanResult(const RxFrame *aBeaconFrame)
 {
-    VerifyOrExit(mActiveScanHandler != nullptr);
+    VerifyOrExit(mActiveScanCallback.IsSet());
 
     if (aBeaconFrame == nullptr)
     {
-        mActiveScanHandler(nullptr, mScanHandlerContext);
+        mActiveScanCallback.Invoke(nullptr);
     }
     else
     {
-        ActiveScanResult result;
+        ScanResult result;
 
-        SuccessOrExit(ConvertBeaconToActiveScanResult(aBeaconFrame, result));
-        mActiveScanHandler(&result, mScanHandlerContext);
+        SuccessOrExit(result.PopulateFromBeacon(aBeaconFrame));
+        LogBeacon("Received");
+
+        mActiveScanCallback.Invoke(&result);
     }
 
 exit:
@@ -354,10 +304,7 @@ exit:
     {
         FinishOperation();
 
-        if (mEnergyScanHandler != nullptr)
-        {
-            mEnergyScanHandler(nullptr, mScanHandlerContext);
-        }
+        mEnergyScanCallback.InvokeIfSet(nullptr);
 
         PerformNextOperation();
     }
@@ -367,12 +314,12 @@ void Mac::ReportEnergyScanResult(int8_t aRssi)
 {
     EnergyScanResult result;
 
-    VerifyOrExit((mEnergyScanHandler != nullptr) && (aRssi != Radio::kInvalidRssi));
+    VerifyOrExit(mEnergyScanCallback.IsSet() && (aRssi != Radio::kInvalidRssi));
 
     result.mChannel = mScanChannel;
     result.mMaxRssi = aRssi;
 
-    mEnergyScanHandler(&result, mScanHandlerContext);
+    mEnergyScanCallback.Invoke(&result);
 
 exit:
     return;
@@ -821,8 +768,8 @@ TxFrame *Mac::PrepareBeacon(void)
         beaconPayload->ClearJoiningPermitted();
     }
 
-    beaconPayload->SetNetworkName(Get<MeshCoP::NetworkNameManager>().GetNetworkName().GetAsData());
-    beaconPayload->SetExtendedPanId(Get<MeshCoP::ExtendedPanIdManager>().GetExtPanId());
+    beaconPayload->SetNetworkName(Get<MeshCoP::NetworkIdentity>().GetNetworkName().GetAsData());
+    beaconPayload->SetExtendedPanId(Get<MeshCoP::NetworkIdentity>().GetExtPanId());
 
     beaconLength += sizeof(*beaconPayload);
 
@@ -2301,45 +2248,37 @@ uint8_t Mac::ComputeLinkMargin(int8_t aRss) const { return ot::ComputeLinkMargin
 
 const char *Mac::OperationToString(Operation aOperation)
 {
-    static const char *const kOperationStrings[] = {
-        "Idle",               // (0) kOperationIdle
-        "ActiveScan",         // (1) kOperationActiveScan
-        "EnergyScan",         // (2) kOperationEnergyScan
-        "TransmitBeacon",     // (3) kOperationTransmitBeacon
-        "TransmitDataDirect", // (4) kOperationTransmitDataDirect
-        "TransmitPoll",       // (5) kOperationTransmitPoll
-        "WaitingForData",     // (6) kOperationWaitingForData
+#define OperationMapList(_)                               \
+    _(kOperationIdle, "Idle")                             \
+    _(kOperationActiveScan, "ActiveScan")                 \
+    _(kOperationEnergyScan, "EnergyScan")                 \
+    _(kOperationTransmitBeacon, "TransmitBeacon")         \
+    _(kOperationTransmitDataDirect, "TransmitDataDirect") \
+    _(kOperationTransmitPoll, "TransmitPoll")             \
+    _(kOperationWaitingForData, "WaitingForData")         \
+    FtdOperationMapList(_) CslTxOperationMapList(_) WakeupOperationMapList(_)
+
 #if OPENTHREAD_FTD
-        "TransmitDataIndirect", // (7) kOperationTransmitDataIndirect
+#define FtdOperationMapList(_) _(kOperationTransmitDataIndirect, "TransmitDataIndirect")
+#else
+#define FtdOperationMapList(_)
 #endif
+
 #if OPENTHREAD_CONFIG_MAC_CSL_TRANSMITTER_ENABLE
-        "TransmitDataCsl", // (8) kOperationTransmitDataCsl
+#define CslTxOperationMapList(_) _(kOperationTransmitDataCsl, "TransmitDataCsl")
+#else
+#define CslTxOperationMapList(_)
 #endif
+
 #if OPENTHREAD_CONFIG_WAKEUP_COORDINATOR_ENABLE
-        "TransmitWakeup", // kOperationTransmitWakeup
+#define WakeupOperationMapList(_) _(kOperationTransmitWakeup, "TransmitWakeup")
+#else
+#define WakeupOperationMapList(_)
 #endif
-    };
 
-    struct OperationChecker
-    {
-        InitEnumValidatorCounter();
+    DefineEnumStringArray(OperationMapList);
 
-        ValidateNextEnum(kOperationIdle);
-        ValidateNextEnum(kOperationActiveScan);
-        ValidateNextEnum(kOperationEnergyScan);
-        ValidateNextEnum(kOperationTransmitBeacon);
-        ValidateNextEnum(kOperationTransmitDataDirect);
-        ValidateNextEnum(kOperationTransmitPoll);
-        ValidateNextEnum(kOperationWaitingForData);
-#if OPENTHREAD_FTD
-        ValidateNextEnum(kOperationTransmitDataIndirect);
-#endif
-#if OPENTHREAD_CONFIG_MAC_CSL_TRANSMITTER_ENABLE
-        ValidateNextEnum(kOperationTransmitDataCsl);
-#endif
-    };
-
-    return kOperationStrings[aOperation];
+    return kStrings[aOperation];
 }
 
 void Mac::LogFrameRxFailure(const RxFrame *aFrame, Error aError) const
@@ -2699,18 +2638,22 @@ Error Mac::HandleWakeupFrame(const RxFrame &aFrame)
 {
     Error               error = kErrorNone;
     const ConnectionIe *connectionIe;
+    Address             srcAddress;
+    WakeupInfo          wakeupInfo;
     uint32_t            rvTimeUs;
     uint64_t            rvTimestampUs;
-    uint32_t            attachDelayMs;
     uint64_t            radioNowUs;
-    uint8_t             retryInterval;
-    uint8_t             retryCount;
 
     VerifyOrExit(mWakeupListenEnabled && aFrame.IsWakeupFrame());
-    connectionIe  = aFrame.GetConnectionIe();
-    retryInterval = connectionIe->GetRetryInterval();
-    retryCount    = connectionIe->GetRetryCount();
-    VerifyOrExit(retryInterval > 0 && retryCount > 0, error = kErrorInvalidArgs);
+
+    SuccessOrExit(error = aFrame.GetSrcAddr(srcAddress));
+    VerifyOrExit(srcAddress.IsExtended(), error = kErrorDrop);
+
+    wakeupInfo.mExtAddress    = srcAddress.GetExtended();
+    connectionIe              = aFrame.GetConnectionIe();
+    wakeupInfo.mRetryInterval = connectionIe->GetRetryInterval();
+    wakeupInfo.mRetryCount    = connectionIe->GetRetryCount();
+    VerifyOrExit(wakeupInfo.mRetryInterval > 0 && wakeupInfo.mRetryCount > 0, error = kErrorInvalidArgs);
 
     radioNowUs    = otPlatRadioGetNow(&GetInstance());
     rvTimeUs      = aFrame.GetRendezvousTimeIe()->GetRendezvousTime() * kUsPerTenSymbols;
@@ -2718,12 +2661,12 @@ Error Mac::HandleWakeupFrame(const RxFrame &aFrame)
 
     if (rvTimestampUs > radioNowUs + kCslRequestAhead)
     {
-        attachDelayMs = static_cast<uint32_t>(rvTimestampUs - radioNowUs - kCslRequestAhead);
-        attachDelayMs = attachDelayMs / 1000;
+        wakeupInfo.mAttachDelayMs = static_cast<uint32_t>(rvTimestampUs - radioNowUs - kCslRequestAhead);
+        wakeupInfo.mAttachDelayMs = wakeupInfo.mAttachDelayMs / Time::kOneMsecInUsec;
     }
     else
     {
-        attachDelayMs = 0;
+        wakeupInfo.mAttachDelayMs = 0;
     }
 
 #if OT_SHOULD_LOG_AT(OT_LOG_LEVEL_INFO)
@@ -2732,15 +2675,14 @@ Error Mac::HandleWakeupFrame(const RxFrame &aFrame)
 
         IgnoreError(aFrame.GetFrameCounter(frameCounter));
         LogInfo("Received wake-up frame, fc:%lu, rendezvous:%luus, retries:%u/%u", ToUlong(frameCounter),
-                ToUlong(rvTimeUs), retryCount, retryInterval);
+                ToUlong(rvTimeUs), wakeupInfo.mRetryCount, wakeupInfo.mRetryInterval);
     }
 #endif
 
     // Stop receiving more wake up frames
     IgnoreError(SetWakeupListenEnabled(false));
 
-    // TODO: start MLE attach process with the WC
-    OT_UNUSED_VARIABLE(attachDelayMs);
+    Get<Mle::Mle>().HandleWakeupFrame(wakeupInfo);
 
 exit:
     return error;

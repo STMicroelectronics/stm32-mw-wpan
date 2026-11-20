@@ -35,8 +35,11 @@
 #ifndef OPENTHREAD_MESSAGE_H_
 #define OPENTHREAD_MESSAGE_H_
 
+#include <stdbool.h>
+#include <stdint.h>
+
+#include <openthread/error.h>
 #include <openthread/instance.h>
-#include <openthread/platform/toolchain.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -104,6 +107,15 @@ typedef struct otThreadLinkInfo
     // Applicable only when OPENTHREAD_CONFIG_MULTI_RADIO feature is enabled.
     uint8_t mRadioType; ///< Radio link type.
 } otThreadLinkInfo;
+
+/**
+ * Gets the `otInstance` associated with a given message.
+ *
+ * @param[in] aMessage  A message.
+ *
+ * @returns The `otInstance` associated with @p aMessage.
+ */
+otInstance *otMessageGetInstance(const otMessage *aMessage);
 
 /**
  * Free an allocated message buffer.
@@ -286,6 +298,44 @@ int8_t otMessageGetRss(const otMessage *aMessage);
 otError otMessageGetThreadLinkInfo(const otMessage *aMessage, otThreadLinkInfo *aLinkInfo);
 
 /**
+ * Represents the callback function pointer to notify the transmission outcome (success or failure) of a message.
+ *
+ * The error indicates the transmission status of the IPv6 message from this device to an immediate neighbor (one-hop
+ * transmission). It doesn't indicate that the message is received by its final intended destination (multi-hop away).
+ *
+ * For a unicast IPv6 message, an `OT_ERROR_NONE` error indicates that the message (all its corresponding fragment
+ * frames if the message is larger and requires fragmentation) was successfully delivered to the immediate neighbor,
+ * and a MAC layer acknowledgment was received for all fragments. This is reported regardless of whether the message
+ * is sent using direct TX or indirect TX (to a sleepy child using CSL or data poll triggered TX).
+ *
+ * For a multicast message, an `OT_ERROR_NONE` status indicates that the message (all its fragment frames) was
+ * successfully broadcast. Note that no MAC-level acknowledgment is required for broadcast frame TX.
+ *
+ * The OpenThread stack may alter the content of the message as it is prepared for transmission (e.g., IPv6 headers
+ * may be prepended, or additional metadata appended at the end). So, the content of @p aMessage when this callback
+ * is invoked may differ from its original content (e.g., when it was given as input in `otIp6Send()` for transmission).
+ *
+ * @param[in] aMessage   A pointer to the message.
+ * @param[in] aError     The TX error when sending the message.
+ * @param[in] aContext   A pointer to the user-provided context when the callback was registered.
+ */
+typedef void (*otMessageTxCallback)(const otMessage *aMessage, otError aError, void *aContext);
+
+/**
+ * Registers a callback to be notified of a message's transmission outcome.
+ *
+ * Calling this function again for the same message will replace any previously registered callback.
+ *
+ * If the message is never actually sent (e.g., it's not passed to `otIp6Send()` or other send APIs), the callback
+ * will still be invoked when the message is freed. In this case, `OT_ERROR_DROP` will be passed as the error.
+ *
+ * @param[in] aMessage   The message to register the callback with.
+ * @param[in] aCallback  The TX callback.
+ * @param[in] aContext   A pointer to a user-provided arbitrary context for the callback.
+ */
+void otMessageRegisterTxCallback(otMessage *aMessage, otMessageTxCallback aCallback, void *aContext);
+
+/**
  * Append bytes to a message.
  *
  * @param[in]  aMessage  A pointer to a message buffer.
@@ -346,11 +396,27 @@ uint16_t otMessageRead(const otMessage *aMessage, uint16_t aOffset, void *aBuf, 
 int otMessageWrite(otMessage *aMessage, uint16_t aOffset, const void *aBuf, uint16_t aLength);
 
 /**
+ * Creates a clone of a given message.
+ *
+ * The new message is allocated from the same message pool as @p aMessage. The entire message content from @p aMessage
+ * is copied to the new message.
+ *
+ * The caller takes ownership of the returned message and must free it by calling `otMessageFree()` when it is no
+ * longer needed.
+ *
+ * @param[in] aMessage   A pointer to the message to clone.
+ *
+ * @returns A pointer to the new message clone, or `nullptr` if no message buffers are available.
+ */
+otMessage *otMessageClone(const otMessage *aMessage);
+
+/**
  * Represents an OpenThread message queue.
  */
 typedef struct
 {
-    void *mData; ///< Opaque data used by the implementation.
+    void *mData;  ///< Opaque data used by the implementation.
+    void *mData2; ///< Opaque data used by the implementation.
 } otMessageQueue;
 
 /**

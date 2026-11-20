@@ -31,8 +31,8 @@
  *   This file includes definitions for locator class for OpenThread objects.
  */
 
-#ifndef LOCATOR_HPP_
-#define LOCATOR_HPP_
+#ifndef OT_CORE_COMMON_LOCATOR_HPP_
+#define OT_CORE_COMMON_LOCATOR_HPP_
 
 #include "openthread-core-config.h"
 
@@ -56,6 +56,15 @@ extern uint64_t gInstanceRaw[];
  *
  * @{
  */
+
+#if !OPENTHREAD_CONFIG_MULTIPLE_INSTANCE_ENABLE
+/**
+ * Gets the single OpenThread instance.
+ *
+ * @returns The single OpenThread instance.
+ */
+inline Instance &GetSingleInstance(void) { return *reinterpret_cast<Instance *>(&gInstanceRaw); }
+#endif
 
 /**
  * Implements `Get<Type>()` method for different `Type` objects belonging to the OpenThread
@@ -110,7 +119,7 @@ public:
 #if OPENTHREAD_CONFIG_MULTIPLE_INSTANCE_ENABLE
     Instance &GetInstance(void) const { return *mInstance; }
 #else
-    Instance &GetInstance(void) const { return *reinterpret_cast<Instance *>(&gInstanceRaw); }
+    Instance &GetInstance(void) const { return GetSingleInstance(); }
 #endif
 
 protected:
@@ -178,4 +187,4 @@ protected:
 
 } // namespace ot
 
-#endif // LOCATOR_HPP_
+#endif // OT_CORE_COMMON_LOCATOR_HPP_

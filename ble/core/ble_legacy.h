@@ -5,7 +5,7 @@
  *****************************************************************************
  * @attention
  *
- * Copyright (c) 2018-2025 STMicroelectronics.
+ * Copyright (c) 2018-2026 STMicroelectronics.
  * All rights reserved.
  *
  * This software is licensed under terms that can be found in the LICENSE file
@@ -28,9 +28,14 @@
 #define OOB_AUTH_DATA_ABSENT                       0x00U
 #define OOB_AUTH_DATA_PRESENT                      0x01U
 
+#define BLE_STATUS_CSRK_NOT_FOUND                  0x5AU
 #define BLE_STATUS_SEC_DB_FULL                     0x5DU
 #define BLE_STATUS_INSUFFICIENT_ENC_KEYSIZE        0x5FU
 #define BLE_STATUS_CHARAC_ALREADY_EXISTS           0x63U
+
+#define ATTR_ACCESS_SIGNED_WRITE_ALLOWED           0x08U
+
+#define CHAR_PROP_SIGNED_WRITE                     0x40U
 
 #define GAP_NAME_DISCOVERY_PROC                    0x04U
 
@@ -54,6 +59,12 @@
         aci_hal_set_peripheral_latency
 #define aci_gap_slave_security_initiated_event \
         aci_gap_peripheral_security_initiated_event
+#define aci_gap_additional_beacon_start \
+        aci_hal_additional_beacon_start
+#define aci_gap_additional_beacon_stop \
+        aci_hal_additional_beacon_stop
+#define aci_gap_additional_beacon_set_data \
+        aci_hal_additional_beacon_set_data
 
 typedef __PACKED_STRUCT
 {

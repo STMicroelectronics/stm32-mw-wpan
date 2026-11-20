@@ -26,6 +26,8 @@
 #define OPENTHREAD_FTD 1
 #endif
 
+/* Use mbedtls as crypto library. */
+#define OPENTHREAD_CONFIG_CRYPTO_LIB OPENTHREAD_CONFIG_CRYPTO_LIB_MBEDTLS  //OPENTHREAD_CONFIG_CRYPTO_LIB_PSA
 
 /* Define to 1 if you want to enable default log output. */
 #define OPENTHREAD_CONFIG_LOG_OUTPUT  OPENTHREAD_CONFIG_LOG_OUTPUT_APP
@@ -103,7 +105,7 @@
 #define OPENTHREAD_CONFIG_DUA_ENABLE 1
 
 /* Define to 1 to enable Thread Test Harness reference device support. */
-#define OPENTHREAD_CONFIG_REFERENCE_DEVICE_ENABLE 1
+#define OPENTHREAD_CONFIG_REFERENCE_DEVICE_ENABLE 0
 
 /* Define to 1 to enable Config MLR */
 #define OPENTHREAD_CONFIG_MLR_ENABLE 1
@@ -153,4 +155,6 @@
 /* Define to 1 to get the current device properties */
 #define OPENTHREAD_CONFIG_MLE_DEVICE_PROPERTY_LEADER_WEIGHT_ENABLE 0
 
+/* Define to 1 to enable DNS over TCP. Required for certification test DNS 11.4*/
+#define OPENTHREAD_CONFIG_DNS_CLIENT_OVER_TCP_ENABLE	1
 #endif /* OPENTHREAD_API_CONFIG_FTD_H_ */

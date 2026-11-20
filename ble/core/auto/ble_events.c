@@ -5,7 +5,7 @@
  *****************************************************************************
  * @attention
  *
- * Copyright (c) 2018-2025 STMicroelectronics.
+ * Copyright (c) 2018-2026 STMicroelectronics.
  * All rights reserved.
  *
  * This software is licensed under terms that can be found in the LICENSE file
@@ -89,6 +89,7 @@ static void aci_gatt_prepare_write_permit_req_event_process( const uint8_t* in )
 static void aci_gatt_eatt_bearer_event_process( const uint8_t* in );
 static void aci_gatt_mult_notification_event_process( const uint8_t* in );
 static void aci_gatt_notification_complete_event_process( const uint8_t* in );
+static void aci_gatt_notification_ll_ack_event_process( const uint8_t* in );
 static void aci_gatt_read_ext_event_process( const uint8_t* in );
 static void aci_gatt_indication_ext_event_process( const uint8_t* in );
 static void aci_gatt_notification_ext_event_process( const uint8_t* in );
@@ -179,6 +180,7 @@ const hci_event_table_t hci_vs_event_table[HCI_VS_EVENT_TABLE_SIZE] =
   { 0x0C19U, aci_gatt_eatt_bearer_event_process },
   { 0x0C1AU, aci_gatt_mult_notification_event_process },
   { 0x0C1BU, aci_gatt_notification_complete_event_process },
+  { 0x0C1CU, aci_gatt_notification_ll_ack_event_process },
   { 0x0C1DU, aci_gatt_read_ext_event_process },
   { 0x0C1EU, aci_gatt_indication_ext_event_process },
   { 0x0C1FU, aci_gatt_notification_ext_event_process },
@@ -634,7 +636,8 @@ static void aci_gap_pairing_complete_event_process( const uint8_t* in )
 }
 
 /* ACI_GAP_PASS_KEY_REQ_EVENT callback function */
-__WEAK void aci_gap_pass_key_req_event( uint16_t Connection_Handle )
+__WEAK void aci_gap_pass_key_req_event( uint16_t Connection_Handle,
+                                        uint8_t IO_Capability )
 {
 }
 
@@ -642,7 +645,8 @@ __WEAK void aci_gap_pass_key_req_event( uint16_t Connection_Handle )
 static void aci_gap_pass_key_req_event_process( const uint8_t* in )
 {
   aci_gap_pass_key_req_event_rp0 *rp0 = (void*)in;
-  aci_gap_pass_key_req_event( rp0->Connection_Handle );
+  aci_gap_pass_key_req_event( rp0->Connection_Handle,
+                              rp0->IO_Capability );
 }
 
 /* ACI_GAP_AUTHORIZATION_REQ_EVENT callback function */
@@ -1374,6 +1378,20 @@ static void aci_gatt_notification_complete_event_process( const uint8_t* in )
 {
   aci_gatt_notification_complete_event_rp0 *rp0 = (void*)in;
   aci_gatt_notification_complete_event( rp0->Attr_Handle );
+}
+
+/* ACI_GATT_NOTIFICATION_LL_ACK_EVENT callback function */
+__WEAK void aci_gatt_notification_ll_ack_event( uint16_t Connection_Handle,
+                                                uint16_t Attr_Handle )
+{
+}
+
+/* ACI_GATT_NOTIFICATION_LL_ACK_EVENT process function */
+static void aci_gatt_notification_ll_ack_event_process( const uint8_t* in )
+{
+  aci_gatt_notification_ll_ack_event_rp0 *rp0 = (void*)in;
+  aci_gatt_notification_ll_ack_event( rp0->Connection_Handle,
+                                      rp0->Attr_Handle );
 }
 
 /* ACI_GATT_READ_EXT_EVENT callback function */

@@ -31,19 +31,24 @@
  *   This file includes definitions related to Thread Network Data service/server entries.
  */
 
-#ifndef NETWORK_DATA_SERVICE_HPP_
-#define NETWORK_DATA_SERVICE_HPP_
+#ifndef OT_CORE_THREAD_NETWORK_DATA_SERVICE_HPP_
+#define OT_CORE_THREAD_NETWORK_DATA_SERVICE_HPP_
 
 #include "openthread-core-config.h"
 
 #include <openthread/netdata.h>
 
 #include "backbone_router/bbr_leader.hpp"
+#include "common/clearable.hpp"
 #include "common/encoding.hpp"
+#include "common/equatable.hpp"
 #include "common/locator.hpp"
 #include "common/non_copyable.hpp"
+#include "common/notifier.hpp"
 #include "common/serial_number.hpp"
+#include "net/netif.hpp"
 #include "net/socket.hpp"
+#include "thread/mle_types.hpp"
 #include "thread/network_data_tlvs.hpp"
 
 namespace ot {
@@ -55,7 +60,7 @@ const uint32_t kThreadEnterpriseNumber = ServiceTlv::kThreadEnterpriseNumber; //
 /**
  * Represents information about an DNS/SRP server parsed from related Network Data service entries.
  */
-struct DnsSrpAnycastInfo
+struct DnsSrpAnycastInfo : public Clearable<DnsSrpAnycastInfo>, public Equatable<DnsSrpAnycastInfo>
 {
     Ip6::Address mAnycastAddress; ///< The anycast address associated with the DNS/SRP servers.
     uint8_t      mSequenceNumber; ///< Sequence number used to notify SRP client if they need to re-register.
@@ -75,11 +80,91 @@ enum DnsSrpUnicastType : uint8_t
 /**
  * Represents information about an DNS/SRP server parsed from related Network Data service entries.
  */
-struct DnsSrpUnicastInfo
+struct DnsSrpUnicastInfo : public Clearable<DnsSrpUnicastInfo>, public Equatable<DnsSrpUnicastInfo>
 {
     Ip6::SockAddr mSockAddr; ///< The socket address (IPv6 address and port) of the DNS/SRP server.
     uint8_t       mVersion;  ///< Version number.
     uint16_t      mRloc16;   ///< The BR RLOC16 adding the entry.
+};
+
+class Manager;
+
+/**
+ * Represents an iterator to iterate over service entries in a Network Data.
+ */
+class Iterator : public InstanceLocator, private NonCopyable
+{
+    friend class Manager;
+
+public:
+    /**
+     * Initializes the `Iterator` for iterating over service entries in the Leader Network Data
+     *
+     * @param[in] aInstance  The OpenThread instance.
+     */
+    explicit Iterator(Instance &aInstance);
+
+    /**
+     * Initializes the `Iterator` for iterating over service entries in a given Network Data.
+     *
+     * @param[in] aInstance     The OpenThread instance.
+     * @param[in] aNetworkData  The `NetworkData` to use with this iterator.
+     */
+    Iterator(Instance &aInstance, const NetworkData &aNetworkData);
+
+    /**
+     * Resets the `Iterator` to start over.
+     */
+    void Reset(void);
+
+    /**
+     * Gets the next DNS/SRP info from the Thread Network Data "DNS/SRP Service Anycast Address" entries.
+     *
+     * To start from the first entry, ensure the iterator is reset (e.g., by creating a new `Iterator` instance, or by
+     * calling `Reset()`).
+     *
+     * @param[out] aInfo        A reference to `DnsSrpAnycastInfo` to return the info.
+     *
+     * @retval kErrorNone       Successfully got the next info. @p aInfo is updated.
+     * @retval kErrorNotFound   No more matching entries in the Network Data.
+     */
+    Error GetNextDnsSrpAnycastInfo(DnsSrpAnycastInfo &aInfo);
+
+    /**
+     * Gets the next DNS/SRP info from the Thread Network Data "DNS/SRP Service Unicast Address" entries.
+     *
+     * To start from the first entry, ensure the iterator is reset (e.g., by creating a new `Iterator` instance, or by
+     * calling `Reset()`).
+     *
+     * @param[in]  aType        The entry type, `kAddrInServiceData` or `kAddrInServerData`
+     * @param[out] aInfo        A reference to `DnsSrpUnicastInfo` to return the info.
+     *
+     * @retval kErrorNone       Successfully got the next info. @p aInfo is updated.
+     * @retval kErrorNotFound   No more matching entries in the Network Data.
+     */
+    Error GetNextDnsSrpUnicastInfo(DnsSrpUnicastType aType, DnsSrpUnicastInfo &aInfo);
+
+#if OPENTHREAD_CONFIG_BORDER_AGENT_ENABLE && OPENTHREAD_CONFIG_BORDER_AGENT_ADMITTER_ENABLE
+    /**
+     * Gets the next Border Admitter service info from the Thread Network Data Border Admitter servcie entries.
+     *
+     * To start from the first service entry, ensure the iterator is reset (e.g., by creating a new `Iterator`
+     * instance, or by calling `Reset()`).
+     *
+     * @param[out] aRloc16      On success, returns the RLOC16 or device which added Border Admitter service entry.
+     *
+     * @retval kErrorNone       Successfully got the next info. @p aRloc16 is updated.
+     * @retval kErrorNotFound   No more matching entries in the Network Data.
+     */
+    Error GetNextBorderAdmitterInfo(uint16_t &aRloc16);
+#endif
+
+private:
+    Error AdvanceToNextServer(void);
+
+    const NetworkData &mNetworkData;
+    const ServiceTlv  *mServiceTlv;
+    const ServerTlv   *mServerSubTlv;
 };
 
 /**
@@ -87,38 +172,10 @@ struct DnsSrpUnicastInfo
  */
 class Manager : public InstanceLocator, private NonCopyable
 {
+    friend class Iterator;
+    friend class ot::Notifier;
+
 public:
-    /**
-     * Represents an iterator used to iterate through Network Data Service entries.
-     */
-    class Iterator : public Clearable<Iterator>
-    {
-        friend class Manager;
-
-    public:
-        /**
-         * Initializes the iterator (as empty/clear).
-         */
-        Iterator(void)
-            : mServiceTlv(nullptr)
-            , mServerSubTlv(nullptr)
-        {
-        }
-
-        /**
-         * Resets the iterator to start from beginning.
-         */
-        void Reset(void)
-        {
-            mServiceTlv   = nullptr;
-            mServerSubTlv = nullptr;
-        }
-
-    private:
-        const ServiceTlv *mServiceTlv;
-        const ServerTlv  *mServerSubTlv;
-    };
-
     /**
      * Initializes the `Manager` object.
      *
@@ -235,6 +292,24 @@ public:
     Error RemoveBackboneRouterService(void) { return RemoveService(kBackboneRouterServiceNumber); }
 #endif
 
+#if OPENTHREAD_CONFIG_BORDER_AGENT_ENABLE && OPENTHREAD_CONFIG_BORDER_AGENT_ADMITTER_ENABLE
+    /**
+     * Adds a Border Admitter Service entry to the local Thread Network Data.
+     *
+     * @retval kErrorNone     Successfully added the Service entry.
+     * @retval kErrorNoBufs   Insufficient space to add the Service entry.
+     */
+    Error AddBorderAdmitterService(void) { return AddService(kBorderAdmitterServiceNumber); }
+
+    /**
+     * Removes the Border Admitter Service entry from the local Thread Network Data.
+     *
+     * @retval kErrorNone       Successfully removed the Service entry.
+     * @retval kErrorNotFound   Could not find the Service entry.
+     */
+    Error RemoveBorderAdmitterService(void) { return RemoveService(kBorderAdmitterServiceNumber); }
+#endif
+
 #endif // OPENTHREAD_CONFIG_TMF_NETDATA_SERVICE_ENABLE
 
 #if (OPENTHREAD_CONFIG_THREAD_VERSION >= OT_THREAD_VERSION_1_2)
@@ -260,20 +335,6 @@ public:
 #endif
 
     /**
-     * Gets the next DNS/SRP info from the Thread Network Data "DNS/SRP Service Anycast Address" entries.
-     *
-     * To get the first entry, @p aIterator should be cleared (e.g., a new instance of `Iterator` or calling `Clear()`
-     * method).
-     *
-     * @param[in,out] aIterator    A reference to an iterator.
-     * @param[out]    aInfo        A reference to `DnsSrpAnycastInfo` to return the info.
-     *
-     * @retval kErrorNone       Successfully got the next info. @p aInfo and @p aIterator are updated.
-     * @retval kErrorNotFound   No more matching entries in the Network Data.
-     */
-    Error GetNextDnsSrpAnycastInfo(Iterator &aIterator, DnsSrpAnycastInfo &aInfo) const;
-
-    /**
      * Finds the preferred DNS/SRP info among all the Thread Network Data "DNS/SRP Service Anycast Address"
      * entries.
      *
@@ -290,25 +351,13 @@ public:
      */
     Error FindPreferredDnsSrpAnycastInfo(DnsSrpAnycastInfo &aInfo) const;
 
-    /**
-     * Gets the next DNS/SRP info from the Thread Network Data "DNS/SRP Service Unicast Address" entries.
-     *
-     * To get the first entry @p aIterator should be cleared (e.g., a new instance of `Iterator` or calling `Clear()`
-     * method).
-     *
-     * @param[in,out] aIterator    A reference to an iterator.
-     * @param[in]     aType        The entry type, `kAddrInServiceData` or `kAddrInServerData`
-     * @param[out]    aInfo        A reference to `DnsSrpUnicastInfo` to return the info.
-     *
-     * @retval kErrorNone       Successfully got the next info. @p aInfo and @p aIterator are updated.
-     * @retval kErrorNotFound   No more matching entries in the Network Data.
-     */
-    Error GetNextDnsSrpUnicastInfo(Iterator &aIterator, DnsSrpUnicastType aType, DnsSrpUnicastInfo &aInfo) const;
-
 private:
     static constexpr uint8_t kBackboneRouterServiceNumber = 0x01;
     static constexpr uint8_t kDnsSrpAnycastServiceNumber  = 0x5c;
     static constexpr uint8_t kDnsSrpUnicastServiceNumber  = 0x5d;
+    static constexpr uint8_t kBorderAdmitterServiceNumber = 0xad;
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     OT_TOOL_PACKED_BEGIN
     class DnsSrpAnycastServiceData
@@ -328,6 +377,8 @@ private:
         uint8_t mServiceNumber;
         uint8_t mSequenceNumber;
     } OT_TOOL_PACKED_END;
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     class DnsSrpUnicast
     {
@@ -419,6 +470,8 @@ private:
         DnsSrpUnicast(void) = delete;
     };
 
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 #if (OPENTHREAD_CONFIG_THREAD_VERSION >= OT_THREAD_VERSION_1_2)
     OT_TOOL_PACKED_BEGIN
     class BbrServerData
@@ -443,7 +496,31 @@ private:
     } OT_TOOL_PACKED_END;
 #endif
 
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 #if OPENTHREAD_CONFIG_TMF_NETDATA_SERVICE_ENABLE
+
+#if OPENTHREAD_FTD && OPENTHREAD_CONFIG_BACKBONE_ROUTER_ENABLE
+    static constexpr uint8_t kMaxServiceAlocs = OPENTHREAD_CONFIG_TMF_NETDATA_SERVICE_MAX_ALOCS + 1;
+#else
+    static constexpr uint8_t kMaxServiceAlocs = OPENTHREAD_CONFIG_TMF_NETDATA_SERVICE_MAX_ALOCS;
+#endif
+
+    class ServiceAloc : public Ip6::Netif::UnicastAddress
+    {
+    public:
+        static constexpr uint16_t kNotInUse = Mle::kInvalidRloc16;
+
+        ServiceAloc(void);
+
+        bool     IsInUse(void) const { return GetAloc16() != kNotInUse; }
+        void     MarkAsNotInUse(void) { SetAloc16(kNotInUse); }
+        uint16_t GetAloc16(void) const { return GetAddress().GetIid().GetLocator(); }
+        void     SetAloc16(uint16_t aAloc16) { GetAddress().GetIid().SetLocator(aAloc16); }
+    };
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     template <typename ServiceDataType> Error AddService(const ServiceDataType &aServiceData)
     {
         return AddService(&aServiceData, aServiceData.GetLength(), nullptr, 0);
@@ -461,6 +538,8 @@ private:
         return AddService(&aServiceData, aServiceData.GetLength(), &aServerData, sizeof(ServerDataType));
     }
 
+    Error AddService(uint8_t aServiceNumber) { return AddService(&aServiceNumber, sizeof(uint8_t), nullptr, 0); }
+
     Error AddService(const void *aServiceData,
                      uint8_t     aServiceDataLength,
                      const void *aServerData,
@@ -473,10 +552,13 @@ private:
 
     Error RemoveService(uint8_t aServiceNumber) { return RemoveService(&aServiceNumber, sizeof(uint8_t)); }
     Error RemoveService(const void *aServiceData, uint8_t aServiceDataLength);
-#endif
+
+    void         HandleNotifierEvents(Events aEvents);
+    ServiceAloc *FindInServiceAlocs(uint16_t aAloc16);
+
+#endif // OPENTHREAD_CONFIG_TMF_NETDATA_SERVICE_ENABLE
 
     Error GetServiceId(uint8_t aServiceNumber, uint8_t &aServiceId) const;
-    Error IterateToNextServer(Iterator &aIterator) const;
 
 #if (OPENTHREAD_CONFIG_THREAD_VERSION >= OT_THREAD_VERSION_1_2)
     bool IsBackboneRouterPreferredTo(const ServerTlv     &aServerTlv,
@@ -484,10 +566,14 @@ private:
                                      const ServerTlv     &aOtherServerTlv,
                                      const BbrServerData &aOtherServerData) const;
 #endif
+
+#if OPENTHREAD_CONFIG_TMF_NETDATA_SERVICE_ENABLE
+    ServiceAloc mServiceAlocs[kMaxServiceAlocs];
+#endif
 };
 
 } // namespace Service
 } // namespace NetworkData
 } // namespace ot
 
-#endif // NETWORK_DATA_SERVICE_HPP_
+#endif // OT_CORE_THREAD_NETWORK_DATA_SERVICE_HPP_

@@ -58,8 +58,10 @@ otMessage *otCoapNewMessage(otInstance *aInstance, const otMessageSettings *aSet
 
 }
 
-void otCoapMessageInit(otMessage *aMessage, otCoapType aType, otCoapCode aCode)
+otError otCoapMessageInit(otMessage *aMessage, otCoapType aType, otCoapCode aCode)
 {
+  otError rspData;
+  
   Pre_OtCmdProcessing();
   /* prepare buffer */
   Thread_OT_Cmd_Request_t* p_ot_req = THREAD_Get_OTCmdPayloadBuffer();
@@ -73,7 +75,12 @@ void otCoapMessageInit(otMessage *aMessage, otCoapType aType, otCoapCode aCode)
 
   Ot_Cmd_Transfer();
 
+  p_ot_req = THREAD_Get_OTCmdRspPayloadBuffer();
+  rspData = (otError)p_ot_req->Data[0];
+  
   Post_OtCmdProcessing();
+  
+  return rspData;
 }
 
 otError otCoapMessageInitResponse(otMessage *aResponse, const otMessage *aRequest, otCoapType aType, otCoapCode aCode)
@@ -852,6 +859,36 @@ otError otCoapSendRequestWithParameters(otInstance *              aInstance,
   return rspData;
 }
 
+otError otCoapSendRequest(otInstance           *aInstance,
+                          otMessage            *aMessage,
+                          const otMessageInfo  *aMessageInfo,
+                          otCoapResponseHandler aHandler,
+                          void                 *aContext)
+{
+  otError rspData;
+  
+  Pre_OtCmdProcessing();
+  /* prepare buffer */
+  Thread_OT_Cmd_Request_t* p_ot_req = THREAD_Get_OTCmdPayloadBuffer();
+
+  p_ot_req->ID = MSG_M4TOM0_OT_COAP_SEND_REQUEST;
+
+  p_ot_req->Size=4;
+  p_ot_req->Data[0] = (uint32_t) aMessage;
+  p_ot_req->Data[1] = (uint32_t) aMessageInfo;
+  p_ot_req->Data[2] = (uint32_t) aHandler;
+  p_ot_req->Data[3] = (uint32_t) aContext;
+
+  Ot_Cmd_Transfer();
+
+  p_ot_req = THREAD_Get_OTCmdRspPayloadBuffer();
+  rspData = (otError)p_ot_req->Data[0];
+  
+  Post_OtCmdProcessing();
+  
+  return rspData;
+}
+
 otError otCoapStart(otInstance *aInstance, uint16_t aPort)
 {
   otError rspData;
@@ -1033,6 +1070,30 @@ otError otCoapSendResponseWithParameters(otInstance *              aInstance,
   p_ot_req->Data[0] = (uint32_t) aMessage;
   p_ot_req->Data[1] = (uint32_t) aMessageInfo;
   p_ot_req->Data[2] = (uint32_t) aTxParameters;
+
+  Ot_Cmd_Transfer();
+
+  p_ot_req = THREAD_Get_OTCmdRspPayloadBuffer();
+  rspData = (otError)p_ot_req->Data[0];
+  
+  Post_OtCmdProcessing();
+  
+  return rspData;
+}
+
+otError otCoapSendResponse(otInstance *aInstance, otMessage *aMessage, const otMessageInfo *aMessageInfo)
+{
+  otError rspData;
+  
+  Pre_OtCmdProcessing();
+  /* prepare buffer */
+  Thread_OT_Cmd_Request_t* p_ot_req = THREAD_Get_OTCmdPayloadBuffer();
+
+  p_ot_req->ID = MSG_M4TOM0_OT_COAP_SEND_RESPONSE;
+
+  p_ot_req->Size=2;
+  p_ot_req->Data[0] = (uint32_t) aMessage;
+  p_ot_req->Data[1] = (uint32_t) aMessageInfo;
 
   Ot_Cmd_Transfer();
 

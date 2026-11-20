@@ -5,7 +5,7 @@
  *****************************************************************************
  * @attention
  *
- * Copyright (c) 2018-2025 STMicroelectronics.
+ * Copyright (c) 2018-2026 STMicroelectronics.
  * All rights reserved.
  *
  * This software is licensed under terms that can be found in the LICENSE file
@@ -31,10 +31,6 @@
  * cannot be performed.
  */
 #define BLE_STATUS_DEV_IN_BLACKLIST                     0x59U
-
-/* CSRK not found during validation of an incoming signed packet
- */
-#define BLE_STATUS_CSRK_NOT_FOUND                       0x5AU
 
 /* IRK not found (Currently not used)
  */
@@ -148,7 +144,7 @@
 /* ------------------------------------------------------------------------- */
 
 /* BLE stack options (Options)
- * (ACI_RESET)
+ * (Stack initialization, ACI_RESET)
  */
 #define BLE_OPTIONS_LL_ONLY                      0x00000001UL
 #define BLE_OPTIONS_NO_SVC_CHANGE_DESC           0x00000002UL
@@ -160,6 +156,11 @@
 #define BLE_OPTIONS_POWER_CLASS_1                0x00000080UL
 #define BLE_OPTIONS_APPEARANCE_WRITABLE          0x00000100UL
 #define BLE_OPTIONS_ENHANCED_ATT                 0x00000200UL
+#define BLE_OPTIONS_NO_NRPA_TIMEOUT              0x00000400UL
+#define BLE_OPTIONS_CIS                          0x00010000UL
+#define BLE_OPTIONS_BIS                          0x00020000UL
+#define BLE_OPTIONS_PAWR                         0x00040000UL
+#define BLE_OPTIONS_CHAN_SOUNDING                0x00080000UL
 
 /* ------------------------------------------------------------------------- */
 
@@ -211,6 +212,7 @@
 #define GAP_SELECTIVE_CONNECTION_ESTABLISHMENT_PROC  0x20U
 #define GAP_DIRECT_CONNECTION_ESTABLISHMENT_PROC     0x40U
 #define GAP_OBSERVATION_PROC                         0x80U
+#define GAP_GENERIC_SCAN_PROC                        0xB0U
 
 /* GAP Address Type
  */
@@ -225,6 +227,7 @@
 #define GAP_ADD_DEV_MODE_CLEAR                       0x01U
 #define GAP_ADD_DEV_MODE_FILTER_ACC_LIST_ONLY        0x02U
 #define GAP_ADD_DEV_MODE_BOTH_LISTS                  0x04U
+#define GAP_ADD_DEV_MODE_CONFIGURE_FROM_SDB          0x08U
 
 /* ------------------------------------------------------------------------- */
 
@@ -344,8 +347,7 @@
 #define ATTR_ACCESS_WRITE_REQ_ONLY                 0x02U
 #define ATTR_ACCESS_READ_WRITE                     0x03U
 #define ATTR_ACCESS_WRITE_WITHOUT_RESPONSE         0x04U
-#define ATTR_ACCESS_SIGNED_WRITE_ALLOWED           0x08U
-#define ATTR_ACCESS_WRITE_ANY                      0x0EU
+#define ATTR_ACCESS_WRITE_ANY                      0x06U
 #define ATTR_ACCESS_ANY                            0x0FU
 
 /* Characteristic properties
@@ -357,7 +359,6 @@
 #define CHAR_PROP_WRITE                            0x08U
 #define CHAR_PROP_NOTIFY                           0x10u
 #define CHAR_PROP_INDICATE                         0x20U
-#define CHAR_PROP_SIGNED_WRITE                     0x40U
 #define CHAR_PROP_EXT                              0x80U
 
 /* Security permissions for an attribute
@@ -421,6 +422,10 @@
 #define GATT_CHAR_UPDATE_SEND_NOTIFICATION         0x01U
 #define GATT_CHAR_UPDATE_SEND_INDICATION           0x02U
 
+/* Conn_Handle_To_Notify definitions for ACI_GATT_UPDATE_CHAR_VALUE_EXT
+ */
+#define GATT_NOTIFY_TO_ALL_CLIENTS                 0x0FFFU
+
 /* ------------------------------------------------------------------------- */
 
 /* Advertising Type
@@ -469,6 +474,7 @@
 #define WARNING_COC_ALREADY_ASSIGNED_DCID            0x05U
 #define WARNING_SMP_UNEXPECTED_LTK_REQUEST           0x06U
 #define WARNING_GATT_BEARER_NOT_ALLOCATED            0x07U
+#define WARNING_GATT_DATABASE_SAVING_ISSUE           0x08U
 
 /* ------------------------------------------------------------------------- */
 
@@ -486,6 +492,7 @@
 #define CONFIG_DATA_LL_RSSI_GOLDEN_RANGE_OFFSET    0xC2U
 #define CONFIG_DATA_LL_RPA_MODE_OFFSET             0xC3U
 #define CONFIG_DATA_LL_RX_ACL_CTRL_OFFSET          0xC4U
+#define CONFIG_DATA_LL_OPTION_FLAGS_OFFSET         0xC5U
 #define CONFIG_DATA_LL_MAX_DATA_EXT_OFFSET         0xD1U
 
 /* Length for configuration values (see ACI_HAL_WRITE_CONFIG_DATA)
@@ -502,6 +509,7 @@
 #define CONFIG_DATA_LL_RSSI_GOLDEN_RANGE_LEN        2
 #define CONFIG_DATA_LL_RPA_MODE_LEN                 1
 #define CONFIG_DATA_LL_RX_ACL_CTRL_LEN              2
+#define CONFIG_DATA_LL_OPTION_FLAGS_LEN             1
 #define CONFIG_DATA_LL_MAX_DATA_EXT_LEN             8
 
 /* ------------------------------------------------------------------------- */

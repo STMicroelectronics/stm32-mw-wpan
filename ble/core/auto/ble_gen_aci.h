@@ -5,7 +5,7 @@
  *****************************************************************************
  * @attention
  *
- * Copyright (c) 2018-2025 STMicroelectronics.
+ * Copyright (c) 2018-2026 STMicroelectronics.
  * All rights reserved.
  *
  * This software is licensed under terms that can be found in the LICENSE file
@@ -23,6 +23,7 @@
 
 /**
  * @brief ACI_RESET
+ *
  * This command resets the BLE stack (Host and LE Controller).
  *
  * @param Mode ACI reset mode.
@@ -43,16 +44,19 @@
  *          mode)
  *        - 0x00000100: Appearance is writable
  *        - 0x00000200: Support of Enhanced ATT
- * @return Value indicating success or error code.
+ *        - 0x00000400: No NRPA timeout
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_reset( uint8_t Mode,
                       uint32_t Options );
 
 /**
  * @brief ACI_GET_INFORMATION
+ *
  * This command reads the local ACI information.
  *
  * @param[out] Version BLE stack version.
+ *        Size: 2 32-bit words.
  * @param[out] Options Current BLE stack options (a bit set to 1 means that the
  *        corresponding optional feature is activated).
  *        Flags:
@@ -67,8 +71,10 @@ tBleStatus aci_reset( uint8_t Mode,
  *          mode)
  *        - 0x00000100: Appearance is writable
  *        - 0x00000200: Support of Enhanced ATT
+ *        - 0x00000400: No NRPA timeout
  * @param[out] Debug_Info BLE stack debug information.
- * @return Value indicating success or error code.
+ *        Size: 3 32-bit words.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_get_information( uint32_t* Version,
                                 uint32_t* Options,
@@ -76,8 +82,9 @@ tBleStatus aci_get_information( uint32_t* Version,
 
 /**
  * @brief ACI_WRITE_CONFIG_DATA
- * This command writes a value to a configure data structure. It is useful to
- * setup directly some parameters for the BLE stack.
+ *
+ * This command writes a value to the configuration data structure. It is
+ * useful to setup directly some parameters for the BLE stack.
  * Refer to Annex for details on the different parameters that can be
  * configured.
  *
@@ -108,7 +115,7 @@ tBleStatus aci_get_information( uint32_t* Version,
  *          LL maximum data length extension; 8 bytes
  * @param Length Length of data to be written
  * @param Value Data to be written
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_write_config_data( uint8_t Offset,
                                   uint8_t Length,
@@ -116,8 +123,9 @@ tBleStatus aci_write_config_data( uint8_t Offset,
 
 /**
  * @brief ACI_READ_CONFIG_DATA
- * This command requests the value in the configure data structure. The number
- * of read bytes changes for different Offset.
+ *
+ * This command requests the value in the configuration data structure. The
+ * number of read bytes changes for different Offset.
  *
  * @param Offset Offset of the element in the configuration data structure
  *        which has to be read.
@@ -125,14 +133,14 @@ tBleStatus aci_write_config_data( uint8_t Offset,
  *        - 0x00: CONFIG_DATA_PUBLIC_ADDRESS_OFFSET;
  *          Bluetooth public address; 6 bytes
  *        - 0x08: CONFIG_DATA_ER_OFFSET;
- *          Encryption root key used to derive LTK (legacy) and CSRK; 16 bytes
+ *          Encryption root key used to derive LTK (legacy); 16 bytes
  *        - 0x18: CONFIG_DATA_IR_OFFSET
  *          Identity root key used to derive DHK (legacy) and IRK; 16 bytes
  *        - 0x2E: CONFIG_DATA_RANDOM_ADDRESS_OFFSET;
  *          Static Random Address; 6 bytes
- * @param[out] Data_Length Length of Data in octets
+ * @param[out] Data_Length Length of Data in octets.
  * @param[out] Data Data field associated with Offset parameter
- * @return Value indicating success or error code.
+ * @return Value indicating success or an error.
  */
 tBleStatus aci_read_config_data( uint8_t Offset,
                                  uint8_t* Data_Length,

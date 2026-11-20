@@ -910,3 +910,26 @@ void otIp6ResetBorderRoutingCounters(otInstance *aInstance)
   
   Post_OtCmdProcessing();
 }
+
+bool otIp6HasUnicastAddress(otInstance *aInstance, const otIp6Address *aAddress)
+{
+  bool rspData;
+  
+  Pre_OtCmdProcessing();
+  /* prepare buffer */
+  Thread_OT_Cmd_Request_t* p_ot_req = THREAD_Get_OTCmdPayloadBuffer();
+
+  p_ot_req->ID = MSG_M4TOM0_OT_IP6_HAS_UNICAST_ADDRESS;
+  
+  p_ot_req->Size=1;
+  p_ot_req->Data[0] = (uint32_t)aAddress;
+
+  Ot_Cmd_Transfer();
+
+  p_ot_req = THREAD_Get_OTCmdRspPayloadBuffer();
+  rspData = (bool)p_ot_req->Data[0];
+  
+  Post_OtCmdProcessing();
+  
+  return rspData;
+}

@@ -30,6 +30,9 @@
 /************************************ Mandatory Flags **********************************/
 /***************************************************************************************/
 
+/* Use mbedtls as crypto library. */
+#define OPENTHREAD_CONFIG_CRYPTO_LIB OPENTHREAD_CONFIG_CRYPTO_LIB_MBEDTLS  //OPENTHREAD_CONFIG_CRYPTO_LIB_PSA
+
 /* Define to 1 if you want to enable default log output. */
 #define OPENTHREAD_CONFIG_LOG_OUTPUT  OPENTHREAD_CONFIG_LOG_OUTPUT_APP
 
@@ -143,6 +146,11 @@
 #define OPENTHREAD_CONFIG_MAC_CSL_RECEIVER_ENABLE 1
 #define OPENTHREAD_CONFIG_MAC_CSL_TRANSMITTER_ENABLE 1
 
+/* Define to 1 to support Joiner Advertisement TLV */
+#define OPENTHREAD_CONFIG_JOINER_ADV_EXPERIMENTAL_ENABLE 1
+
+/* Define to 1 to enable DNS over TCP. Required for certification test DNS 11.4*/
+#define OPENTHREAD_CONFIG_DNS_CLIENT_OVER_TCP_ENABLE	1
 /**************************************************************************************************************************/
 /************************************ Flags enabled by default but necessary for M4 applications **************************/
 /**************************************************************************************************************************/

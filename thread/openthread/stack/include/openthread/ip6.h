@@ -35,8 +35,14 @@
 #ifndef OPENTHREAD_IP6_H_
 #define OPENTHREAD_IP6_H_
 
+#include <stdbool.h>
+#include <stdint.h>
+
+#include <openthread/error.h>
+#include <openthread/instance.h>
 #include <openthread/message.h>
 #include <openthread/platform/radio.h>
+#include <openthread/platform/toolchain.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -550,6 +556,33 @@ const uint16_t *otIp6GetUnsecurePorts(otInstance *aInstance, uint8_t *aNumEntrie
  * @retval FALSE  The two IPv6 addresses are not the same.
  */
 bool otIp6IsAddressEqual(const otIp6Address *aFirst, const otIp6Address *aSecond);
+
+/**
+ * Test whether or not the IPv6 address is a link-local unicast address.
+ *
+ * @param[in]  aAddress   A pointer to the IPv6 address to test.
+ *
+ * @retval TRUE   If the IPv6 address is a link-local unicast address.
+ * @retval FALSE  If the IPv6 address is not a link-local unicast address.
+ */
+bool otIp6IsLinkLocalUnicast(const otIp6Address *aAddress);
+
+/**
+ * Forms a link-local unicast IPv6 address from the Interface Identifier generated from the given
+ * MAC Extended Address with the universal/local bit inverted.
+ *
+ * @param[in]  aExtAddress  A pointer to the MAC Extended Address (used to generate the IID).
+ * @param[out] aAddress     A pointer to output the IPv6 link-local unicast address.
+ */
+void otIp6FormLinkLocalAddressFromExtAddress(const otExtAddress *aExtAddress, otIp6Address *aAddress);
+
+/**
+ * Extracts the MAC Extended Address from the Interface Identifier of the given IPv6 address.
+ *
+ * @param[in]  aAddress     A pointer to the IPv6 address.
+ * @param[out] aExtAddress  A pointer to output the MAC Extended Address (generated from the IID).
+ */
+void otIp6ExtractExtAddressFromIp6AddressIid(const otIp6Address *aAddress, otExtAddress *aExtAddress);
 
 /**
  * Test if two IPv6 prefixes are the same.

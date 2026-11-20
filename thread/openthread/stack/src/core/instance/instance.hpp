@@ -31,8 +31,8 @@
  *  This file defines OpenThread instance class.
  */
 
-#ifndef INSTANCE_HPP_
-#define INSTANCE_HPP_
+#ifndef OT_CORE_INSTANCE_INSTANCE_HPP_
+#define OT_CORE_INSTANCE_INSTANCE_HPP_
 
 #include "openthread-core-config.h"
 
@@ -47,14 +47,18 @@
 #include "common/array.hpp"
 #include "common/as_core_type.hpp"
 #include "common/debug.hpp"
+#include "common/enum_to_string.hpp"
 #include "common/error.hpp"
 #include "common/heap.hpp"
 #include "common/locator.hpp"
 #include "common/log.hpp"
 #include "common/message.hpp"
 #include "common/non_copyable.hpp"
+#include "common/num_utils.hpp"
+#include "common/numeric_limits.hpp"
 #include "common/random.hpp"
 #include "common/serial_number.hpp"
+#include "common/string.hpp"
 #include "common/tasklet.hpp"
 #include "common/time_ticker.hpp"
 #include "common/timer.hpp"
@@ -73,7 +77,11 @@
 #include "backbone_router/bbr_leader.hpp"
 #include "backbone_router/bbr_local.hpp"
 #include "backbone_router/bbr_manager.hpp"
+#include "border_router/dhcp6_pd_client.hpp"
+#include "border_router/infra_if.hpp"
+#include "border_router/multi_ail_detector.hpp"
 #include "border_router/routing_manager.hpp"
+#include "border_router/rx_ra_tracker.hpp"
 #include "coap/coap_secure.hpp"
 #include "common/code_utils.hpp"
 #include "common/notifier.hpp"
@@ -83,14 +91,18 @@
 #include "mac/mac.hpp"
 #include "mac/wakeup_tx_scheduler.hpp"
 #include "meshcop/border_agent.hpp"
+#include "meshcop/border_agent_admitter.hpp"
+#include "meshcop/border_agent_ephemeral_key.hpp"
+#include "meshcop/border_agent_tracker.hpp"
+#include "meshcop/border_agent_txt_data.hpp"
 #include "meshcop/commissioner.hpp"
 #include "meshcop/dataset_manager.hpp"
 #include "meshcop/dataset_updater.hpp"
-#include "meshcop/extended_panid.hpp"
 #include "meshcop/joiner.hpp"
 #include "meshcop/joiner_router.hpp"
 #include "meshcop/meshcop_leader.hpp"
-#include "meshcop/network_name.hpp"
+#include "meshcop/network_identity.hpp"
+#include "meshcop/seeker.hpp"
 #include "net/dhcp6_client.hpp"
 #include "net/dhcp6_server.hpp"
 #include "net/dhcp6_types.hpp"
@@ -104,6 +116,7 @@
 #include "net/nat64_translator.hpp"
 #include "net/nd_agent.hpp"
 #include "net/netif.hpp"
+#include "net/slaac_address.hpp"
 #include "net/sntp_client.hpp"
 #include "net/srp_advertising_proxy.hpp"
 #include "net/srp_client.hpp"
@@ -121,6 +134,7 @@
 #include "thread/link_metrics.hpp"
 #include "thread/link_quality.hpp"
 #include "thread/mesh_forwarder.hpp"
+#include "thread/message_framer.hpp"
 #include "thread/mle.hpp"
 #include "thread/mlr_manager.hpp"
 #include "thread/network_data_local.hpp"
@@ -133,15 +147,17 @@
 #include "thread/thread_netif.hpp"
 #include "thread/time_sync_service.hpp"
 #include "thread/tmf.hpp"
+#include "thread/vendor_info.hpp"
 #include "utils/channel_manager.hpp"
 #include "utils/channel_monitor.hpp"
 #include "utils/heap.hpp"
 #include "utils/history_tracker.hpp"
+#include "utils/history_tracker_client.hpp"
+#include "utils/history_tracker_server.hpp"
 #include "utils/jam_detector.hpp"
 #include "utils/link_metrics_manager.hpp"
 #include "utils/mesh_diag.hpp"
 #include "utils/ping_sender.hpp"
-#include "utils/slaac_address.hpp"
 #include "utils/srp_client_buffers.hpp"
 #endif // OPENTHREAD_FTD || OPENTHREAD_MTD
 
@@ -466,7 +482,11 @@ private:
     Radio mRadio;
 
 #if OPENTHREAD_CONFIG_UPTIME_ENABLE
-    Uptime mUptime;
+    UptimeTracker mUptimeTracker;
+#endif
+
+#if OPENTHREAD_CONFIG_OTNS_ENABLE
+    Utils::Otns mOtns;
 #endif
 
 #if OPENTHREAD_MTD || OPENTHREAD_FTD
@@ -509,7 +529,7 @@ private:
 #endif
 
 #if OPENTHREAD_CONFIG_IP6_SLAAC_ENABLE
-    Utils::Slaac mSlaac;
+    Ip6::Slaac mSlaac;
 #endif
 
 #if OPENTHREAD_CONFIG_DNS_CLIENT_ENABLE
@@ -542,12 +562,12 @@ private:
 
     MeshCoP::ActiveDatasetManager  mActiveDataset;
     MeshCoP::PendingDatasetManager mPendingDataset;
-    MeshCoP::ExtendedPanIdManager  mExtendedPanIdManager;
-    MeshCoP::NetworkNameManager    mNetworkNameManager;
+    MeshCoP::NetworkIdentity       mNetworkIdentity;
     Ip6::Filter                    mIp6Filter;
     KeyManager                     mKeyManager;
     Lowpan::Lowpan                 mLowpan;
     Mac::Mac                       mMac;
+    MessageFramer                  mMessageFramer;
     MeshForwarder                  mMeshForwarder;
     Mle::Mle                       mMle;
     Mle::DiscoverScanner           mDiscoverScanner;
@@ -573,13 +593,28 @@ private:
 
     NetworkData::Service::Manager mNetworkDataServiceManager;
 
+    VendorInfo mVendorInfo;
+
     NetworkDiagnostic::Server mNetworkDiagnosticServer;
 #if OPENTHREAD_CONFIG_TMF_NETDIAG_CLIENT_ENABLE
     NetworkDiagnostic::Client mNetworkDiagnosticClient;
 #endif
 
 #if OPENTHREAD_CONFIG_BORDER_AGENT_ENABLE
-    MeshCoP::BorderAgent mBorderAgent;
+    MeshCoP::BorderAgent::TxtData mBorderAgentTxtData;
+    MeshCoP::BorderAgent::Manager mBorderAgentManager;
+#endif
+
+#if OPENTHREAD_CONFIG_BORDER_AGENT_ENABLE && OPENTHREAD_CONFIG_BORDER_AGENT_ADMITTER_ENABLE
+    MeshCoP::BorderAgent::Admitter mBorderAgentAdmitter;
+#endif
+
+#if OPENTHREAD_CONFIG_BORDER_AGENT_ENABLE && OPENTHREAD_CONFIG_BORDER_AGENT_EPHEMERAL_KEY_ENABLE
+    MeshCoP::BorderAgent::EphemeralKeyManager mBorderAgentEphemeralKeyManager;
+#endif
+
+#if OPENTHREAD_CONFIG_BORDER_AGENT_TRACKER_ENABLE
+    MeshCoP::BorderAgent::Tracker mBorderAgentTracker;
 #endif
 
 #if OPENTHREAD_CONFIG_COMMISSIONER_ENABLE && OPENTHREAD_FTD
@@ -590,6 +625,9 @@ private:
     Tmf::SecureAgent mTmfSecureAgent;
 #endif
 
+#if OPENTHREAD_CONFIG_SEEKER_ENABLE || OPENTHREAD_CONFIG_JOINER_ENABLE
+    MeshCoP::Seeker mSeeker;
+#endif
 #if OPENTHREAD_CONFIG_JOINER_ENABLE
     MeshCoP::Joiner mJoiner;
 #endif
@@ -660,7 +698,8 @@ private:
 #endif
 
 #if OPENTHREAD_CONFIG_BLE_TCAT_ENABLE
-    Ble::BleSecure mApplicationBleSecure;
+    Ble::BleSecure     mBleSecure;
+    MeshCoP::TcatAgent mTcatAgent;
 #endif
 
 #if OPENTHREAD_CONFIG_PING_SENDER_ENABLE
@@ -681,7 +720,13 @@ private:
 #endif
 
 #if OPENTHREAD_CONFIG_HISTORY_TRACKER_ENABLE
-    Utils::HistoryTracker mHistoryTracker;
+    HistoryTracker::Local mHistoryTrackerLocal;
+#if OPENTHREAD_CONFIG_HISTORY_TRACKER_SERVER_ENABLE
+    HistoryTracker::Server mHistoryTrackerServer;
+#endif
+#if OPENTHREAD_CONFIG_HISTORY_TRACKER_CLIENT_ENABLE
+    HistoryTracker::Client mHistoryTrackerClient;
+#endif
 #endif
 
 #if OPENTHREAD_CONFIG_LINK_METRICS_MANAGER_ENABLE
@@ -696,12 +741,19 @@ private:
     AnnounceSender mAnnounceSender;
 #endif
 
-#if OPENTHREAD_CONFIG_OTNS_ENABLE
-    Utils::Otns mOtns;
-#endif
-
 #if OPENTHREAD_CONFIG_BORDER_ROUTING_ENABLE
+    BorderRouter::InfraIf        mInfraIf;
+    BorderRouter::RxRaTracker    mRxRaTracker;
     BorderRouter::RoutingManager mRoutingManager;
+#if OPENTHREAD_CONFIG_BORDER_ROUTING_TRACK_PEER_BR_INFO_ENABLE
+    BorderRouter::NetDataBrTracker mNetDataBrTracker;
+#endif
+#if OPENTHREAD_CONFIG_BORDER_ROUTING_MULTI_AIL_DETECTION_ENABLE
+    BorderRouter::MultiAilDetector mMultiAilDetector;
+#endif
+#if OPENTHREAD_CONFIG_BORDER_ROUTING_DHCP6_PD_ENABLE && OPENTHREAD_CONFIG_BORDER_ROUTING_DHCP6_PD_CLIENT_ENABLE
+    BorderRouter::Dhcp6PdClient mDhcp6PdClient;
+#endif
 #endif
 
 #if OPENTHREAD_CONFIG_NAT64_TRANSLATOR_ENABLE
@@ -746,7 +798,11 @@ template <> inline Radio::Statistics &Instance::Get(void) { return mRadio.mStati
 #endif
 
 #if OPENTHREAD_CONFIG_UPTIME_ENABLE
-template <> inline Uptime &Instance::Get(void) { return mUptime; }
+template <> inline UptimeTracker &Instance::Get(void) { return mUptimeTracker; }
+#endif
+
+#if OPENTHREAD_CONFIG_OTNS_ENABLE
+template <> inline Utils::Otns &Instance::Get(void) { return mOtns; }
 #endif
 
 #if OPENTHREAD_MTD || OPENTHREAD_FTD
@@ -757,6 +813,8 @@ template <> inline TimeTicker &Instance::Get(void) { return mTimeTicker; }
 template <> inline Settings &Instance::Get(void) { return mSettings; }
 
 template <> inline SettingsDriver &Instance::Get(void) { return mSettingsDriver; }
+
+template <> inline MessageFramer &Instance::Get(void) { return mMessageFramer; }
 
 template <> inline MeshForwarder &Instance::Get(void) { return mMeshForwarder; }
 
@@ -778,6 +836,10 @@ template <> inline NeighborTable &Instance::Get(void) { return mMle.mNeighborTab
 template <> inline ChildTable &Instance::Get(void) { return mMle.mChildTable; }
 
 template <> inline RouterTable &Instance::Get(void) { return mMle.mRouterTable; }
+#endif
+
+#if OPENTHREAD_CONFIG_P2P_ENABLE
+template <> inline PeerTable &Instance::Get(void) { return mMle.mP2p.mPeerTable; }
 #endif
 
 #if OPENTHREAD_CONFIG_WAKEUP_COORDINATOR_ENABLE
@@ -882,13 +944,11 @@ template <> inline Tmf::Agent &Instance::Get(void) { return mTmfAgent; }
 template <> inline Tmf::SecureAgent &Instance::Get(void) { return mTmfSecureAgent; }
 #endif
 
-template <> inline MeshCoP::ExtendedPanIdManager &Instance::Get(void) { return mExtendedPanIdManager; }
-
-template <> inline MeshCoP::NetworkNameManager &Instance::Get(void) { return mNetworkNameManager; }
-
 template <> inline MeshCoP::ActiveDatasetManager &Instance::Get(void) { return mActiveDataset; }
 
 template <> inline MeshCoP::PendingDatasetManager &Instance::Get(void) { return mPendingDataset; }
+
+template <> inline MeshCoP::NetworkIdentity &Instance::Get(void) { return mNetworkIdentity; }
 
 #if OPENTHREAD_CONFIG_TIME_SYNC_ENABLE
 template <> inline TimeSync &Instance::Get(void) { return mTimeSync; }
@@ -906,6 +966,10 @@ template <> inline PanIdQueryClient &Instance::Get(void) { return mCommissioner.
 
 #if OPENTHREAD_CONFIG_PLATFORM_DNSSD_ENABLE || OPENTHREAD_CONFIG_MULTICAST_DNS_ENABLE
 template <> inline Dnssd &Instance::Get(void) { return mDnssd; }
+#endif
+
+#if OPENTHREAD_CONFIG_SEEKER_ENABLE || OPENTHREAD_CONFIG_JOINER_ENABLE
+template <> inline MeshCoP::Seeker &Instance::Get(void) { return mSeeker; }
 #endif
 
 #if OPENTHREAD_CONFIG_JOINER_ENABLE
@@ -936,6 +1000,8 @@ template <> inline Dns::Dso &Instance::Get(void) { return mDnsDso; }
 template <> inline Dns::Multicast::Core &Instance::Get(void) { return mMdnsCore; }
 #endif
 
+template <> inline VendorInfo &Instance::Get(void) { return mVendorInfo; }
+
 template <> inline NetworkDiagnostic::Server &Instance::Get(void) { return mNetworkDiagnosticServer; }
 
 #if OPENTHREAD_CONFIG_TMF_NETDIAG_CLIENT_ENABLE
@@ -955,7 +1021,7 @@ template <> inline NeighborDiscovery::Agent &Instance::Get(void) { return mNeigh
 #endif
 
 #if OPENTHREAD_CONFIG_IP6_SLAAC_ENABLE
-template <> inline Utils::Slaac &Instance::Get(void) { return mSlaac; }
+template <> inline Ip6::Slaac &Instance::Get(void) { return mSlaac; }
 #endif
 
 #if OPENTHREAD_CONFIG_JAM_DETECTION_ENABLE
@@ -989,7 +1055,16 @@ template <> inline Utils::MeshDiag &Instance::Get(void) { return mMeshDiag; }
 #endif
 
 #if OPENTHREAD_CONFIG_HISTORY_TRACKER_ENABLE
-template <> inline Utils::HistoryTracker &Instance::Get(void) { return mHistoryTracker; }
+
+template <> inline HistoryTracker::Local &Instance::Get(void) { return mHistoryTrackerLocal; }
+
+#if OPENTHREAD_CONFIG_HISTORY_TRACKER_SERVER_ENABLE
+template <> inline HistoryTracker::Server &Instance::Get(void) { return mHistoryTrackerServer; }
+#endif
+
+#if OPENTHREAD_CONFIG_HISTORY_TRACKER_CLIENT_ENABLE
+template <> inline HistoryTracker::Client &Instance::Get(void) { return mHistoryTrackerClient; }
+#endif
 #endif
 
 #if OPENTHREAD_CONFIG_LINK_METRICS_MANAGER_ENABLE
@@ -1001,14 +1076,23 @@ template <> inline MeshCoP::DatasetUpdater &Instance::Get(void) { return mDatase
 #endif
 
 #if OPENTHREAD_CONFIG_BORDER_AGENT_ENABLE
-template <> inline MeshCoP::BorderAgent &Instance::Get(void) { return mBorderAgent; }
+template <> inline MeshCoP::BorderAgent::Manager &Instance::Get(void) { return mBorderAgentManager; }
+template <> inline MeshCoP::BorderAgent::TxtData &Instance::Get(void) { return mBorderAgentTxtData; }
+#endif
+
+#if OPENTHREAD_CONFIG_BORDER_AGENT_ENABLE && OPENTHREAD_CONFIG_BORDER_AGENT_ADMITTER_ENABLE
+template <> inline MeshCoP::BorderAgent::Admitter &Instance::Get(void) { return mBorderAgentAdmitter; }
 #endif
 
 #if OPENTHREAD_CONFIG_BORDER_AGENT_ENABLE && OPENTHREAD_CONFIG_BORDER_AGENT_EPHEMERAL_KEY_ENABLE
 template <> inline MeshCoP::BorderAgent::EphemeralKeyManager &Instance::Get(void)
 {
-    return mBorderAgent.GetEphemeralKeyManager();
+    return mBorderAgentEphemeralKeyManager;
 }
+#endif
+
+#if OPENTHREAD_CONFIG_BORDER_AGENT_TRACKER_ENABLE
+template <> inline MeshCoP::BorderAgent::Tracker &Instance::Get(void) { return mBorderAgentTracker; }
 #endif
 
 #if OPENTHREAD_CONFIG_ANNOUNCE_SENDER_ENABLE
@@ -1063,14 +1147,19 @@ template <> inline LinkMetrics::Subject &Instance::Get(void) { return mSubject; 
 
 #endif // (OPENTHREAD_CONFIG_THREAD_VERSION >= OT_THREAD_VERSION_1_2)
 
-#if OPENTHREAD_CONFIG_OTNS_ENABLE
-template <> inline Utils::Otns &Instance::Get(void) { return mOtns; }
-#endif
-
 #if OPENTHREAD_CONFIG_BORDER_ROUTING_ENABLE
+template <> inline BorderRouter::InfraIf        &Instance::Get(void) { return mInfraIf; }
+template <> inline BorderRouter::RxRaTracker    &Instance::Get(void) { return mRxRaTracker; }
 template <> inline BorderRouter::RoutingManager &Instance::Get(void) { return mRoutingManager; }
-
-template <> inline BorderRouter::InfraIf &Instance::Get(void) { return mRoutingManager.mInfraIf; }
+#if OPENTHREAD_CONFIG_BORDER_ROUTING_TRACK_PEER_BR_INFO_ENABLE
+template <> inline BorderRouter::NetDataBrTracker &Instance::Get(void) { return mNetDataBrTracker; }
+#endif
+#if OPENTHREAD_CONFIG_BORDER_ROUTING_MULTI_AIL_DETECTION_ENABLE
+template <> inline BorderRouter::MultiAilDetector &Instance::Get(void) { return mMultiAilDetector; }
+#endif
+#if OPENTHREAD_CONFIG_BORDER_ROUTING_DHCP6_PD_ENABLE && OPENTHREAD_CONFIG_BORDER_ROUTING_DHCP6_PD_CLIENT_ENABLE
+template <> inline BorderRouter::Dhcp6PdClient &Instance::Get(void) { return mDhcp6PdClient; }
+#endif
 #endif
 
 #if OPENTHREAD_CONFIG_NAT64_TRANSLATOR_ENABLE
@@ -1093,7 +1182,8 @@ template <> inline Coap::ApplicationCoapSecure &Instance::Get(void) { return mAp
 #endif
 
 #if OPENTHREAD_CONFIG_BLE_TCAT_ENABLE
-template <> inline Ble::BleSecure &Instance::Get(void) { return mApplicationBleSecure; }
+template <> inline Ble::BleSecure     &Instance::Get(void) { return mBleSecure; }
+template <> inline MeshCoP::TcatAgent &Instance::Get(void) { return mTcatAgent; }
 #endif
 
 #endif // OPENTHREAD_MTD || OPENTHREAD_FTD
@@ -1162,4 +1252,4 @@ void TimerMicroIn<Owner, HandleTimertPtr>::HandleTimer(Timer &aTimer)
 
 } // namespace ot
 
-#endif // INSTANCE_HPP_
+#endif // OT_CORE_INSTANCE_INSTANCE_HPP_

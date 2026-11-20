@@ -30,7 +30,7 @@
 <h1 id="purpose">Purpose</h1>
 <p>STM32 Wireless Personal Area Network Middleware developed within the STM32WB framework is used to support:</p>
 <ul>
-<li>Bluetooth Low Energy 5 Certified Applications</li>
+<li>Bluetooth Low Energy 6 Certified Applications</li>
 </ul>
 <p><strong>NOTE</strong>: The list of BLE commands is documented in the following file: /STM32_WPAN/ble/core/doc/<strong>STM32WB_BLE_Wireless_Interface.html</strong>.</p>
 <p>Refer to /STM32_WPAN/ble/core/doc/<strong>GATT_DB_Size_SRAM_NVM.xlsx</strong> document to calculate the size of the GATT Database stored in SRAM and the GATT DB and security records in NVM.</p>
@@ -54,9 +54,40 @@
 <div class="col-sm-12 col-lg-8">
 <h1 id="update-history">Update History</h1>
 <div class="collapse">
-<input type="checkbox" id="collapse-section34" checked aria-hidden="true"> <label for="collapse-section34" aria-hidden="false">V1.24.0 / 23-October-2025</label>
+<input type="checkbox" id="collapse-section35" checked aria-hidden="true"> <label for="collapse-section35" aria-hidden="false">V1.25.0 / 23-Oct-2026</label>
 <div>
+<h2 id="api-changes">API Changes</h2>
+<ul>
+<li>SWCU1-13324 : As stated in Core Erratum 26770, Passkey Entry in Legacy Pairing is now considered as unauthenticated. This change is now effective whatever the core version (behavioral change).</li>
+<li>SWCU1-13699 : Parameter IO_Capability added to ACI_GAP_PASS_KEY_REQ_EVENT (event signature change).</li>
+<li>SWCU1-13826 : “Authenticated Signed Writes” feature removed from the BLE stack (capability removal).</li>
+<li>SWCU1-13834 : ACI_GAP_START_OBSERVATION_PROC, …_LIMITED_DISCOVERY_PROC, …_GENERAL_DISCOVERY_PROC, …_GENERAL_CONNECTION_ESTABLISH_PROC, …_SELECTIVE_CONNECTION_ESTABLISH_PROC deprecated and ACI_GAP_EXT_START_SCAN removed, replaced by ACI_GAP_START_SCAN (command deprecation/removal/replacement).</li>
+<li>SWCU1-13835 : ACI_GAP_ADDITIONAL_BEACON_START/STOP/SET_DATA renamed to ACI_HAL_ADDITIONAL_BEACON_START/STOP/SET_DATA (command rename).</li>
+<li>SWCU1-24456 : max_coc_mps is now internally limited by attMtu; new usage constraint on attMtu (behavioral/usage API change; also affects the BLE_MBLOCKS_CALC macro).</li>
+<li>SWCU1-24471 : New event ACI_GATT_NOTIFICATION_LL_ACK_EVENT added.</li>
+<li>SWCU1-25034 : ACI_GATT_STORE_DB now returns an error when the DB exceeds storage capacity (return-behavior change; buffer 512→672 bytes).</li>
+<li>SWCU1-25105 : Attribute_Val_Length and Attribute_Val of ACI_GATT_PERMIT_WRITE are no longer used (parameter deprecation).</li>
+</ul>
 <h2 id="main-changes">Main Changes</h2>
+<ul>
+<li>BLE:
+<ul>
+<li>Update to the Bluetooth® Core Specification v6.3 and Bluetooth® TCRL pkg104.</li>
+<li>Introduces new version of MESH library (1.13.12).</li>
+</ul></li>
+<li>Thread:
+<ul>
+<li>SWCU1-23674 : Updates the OpenThread stack to the February 2026 version (SHA-1: b81da07ace250b7d3800928848feaa1fb126fa43), validated against Thread FTD, MTD and RCP certification suites.</li>
+<li>SWCU1-25036 : Fixes misleading OpenThread middleware definitions referencing a deprecated option to store Thread NVM data in internal flash.</li>
+<li>SWCU1-13762 : Improves OpenThread robustness when listing multicast addresses through ipmaddr and similar APIs.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section34" aria-hidden="true"> <label for="collapse-section34" aria-hidden="false">V1.24.0 / 23-October-2025</label>
+<div>
+<h2 id="main-changes-1">Main Changes</h2>
 <ul>
 <li>General:
 <ul>
@@ -74,7 +105,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section33" aria-hidden="true"> <label for="collapse-section33" aria-hidden="false">V1.23.0 / 02-June-2025</label>
 <div>
-<h2 id="main-changes-1">Main Changes</h2>
+<h2 id="main-changes-2">Main Changes</h2>
 <ul>
 <li>BLE:
 <ul>
@@ -91,7 +122,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section32" aria-hidden="true"> <label for="collapse-section32" aria-hidden="false">V1.22.1 / 12-March-2025</label>
 <div>
-<h2 id="main-changes-2">Main Changes</h2>
+<h2 id="main-changes-3">Main Changes</h2>
 <ul>
 <li>Zigbee:
 <ul>
@@ -103,7 +134,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section31" aria-hidden="true"> <label for="collapse-section31" aria-hidden="false">V1.22.0 / 05-February-2025</label>
 <div>
-<h2 id="main-changes-3">Main Changes</h2>
+<h2 id="main-changes-4">Main Changes</h2>
 <ul>
 <li>BLE:
 <ul>
@@ -119,7 +150,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section30" aria-hidden="true"> <label for="collapse-section30" aria-hidden="false">V1.21.0 / 30-October-2024</label>
 <div>
-<h2 id="main-changes-4">Main Changes</h2>
+<h2 id="main-changes-5">Main Changes</h2>
 <ul>
 <li>BLE:
 <ul>
@@ -139,7 +170,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section29" aria-hidden="true"> <label for="collapse-section29" aria-hidden="false">V1.20.0 / 04-June-2024</label>
 <div>
-<h2 id="main-changes-5">Main Changes</h2>
+<h2 id="main-changes-6">Main Changes</h2>
 <ul>
 <li>General:
 <ul>
@@ -161,7 +192,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section28" aria-hidden="true"> <label for="collapse-section28" aria-hidden="false">V1.19.1 / 8-April-2024</label>
 <div>
-<h2 id="main-changes-6">Main Changes</h2>
+<h2 id="main-changes-7">Main Changes</h2>
 <ul>
 <li>Thread:
 <ul>
@@ -173,7 +204,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section27" aria-hidden="true"> <label for="collapse-section27" aria-hidden="false">V1.19.0 / 7-Feb-2024</label>
 <div>
-<h2 id="main-changes-7">Main Changes</h2>
+<h2 id="main-changes-8">Main Changes</h2>
 <ul>
 <li>BLE:
 <ul>
@@ -191,7 +222,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section26" aria-hidden="true"> <label for="collapse-section26" aria-hidden="false">V1.18.0 / 30-Oct-2023</label>
 <div>
-<h2 id="main-changes-8">Main Changes</h2>
+<h2 id="main-changes-9">Main Changes</h2>
 <ul>
 <li>BLE:
 <ul>
@@ -220,7 +251,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section25" aria-hidden="true"> <label for="collapse-section25" aria-hidden="false">V1.17.3 / 10-Sep-2023</label>
 <div>
-<h2 id="main-changes-9">Main Changes</h2>
+<h2 id="main-changes-10">Main Changes</h2>
 <ul>
 <li>BLE:
 <ul>
@@ -232,7 +263,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section24" aria-hidden="true"> <label for="collapse-section24" aria-hidden="false">V1.17.1 / 25-July-2023</label>
 <div>
-<h2 id="main-changes-10">Main Changes</h2>
+<h2 id="main-changes-11">Main Changes</h2>
 <ul>
 <li>BLE:
 <ul>
@@ -248,7 +279,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section23" aria-hidden="true"> <label for="collapse-section23" aria-hidden="false">V1.17.0 / 31-May-2023</label>
 <div>
-<h2 id="main-changes-11">Main Changes</h2>
+<h2 id="main-changes-12">Main Changes</h2>
 <ul>
 <li>BLE:
 <ul>
@@ -282,7 +313,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section22" aria-hidden="true"> <label for="collapse-section22" aria-hidden="false">V1.16.0 / 01-Feb-2023</label>
 <div>
-<h2 id="main-changes-12">Main Changes</h2>
+<h2 id="main-changes-13">Main Changes</h2>
 <ul>
 <li>BLE:
 <ul>
@@ -303,7 +334,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section21" aria-hidden="true"> <label for="collapse-section21" aria-hidden="false">V1.15.0 / 04-Nov-2022</label>
 <div>
-<h2 id="main-changes-13">Main Changes</h2>
+<h2 id="main-changes-14">Main Changes</h2>
 <ul>
 <li>BLE:
 <ul>
@@ -335,7 +366,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section20" aria-hidden="true"> <label for="collapse-section20" aria-hidden="false">V1.14.1 / 06-July-2022</label>
 <div>
-<h2 id="main-changes-14">Main Changes</h2>
+<h2 id="main-changes-15">Main Changes</h2>
 <ul>
 <li>BLE:
 <ul>
@@ -355,7 +386,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section19" aria-hidden="true"> <label for="collapse-section19" aria-hidden="false">V1.14.0 / 06-June-2022</label>
 <div>
-<h2 id="main-changes-15">Main Changes</h2>
+<h2 id="main-changes-16">Main Changes</h2>
 <ul>
 <li>BLE (v5.3):
 <ul>
@@ -386,7 +417,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section18" aria-hidden="true"> <label for="collapse-section18" aria-hidden="false">V1.13.3 / 18-March-2022</label>
 <div>
-<h2 id="main-changes-16">Main Changes</h2>
+<h2 id="main-changes-17">Main Changes</h2>
 <ul>
 <li>BLE:
 <ul>
@@ -399,7 +430,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section17" aria-hidden="true"> <label for="collapse-section17" aria-hidden="false">V1.13.2 / 9-February-2022</label>
 <div>
-<h2 id="main-changes-17">Main Changes</h2>
+<h2 id="main-changes-18">Main Changes</h2>
 <ul>
 <li>BLE:
 <ul>
@@ -415,7 +446,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section16" aria-hidden="true"> <label for="collapse-section16" aria-hidden="false">V1.13.1 / 3-December-2021</label>
 <div>
-<h2 id="main-changes-18">Main Changes</h2>
+<h2 id="main-changes-19">Main Changes</h2>
 <ul>
 <li>BLE updates:
 <ul>
@@ -432,7 +463,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section15" aria-hidden="true"> <label for="collapse-section15" aria-hidden="false">V1.13.0 / 3-November-2021</label>
 <div>
-<h2 id="main-changes-19">Main Changes</h2>
+<h2 id="main-changes-20">Main Changes</h2>
 <ul>
 <li>BLE:
 <ul>
@@ -488,7 +519,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section14" aria-hidden="true"> <label for="collapse-section14" aria-hidden="false">V1.12.0 / 17-June-2021</label>
 <div>
-<h2 id="main-changes-20">Main Changes</h2>
+<h2 id="main-changes-21">Main Changes</h2>
 <ul>
 <li>Zigbee:
 <ul>
@@ -511,7 +542,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section13" aria-hidden="true"> <label for="collapse-section13" aria-hidden="false">V1.11.0 / 5-February-2021</label>
 <div>
-<h2 id="main-changes-21">Main Changes</h2>
+<h2 id="main-changes-22">Main Changes</h2>
 <ul>
 <li>BLE-Mesh library version 1.13.002
 <ul>
@@ -564,7 +595,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section12" aria-hidden="true"> <label for="collapse-section12" aria-hidden="false">V1.10.0 / 26-October-2020</label>
 <div>
-<h2 id="main-changes-22">Main Changes</h2>
+<h2 id="main-changes-23">Main Changes</h2>
 <ul>
 <li>General:
 <ul>
@@ -600,7 +631,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section11" aria-hidden="true"> <label for="collapse-section11" aria-hidden="false">V1.9.0 / 21-September-2020</label>
 <div>
-<h2 id="main-changes-23">Main Changes</h2>
+<h2 id="main-changes-24">Main Changes</h2>
 <ul>
 <li>BLE-Mesh library version 1.13.000
 <ul>
@@ -662,7 +693,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section10" aria-hidden="true"> <label for="collapse-section10" aria-hidden="false">V1.8.0 / 22-June-2020</label>
 <div>
-<h2 id="main-changes-24">Main Changes</h2>
+<h2 id="main-changes-25">Main Changes</h2>
 <ul>
 <li>BLE-Mesh library version 1.12.008
 <ul>
@@ -698,7 +729,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section9" aria-hidden="true"> <label for="collapse-section9" aria-hidden="false">V1.7.0 / 11-May-2020</label>
 <div>
-<h2 id="main-changes-25">Main Changes</h2>
+<h2 id="main-changes-26">Main Changes</h2>
 <p>BLE-Mesh:</p>
 <ul>
 <li>BLE Mesh Models Fix/Update</li>
@@ -708,7 +739,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section8" aria-hidden="true"> <label for="collapse-section8" aria-hidden="false">V1.6.0 / 27-March-2020</label>
 <div>
-<h2 id="main-changes-26">Main Changes</h2>
+<h2 id="main-changes-27">Main Changes</h2>
 <p>BLE-Mesh:</p>
 <ul>
 <li>BLE-Mesh library version 1.12.007
@@ -980,7 +1011,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section7" aria-hidden="true"> <label for="collapse-section7" aria-hidden="false">V1.5.0 / 22-January-2020</label>
 <div>
-<h2 id="main-changes-27">Main Changes</h2>
+<h2 id="main-changes-28">Main Changes</h2>
 <p>Interface:</p>
 <ul>
 <li>Added new command SHCI_C2_SetFlashActivityControl() to configure BLE timing protection</li>
@@ -1023,7 +1054,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section6" aria-hidden="true"> <label for="collapse-section6" aria-hidden="true">V1.4.0 / 22-November-2019</label>
 <div>
-<h2 id="main-changes-28">Main Changes</h2>
+<h2 id="main-changes-29">Main Changes</h2>
 <p>Interface:</p>
 <ul>
 <li>Added new command SHCI_C2_ExtpaConfig() to support external PA</li>
@@ -1039,7 +1070,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section5" aria-hidden="true"> <label for="collapse-section5" aria-hidden="true">V1.3.0 / 4-September-2019</label>
 <div>
-<h2 id="main-changes-29">Main Changes</h2>
+<h2 id="main-changes-30">Main Changes</h2>
 <p>General:</p>
 <ul>
 <li>Introducing support of Zigbee</li>
@@ -1077,7 +1108,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section4" aria-hidden="true"> <label for="collapse-section4" aria-hidden="true">V1.2.0 / 27-June-2019</label>
 <div>
-<h2 id="main-changes-30">Main Changes</h2>
+<h2 id="main-changes-31">Main Changes</h2>
 <p>General:</p>
 <ul>
 <li>Following utilities : Scheduler and Low Power Manager reworked and moved to “Utilities” directory</li>
@@ -1103,7 +1134,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section3" aria-hidden="true"> <label for="collapse-section3" aria-hidden="true">V1.1.1 / 10-May-2019</label>
 <div>
-<h2 id="main-changes-31">Main Changes</h2>
+<h2 id="main-changes-32">Main Changes</h2>
 <p>BLE:</p>
 <ul>
 <li>Fix race condition in transport layer when an operating system is used.</li>
@@ -1149,7 +1180,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section2" aria-hidden="true"> <label for="collapse-section2" aria-hidden="true">V1.1.0 / 29-March-2019</label>
 <div>
-<h2 id="main-changes-32">Main Changes</h2>
+<h2 id="main-changes-33">Main Changes</h2>
 <p>General:</p>
 <ul>
 <li>Licenses in utilities and patterns moved from sla0044 to 3-clauses BSD</li>
@@ -1175,7 +1206,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section1" aria-hidden="true"> <label for="collapse-section1" aria-hidden="true">V1.0.0 / 31-January-2019</label>
 <div>
-<h2 id="main-changes-33">Main Changes</h2>
+<h2 id="main-changes-34">Main Changes</h2>
 <p>First release</p>
 </div>
 </div>

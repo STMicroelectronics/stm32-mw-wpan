@@ -173,7 +173,7 @@ int tcp_timer_active(struct tcpcb *tp, uint32_t timer_type);
 #define	TP_KEEPIDLE(tp)	(/*(tp)->t_keepidle ? (tp)->t_keepidle :*/ tcp_keepidle)
 #define	TP_KEEPINTVL(tp) (/*(tp)->t_keepintvl ? (tp)->t_keepintvl :*/ tcp_keepintvl)
 #define	TP_KEEPCNT(tp)	(/*(tp)->t_keepcnt ? (tp)->t_keepcnt :*/ tcp_keepcnt)
-#define	TP_MAXIDLE(tp)	(TP_KEEPCNT(tp) * TP_KEEPINTVL(tp))
+#define	TP_MAXIDLE(tp)	(((uint32_t)TP_KEEPCNT(tp) * (uint32_t)TP_KEEPINTVL(tp)))
 
 /*
  * samkumar: MOVED NECESSARY EXTERN DECLARATIONS TO TCP_SUBR.C

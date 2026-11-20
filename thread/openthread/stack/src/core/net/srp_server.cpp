@@ -303,7 +303,7 @@ bool Server::NetDataContainsOtherSrpServers(void) const
     bool                                    contains = false;
     NetworkData::Service::DnsSrpAnycastInfo anycastInfo;
     NetworkData::Service::DnsSrpUnicastInfo unicastInfo;
-    NetworkData::Service::Manager::Iterator iterator;
+    NetworkData::Service::Iterator          iterator(GetInstance());
 
     if (Get<NetworkData::Service::Manager>().FindPreferredDnsSrpAnycastInfo(anycastInfo) == kErrorNone)
     {
@@ -313,8 +313,7 @@ bool Server::NetDataContainsOtherSrpServers(void) const
 
     iterator.Reset();
 
-    if (Get<NetworkData::Service::Manager>().GetNextDnsSrpUnicastInfo(
-            iterator, NetworkData::Service::kAddrInServiceData, unicastInfo) == kErrorNone)
+    if (iterator.GetNextDnsSrpUnicastInfo(NetworkData::Service::kAddrInServiceData, unicastInfo) == kErrorNone)
     {
         contains = true;
         ExitNow();
@@ -322,8 +321,7 @@ bool Server::NetDataContainsOtherSrpServers(void) const
 
     iterator.Reset();
 
-    while (Get<NetworkData::Service::Manager>().GetNextDnsSrpUnicastInfo(
-               iterator, NetworkData::Service::kAddrInServerData, unicastInfo) == kErrorNone)
+    while (iterator.GetNextDnsSrpUnicastInfo(NetworkData::Service::kAddrInServerData, unicastInfo) == kErrorNone)
     {
         if (!Get<Mle::Mle>().HasRloc16(unicastInfo.mRloc16) &&
             Get<Mle::Mle>().GetMeshLocalEid() != unicastInfo.mSockAddr.GetAddress())
@@ -438,7 +436,7 @@ Error Server::SetDomain(const char *aDomain)
 
         memcpy(buf, aDomain, length);
         buf[length]     = '.';
-        buf[length + 1] = '\0';
+        buf[length + 1] = kNullChar;
 
         error = mDomain.Set(buf);
     }
@@ -509,15 +507,17 @@ bool Server::HasNameConflictsWith(Host &aHost) const
         ExitNow(hasConflicts = true);
     }
 
-    for (const Service &service : aHost.mServices)
+    for (const Host &host : mHosts)
     {
-        // Check on all hosts for a matching service with the same
-        // instance name and if found, verify that it has the same
-        // key.
-
-        for (const Host &host : mHosts)
+        if (aHost.mKey == host.mKey)
         {
-            if (host.HasService(service.GetInstanceName()) && (aHost.mKey != host.mKey))
+            continue;
+        }
+
+        // Verify that no allocated services have the same instance name.
+        for (const Service &service : aHost.mServices)
+        {
+            if (host.HasService(service.GetInstanceName()))
             {
                 LogWarn("Name conflict: service name %s has already been allocated", service.GetInstanceName());
                 ExitNow(hasConflicts = true);
@@ -711,7 +711,7 @@ void Server::CommitSrpUpdate(Error                    aError,
 
         mHasRegisteredAnyService = true;
         info.SetPort(GetSocket().mSockName.mPort);
-        IgnoreError(Get<Settings>().Save(info));
+        Get<Settings>().Save(info);
     }
 #endif
 
@@ -723,7 +723,7 @@ void Server::CommitSrpUpdate(Error                    aError,
 exit:
     if (aMessageInfo != nullptr)
     {
-        if (aError == kErrorNone && !(grantedLease == hostLease && grantedKeyLease == hostKeyLease))
+        if (aError == kErrorNone && (grantedLease != hostLease || grantedKeyLease != hostKeyLease))
         {
             SendResponse(aDnsHeader, grantedLease, grantedKeyLease, useShortLease, *aMessageInfo);
         }
@@ -1867,21 +1867,14 @@ void Server::HandleOutstandingUpdatesTimer(void)
 
 const char *Server::AddressModeToString(AddressMode aMode)
 {
-    static const char *const kAddressModeStrings[] = {
-        "unicast",           // (0) kAddressModeUnicast
-        "anycast",           // (1) kAddressModeAnycast
-        "unicast-force-add", // (2) kAddressModeUnicastForceAdd
-    };
+#define AddressModeMapList(_)         \
+    _(kAddressModeUnicast, "unicast") \
+    _(kAddressModeAnycast, "anycast") \
+    _(kAddressModeUnicastForceAdd, "unicast-force-add")
 
-    struct EnumCheck
-    {
-        InitEnumValidatorCounter();
-        ValidateNextEnum(kAddressModeUnicast);
-        ValidateNextEnum(kAddressModeAnycast);
-        ValidateNextEnum(kAddressModeUnicastForceAdd);
-    };
+    DefineEnumStringArray(AddressModeMapList);
 
-    return kAddressModeStrings[aMode];
+    return kStrings[aMode];
 }
 
 void Server::UpdateResponseCounters(Dns::UpdateHeader::Response aResponseCode)
@@ -2080,27 +2073,16 @@ bool Server::Service::HasSubTypeServiceName(const char *aSubTypeServiceName) con
 #if OT_SHOULD_LOG_AT(OT_LOG_LEVEL_INFO)
 void Server::Service::Log(Action aAction) const
 {
-    static const char *const kActionStrings[] = {
-        "Add new",                   // (0) kAddNew
-        "Update existing",           // (1) kUpdateExisting
-        "Keep unchanged",            // (2) kKeepUnchanged
-        "Remove but retain name of", // (3) kRemoveButRetainName
-        "Fully remove",              // (4) kFullyRemove
-        "LEASE expired for",         // (5) kLeaseExpired
-        "KEY LEASE expired for",     // (6) kKeyLeaseExpired
-    };
+#define ActionMapList(_)                                 \
+    _(kAddNew, "Add new")                                \
+    _(kUpdateExisting, "Update existing")                \
+    _(kKeepUnchanged, "Keep unchanged")                  \
+    _(kRemoveButRetainName, "Remove but retain name of") \
+    _(kFullyRemove, "Fully remove")                      \
+    _(kLeaseExpired, "LEASE expired for")                \
+    _(kKeyLeaseExpired, "KEY LEASE expired for")
 
-    struct EnumCheck
-    {
-        InitEnumValidatorCounter();
-        ValidateNextEnum(kAddNew);
-        ValidateNextEnum(kUpdateExisting);
-        ValidateNextEnum(kKeepUnchanged);
-        ValidateNextEnum(kRemoveButRetainName);
-        ValidateNextEnum(kFullyRemove);
-        ValidateNextEnum(kLeaseExpired);
-        ValidateNextEnum(kKeyLeaseExpired);
-    };
+    DefineEnumStringArray(ActionMapList);
 
     // We only log if the `Service` is marked as committed. This
     // ensures that temporary `Service` entries associated with a
@@ -2109,7 +2091,7 @@ void Server::Service::Log(Action aAction) const
 
     if (mIsCommitted)
     {
-        LogInfo("%s service '%s'", kActionStrings[aAction], GetInstanceName());
+        LogInfo("%s service '%s'", kStrings[aAction], GetInstanceName());
 
         for (const Heap::String &subType : mSubTypes)
         {

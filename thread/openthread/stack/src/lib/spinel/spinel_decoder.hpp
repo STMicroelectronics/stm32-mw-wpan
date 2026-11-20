@@ -30,13 +30,14 @@
  *   This file contains the definitions of a spinel decoder.
  */
 
-#ifndef SPINEL_DECODER_HPP_
-#define SPINEL_DECODER_HPP_
+#ifndef OT_LIB_SPINEL_SPINEL_DECODER_HPP_
+#define OT_LIB_SPINEL_SPINEL_DECODER_HPP_
 
 #include "openthread-spinel-config.h"
 
 #include <openthread/ip6.h>
 #include <openthread/ncp.h>
+#include <openthread/platform/radio.h>
 
 #include "spinel.h"
 
@@ -49,10 +50,7 @@ namespace Spinel {
 class Decoder
 {
 public:
-    enum
-    {
-        kMaxNestedStructs = 4, ///< Maximum number of nested structs.
-    };
+    static constexpr uint8_t kMaxNestedStructs = 4; ///< Maximum number of nested structs.
 
     /**
      * Initializes a `Decoder` object.
@@ -548,4 +546,4 @@ private:
 } // namespace Spinel
 } // namespace ot
 
-#endif // SPINEL_DECODER_HPP_
+#endif // OT_LIB_SPINEL_SPINEL_DECODER_HPP_

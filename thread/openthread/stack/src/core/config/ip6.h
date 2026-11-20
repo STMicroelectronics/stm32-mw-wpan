@@ -31,8 +31,8 @@
  *   This file includes compile-time configurations for the IP6 service.
  */
 
-#ifndef CONFIG_IP6_H_
-#define CONFIG_IP6_H_
+#ifndef OT_CORE_CONFIG_IP6_H_
+#define OT_CORE_CONFIG_IP6_H_
 
 /**
  * @addtogroup config-ip6
@@ -61,7 +61,11 @@
  * The maximum number of supported IPv6 multicast addresses allows to be externally added.
  */
 #ifndef OPENTHREAD_CONFIG_IP6_MAX_EXT_MCAST_ADDRS
+#if OPENTHREAD_CONFIG_REFERENCE_DEVICE_ENABLE
+#define OPENTHREAD_CONFIG_IP6_MAX_EXT_MCAST_ADDRS 8
+#else
 #define OPENTHREAD_CONFIG_IP6_MAX_EXT_MCAST_ADDRS 2
+#endif
 #endif
 
 /**
@@ -221,4 +225,4 @@
  * @}
  */
 
-#endif // CONFIG_IP6_H_
+#endif // OT_CORE_CONFIG_IP6_H_

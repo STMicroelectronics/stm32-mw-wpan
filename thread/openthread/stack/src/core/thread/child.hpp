@@ -31,8 +31,8 @@
  *   This file includes definitions for a Thread `Child`.
  */
 
-#ifndef CHILD_HPP_
-#define CHILD_HPP_
+#ifndef OT_CORE_THREAD_CHILD_HPP_
+#define OT_CORE_THREAD_CHILD_HPP_
 
 #include "openthread-core-config.h"
 
@@ -231,7 +231,7 @@ public:
      */
     bool HasIp6Address(const Ip6::Address &aAddress) const;
 
-#if OPENTHREAD_FTD && OPENTHREAD_CONFIG_TMF_PROXY_DUA_ENABLE
+#if OPENTHREAD_CONFIG_TMF_PROXY_DUA_ENABLE
     /**
      * Retrieves the Domain Unicast Address registered by the child.
      *
@@ -394,4 +394,4 @@ DefineCoreType(otChildInfo, Child::Info);
 
 } // namespace ot
 
-#endif // CHILD_HPP_
+#endif // OT_CORE_THREAD_CHILD_HPP_

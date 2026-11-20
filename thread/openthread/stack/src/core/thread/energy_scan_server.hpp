@@ -31,14 +31,15 @@
  *   This file includes definitions for responding to Energy Scan Requests.
  */
 
-#ifndef ENERGY_SCAN_SERVER_HPP_
-#define ENERGY_SCAN_SERVER_HPP_
+#ifndef OT_CORE_THREAD_ENERGY_SCAN_SERVER_HPP_
+#define OT_CORE_THREAD_ENERGY_SCAN_SERVER_HPP_
 
 #include "openthread-core-config.h"
 
 #include "common/locator.hpp"
 #include "common/non_copyable.hpp"
 #include "common/notifier.hpp"
+#include "common/owned_ptr.hpp"
 #include "common/timer.hpp"
 #include "mac/mac.hpp"
 #include "net/ip6_address.hpp"
@@ -65,8 +66,10 @@ public:
 private:
     static constexpr uint32_t kScanDelay   = 1000; // SCAN_DELAY (milliseconds)
     static constexpr uint32_t kReportDelay = 500;  // Delay before sending a report (milliseconds)
+    static constexpr uint8_t  kMinCount    = 1;
+    static constexpr uint8_t  kMaxCount    = 3;
 
-    template <Uri kUri> void HandleTmf(Coap::Message &aMessage, const Ip6::MessageInfo &aMessageInfo);
+    template <Uri kUri> void HandleTmf(Coap::Msg &aMsg);
 
     static void HandleScanResult(Mac::EnergyScanResult *aResult, void *aContext);
     void        HandleScanResult(Mac::EnergyScanResult *aResult);
@@ -79,15 +82,15 @@ private:
 
     using ScanTimer = TimerMilliIn<EnergyScanServer, &EnergyScanServer::HandleTimer>;
 
-    Ip6::Address   mCommissioner;
-    uint32_t       mChannelMask;
-    uint32_t       mChannelMaskCurrent;
-    uint16_t       mPeriod;
-    uint16_t       mScanDuration;
-    uint8_t        mCount;
-    uint8_t        mNumScanResults;
-    Coap::Message *mReportMessage;
-    ScanTimer      mTimer;
+    Ip6::Address            mCommissioner;
+    uint32_t                mChannelMask;
+    uint32_t                mChannelMaskCurrent;
+    uint16_t                mPeriod;
+    uint16_t                mScanDuration;
+    uint8_t                 mCount;
+    uint8_t                 mNumScanResults;
+    OwnedPtr<Coap::Message> mReportMessage;
+    ScanTimer               mTimer;
 };
 
 DeclareTmfHandler(EnergyScanServer, kUriEnergyScan);
@@ -98,4 +101,4 @@ DeclareTmfHandler(EnergyScanServer, kUriEnergyScan);
 
 } // namespace ot
 
-#endif // ENERGY_SCAN_SERVER_HPP_
+#endif // OT_CORE_THREAD_ENERGY_SCAN_SERVER_HPP_

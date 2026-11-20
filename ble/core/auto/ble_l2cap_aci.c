@@ -5,7 +5,7 @@
  *****************************************************************************
  * @attention
  *
- * Copyright (c) 2018-2025 STMicroelectronics.
+ * Copyright (c) 2018-2026 STMicroelectronics.
  * All rights reserved.
  *
  * This software is licensed under terms that can be found in the LICENSE file
@@ -25,25 +25,23 @@ tBleStatus aci_l2cap_connection_parameter_update_req( uint16_t Connection_Handle
 {
   struct hci_request rq;
   uint8_t cmd_buffer[BLE_CMD_MAX_PARAM_LEN];
-  aci_l2cap_connection_parameter_update_req_cp0 *cp0 = (aci_l2cap_connection_parameter_update_req_cp0*)(cmd_buffer);
-  tBleStatus status = 0;
-  int index_input = 0;
+  int in_offset = 0;
+  aci_l2cap_connection_parameter_update_req_cp0 *cp0 = (aci_l2cap_connection_parameter_update_req_cp0*)(cmd_buffer + in_offset);
   cp0->Connection_Handle = Connection_Handle;
-  index_input += 2;
+  in_offset += 2;
   cp0->Conn_Interval_Min = Conn_Interval_Min;
-  index_input += 2;
+  in_offset += 2;
   cp0->Conn_Interval_Max = Conn_Interval_Max;
-  index_input += 2;
+  in_offset += 2;
   cp0->Latency = Latency;
-  index_input += 2;
+  in_offset += 2;
   cp0->Timeout_Multiplier = Timeout_Multiplier;
-  index_input += 2;
-  Osal_MemSet( &rq, 0, sizeof(rq) );
+  in_offset += 2;
+  tBleStatus status = 0;
   rq.ogf = 0x3f;
   rq.ocf = 0x181;
-  rq.event = 0x0F;
   rq.cparam = cmd_buffer;
-  rq.clen = index_input;
+  rq.clen = in_offset;
   rq.rparam = &status;
   rq.rlen = 1;
   if ( hci_send_req(&rq, FALSE) < 0 )
@@ -63,32 +61,31 @@ tBleStatus aci_l2cap_connection_parameter_update_resp( uint16_t Connection_Handl
 {
   struct hci_request rq;
   uint8_t cmd_buffer[BLE_CMD_MAX_PARAM_LEN];
-  aci_l2cap_connection_parameter_update_resp_cp0 *cp0 = (aci_l2cap_connection_parameter_update_resp_cp0*)(cmd_buffer);
-  tBleStatus status = 0;
-  int index_input = 0;
+  int in_offset = 0;
+  aci_l2cap_connection_parameter_update_resp_cp0 *cp0 = (aci_l2cap_connection_parameter_update_resp_cp0*)(cmd_buffer + in_offset);
   cp0->Connection_Handle = Connection_Handle;
-  index_input += 2;
+  in_offset += 2;
   cp0->Conn_Interval_Min = Conn_Interval_Min;
-  index_input += 2;
+  in_offset += 2;
   cp0->Conn_Interval_Max = Conn_Interval_Max;
-  index_input += 2;
+  in_offset += 2;
   cp0->Latency = Latency;
-  index_input += 2;
+  in_offset += 2;
   cp0->Timeout_Multiplier = Timeout_Multiplier;
-  index_input += 2;
+  in_offset += 2;
   cp0->Minimum_CE_Length = Minimum_CE_Length;
-  index_input += 2;
+  in_offset += 2;
   cp0->Maximum_CE_Length = Maximum_CE_Length;
-  index_input += 2;
+  in_offset += 2;
   cp0->Identifier = Identifier;
-  index_input += 1;
+  in_offset += 1;
   cp0->Accept = Accept;
-  index_input += 1;
-  Osal_MemSet( &rq, 0, sizeof(rq) );
+  in_offset += 1;
+  tBleStatus status = 0;
   rq.ogf = 0x3f;
   rq.ocf = 0x182;
   rq.cparam = cmd_buffer;
-  rq.clen = index_input;
+  rq.clen = in_offset;
   rq.rparam = &status;
   rq.rlen = 1;
   if ( hci_send_req(&rq, FALSE) < 0 )
@@ -105,26 +102,25 @@ tBleStatus aci_l2cap_coc_connect( uint16_t Connection_Handle,
 {
   struct hci_request rq;
   uint8_t cmd_buffer[BLE_CMD_MAX_PARAM_LEN];
-  aci_l2cap_coc_connect_cp0 *cp0 = (aci_l2cap_coc_connect_cp0*)(cmd_buffer);
-  tBleStatus status = 0;
-  int index_input = 0;
+  int in_offset = 0;
+  aci_l2cap_coc_connect_cp0 *cp0 = (aci_l2cap_coc_connect_cp0*)(cmd_buffer + in_offset);
   cp0->Connection_Handle = Connection_Handle;
-  index_input += 2;
+  in_offset += 2;
   cp0->SPSM = SPSM;
-  index_input += 2;
+  in_offset += 2;
   cp0->MTU = MTU;
-  index_input += 2;
+  in_offset += 2;
   cp0->MPS = MPS;
-  index_input += 2;
+  in_offset += 2;
   cp0->Initial_Credits = Initial_Credits;
-  index_input += 2;
+  in_offset += 2;
   cp0->Channel_Number = Channel_Number;
-  index_input += 1;
-  Osal_MemSet( &rq, 0, sizeof(rq) );
+  in_offset += 1;
+  tBleStatus status = 0;
   rq.ogf = 0x3f;
   rq.ocf = 0x188;
   rq.cparam = cmd_buffer;
-  rq.clen = index_input;
+  rq.clen = in_offset;
   rq.rparam = &status;
   rq.rlen = 1;
   if ( hci_send_req(&rq, FALSE) < 0 )
@@ -143,27 +139,26 @@ tBleStatus aci_l2cap_coc_connect_confirm( uint16_t Connection_Handle,
 {
   struct hci_request rq;
   uint8_t cmd_buffer[BLE_CMD_MAX_PARAM_LEN];
-  aci_l2cap_coc_connect_confirm_cp0 *cp0 = (aci_l2cap_coc_connect_confirm_cp0*)(cmd_buffer);
+  int in_offset = 0;
+  aci_l2cap_coc_connect_confirm_cp0 *cp0 = (aci_l2cap_coc_connect_confirm_cp0*)(cmd_buffer + in_offset);
+  cp0->Connection_Handle = Connection_Handle;
+  in_offset += 2;
+  cp0->MTU = MTU;
+  in_offset += 2;
+  cp0->MPS = MPS;
+  in_offset += 2;
+  cp0->Initial_Credits = Initial_Credits;
+  in_offset += 2;
+  cp0->Result = Result;
+  in_offset += 2;
+  cp0->Max_Channel_Number = Max_Channel_Number;
+  in_offset += 1;
   aci_l2cap_coc_connect_confirm_rp0 resp;
   Osal_MemSet( &resp, 0, sizeof(resp) );
-  int index_input = 0;
-  cp0->Connection_Handle = Connection_Handle;
-  index_input += 2;
-  cp0->MTU = MTU;
-  index_input += 2;
-  cp0->MPS = MPS;
-  index_input += 2;
-  cp0->Initial_Credits = Initial_Credits;
-  index_input += 2;
-  cp0->Result = Result;
-  index_input += 2;
-  cp0->Max_Channel_Number = Max_Channel_Number;
-  index_input += 1;
-  Osal_MemSet( &rq, 0, sizeof(rq) );
   rq.ogf = 0x3f;
   rq.ocf = 0x189;
   rq.cparam = cmd_buffer;
-  rq.clen = index_input;
+  rq.clen = in_offset;
   rq.rparam = &resp;
   rq.rlen = sizeof(resp);
   if ( hci_send_req(&rq, FALSE) < 0 )
@@ -171,7 +166,7 @@ tBleStatus aci_l2cap_coc_connect_confirm( uint16_t Connection_Handle,
   if ( resp.Status )
     return resp.Status;
   *Channel_Number = resp.Channel_Number;
-  Osal_MemCpy( (void*)Channel_Index_List, (const void*)resp.Channel_Index_List, *Channel_Number);
+  Osal_MemCpy( (void*)Channel_Index_List, (const void*)resp.Channel_Index_List, *Channel_Number );
   return BLE_STATUS_SUCCESS;
 }
 
@@ -183,24 +178,23 @@ tBleStatus aci_l2cap_coc_reconf( uint16_t Connection_Handle,
 {
   struct hci_request rq;
   uint8_t cmd_buffer[BLE_CMD_MAX_PARAM_LEN];
-  aci_l2cap_coc_reconf_cp0 *cp0 = (aci_l2cap_coc_reconf_cp0*)(cmd_buffer);
-  tBleStatus status = 0;
-  int index_input = 0;
+  int in_offset = 0;
+  aci_l2cap_coc_reconf_cp0 *cp0 = (aci_l2cap_coc_reconf_cp0*)(cmd_buffer + in_offset);
   cp0->Connection_Handle = Connection_Handle;
-  index_input += 2;
+  in_offset += 2;
   cp0->MTU = MTU;
-  index_input += 2;
+  in_offset += 2;
   cp0->MPS = MPS;
-  index_input += 2;
+  in_offset += 2;
   cp0->Channel_Number = Channel_Number;
-  index_input += 1;
+  in_offset += 1;
   Osal_MemCpy( (void*)&cp0->Channel_Index_List, (const void*)Channel_Index_List, Channel_Number );
-  index_input += Channel_Number;
-  Osal_MemSet( &rq, 0, sizeof(rq) );
+  in_offset += Channel_Number;
+  tBleStatus status = 0;
   rq.ogf = 0x3f;
   rq.ocf = 0x18a;
   rq.cparam = cmd_buffer;
-  rq.clen = index_input;
+  rq.clen = in_offset;
   rq.rparam = &status;
   rq.rlen = 1;
   if ( hci_send_req(&rq, FALSE) < 0 )
@@ -213,18 +207,17 @@ tBleStatus aci_l2cap_coc_reconf_confirm( uint16_t Connection_Handle,
 {
   struct hci_request rq;
   uint8_t cmd_buffer[BLE_CMD_MAX_PARAM_LEN];
-  aci_l2cap_coc_reconf_confirm_cp0 *cp0 = (aci_l2cap_coc_reconf_confirm_cp0*)(cmd_buffer);
-  tBleStatus status = 0;
-  int index_input = 0;
+  int in_offset = 0;
+  aci_l2cap_coc_reconf_confirm_cp0 *cp0 = (aci_l2cap_coc_reconf_confirm_cp0*)(cmd_buffer + in_offset);
   cp0->Connection_Handle = Connection_Handle;
-  index_input += 2;
+  in_offset += 2;
   cp0->Result = Result;
-  index_input += 2;
-  Osal_MemSet( &rq, 0, sizeof(rq) );
+  in_offset += 2;
+  tBleStatus status = 0;
   rq.ogf = 0x3f;
   rq.ocf = 0x18b;
   rq.cparam = cmd_buffer;
-  rq.clen = index_input;
+  rq.clen = in_offset;
   rq.rparam = &status;
   rq.rlen = 1;
   if ( hci_send_req(&rq, FALSE) < 0 )
@@ -236,16 +229,15 @@ tBleStatus aci_l2cap_coc_disconnect( uint8_t Channel_Index )
 {
   struct hci_request rq;
   uint8_t cmd_buffer[BLE_CMD_MAX_PARAM_LEN];
-  aci_l2cap_coc_disconnect_cp0 *cp0 = (aci_l2cap_coc_disconnect_cp0*)(cmd_buffer);
-  tBleStatus status = 0;
-  int index_input = 0;
+  int in_offset = 0;
+  aci_l2cap_coc_disconnect_cp0 *cp0 = (aci_l2cap_coc_disconnect_cp0*)(cmd_buffer + in_offset);
   cp0->Channel_Index = Channel_Index;
-  index_input += 1;
-  Osal_MemSet( &rq, 0, sizeof(rq) );
+  in_offset += 1;
+  tBleStatus status = 0;
   rq.ogf = 0x3f;
   rq.ocf = 0x18c;
   rq.cparam = cmd_buffer;
-  rq.clen = index_input;
+  rq.clen = in_offset;
   rq.rparam = &status;
   rq.rlen = 1;
   if ( hci_send_req(&rq, FALSE) < 0 )
@@ -258,18 +250,17 @@ tBleStatus aci_l2cap_coc_flow_control( uint8_t Channel_Index,
 {
   struct hci_request rq;
   uint8_t cmd_buffer[BLE_CMD_MAX_PARAM_LEN];
-  aci_l2cap_coc_flow_control_cp0 *cp0 = (aci_l2cap_coc_flow_control_cp0*)(cmd_buffer);
-  tBleStatus status = 0;
-  int index_input = 0;
+  int in_offset = 0;
+  aci_l2cap_coc_flow_control_cp0 *cp0 = (aci_l2cap_coc_flow_control_cp0*)(cmd_buffer + in_offset);
   cp0->Channel_Index = Channel_Index;
-  index_input += 1;
+  in_offset += 1;
   cp0->Credits = Credits;
-  index_input += 2;
-  Osal_MemSet( &rq, 0, sizeof(rq) );
+  in_offset += 2;
+  tBleStatus status = 0;
   rq.ogf = 0x3f;
   rq.ocf = 0x18d;
   rq.cparam = cmd_buffer;
-  rq.clen = index_input;
+  rq.clen = in_offset;
   rq.rparam = &status;
   rq.rlen = 1;
   if ( hci_send_req(&rq, FALSE) < 0 )
@@ -283,20 +274,19 @@ tBleStatus aci_l2cap_coc_tx_data( uint8_t Channel_Index,
 {
   struct hci_request rq;
   uint8_t cmd_buffer[BLE_CMD_MAX_PARAM_LEN];
-  aci_l2cap_coc_tx_data_cp0 *cp0 = (aci_l2cap_coc_tx_data_cp0*)(cmd_buffer);
-  tBleStatus status = 0;
-  int index_input = 0;
+  int in_offset = 0;
+  aci_l2cap_coc_tx_data_cp0 *cp0 = (aci_l2cap_coc_tx_data_cp0*)(cmd_buffer + in_offset);
   cp0->Channel_Index = Channel_Index;
-  index_input += 1;
+  in_offset += 1;
   cp0->Length = Length;
-  index_input += 2;
+  in_offset += 2;
   Osal_MemCpy( (void*)&cp0->Data, (const void*)Data, Length );
-  index_input += Length;
-  Osal_MemSet( &rq, 0, sizeof(rq) );
+  in_offset += Length;
+  tBleStatus status = 0;
   rq.ogf = 0x3f;
   rq.ocf = 0x18e;
   rq.cparam = cmd_buffer;
-  rq.clen = index_input;
+  rq.clen = in_offset;
   rq.rparam = &status;
   rq.rlen = 1;
   if ( hci_send_req(&rq, FALSE) < 0 )

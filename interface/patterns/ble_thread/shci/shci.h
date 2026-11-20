@@ -26,7 +26,7 @@ extern "C" {
 #endif
 
   /* Includes ------------------------------------------------------------------*/
-#include "mbox_def.h" /* Requested to expose the MB_WirelessFwInfoTable_t structure */
+#include "mbox_def.h" /* Requested to expose the MB_WirelessFwInfoTable_t structure */ 
   
   /* Exported types ------------------------------------------------------------*/
 
@@ -249,7 +249,14 @@ extern "C" {
     FUS_STATE_ERROR_AUTH_TAG_ST_NOTFOUND = 0x08,
     FUS_STATE_ERROR_AUTH_TAG_CUST_NOTFOUND = 0x09,
     FUS_STATE_ERROR_AUTH_KEY_LOCKED = 0x0A,
-    FUS_STATE_ERROR_FW_ROLLBACK_ERROR = 0x11,
+    FUS_STATE_ERROR_FW_ROLLBACK_ERROR = 0x11, 
+    FUS_STATE_ERROR_BUSY = 0x12,
+    FUS_STATE_ERROR_CKS_OPERATION_NOT_ALLOWED = 0x13,
+    FUS_STATE_ERROR_INVALID_OB = 0xF8,
+    FUS_STATE_ERROR_INVALID_ARGUMENT = 0xF9,
+    FUS_STATE_ERROR_USB_OBSOLETE = 0xFA,
+    FUS_STATE_ERROR_CRITICAL_FAILURE = 0xFB,
+    FUS_STATE_ERROR_FORBIDDEN = 0xFC,     
     FUS_STATE_ERROR_STATE_NOT_RUNNING = 0xFE,
     FUS_STATE_ERROR_ERR_UNKNOWN = 0xFF,
   } SHCI_FUS_GetState_ErrorCode_t;
@@ -909,7 +916,6 @@ extern "C" {
  */
 #define SHCI_C2_CONFIG_CONFIG1_BIT0_BLE_NVM_DATA_TO_INTERNAL_FLASH    (0<<0)
 #define SHCI_C2_CONFIG_CONFIG1_BIT0_BLE_NVM_DATA_TO_SRAM              (1<<0)
-#define SHCI_C2_CONFIG_CONFIG1_BIT1_THREAD_NVM_DATA_TO_INTERNAL_FLASH (0<<1)
 #define SHCI_C2_CONFIG_CONFIG1_BIT1_THREAD_NVM_DATA_TO_SRAM           (1<<1)
 #define SHCI_C2_CONFIG_CONFIG1_BIT2_SET_EUI64_FORMAT                  (1<<2)
 
@@ -1380,8 +1386,7 @@ typedef struct {
   *                    uint8_t Config1 :
   *                     - bit0 :  0 - BLE NVM Data  data are flushed in internal secure flash
   *                               1 - BLE NVM Data are written in SRAM cache pointed by BleNvmRamAddress
-  *                     - bit1 :  0 - THREAD NVM Data  data are flushed in internal secure flash
-  *                               1 - THREAD NVM Data are written in SRAM cache pointed by ThreadNvmRamAddress
+  *                     - bit1 :  Not used
   *                     - bit2 :  0 - Thread EUI64 is set to new (and current) format
   *                               1 - Thread EUI64 is set to old format
   *                     - bit3 to bit7 : Unused, shall be set to 0
@@ -1398,7 +1403,6 @@ typedef struct {
   *                               The size of the buffer shall be BLE_NVM_SRAM_SIZE (number of 32bits)
   *                               The buffer shall be allocated in SRAM2
   *                    uint32_t ThreadNvmRamAddress :
-  *                               Only considered when Config1.bit1 = 1
   *                               When set to 0, data are kept in internal SRAM on CPU2
   *                               Otherwise, data are copied in the cache pointed by ThreadNvmRamAddress
   *                               The size of the buffer shall be THREAD_NVM_SRAM_SIZE (number of 32bits)

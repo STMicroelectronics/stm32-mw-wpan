@@ -633,14 +633,16 @@ Error Tcp::HandleMessage(ot::Ip6::Header &aIp6Header, Message &aMessage, Message
     struct tcplp_signals sig;
     int                  nextAction;
 
-    VerifyOrExit(length == aMessage.GetLength() - aMessage.GetOffset(), error = kErrorParse);
+    VerifyOrExit(length == aMessage.DetermineLengthAfterOffset(), error = kErrorParse);
     VerifyOrExit(length >= sizeof(Tcp::Header), error = kErrorParse);
     SuccessOrExit(error = aMessage.Read(aMessage.GetOffset() + offsetof(struct tcphdr, th_off_x2), headerSize));
     headerSize = static_cast<uint8_t>((headerSize >> TH_OFF_SHIFT) << 2);
     VerifyOrExit(headerSize >= sizeof(struct tcphdr) && headerSize <= sizeof(header) &&
                      static_cast<uint16_t>(headerSize) <= length,
                  error = kErrorParse);
+#ifndef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
     SuccessOrExit(error = Checksum::VerifyMessageChecksum(aMessage, aMessageInfo, kProtoTcp));
+#endif
     SuccessOrExit(error = aMessage.Read(aMessage.GetOffset(), &header[0], headerSize));
 
     ip6Header = reinterpret_cast<struct ip6_hdr *>(&aIp6Header);

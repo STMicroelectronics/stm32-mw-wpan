@@ -5,7 +5,7 @@
  *****************************************************************************
  * @attention
  *
- * Copyright (c) 2018-2025 STMicroelectronics.
+ * Copyright (c) 2018-2026 STMicroelectronics.
  * All rights reserved.
  *
  * This software is licensed under terms that can be found in the LICENSE file
@@ -104,7 +104,6 @@ struct hci_request
 {
   uint16_t ogf;
   uint16_t ocf;
-  int      event;
   void*    cparam;
   int      clen;
   void*    rparam;

@@ -5,7 +5,7 @@
  *****************************************************************************
  * @attention
  *
- * Copyright (c) 2018-2025 STMicroelectronics.
+ * Copyright (c) 2018-2026 STMicroelectronics.
  * All rights reserved.
  *
  * This software is licensed under terms that can be found in the LICENSE file
@@ -138,6 +138,9 @@
 
 /* ACI_GATT_NOTIFICATION_COMPLETE_EVENT code */
 #define ACI_GATT_NOTIFICATION_COMPLETE_VSEVT_CODE         0x0C1BU
+
+/* ACI_GATT_NOTIFICATION_LL_ACK_EVENT code */
+#define ACI_GATT_NOTIFICATION_LL_ACK_VSEVT_CODE           0x0C1CU
 
 /* ACI_GATT_READ_EXT_EVENT code */
 #define ACI_GATT_READ_EXT_VSEVT_CODE                      0x0C1DU

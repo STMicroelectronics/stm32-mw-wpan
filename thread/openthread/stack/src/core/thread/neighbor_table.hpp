@@ -31,8 +31,8 @@
  *   This file includes definitions for Thread neighbor table.
  */
 
-#ifndef NEIGHBOR_TABLE_HPP_
-#define NEIGHBOR_TABLE_HPP_
+#ifndef OT_CORE_THREAD_NEIGHBOR_TABLE_HPP_
+#define OT_CORE_THREAD_NEIGHBOR_TABLE_HPP_
 
 #include "openthread-core-config.h"
 
@@ -152,6 +152,10 @@ public:
     Neighbor *FindNeighbor(const Mac::Address   &aMacAddress,
                            Neighbor::StateFilter aFilter = Neighbor::kInStateValidOrRestoring);
 
+#if OPENTHREAD_CONFIG_P2P_ENABLE
+    Neighbor *FindPeer(const Neighbor::AddressMatcher &aMatcher);
+#endif
+
 #if OPENTHREAD_FTD
 
     /**
@@ -232,4 +236,4 @@ private:
 
 } // namespace ot
 
-#endif // NEIGHBOR_TABLE_HPP_
+#endif // OT_CORE_THREAD_NEIGHBOR_TABLE_HPP_

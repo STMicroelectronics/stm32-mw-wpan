@@ -35,7 +35,10 @@
 #ifndef OPENTHREAD_DNS_CLIENT_H_
 #define OPENTHREAD_DNS_CLIENT_H_
 
-#include <openthread/dns.h>
+#include <stdbool.h>
+#include <stdint.h>
+
+#include <openthread/error.h>
 #include <openthread/instance.h>
 #include <openthread/ip6.h>
 
@@ -671,7 +674,6 @@ typedef struct otDnsRecordResponse otDnsRecordResponse;
  *  - OT_ERROR_NONE              A response was received successfully.
  *  - OT_ERROR_ABORT             A DNS transaction was aborted by the stack.
  *  - OT_ERROR_RESPONSE_TIMEOUT  No DNS response has been received within timeout.
- *
  */
 typedef void (*otDnsRecordCallback)(otError aError, const otDnsRecordResponse *aResponse, void *aContext);
 

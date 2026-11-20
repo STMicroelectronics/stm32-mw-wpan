@@ -51,6 +51,17 @@
  * */
 //#define MBEDTLS_SHA256_ALT
 
+/*
+ * GCC on Cortex-M profile can fail to allocate registers for some Mbed TLS
+ * inline asm paths (typically reported from library/common.h). For STM32WB
+ * OpenThread builds, prefer portable C implementations.
+ */
+#if defined(__GNUC__) && defined(__arm__) && defined(__thumb__) && \
+	(defined(__ARM_ARCH_7EM__) || defined(__ARM_ARCH_7M__) || defined(__ARM_ARCH_8M_MAIN__))
+#if defined(MBEDTLS_HAVE_ASM)
+#undef MBEDTLS_HAVE_ASM
+#endif
+#endif
 
 
 

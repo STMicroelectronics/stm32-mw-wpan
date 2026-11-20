@@ -82,7 +82,10 @@ Instance::Instance(void)
 #endif
     , mRadio(*this)
 #if OPENTHREAD_CONFIG_UPTIME_ENABLE
-    , mUptime(*this)
+    , mUptimeTracker(*this)
+#endif
+#if OPENTHREAD_CONFIG_OTNS_ENABLE
+    , mOtns(*this)
 #endif
 #if OPENTHREAD_MTD || OPENTHREAD_FTD
     , mNotifier(*this)
@@ -139,12 +142,12 @@ Instance::Instance(void)
 #endif
     , mActiveDataset(*this)
     , mPendingDataset(*this)
-    , mExtendedPanIdManager(*this)
-    , mNetworkNameManager(*this)
+    , mNetworkIdentity(*this)
     , mIp6Filter(*this)
     , mKeyManager(*this)
     , mLowpan(*this)
     , mMac(*this)
+    , mMessageFramer(*this)
     , mMeshForwarder(*this)
     , mMle(*this)
     , mDiscoverScanner(*this)
@@ -163,18 +166,32 @@ Instance::Instance(void)
     , mNetworkDataPublisher(*this)
 #endif
     , mNetworkDataServiceManager(*this)
+    , mVendorInfo(*this)
     , mNetworkDiagnosticServer(*this)
 #if OPENTHREAD_CONFIG_TMF_NETDIAG_CLIENT_ENABLE
     , mNetworkDiagnosticClient(*this)
 #endif
 #if OPENTHREAD_CONFIG_BORDER_AGENT_ENABLE
-    , mBorderAgent(*this)
+    , mBorderAgentTxtData(*this)
+    , mBorderAgentManager(*this)
+#endif
+#if OPENTHREAD_CONFIG_BORDER_AGENT_ENABLE && OPENTHREAD_CONFIG_BORDER_AGENT_ADMITTER_ENABLE
+    , mBorderAgentAdmitter(*this)
+#endif
+#if OPENTHREAD_CONFIG_BORDER_AGENT_ENABLE && OPENTHREAD_CONFIG_BORDER_AGENT_EPHEMERAL_KEY_ENABLE
+    , mBorderAgentEphemeralKeyManager(*this)
+#endif
+#if OPENTHREAD_CONFIG_BORDER_AGENT_TRACKER_ENABLE
+    , mBorderAgentTracker(*this)
 #endif
 #if OPENTHREAD_CONFIG_COMMISSIONER_ENABLE && OPENTHREAD_FTD
     , mCommissioner(*this)
 #endif
 #if OPENTHREAD_CONFIG_SECURE_TRANSPORT_ENABLE
     , mTmfSecureAgent(*this)
+#endif
+#if OPENTHREAD_CONFIG_SEEKER_ENABLE || OPENTHREAD_CONFIG_JOINER_ENABLE
+    , mSeeker(*this)
 #endif
 #if OPENTHREAD_CONFIG_JOINER_ENABLE
     , mJoiner(*this)
@@ -231,7 +248,8 @@ Instance::Instance(void)
     , mApplicationCoapSecure(*this, kWithLinkSecurity)
 #endif
 #if OPENTHREAD_CONFIG_BLE_TCAT_ENABLE
-    , mApplicationBleSecure(*this)
+    , mBleSecure(*this)
+    , mTcatAgent(*this)
 #endif
 #if OPENTHREAD_CONFIG_PING_SENDER_ENABLE
     , mPingSender(*this)
@@ -247,7 +265,13 @@ Instance::Instance(void)
     , mMeshDiag(*this)
 #endif
 #if OPENTHREAD_CONFIG_HISTORY_TRACKER_ENABLE
-    , mHistoryTracker(*this)
+    , mHistoryTrackerLocal(*this)
+#if OPENTHREAD_CONFIG_HISTORY_TRACKER_SERVER_ENABLE
+    , mHistoryTrackerServer(*this)
+#endif
+#if OPENTHREAD_CONFIG_HISTORY_TRACKER_CLIENT_ENABLE
+    , mHistoryTrackerClient(*this)
+#endif
 #endif
 #if OPENTHREAD_CONFIG_LINK_METRICS_MANAGER_ENABLE
     , mLinkMetricsManager(*this)
@@ -258,11 +282,19 @@ Instance::Instance(void)
 #if OPENTHREAD_CONFIG_ANNOUNCE_SENDER_ENABLE
     , mAnnounceSender(*this)
 #endif
-#if OPENTHREAD_CONFIG_OTNS_ENABLE
-    , mOtns(*this)
-#endif
 #if OPENTHREAD_CONFIG_BORDER_ROUTING_ENABLE
+    , mInfraIf(*this)
+    , mRxRaTracker(*this)
     , mRoutingManager(*this)
+#if OPENTHREAD_CONFIG_BORDER_ROUTING_TRACK_PEER_BR_INFO_ENABLE
+    , mNetDataBrTracker(*this)
+#endif
+#if OPENTHREAD_CONFIG_BORDER_ROUTING_MULTI_AIL_DETECTION_ENABLE
+    , mMultiAilDetector(*this)
+#endif
+#if OPENTHREAD_CONFIG_BORDER_ROUTING_DHCP6_PD_ENABLE && OPENTHREAD_CONFIG_BORDER_ROUTING_DHCP6_PD_CLIENT_ENABLE
+    , mDhcp6PdClient(*this)
+#endif
 #endif
 #if OPENTHREAD_CONFIG_NAT64_TRANSLATOR_ENABLE
     , mNat64Translator(*this)
@@ -400,6 +432,8 @@ void Instance::AfterInit(void)
     mIsInitialized = true;
 #if OPENTHREAD_MTD || OPENTHREAD_FTD
 
+    Get<KeyManager>().Init();
+
     // Restore datasets and network information
 
     Get<Settings>().Init();
@@ -427,10 +461,9 @@ void Instance::Finalize(void)
     mIsInitialized = false;
 
 #if OPENTHREAD_MTD || OPENTHREAD_FTD
-    IgnoreError(otThreadSetEnabled(this, false));
-    IgnoreError(otIp6SetEnabled(this, false));
-    IgnoreError(otLinkSetEnabled(this, false));
-
+    Get<Mle::Mle>().Stop();
+    Get<ThreadNetif>().Down();
+    Get<Mac::Mac>().SetEnabled(false);
 #if OPENTHREAD_CONFIG_PLATFORM_KEY_REFERENCES_ENABLE
     Get<KeyManager>().DestroyTemporaryKeys();
 #endif

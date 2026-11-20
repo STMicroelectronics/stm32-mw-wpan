@@ -1515,7 +1515,7 @@ tcp_do_segment(struct ip6_hdr* ip6, struct tcphdr *th, otMessage* msg,
 				goto dropwithreset;
 			} else if (thflags & TH_SYN) {
 				/* non-initial SYN is ignored */
-				if ((tcp_timer_active(tp, TT_DELACK) || 
+				if ((tcp_timer_active(tp, TT_DELACK) ||
 				     tcp_timer_active(tp, TT_REXMT)))
 					goto drop;
 			} else if (!(thflags & (TH_ACK|TH_FIN|TH_RST))) {
@@ -1983,7 +1983,7 @@ tcp_do_segment(struct ip6_hdr* ip6, struct tcphdr *th, otMessage* msg,
 			/*
 			 * Account for the ACK of our SYN prior to
 			 * regular ACK processing below.
-			 */ 
+			 */
 			tp->snd_una++;
 		}
 		if (tp->t_flags & TF_NEEDFIN) {
@@ -2440,8 +2440,8 @@ process_ACK:
 				if (tpiscantrcv(tp)) {
 					/* samkumar: Removed a call to soisdisconnected(so). */
 					tcp_timer_activate(tp, TT_2MSL,
-					    (tcp_fast_finwait2_recycle ?
-					    tcp_finwait2_timeout :
+					    (uint32_t)((uint32_t)tcp_fast_finwait2_recycle ?
+					    (uint32_t)tcp_finwait2_timeout :
 					    TP_MAXIDLE(tp)));
 				}
 				tcp_state_change(tp, TCPS_FIN_WAIT_2);
